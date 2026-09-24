@@ -1,0 +1,59 @@
+"use client";
+
+import Link from "next/link";
+import { ShoppingCart } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/core/ui/tabs";
+import TypographyBody from "@/components/core/ui/typography-body";
+import { mobileNavbarMenuItems } from "@/components/platform/data/mobile.navbar.menuItems";
+import { useNavbarMobile } from "@/components/platform/hooks/use.navbar";
+import AppIcon from "@/components/platform/ui/shared/app-icon";
+
+type MobileNavbarProps = {
+  cartCount?: number;
+};
+
+/** Renders navigation for the mobile platform layout. */
+export default function MobileNavbar({ cartCount = 2 }: MobileNavbarProps) {
+  const { showCartCount, cartLabel } = useNavbarMobile(cartCount);
+
+  return (
+    <>
+      <header className="absolute inset-x-0 top-0 z-50 flex h-16 items-center justify-between px-5 text-background xl:hidden">
+        <Link href="/" aria-label="Findee home">
+          <AppIcon brightness="light" size="compact" />
+        </Link>
+        <Link href="#cart" aria-label={`Cart, ${cartCount} items`} className="relative p-1.5">
+          <ShoppingCart aria-hidden="true" className="size-5" strokeWidth={1.8} />
+          {showCartCount && (
+            <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-background">
+              <TypographyBody className="text-[10px] leading-none font-semibold">{cartLabel}</TypographyBody>
+            </span>
+          )}
+        </Link>
+      </header>
+
+      <nav
+        aria-label="Mobile primary navigation"
+        className="fixed left-1/2 z-50 w-fit max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-full border border-foreground/10 bg-background p-1 text-foreground shadow-xs xl:hidden"
+        style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
+      >
+        <Tabs defaultValue="/" className="w-fit">
+          <TabsList className="flex w-fit bg-transparent p-0 group-data-horizontal/tabs:h-12">
+            {mobileNavbarMenuItems.map(({ label, href, icon: Icon }) => (
+              <TabsTrigger
+                key={label}
+                value={href}
+                render={<Link href={href} />}
+                nativeButton={false}
+                className="h-full w-[min(5rem,20vw)] flex-none flex-col gap-1 px-1 py-0.5 text-foreground hover:text-foreground dark:text-foreground dark:hover:text-foreground data-active:bg-foreground/10 data-active:text-foreground dark:data-active:bg-foreground/10 dark:data-active:text-foreground"
+              >
+                <Icon aria-hidden="true" className="size-4" strokeWidth={1.8} />
+                <TypographyBody className="block text-center text-xs leading-tight whitespace-nowrap">{label}</TypographyBody>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+      </nav>
+    </>
+  );
+}

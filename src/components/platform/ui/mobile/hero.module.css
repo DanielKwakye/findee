@@ -1,0 +1,15 @@
+.topGlow {
+  isolation: isolate;
+}
+
+.topGlow::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -4rem 0 auto;
+  height: 22rem;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 54% at 68% 30%, var(--chart-4) 0%, transparent 100%);
+  opacity: 0.38;
+  filter: blur(28px);
+}

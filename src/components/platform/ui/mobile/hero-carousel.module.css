@@ -1,0 +1,13 @@
+@media (max-width: 79.999rem) {
+  .previousMobile {
+    transform-origin: right center;
+    transform: perspective(550px) rotateY(-24deg) scale(0.92);
+    backface-visibility: hidden;
+  }
+
+  .nextMobile {
+    transform-origin: left center;
+    transform: perspective(550px) rotateY(24deg) scale(0.92);
+    backface-visibility: hidden;
+  }
+}

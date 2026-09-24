@@ -1,0 +1,47 @@
+{
+  "Hero": {
+    "eyebrow": "A smarter way to get lost items back",
+    "titleFirstLine": "Stick. Scan.",
+    "titleSecondLine": "Get It Back.",
+    "mobileSubtitle": "Findee QR stickers help you recover your lost items. No apps needed.",
+    "desktopSubtitle": "Findee QR stickers help you recover your lost items easily. If someone finds your item, they can scan the QR code to get in touch with you.",
+    "getYourStickers": "Get Your Stickers",
+    "howItWorks": "How It Works",
+    "secured": "Secured",
+    "trusted": "Trusted",
+    "trustedByPeopleEverywhere": "Trusted by people everywhere",
+    "carousel": {
+      "regionLabel": "Findee QR sticker use cases",
+      "laptopsTitle": "Stick on Electronics",
+      "laptopsDescription": "Keep your devices within reach.",
+      "laptopsAlt": "Findee QR sticker on a laptop",
+      "bagsTitle": "Stick on Backpacks",
+      "bagsDescription": "School bags, travel luggage, gym bags and more.",
+      "bagsAlt": "Findee QR sticker on a black backpack",
+      "keysTitle": "Stick on Keys & Essentials",
+      "keysDescription": "Keys, wallets, ID cards and more.",
+      "keysAlt": "Findee QR tag attached to keys",
+      "walletsTitle": "Stick on Wallets & Cards",
+      "walletsDescription": "Keep everyday essentials easy to return.",
+      "walletsAlt": "Findee QR sticker on a wallet",
+      "phonesTitle": "Stick on Phones & Devices",
+      "phonesDescription": "Give your everyday tech a way back.",
+      "phonesAlt": "Findee QR sticker on a phone",
+      "passesTitle": "Stick on Passes & IDs",
+      "passesDescription": "Help lost travel cards find their way home.",
+      "passesAlt": "Findee QR sticker on a bus pass",
+      "previous": "Previous item",
+      "next": "Next item",
+      "slideLabel": "{title}, slide {number} of {total}"
+    },
+    "categories": {
+      "luggage": "Luggage",
+      "laptops": "Laptops",
+      "keys": "Keys",
+      "wallets": "Wallets",
+      "bikes": "Bikes",
+      "cameras": "Cameras",
+      "pets": "Pets"
+    }
+  }
+}

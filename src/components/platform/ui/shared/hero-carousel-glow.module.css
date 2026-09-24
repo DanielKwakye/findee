@@ -1,0 +1,15 @@
+.glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.glow::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 5% 0 12%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 52% at 50% 50%, var(--chart-2) 0%, transparent 100%);
+  opacity: 0.52;
+  filter: blur(26px);
+}
