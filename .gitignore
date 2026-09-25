@@ -24,6 +24,16 @@
 .DS_Store
 *.pem
 
+# IDEs and editors
+.idea/
+.vscode/
+.fleet/
+.vs/
+*.iml
+.settings/
+.project
+.classpath
+
 # debug
 npm-debug.log*
 yarn-debug.log*
