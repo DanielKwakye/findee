@@ -7,20 +7,21 @@ import { Button } from "@/components/core/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/core/ui/carousel";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
-import { heroCarouselItems, heroCarouselOptions } from "@/components/platform/data/hero.carousel.items";
+import { heroCarouselItems } from "@/components/platform/data/hero.carousel.items";
 import { useHeroCarousel } from "@/components/platform/hooks/use.hero.carousel";
 import HeroCarouselIndicators from "@/components/platform/ui/shared/hero-carousel-indicators";
+import { heroCarouselOptions } from "@/components/platform/utils/carousel.utils";
 import { cn } from "@/lib/utils";
 import styles from "./hero-carousel.module.css";
 
 /** Shows the navigable hero image cards in the mobile layout. */
 export default function MobileHeroCarousel() {
   const t = useTranslations("Hero.carousel");
-  const { setApi, selectedIndex, canScrollPrevious, canScrollNext, scrollPrevious, scrollNext, getSlidePosition } = useHeroCarousel();
+  const { setApi, plugins, selectedIndex, canScrollPrevious, canScrollNext, scrollPrevious, scrollNext, getSlidePosition } = useHeroCarousel();
 
   return (
     <>
-    <Carousel aria-label={t("regionLabel")} className="w-full" opts={heroCarouselOptions} setApi={setApi}>
+    <Carousel aria-label={t("regionLabel")} className="w-full" opts={heroCarouselOptions} plugins={plugins} setApi={setApi}>
       <CarouselContent className="-ml-3 items-center">
         {heroCarouselItems.map((item, index) => {
           const position = getSlidePosition(index, heroCarouselItems.length);

@@ -1,11 +1,14 @@
 "use client";
 
 import { useCallback, useState, useSyncExternalStore } from "react";
+import Autoplay from "embla-carousel-autoplay";
 import type { CarouselApi } from "@/components/core/ui/carousel";
+import { heroCarouselAutoplayOptions } from "@/components/platform/utils/carousel.utils";
 
 /** Manages slide selection and navigation for the hero carousels. */
 export function useHeroCarousel() {
   const [api, setApi] = useState<CarouselApi>();
+  const [plugins] = useState(() => [Autoplay(heroCarouselAutoplayOptions)]);
 
   /** Subscribes to changes in the carousel's selected slide. */
   const subscribeToSelection = useCallback((notify: () => void) => {
@@ -44,6 +47,7 @@ export function useHeroCarousel() {
 
   return {
     setApi,
+    plugins,
     selectedIndex,
     canScrollPrevious: api?.canScrollPrev() ?? false,
     canScrollNext: api?.canScrollNext() ?? false,

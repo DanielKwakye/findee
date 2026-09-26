@@ -1,12 +1,5 @@
 import { ImageConstants } from "@/lib/image.constants";
 
-export const heroCarouselOptions = {
-  align: "center",
-  containScroll: "keepSnaps",
-  loop: true,
-  startIndex: 1,
-} as const;
-
 export const heroCarouselItems = [
   {
     image: ImageConstants.FindeeOnLaptop,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { getScrollState, getServerScrollState, subscribeToScroll } from "@/components/platform/utils/navbar.util";
+import { getScrollState, getServerScrollState, subscribeToScroll } from "@/components/platform/utils/navbar.utils";
 
 /** Coordinates state and interactions for the web navigation bar. */
 export function useNavbarWeb() {
