@@ -1,5 +1,6 @@
-# docker build -t danielkwakye1000/findee:v1 .
-# docker push danielkwakye1000/findee:v1
+# Build image:
+# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v3 --push .
+
 
 # -----------------------------
 # 1. Dependencies Install Stage
@@ -70,8 +71,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # group id = 1001
 # user id = 1001
 # add user to the group
-RUN addgroup -g 1001 findeeGroup && \
-    adduser -u 1001 -G findeeGroup -s /bin/sh -D findeeUser
+RUN addgroup -g 3002 findeeGroup && \
+    adduser -u 3002 -G findeeGroup -s /bin/sh -D findeeUser
 
 # Copy production files
 COPY --from=builder /app/next.config.ts ./next.config.ts
@@ -86,6 +87,6 @@ RUN mkdir -p .next/cache && \
 
 USER findeeUser
 
-EXPOSE 3000
+EXPOSE 3002
 
 CMD ["npm", "run", "start"]
