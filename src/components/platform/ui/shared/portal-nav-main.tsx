@@ -2,6 +2,7 @@
 
 import { ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 import TypographyBody from "@/components/core/ui/typography-body"
 import type { PortalInventoryItem } from "@/components/platform/data/portal.sidebar.menuItems"
 
@@ -57,9 +58,9 @@ export function PortalNavMain({
                                             <SidebarMenuSubItem key={subItem.title}>
                                                 <SidebarMenuSubButton
                                                     render={
-                                                        <a href={subItem.url}>
+                                                        <Link href={subItem.url}>
                                                             <TypographyBody className="text-sm">{t(subItem.title)}</TypographyBody>
-                                                        </a>
+                                                        </Link>
                                                     }
                                                 />
                                             </SidebarMenuSubItem>
@@ -73,10 +74,10 @@ export function PortalNavMain({
                             <SidebarMenuButton
                                 tooltip={t(item.title)}
                                 render={
-                                    <a href={item.url}>
+                                    <Link href={item.url}>
                                         <item.icon />
                                         <TypographyBody className="text-sm">{t(item.title)}</TypographyBody>
-                                    </a>
+                                    </Link>
                                 }
                             />
                         </SidebarMenuItem>

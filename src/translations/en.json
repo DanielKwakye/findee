@@ -16,6 +16,16 @@
     "procurements": "Procurements",
     "settings": "Settings"
   },
+  "products": {
+    "heading": "Manage Products",
+    "description": "View and manage all products",
+    "placeholder": "Manage"
+  },
+  "addProducts": {
+    "heading": "Add Products",
+    "description": "Add new products to your inventory",
+    "placeholder": "Add"
+  },
   "Hero": {
     "eyebrow": "A smarter way to get lost items back",
     "titleFirstLine": "Stick. Scan.",

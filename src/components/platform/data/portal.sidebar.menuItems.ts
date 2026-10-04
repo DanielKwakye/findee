@@ -36,8 +36,8 @@ export const portalInventoryItems: PortalInventoryItem[] = [
         url: "#",
         icon: Package,
         items: [
-            { title: "viewProducts", url: "#" },
-            { title: "addNew", url: "#" },
+            { title: "viewProducts", url: "/admin/products" },
+            { title: "addNew", url: "/admin/products/add" },
         ],
     },
 ]
