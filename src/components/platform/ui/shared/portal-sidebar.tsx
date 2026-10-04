@@ -3,15 +3,8 @@
 import * as React from "react"
 import {
     AudioWaveform,
-    BookOpen,
-    Bot,
     Command,
-    Frame,
     GalleryVerticalEnd,
-    Map,
-    PieChart,
-    Settings2,
-    SquareTerminal,
 } from "lucide-react"
 import {
     Sidebar,
@@ -24,6 +17,7 @@ import {PortalNavMain} from "@/components/platform/ui/shared/portal-nav-main";
 import {PortalTeamSwitcher} from "@/components/platform/ui/shared/portal-team-switcher";
 import {PortalNavProjects} from "@/components/platform/ui/shared/portal-nav-projects";
 import {PortalNavUser} from "@/components/platform/ui/shared/portal-nav-user";
+import { portalInventoryItems, portalInternalItems } from "@/components/platform/data/portal.sidebar.menuItems";
 
 // This is sample data.
 const data = {
@@ -49,112 +43,9 @@ const data = {
             plan: "Free",
         },
     ],
-    navMain: [
-        {
-            title: "Playground",
-            url: "#",
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Models",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Documentation",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-                {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-                {
-                    title: "Changelog",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Settings",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-                {
-                    title: "Limits",
-                    url: "#",
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: "Design Engineering",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "Sales & Marketing",
-            url: "#",
-            icon: PieChart,
-        },
-        {
-            name: "Travel",
-            url: "#",
-            icon: Map,
-        },
-    ],
 }
 
+/** Renders the portal sidebar with team, navigation, and account controls. */
 export function PortalSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar collapsible="icon" {...props}>
@@ -162,8 +53,8 @@ export function PortalSidebar({ ...props }: React.ComponentProps<typeof Sidebar>
                 <PortalTeamSwitcher teams={data.teams} />
             </SidebarHeader>
             <SidebarContent>
-                <PortalNavMain items={data.navMain} />
-                <PortalNavProjects projects={data.projects} />
+                <PortalNavMain items={portalInventoryItems} />
+                <PortalNavProjects projects={portalInternalItems} />
             </SidebarContent>
             <SidebarFooter>
                 <PortalNavUser user={data.user} />

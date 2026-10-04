@@ -1,6 +1,9 @@
 "use client"
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight } from "lucide-react"
+import { useTranslations } from "next-intl"
+import TypographyBody from "@/components/core/ui/typography-body"
+import type { PortalInventoryItem } from "@/components/platform/data/portal.sidebar.menuItems"
 
 import {
     Collapsible,
@@ -22,23 +25,18 @@ import {
 export function PortalNavMain({
                             items,
                         }: {
-    items: {
-        title: string
-        url: string
-        icon?: LucideIcon
-        isActive?: boolean
-        items?: {
-            title: string
-            url: string
-        }[]
-    }[]
+    items: PortalInventoryItem[]
 }) {
+    const t = useTranslations("PortalNavigation")
+
     return (
         <SidebarGroup>
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupLabel>
+                <TypographyBody className="text-xs">{t("inventory")}</TypographyBody>
+            </SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
-                    <Collapsible
+                    item.items?.length ? <Collapsible
                         key={item.title}
                         defaultOpen={item.isActive}
                         className="group/collapsible"
@@ -46,9 +44,9 @@ export function PortalNavMain({
                             <SidebarMenuItem>
                                 <CollapsibleTrigger
                                     render={
-                                        <SidebarMenuButton tooltip={item.title}>
+                                        <SidebarMenuButton tooltip={t(item.title)}>
                                             {item.icon && <item.icon />}
-                                            <span>{item.title}</span>
+                                            <TypographyBody className="text-sm">{t(item.title)}</TypographyBody>
                                             <ChevronRight className="ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90" />
                                         </SidebarMenuButton>
                                     }
@@ -60,7 +58,7 @@ export function PortalNavMain({
                                                 <SidebarMenuSubButton
                                                     render={
                                                         <a href={subItem.url}>
-                                                            <span>{subItem.title}</span>
+                                                            <TypographyBody className="text-sm">{t(subItem.title)}</TypographyBody>
                                                         </a>
                                                     }
                                                 />
@@ -70,7 +68,19 @@ export function PortalNavMain({
                                 </CollapsibleContent>
                             </SidebarMenuItem>
                         }
-                    />
+                    /> : (
+                        <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton
+                                tooltip={t(item.title)}
+                                render={
+                                    <a href={item.url}>
+                                        <item.icon />
+                                        <TypographyBody className="text-sm">{t(item.title)}</TypographyBody>
+                                    </a>
+                                }
+                            />
+                        </SidebarMenuItem>
+                    )
                 ))}
             </SidebarMenu>
         </SidebarGroup>

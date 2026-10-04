@@ -1,4 +1,21 @@
 {
+  "PortalNavigation": {
+    "inventory": "Inventory",
+    "orders": "Orders",
+    "showAll": "Show all",
+    "pending": "Pending",
+    "processing": "Processing",
+    "outForDelivery": "Out for Delivery",
+    "delivered": "Delivered",
+    "canceled": "Canceled",
+    "createOrder": "Create Order",
+    "products": "Products",
+    "viewProducts": "View Products",
+    "addNew": "Add New",
+    "internal": "Internal",
+    "procurements": "Procurements",
+    "settings": "Settings"
+  },
   "Hero": {
     "eyebrow": "A smarter way to get lost items back",
     "titleFirstLine": "Stick. Scan.",
