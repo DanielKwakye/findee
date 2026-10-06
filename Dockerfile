@@ -46,7 +46,7 @@ COPY . .
 RUN mkdir -p .next/cache
 
 # Build full Next.js app
-RUN npm run build
+RUN DATABASE_URL="mongodb://localhost:27017/findee" npm run build
 
 # Remove development dependencies before copying dependencies to the runtime stage
 RUN npm prune --omit=dev
