@@ -2,6 +2,7 @@
 
 import { type LucideIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 import TypographyBody from "@/components/core/ui/typography-body"
 import {
     SidebarGroup,
@@ -33,10 +34,10 @@ export function PortalNavProjects({
                     <SidebarMenuItem key={item.name}>
                         <SidebarMenuButton
                             render={
-                                <a href={item.url}>
+                                <Link href={item.url}>
                                     <item.icon />
                                     <TypographyBody className="text-sm">{t(item.name)}</TypographyBody>
-                                </a>
+                                </Link>
                             }
                         />
                     </SidebarMenuItem>

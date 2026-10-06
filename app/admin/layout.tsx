@@ -1,18 +1,10 @@
 import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/core/ui/breadcrumb";
-import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/core/ui/sidebar";
 import {Separator} from "@/components/core/ui/separator";
-import {PortalSidebar} from "@/components/platform";
+import {PortalSidebar, PortalBreadcrumb} from "@/components/platform";
 import {ReactNode} from "react";
 import {requireAdmin} from "@/features/auth/server/auth.session";
 
@@ -22,30 +14,18 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     return (
         <SidebarProvider>
             <PortalSidebar user={user} />
-            <SidebarInset>
-                <header className="sticky top-0 z-20 bg-background flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                    <div className="flex items-center gap-2 px-4">
+            <SidebarInset className="min-w-0">
+                <header className="sticky top-0 z-20 bg-background flex min-h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">
+                    <div className="flex min-w-0 items-center gap-2 px-4 py-2">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
                             orientation="vertical"
-                            className="mr-2 data-[orientation=vertical]:h-4"
+                            className="mr-2 data-vertical:h-4 data-vertical:self-center"
                         />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="#">
-                                        Build Your Application
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="hidden md:block" />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
+                        <PortalBreadcrumb />
                     </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div className="flex min-w-0 flex-1 flex-col gap-4 p-4 pt-0">
                     { children }
                 </div>
             </SidebarInset>

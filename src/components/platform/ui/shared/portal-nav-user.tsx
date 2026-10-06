@@ -42,7 +42,7 @@ export function PortalNavUser({
     }
 }) {
     const { isMobile, logout, t } = usePortalUser();
-    const name = user.name ?? user.email;
+    const name = t("admin");
     const initials = name.slice(0, 2).toUpperCase();
 
     return (

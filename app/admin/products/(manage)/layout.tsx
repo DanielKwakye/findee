@@ -8,7 +8,7 @@ export default async function ProductsLayout({ children }: { children: ReactNode
     const t = await getTranslations("products");
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex min-w-0 flex-col gap-4">
             <div className="flex flex-col">
                 <TypographyH2>{t("heading")}</TypographyH2>
                 <TypographyBody>{t("description")}</TypographyBody>

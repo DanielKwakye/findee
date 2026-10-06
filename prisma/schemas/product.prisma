@@ -1,0 +1,34 @@
+model Product {
+  id                     String         @id @default(auto()) @map("_id") @db.ObjectId
+  /// Human-readable unique code; enforce a maximum of 255 characters when writing.
+  code                   String         @unique
+  /// Allowed values: Everyday, Fabric, Tough. Enforce a maximum of 100 characters when writing.
+  variant                String         @default("Everyday")
+  published              Boolean        @default(false)
+  procurementStatus      ProcurementStatus @default(inactive)
+  reachoutModes          ReachoutModes?
+  /// Original purchaser; preserved when ownership is transferred.
+  reservedById           String?        @db.ObjectId
+  reservedBy             User?          @relation("ProductReservation", fields: [reservedById], references: [id])
+  reservedAt             DateTime?
+  // does not expire
+  /// Current owner; initially the purchaser and transferable to another user.
+  assignedToId           String?        @db.ObjectId
+  assignedTo             User?          @relation("ProductAssignment", fields: [assignedToId], references: [id])
+  assignedAt             DateTime?
+  orderId                String?        @db.ObjectId
+  order                  Order?         @relation(fields: [orderId], references: [id])
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+
+  @@index([reservedById])
+  @@index([assignedToId])
+  @@index([orderId])
+  @@index([published, variant])
+}
+
+enum ProcurementStatus {
+  inactive
+  requested
+  received
+}

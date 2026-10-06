@@ -31,18 +31,10 @@ export const portalInventoryItems: PortalInventoryItem[] = [
         ],
     },
     { title: "createOrder", url: "#", icon: PackagePlus },
-    {
-        title: "products",
-        url: "#",
-        icon: Package,
-        items: [
-            { title: "viewProducts", url: "/admin/products" },
-            { title: "addNew", url: "/admin/products/add" },
-        ],
-    },
 ]
 
 export const portalInternalItems = [
+    { name: "products", url: "/admin/products", icon: Package },
     { name: "procurements", url: "/admin/procurement", icon: ClipboardList },
     { name: "settings", url: "#", icon: Settings2 },
 ]

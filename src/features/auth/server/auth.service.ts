@@ -22,7 +22,7 @@ export async function authenticateCredentials(credentials: Partial<Record<string
     const user = await db.user.findUnique({ where: { email: values.email } });
     dummyHash ??= hashPassword("invalid-account-timing-placeholder");
     const valid = await verifyPassword(user?.passwordHash ?? await dummyHash, values.password);
-    if (!user || !valid || user.role !== "ADMIN") return null;
+    if (!user || !user.passwordHash || !valid || user.role !== "ADMIN") return null;
 
     return { id: user.id, email: user.email, name: user.name, role: user.role };
 }
