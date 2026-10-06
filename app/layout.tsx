@@ -5,6 +5,7 @@ import "@/app/globals.css";
 import { cn } from "@/lib/utils";
 import {TooltipProvider} from "@/components/core/ui/tooltip";
 import {ReactNode} from "react";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const notoSansHeading = Noto_Sans({subsets:['latin'],variable:'--font-heading'});
 
@@ -34,7 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode } ) {
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <QueryProvider><TooltipProvider>{children}</TooltipProvider></QueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

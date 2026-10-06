@@ -1,4 +1,8 @@
-export default function ProcurementPage() {
+import {requireAdmin} from "@/features/auth/server/auth.session";
+
+/** Presents the administrator's procurement workspace. */
+export default async function ProcurementPage() {
+    await requireAdmin();
     return (
         <div>
             <div className="grid auto-rows-min gap-4 md:grid-cols-3">

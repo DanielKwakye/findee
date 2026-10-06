@@ -21,11 +21,6 @@ import { portalInventoryItems, portalInternalItems } from "@/components/platform
 
 // This is sample data.
 const data = {
-    user: {
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "/avatars/shadcn.jpg",
-    },
     teams: [
         {
             name: "Acme Inc",
@@ -46,7 +41,9 @@ const data = {
 }
 
 /** Renders the portal sidebar with team, navigation, and account controls. */
-export function PortalSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function PortalSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & {
+    user: { name: string | null; email: string };
+}) {
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
@@ -57,7 +54,7 @@ export function PortalSidebar({ ...props }: React.ComponentProps<typeof Sidebar>
                 <PortalNavProjects projects={portalInternalItems} />
             </SidebarContent>
             <SidebarFooter>
-                <PortalNavUser user={data.user} />
+                <PortalNavUser user={user} />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

@@ -12,13 +12,16 @@ import {
     SidebarTrigger,
 } from "@/components/core/ui/sidebar";
 import {Separator} from "@/components/core/ui/separator";
-import {PortalSidebar} from "@/components/platform/ui/shared/portal-sidebar";
+import {PortalSidebar} from "@/components/platform";
 import {ReactNode} from "react";
+import {requireAdmin} from "@/features/auth/server/auth.session";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+/** Provides the authorized administrator's portal layout. */
+export default async function AdminLayout({ children }: { children: ReactNode }) {
+    const user = await requireAdmin();
     return (
         <SidebarProvider>
-            <PortalSidebar />
+            <PortalSidebar user={user} />
             <SidebarInset>
                 <header className="sticky top-0 z-20 bg-background flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                     <div className="flex items-center gap-2 px-4">

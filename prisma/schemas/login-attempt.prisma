@@ -1,0 +1,7 @@
+model LoginAttempt {
+  id        String   @id @map("_id")
+  attempts  Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
