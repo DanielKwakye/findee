@@ -1,5 +1,5 @@
 # Build image:
-# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v3 --push .
+# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v4 --push .
 
 
 # -----------------------------
