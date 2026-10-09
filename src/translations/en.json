@@ -1,4 +1,92 @@
 {
+  "Stepper": {
+    "progress": "Step progress",
+    "status": "Step {current} of {total}",
+    "back": "Back",
+    "continue": "Continue"
+  },
+  "Checkout": {
+    "comingSoon": "Coming soon",
+    "plans": {
+      "title": "How many stickers do you want?",
+      "names": {
+        "Starter": "Starter",
+        "Family": "Family",
+        "Business": "Business"
+      },
+      "description": "Choose a plan with enough stickers and recovery profiles for you, your family, or your business.",
+      "details": "{quantity, number} stickers · Up to {profiles, number} recovery profiles",
+      "stickers": "{quantity, number} stickers",
+      "stickersPlus": "{quantity, number}+ stickers",
+      "profiles": "Up to {profiles, number} recovery profiles",
+      "unlimitedProfiles": "Unlimited recovery profiles",
+      "profilesExplanation": "Maximum recovery profiles is the total number of people, including you, who can use the stickers in that plan.",
+      "loading": "Loading plans…",
+      "error": "Unable to load plans. Please try again.",
+      "retry": "Try again"
+    },
+    "steps": {
+      "variants": "Variants",
+      "plan": "Plan",
+      "allocation": "Allocation",
+      "checkout": "Checkout"
+    },
+    "details": {
+      "title": "Checkout",
+      "description": "Choose how finders can reach you and where we should deliver your stickers.",
+      "email": "Email",
+      "name": "Name (optional)",
+      "phone": "Phone (optional)",
+      "contactByEmail": "Allow finders to contact me by email",
+      "showName": "Allow finders to see my name",
+      "contactByPhone": "Allow finders to contact me by phone",
+      "contactRequired": "Allow finders to contact you by email or phone, or both.",
+      "emailRequired": "Enter your email.",
+      "emailInvalid": "Enter a valid email address.",
+      "phoneRequired": "Enter your phone number to allow phone contact.",
+      "shippingAddress": "Shipping address",
+      "addressHelp": "Include street number, unit (optional), street, city, province, and country.",
+      "addressRequired": "Enter your shipping address.",
+      "allocationNote": "<strong>After delivery</strong>, you can assign your QR stickers to up to {profiles, number} people, including you.",
+      "allocationUnlimited": "<strong>After delivery</strong>, you can assign your QR stickers to an unlimited number of people.",
+      "learnHow": "Click here to see how",
+      "pay": "Secure Checkout",
+      "submitting": "Submitting…",
+      "submitError": "Unable to submit your order. Please try again."
+    },
+    "orderReceived": {
+      "title": "Order received",
+      "description": "We're processing your order and we'll get back to you soon.",
+      "goHome": "Go Home",
+      "trackDelivery": "Track Delivery"
+    },
+    "allocation": {
+      "title": "How many of each variant?",
+      "description": "Split your stickers between the selected variants. We start with an equal share; you can adjust the quantities within your plan limit.",
+      "total": "{total, number} of {limit, number} stickers allocated",
+      "overLimit": "Your total cannot exceed {limit, number} stickers.",
+      "invalid": "Enter a whole number of zero or more for each variant."
+    },
+    "variants": {
+      "title": "Where do you want to stick them?",
+      "description": "Choose the sticker variants that suit your belongings. You can select more than one.",
+      "everyday": {
+        "title": "Everyday items",
+        "description": "Laptops, phones, tablets, water bottles, keys, bikes, luggage and more.",
+        "alt": "Findee QR sticker on a laptop"
+      },
+      "tough": {
+        "title": "Toughs",
+        "description": "Tools, toolboxes, outdoor gear, sports equipment, bikes, helmets and more.",
+        "alt": "Findee QR tag attached to keys"
+      },
+      "fabric": {
+        "title": "Fabrics",
+        "description": "Clothes, backpacks, hats, school uniforms, fabric bags and more.",
+        "alt": "Findee QR sticker on a backpack"
+      }
+    }
+  },
   "recovery": {
     "title": "Kindly contact the owner",
     "unreachableGuidance": "If you cannot reach the owner, contact your local police station for help returning this item.",

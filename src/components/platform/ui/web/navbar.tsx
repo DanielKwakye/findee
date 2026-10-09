@@ -10,21 +10,23 @@ import AppIcon from "@/components/platform/ui/shared/app-icon";
 import { cn } from "@/lib/utils";
 
 /** Renders navigation for the web platform layout. */
-export default function WebNavbar() {
+export default function WebNavbar({ appearance = "overlay", showGetStarted = true }: { appearance?: "overlay" | "solid" | "primary"; showGetStarted?: boolean }) {
   const { isScrolled } = useNavbarWeb();
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 hidden h-16 border-b transition-[background-color,color,border-color,box-shadow] duration-500 ease-in-out xl:block",
-        isScrolled
+        appearance === "primary"
+          ? "border-primary bg-primary text-primary-foreground shadow-sm"
+          : isScrolled || appearance === "solid"
           ? "border-border bg-background text-foreground shadow-sm"
           : "border-transparent bg-transparent text-background shadow-none",
       )}
     >
       <nav aria-label="Primary navigation" className="container mx-auto flex h-full items-center justify-between gap-8 px-6">
         <Link href="/" aria-label="Findee home" className="shrink-0">
-          <AppIcon brightness={isScrolled ? "dark" : "light"} size="compact" />
+          <AppIcon brightness={appearance === "primary" ? "primary" : isScrolled || appearance === "solid" ? "dark" : "light"} size="compact" />
         </Link>
 
         <div className="flex items-center gap-7">
@@ -39,9 +41,9 @@ export default function WebNavbar() {
           <Link href="#cart" aria-label="Cart" className="transition-opacity hover:opacity-70">
             <ShoppingCart aria-hidden="true" className="size-4.5" strokeWidth={1.8} />
           </Link>
-          <Button render={<Link href="#get-started" />} nativeButton={false}>
+          {showGetStarted && <Button variant={appearance === "primary" ? "secondary" : "default"} render={<Link href="/checkout" />} nativeButton={false}>
             <TypographyBody className="text-sm">Get Started</TypographyBody>
-          </Button>
+          </Button>}
         </div>
       </nav>
     </header>
