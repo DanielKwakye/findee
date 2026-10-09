@@ -24,8 +24,8 @@ export async function getProducts(params: ProductQuery) {
         {order: {is: {number: {contains: search, mode: "insensitive" as const}}}},
         ]} : {}),
     };
-    const sortBy = productSortFields.find(field => field === params.sortBy) ?? "code";
-    const direction = params.direction === "desc" ? "desc" as const : "asc" as const;
+    const sortBy = productSortFields.find(field => field === params.sortBy) ?? "createdAt";
+    const direction = params.direction === "asc" ? "asc" as const : "desc" as const;
     const total = await db.product.count({where});
     const page = Math.min(params.page, Math.max(1, Math.ceil(total / params.pageSize)));
     const products = await db.product.findMany({

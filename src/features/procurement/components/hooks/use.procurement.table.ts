@@ -3,7 +3,8 @@
 import {useMemo, useRef, useState} from "react";
 import {useForm} from "react-hook-form";
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useFormatter, useTranslations} from "next-intl";
+import {useTranslations} from "next-intl";
+import {useUserDateTime} from "@/components/platform";
 import type {SortingState} from "@tanstack/react-table";
 import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
 import {getProcurementProducts} from "@/features/procurement/server/get.procurement.products.action";
@@ -12,12 +13,13 @@ import {updateProcurementStatus} from "@/features/procurement/server/update.proc
 import type {ProcurementMutation, ProcurementStatusValues} from "@/features/procurement/utils/procurement.types";
 import {getProcurementColumns} from "@/features/procurement/utils/procurement.columns";
 import {downloadProcurementCsv} from "@/features/procurement/utils/procurement.csv";
+import {getProcurementRecoveryUrls} from "@/features/procurement/server/get.procurement.recovery.urls.action";
 import type {ProductVariantFilterValue} from "@/features/products/utils/product.types";
 
 /** Manages procurement inventory requests, table controls, and selected products. */
 export function useProcurementTable() {
     const t = useTranslations("procurement");
-    const format = useFormatter();
+    const formatDateTime = useUserDateTime();
     const queryClient = useQueryClient();
     const confirmRef = useRef<PortalConfirmDialogHandle>(null);
     const statusForm = useForm<ProcurementStatusValues>({defaultValues: {status: "inactive"}});
@@ -30,8 +32,8 @@ export function useProcurementTable() {
         queryKey: ["procurement", pagination, search, sorting, variant],
         queryFn: () => getProcurementProducts({
             ...pagination, search, variant,
-            sortBy: sorting[0]?.id === "published" || sorting[0]?.id === "createdAt" || sorting[0]?.id === "procurementStatus" ? sorting[0].id : "code",
-            direction: sorting[0]?.desc ? "desc" : "asc",
+            sortBy: sorting[0] ? (sorting[0].id === "published" || sorting[0].id === "createdAt" || sorting[0].id === "procurementStatus" ? sorting[0].id : "code") : "createdAt",
+            direction: !sorting[0] || sorting[0].desc ? "desc" : "asc",
         }),
         placeholderData: keepPreviousData,
     });
@@ -56,12 +58,27 @@ export function useProcurementTable() {
             ]);
         },
     });
-    const columns = useMemo(() => getProcurementColumns({code: t("code"), published: t("published"), procurementStatus: t("procurementStatus"), inactive: t("inactive"), requested: t("requested"), received: t("received"), createdAt: t("createdAt"), yes: t("yes"), no: t("no")},
-        date => format.dateTime(date, {year: "numeric", month: "short", day: "numeric"})), [t, format]);
+    const columns = useMemo(() => getProcurementColumns({code: t("code"),
+            published: t("published"),
+            procurementStatus: t("procurementStatus"),
+            inactive: t("inactive"),
+            requested: t("requested"),
+            received: t("received"),
+            createdAt: t("createdAt"),
+            yes: t("yes"),
+            no: t("no")
+        }, formatDateTime), [t, formatDateTime]);
 
-    /** Exports selected QR codes across inventory pages. */
+    const downloadMutation = useMutation({
+        mutationFn: getProcurementRecoveryUrls,
+        retry: false,
+        onSuccess: urls => downloadProcurementCsv(urls, t("csvHeading"), t("csvFilename")),
+    });
+
+    /** Exports selected recovery links across inventory pages. */
     function downloadSelected() {
-        downloadProcurementCsv(selectedCodes, t("csvHeading"), t("csvFilename"));
+        if (!selectedCodes.length || downloadMutation.isPending) return;
+        downloadMutation.mutate([...selectedCodes]);
     }
 
     /** Applies the chosen procurement status to the current selection. */
@@ -86,5 +103,5 @@ export function useProcurementTable() {
     return {t, query, mutation, columns, rowSelection, setRowSelection, selectedCount: selectedCodes.length,
         pagination: {...pagination, page: query.isPlaceholderData ? pagination.page : query.data?.page ?? pagination.page, total: query.data?.total ?? 0},
         setPagination, search, setSearch, setSorting, downloadSelected, updateSelected, confirmRef, variant, changeVariant,
-        statusForm, updateSelectedStatus};
+        statusForm, updateSelectedStatus, downloadMutation};
 }

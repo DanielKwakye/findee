@@ -1,4 +1,22 @@
 {
+  "recovery": {
+    "title": "Kindly contact the owner",
+    "unreachableGuidance": "If you cannot reach the owner, contact your local police station for help returning this item.",
+    "eyebrow": "Found an item? 🎉",
+    "home": "Findee home",
+    "ownerLabel": "This item belongs to",
+    "ownerFallback": "A Findee owner",
+    "description": "Contact the owner to help return this item.",
+    "loading": "Looking up this recovery code…",
+    "notFound": "No record found for the given recovery code.",
+    "error": "Unable to load recovery details. Please try again.",
+    "retry": "Try again",
+    "owner": "Owner: {name}",
+    "email": "Email: {email}",
+    "phone": "Phone: {phone}",
+    "chatEnabled": "Chat is enabled for this item.",
+    "noContact": "No contact methods are available for this item."
+  },
   "Auth": {
     "admin": "Admin",
     "title": "Login to your account",
@@ -70,7 +88,8 @@
     "deleteConfirmTitle": "Delete selected products?",
     "deleteConfirmDescription": "Permanently delete {count, plural, one {this product} other {these # products}}? This cannot be undone.",
     "downloadSelected": "Download CSV",
-    "csvHeading": "QR",
+    "csvHeading": "QR Code",
+    "downloadError": "Unable to download recovery links. Please try again.",
     "csvFilename": "findee-qrs.csv",
     "actionError": "Unable to update selected products. Please try again.",
     "yes": "Yes",

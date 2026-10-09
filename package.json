@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "gen": "prisma generate",
+    "codes:normalize": "tsx prisma/normalize.product.codes.ts",
     "seed": "prisma db seed",
+    "seed:recovery": "tsx prisma/seed.recovery.ts",
     "seed:prod": "DOTENV_CONFIG_PATH=.env.prod prisma db seed",
     "start": "next start",
     "lint": "eslint"

@@ -2,7 +2,8 @@
 
 import {useMemo, useRef, useState} from "react";
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useFormatter, useTranslations} from "next-intl";
+import {useTranslations} from "next-intl";
+import {useUserDateTime} from "@/components/platform";
 import type {SortingState} from "@tanstack/react-table";
 import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
 import {getProducts} from "@/features/products/server/get.products.action";
@@ -14,7 +15,7 @@ import type {ProductVariantFilterValue} from "@/features/products/utils/product.
 export function useProductsTable() {
     const t = useTranslations("products");
     const variants = useTranslations("procurement.generation");
-    const format = useFormatter();
+    const formatDateTime = useUserDateTime();
     const queryClient = useQueryClient();
     const confirmRef = useRef<PortalConfirmDialogHandle>(null);
     const [rowSelection, setRowSelection] = useState<PortalTableRowSelection>({});
@@ -24,7 +25,7 @@ export function useProductsTable() {
     const [variant, setVariant] = useState<ProductVariantFilterValue>("all");
     const query = useQuery({
         queryKey: ["products", pagination, search, sorting, variant],
-        queryFn: () => getProducts({...pagination, search, variant, sortBy: sorting[0]?.id ?? "code", direction: sorting[0]?.desc ? "desc" : "asc"}),
+        queryFn: () => getProducts({...pagination, search, variant, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc"}),
         placeholderData: keepPreviousData,
     });
     const mutation = useMutation({
@@ -60,8 +61,8 @@ export function useProductsTable() {
         reservedBy: t("reservedBy"), reservedAt: t("reservedAt"), assignedTo: t("assignedTo"), assignedAt: t("assignedAt"),
         order: t("order"), createdAt: t("createdAt"), yes: t("yes"), no: t("no"), unset: t("unset"), none: t("none"),
         phone: t("phone"), email: t("email"), chat: t("chat"),
-    }, date => format.dateTime(date, {year: "numeric", month: "short", day: "numeric"}),
-    {Everyday: variants("Everyday"), Fabric: variants("Fabric"), Tough: variants("Tough")}), [t, variants, format]);
+    }, formatDateTime,
+    {Everyday: variants("Everyday"), Fabric: variants("Fabric"), Tough: variants("Tough")}), [t, variants, formatDateTime]);
     return {t, query, mutation, columns, search, setSearch, setSorting, setPagination, confirmRef, requestDelete,
         rowSelection, setRowSelection, selectedCount: selectedCodes.length, variant, changeVariant,
         pagination: {...pagination, page: query.isPlaceholderData ? pagination.page : query.data?.page ?? pagination.page, total: query.data?.total ?? 0}};

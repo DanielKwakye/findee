@@ -3,6 +3,7 @@
 import { ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
+import {usePortalNavigation} from "@/components/platform/hooks/use.portal.navigation"
 import TypographyBody from "@/components/core/ui/typography-body"
 import type { PortalInventoryItem } from "@/components/platform/data/portal.sidebar.menuItems"
 
@@ -29,6 +30,7 @@ export function PortalNavMain({
     items: PortalInventoryItem[]
 }) {
     const t = useTranslations("PortalNavigation")
+    const {isActive} = usePortalNavigation()
 
     return (
         <SidebarGroup>
@@ -39,13 +41,13 @@ export function PortalNavMain({
                 {items.map((item) => (
                     item.items?.length ? <Collapsible
                         key={item.title}
-                        defaultOpen={item.isActive}
+                        defaultOpen={item.isActive || isActive(item.url) || item.items.some(subItem => isActive(subItem.url))}
                         className="group/collapsible"
                         render={
                             <SidebarMenuItem>
                                 <CollapsibleTrigger
                                     render={
-                                        <SidebarMenuButton tooltip={t(item.title)}>
+                                        <SidebarMenuButton tooltip={t(item.title)} isActive={isActive(item.url) || item.items?.some(subItem => isActive(subItem.url))}>
                                             {item.icon && <item.icon />}
                                             <TypographyBody className="text-sm">{t(item.title)}</TypographyBody>
                                             <ChevronRight className="ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90" />
@@ -57,8 +59,9 @@ export function PortalNavMain({
                                         {item.items?.map((subItem) => (
                                             <SidebarMenuSubItem key={subItem.title}>
                                                 <SidebarMenuSubButton
+                                                    isActive={isActive(subItem.url)}
                                                     render={
-                                                        <Link href={subItem.url}>
+                                                        <Link href={subItem.url} aria-current={isActive(subItem.url) ? "page" : undefined}>
                                                             <TypographyBody className="text-sm">{t(subItem.title)}</TypographyBody>
                                                         </Link>
                                                     }
@@ -72,9 +75,10 @@ export function PortalNavMain({
                     /> : (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton
+                                isActive={isActive(item.url)}
                                 tooltip={t(item.title)}
                                 render={
-                                    <Link href={item.url}>
+                                    <Link href={item.url} aria-current={isActive(item.url) ? "page" : undefined}>
                                         <item.icon />
                                         <TypographyBody className="text-sm">{t(item.title)}</TypographyBody>
                                     </Link>

@@ -12,7 +12,7 @@ import ProductVariantFilter from "@/features/products/components/ui/product-vari
 
 /** Presents product procurement inventory and its multi-selection controls. */
 export default function ProcurementTable() {
-    const {t, query, mutation, columns, rowSelection, setRowSelection, selectedCount, pagination, setPagination, search, setSearch, setSorting, downloadSelected, updateSelected, confirmRef, variant, changeVariant, statusForm, updateSelectedStatus} = useProcurementTable();
+    const {t, query, mutation, columns, rowSelection, setRowSelection, selectedCount, pagination, setPagination, search, setSearch, setSorting, downloadSelected, updateSelected, confirmRef, variant, changeVariant, statusForm, updateSelectedStatus, downloadMutation} = useProcurementTable();
     return (
         <div className="min-w-0 space-y-4">
             {query.isError && (
@@ -26,6 +26,11 @@ export default function ProcurementTable() {
             {mutation.isError && (
                 <div role="alert">
                     <TypographyBody className="text-sm text-destructive">{t("actionError")}</TypographyBody>
+                </div>
+            )}
+            {downloadMutation.isError && (
+                <div role="alert">
+                    <TypographyBody className="text-sm text-destructive">{t("downloadError")}</TypographyBody>
                 </div>
             )}
             <PortalTable data={query.data?.products ?? []} columns={columns}
@@ -52,7 +57,7 @@ export default function ProcurementTable() {
                                 <TypographyBody className="text-sm">{t("updateStatus")}</TypographyBody>
                             </Button>
                         </form>
-                        <Button type="button" variant="outline" disabled={query.isFetching || mutation.isPending} onClick={downloadSelected}>
+                        <Button type="button" variant="outline" disabled={query.isFetching || mutation.isPending || downloadMutation.isPending} onClick={downloadSelected}>
                             <TypographyBody className="text-sm">{t("downloadSelected")}</TypographyBody>
                         </Button>
                         <Button type="button" variant="outline" disabled={query.isFetching || mutation.isPending} onClick={() => updateSelected("publish")}>

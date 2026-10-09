@@ -3,6 +3,7 @@
 import { type LucideIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
+import {usePortalNavigation} from "@/components/platform/hooks/use.portal.navigation"
 import TypographyBody from "@/components/core/ui/typography-body"
 import {
     SidebarGroup,
@@ -23,6 +24,7 @@ export function PortalNavProjects({
     }[]
 }) {
     const t = useTranslations("PortalNavigation")
+    const {isActive} = usePortalNavigation()
 
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -33,8 +35,9 @@ export function PortalNavProjects({
                 {projects.map((item) => (
                     <SidebarMenuItem key={item.name}>
                         <SidebarMenuButton
+                            isActive={isActive(item.url)}
                             render={
-                                <Link href={item.url}>
+                                <Link href={item.url} aria-current={isActive(item.url) ? "page" : undefined}>
                                     <item.icon />
                                     <TypographyBody className="text-sm">{t(item.name)}</TypographyBody>
                                 </Link>
