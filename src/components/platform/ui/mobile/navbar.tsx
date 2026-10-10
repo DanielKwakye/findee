@@ -1,22 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/core/ui/tabs";
 import TypographyBody from "@/components/core/ui/typography-body";
 import { mobileNavbarMenuItems } from "@/components/platform/data/mobile.navbar.menuItems";
 import { useNavbarMobile } from "@/components/platform/hooks/use.navbar";
 import AppIcon from "@/components/platform/ui/shared/app-icon";
+import NavbarAccount from "@/components/platform/ui/shared/navbar-account";
 import { cn } from "@/lib/utils";
 
 type MobileNavbarProps = {
-  cartCount?: number;
   appearance?: "overlay" | "solid" | "primary";
 };
 
 /** Renders navigation for the mobile platform layout. */
-export default function MobileNavbar({ cartCount = 2, appearance = "overlay" }: MobileNavbarProps) {
-  const { showCartCount, cartLabel, activeTab } = useNavbarMobile(cartCount);
+export default function MobileNavbar({ appearance = "overlay" }: MobileNavbarProps) {
+  const { activeTab, showAccount } = useNavbarMobile();
 
   return (
     <>
@@ -24,14 +23,7 @@ export default function MobileNavbar({ cartCount = 2, appearance = "overlay" }: 
         <Link href="/" aria-label="Findee home">
           <AppIcon brightness={appearance === "solid" ? "dark" : "light"} size="compact" showName={false} />
         </Link>
-        <Link href="#cart" aria-label={`Cart, ${cartCount} items`} className="relative p-1.5">
-          <ShoppingCart aria-hidden="true" className="size-5" strokeWidth={1.8} />
-          {showCartCount && (
-            <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-background">
-              <TypographyBody className="text-[10px] leading-none font-semibold">{cartLabel}</TypographyBody>
-            </span>
-          )}
-        </Link>
+        {showAccount && <NavbarAccount />}
       </header>
 
       <nav

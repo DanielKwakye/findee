@@ -10,7 +10,7 @@ export const getAuthenticatedUser = cache(async () => {
     if (!session?.user?.id || !/^[a-f\d]{24}$/i.test(session.user.id)) return null;
     return db.user.findUnique({
         where: { id: session.user.id },
-        select: { id: true, email: true, name: true, role: true },
+        select: { id: true, email: true, name: true, phone: true, role: true },
     });
 });
 

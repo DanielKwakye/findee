@@ -13,14 +13,14 @@ type Props = {
     onBack: () => void;
     onContinue: () => void;
     continueDisabled?: boolean;
+    hideContinue?: boolean;
     children: ReactNode;
     introduction?: ReactNode;
     finalAction?: ReactNode;
-    scrollContent?: boolean;
 };
 
 /** Presents a reusable segmented step flow with content and navigation controls. */
-export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisabled = false, children, introduction, finalAction, scrollContent = false }: Props) {
+export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisabled = false, hideContinue = false, children, introduction, finalAction }: Props) {
     const t = useTranslations("Stepper");
 
     return (
@@ -29,7 +29,7 @@ export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisab
                 <ol aria-label={t("progress")} className="flex gap-2 sm:gap-3">
                     {steps.map((step, index) => (
                         <li key={step.id} aria-current={index === currentIndex ? "step" : undefined}
-                            className={cn("h-2 flex-1 rounded-full", index <= currentIndex ? "bg-primary" : "bg-muted")}>
+                            className={cn("h-1 flex-1 rounded-full", index <= currentIndex ? "bg-primary" : "bg-muted")}>
                             <TypographyBody className="sr-only">{step.label}</TypographyBody>
                         </li>
                     ))}
@@ -41,21 +41,17 @@ export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisab
                 </div>
             </div>
             <div className={cn("grid gap-4 sm:gap-6", introduction && "xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] xl:gap-8")}>
-                {introduction && <div className="space-y-4 xl:space-y-6 xl:pr-6">{introduction}</div>}
+                {introduction && <div className="space-y-4 xl:space-y-6">{introduction}</div>}
                 <div className={cn("space-y-4 sm:space-y-6", introduction && "xl:border-l xl:border-border xl:pl-8")}>
-                    {scrollContent ? (
-                        <div className="xl:max-h-[calc(100svh-18rem)] xl:overflow-y-auto xl:px-1 xl:py-1">
-                            {children}
-                        </div>
-                    ) : children}
+                    {children}
                     <div className="flex justify-between gap-4">
                 <Button type="button" variant="secondary" size="lg" disabled={currentIndex === 0} onClick={() => onBack()}>
                     <TypographyBody className="text-sm sm:text-base xl:text-sm">{t("back")}</TypographyBody>
                 </Button>
-                {currentIndex === steps.length - 1 && finalAction ? finalAction : <Button type="button" size="lg" disabled={continueDisabled || currentIndex === steps.length - 1} onClick={() => onContinue()}>
+                {!hideContinue && (currentIndex === steps.length - 1 && finalAction ? finalAction : <Button type="button" size="lg" disabled={continueDisabled || currentIndex === steps.length - 1} onClick={() => onContinue()}>
                     <TypographyBody className="text-sm sm:text-base xl:text-sm">{t("continue")}</TypographyBody>
                     <ArrowRight aria-hidden="true" data-icon="inline-end" />
-                </Button>}
+                </Button>)}
                     </div>
                 </div>
             </div>

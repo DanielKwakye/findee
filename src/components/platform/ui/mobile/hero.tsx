@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
@@ -26,7 +27,8 @@ export default function MobileHero() {
           {t("mobileSubtitle")}
         </TypographyParagraph>
         <Button
-          type="button"
+          render={<Link href="/checkout" />}
+          nativeButton={false}
           className="mt-8 h-12 w-full max-w-72 gap-3 bg-destructive text-primary-foreground hover:bg-destructive/90"
         >
           <TypographyBody className="text-sm font-semibold">{t("getYourStickers")}</TypographyBody>

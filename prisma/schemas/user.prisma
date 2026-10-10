@@ -4,6 +4,8 @@ model User {
   phone String?
   name  String?
   passwordHash String?
+  otp String?
+  otpCreatedAt DateTime?
   role UserRole @default(CUSTOMER)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt

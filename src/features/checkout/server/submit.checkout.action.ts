@@ -1,43 +1,61 @@
 "use server";
 
 import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
-import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
+import { validateCheckoutValues, validateCheckoutAllocation } from "@/features/checkout/utils/checkout.validations";
 import type { CheckoutValues } from "@/features/checkout/utils/checkout.types";
+import { getCustomerUser } from "@/features/auth/server/auth.session";
+import { db } from "@/lib/db";
+import { Prisma } from "@/generated/client";
+import { generateReferenceCode } from "@/components/platform/utils/reference.code.utils";
+import { checkoutOrderPlans } from "@/features/checkout/data/checkout.order.plans";
 
 /** Validates and records submitted checkout information for order processing. */
 export async function submitCheckout(values: CheckoutValues): Promise<string> {
-    if (!values || !Array.isArray(values.variants) || values.variants.length === 0
-        || new Set(values.variants).size !== values.variants.length
-        || values.variants.some(variant => !checkoutVariants.some(option => option.id === variant))
-        || !values.allocation || typeof values.allocation !== "object"
-        || typeof values.email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)
-        || typeof values.name !== "string" || typeof values.phone !== "string"
-        || typeof values.shippingAddress !== "string" || !values.shippingAddress.trim()
-        || typeof values.contactByEmail !== "boolean" || typeof values.contactByPhone !== "boolean"
-        || typeof values.showName !== "boolean" || (!values.contactByEmail && !values.contactByPhone)
-        || (values.contactByPhone && !values.phone.trim())) {
-        throw new Error("Invalid checkout information");
-    }
+    const customer = await getCustomerUser();
+    if (!customer) throw new Error("Customer authentication required");
+    validateCheckoutValues(values);
     const plans = await getCheckoutPlans();
-    const plan = plans.find(plan => plan.id === values.plan);
-    const quantities = values.variants.map(variant => values.allocation[variant]);
-    if (!plan || quantities.some(quantity => typeof quantity !== "number" || !Number.isSafeInteger(quantity) || quantity < 0)
-        || quantities.reduce<number>((total, quantity) => total + Number(quantity), 0) > plan.quantity) {
-        throw new Error("Invalid sticker allocation");
-    }
+    const plan = validateCheckoutAllocation(values, plans);
 
-    const submission = {
-        plan,
-        variants: values.variants,
-        allocation: Object.fromEntries(values.variants.map(variant => [variant, values.allocation[variant]])),
-        email: values.email,
-        name: values.name,
-        phone: values.phone,
-        contactByEmail: values.contactByEmail,
-        contactByPhone: values.contactByPhone,
-        showName: values.showName,
-        shippingAddress: values.shippingAddress,
-    };
-    console.log("Checkout submitted:", JSON.stringify(submission, null, 2));
-    return "https://www.google.com/";
+    const name = values.name.trim();
+    const phone = values.phone.trim();
+    for (let attempt = 0; attempt < 5; attempt++) {
+        try {
+            const order = await db.$transaction(async transaction => {
+                if (name || phone) {
+                    await transaction.user.update({
+                        where: { id: customer.id },
+                        data: { ...(name ? { name } : {}), ...(phone ? { phone } : {}) },
+                        select: { id: true },
+                    });
+                }
+                return transaction.order.create({
+                    data: {
+                        number: generateReferenceCode(),
+                        customerId: customer.id,
+                        planDetail: {
+                            plan: checkoutOrderPlans[plan.id],
+                            quantity: plan.quantity,
+                            price: plan.price,
+                            currency: plan.currency,
+                            maxRecoveryProfiles: plan.maxRecoveryProfiles,
+                            allocations: values.variants.map(variant => ({ variant, quantity: Number(values.allocation[variant]) })),
+                        },
+                        defaultReachoutModes: { email: values.contactByEmail, phone: values.contactByPhone, chat: false },
+                        showOwnerName: values.showName,
+                        shippingAddress: values.shippingAddress.trim(),
+                        deliveryInstructions: values.deliveryInstructions.trim() || null,
+                        cancelledAt: null,
+                        cancellationReason: null,
+                        completedAt: null,
+                    },
+                    select: { number: true },
+                });
+            });
+            return order.number;
+        } catch (error) {
+            if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") throw error;
+        }
+    }
+    throw new Error("Unable to generate a unique order number. Please try again.");
 }

@@ -29,7 +29,12 @@
       "variants": "Variants",
       "plan": "Plan",
       "allocation": "Allocation",
+      "verification": "Verification",
       "checkout": "Checkout"
+    },
+    "verification": {
+      "title": "Verify your email",
+      "description": "Sign in or create your customer account to continue checkout."
     },
     "details": {
       "title": "Checkout",
@@ -45,6 +50,7 @@
       "emailInvalid": "Enter a valid email address.",
       "phoneRequired": "Enter your phone number to allow phone contact.",
       "shippingAddress": "Shipping address",
+      "deliveryInstructions": "Delivery instructions (optional)",
       "addressHelp": "Include street number, unit (optional), street, city, province, and country.",
       "addressRequired": "Enter your shipping address.",
       "allocationNote": "<strong>After delivery</strong>, you can assign your QR stickers to up to {profiles, number} people, including you.",
@@ -56,7 +62,7 @@
     },
     "orderReceived": {
       "title": "Order received",
-      "description": "We're processing your order and we'll get back to you soon.",
+      "description": "Thank you for the order. We're processing your order and we'll get back to you soon.",
       "goHome": "Go Home",
       "trackDelivery": "Track Delivery"
     },
@@ -64,6 +70,10 @@
       "title": "How many of each variant?",
       "description": "Split your stickers between the selected variants. We start with an equal share; you can adjust the quantities within your plan limit.",
       "total": "{total, number} of {limit, number} stickers allocated",
+      "minimumTotal": "{total, number} stickers allocated · Minimum {limit, number}",
+      "remaining": "You have {limit, number} stickers. Allocate the remaining {remaining, number} to continue.",
+      "minimumRemaining": "Your plan requires at least {limit, number} stickers. Allocate {remaining, number} more to continue.",
+      "excess": "You have {limit, number} stickers. Reduce your allocation by {excess, number} to continue.",
       "overLimit": "Your total cannot exceed {limit, number} stickers.",
       "invalid": "Enter a whole number of zero or more for each variant."
     },
@@ -106,6 +116,21 @@
     "noContact": "No contact methods are available for this item."
   },
   "Auth": {
+    "customerOtp": {
+      "email": "Email",
+      "emailRequired": "Enter your email.",
+      "emailInvalid": "Enter a valid email address.",
+      "code": "Verification code",
+      "codeSent": "A verification code has been sent to your email. Kindly check your email and enter the code below.",
+      "codeInvalid": "The verification code is invalid. Please try again.",
+      "verificationFailed": "Unable to sign in with this email. Please use a customer email.",
+      "serverError": "Unable to complete verification. Please try again.",
+      "send": "Send verification code",
+      "sending": "Sending…",
+      "verify": "Verify email",
+      "verifying": "Verifying…",
+      "resend": "Resend OTP"
+    },
     "admin": "Admin",
     "title": "Login to your account",
     "description": "Enter your email below to login to your account",
@@ -115,6 +140,7 @@
     "login": "Login",
     "loggingIn": "Logging in…",
     "logout": "Log out",
+    "account": "Account",
     "loggingOut": "Logging out…",
     "logoutError": "Unable to log out. Please try again.",
     "emailRequired": "Enter your email.",

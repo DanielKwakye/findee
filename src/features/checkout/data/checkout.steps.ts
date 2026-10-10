@@ -4,5 +4,6 @@ export const checkoutStepper = defineStepper([
     { id: "variants" },
     { id: "plan" },
     { id: "allocation" },
+    { id: "verification" },
     { id: "checkout" },
 ]);

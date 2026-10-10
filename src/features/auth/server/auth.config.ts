@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authenticateCredentials } from "@/features/auth/server/auth.service";
+import { authenticateCustomerOtp } from "@/features/auth/server/auth.customer";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     pages: { signIn: "/login" },
@@ -8,6 +9,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     providers: [Credentials({
         credentials: { email: { type: "email" }, password: { type: "password" } },
         authorize: authenticateCredentials,
+    }), Credentials({
+        id: "customer-otp",
+        credentials: { email: { type: "email" }, code: { type: "text" } },
+        authorize: authenticateCustomerOtp,
     })],
     callbacks: {
         /** Carries the authenticated account identity into the encrypted session token. */

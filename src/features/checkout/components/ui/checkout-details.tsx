@@ -5,6 +5,7 @@ import { Controller, type UseFormRegisterReturn, type UseFormReturn } from "reac
 import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/core/ui/checkbox";
 import { Input } from "@/components/core/ui/input";
+import { Textarea } from "@/components/core/ui/textarea";
 import { Field, FieldLabel } from "@/components/core/ui/field";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
@@ -31,7 +32,7 @@ export default function CheckoutDetails({ form, contactInputs, shippingInput, ma
             {checkoutContactFields.map(input => (
                 <Field key={input.name} className="gap-2">
                     <FieldLabel htmlFor={`checkout-${input.name}`}><TypographyBody className="text-sm">{t(input.name)}</TypographyBody></FieldLabel>
-                    <Input id={`checkout-${input.name}`} type={input.type} autoComplete={input.autoComplete}
+                    <Input id={`checkout-${input.name}`} type={input.type} autoComplete={input.autoComplete} readOnly={input.name === "email"}
                         {...contactInputs[input.name]} aria-invalid={!!errors[input.name]} aria-describedby={errors[input.name] ? `checkout-${input.name}-error` : undefined} />
                     {errors[input.name] && <div id={`checkout-${input.name}-error`} role="alert"><TypographyParagraph className="text-xs text-destructive">{errors[input.name]?.message}</TypographyParagraph></div>}
                     <Controller name={input.toggle} control={form.control} render={({ field }) => (
@@ -61,6 +62,10 @@ export default function CheckoutDetails({ form, contactInputs, shippingInput, ma
                 <div id="checkout-address-error" role={errors.shippingAddress ? "alert" : undefined}>
                     {errors.shippingAddress && <TypographyParagraph className="text-xs text-destructive">{errors.shippingAddress.message}</TypographyParagraph>}
                 </div>
+            </Field>
+            <Field className="gap-2">
+                <FieldLabel htmlFor="checkout-delivery-instructions"><TypographyBody className="text-sm">{t("deliveryInstructions")}</TypographyBody></FieldLabel>
+                <Textarea id="checkout-delivery-instructions" rows={4} className="field-sizing-fixed" {...form.register("deliveryInstructions")} />
             </Field>
             {submitError && <div role="alert"><TypographyParagraph className="text-xs text-destructive">{t("submitError")}</TypographyParagraph></div>}
         </fieldset>

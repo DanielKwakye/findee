@@ -4,11 +4,11 @@ model Order {
   customerId           String               @db.ObjectId
   customer             User                 @relation(fields: [customerId], references: [id])
   status               OrderStatus          @default(PENDING)
-  plan                 OrderPlan
   planDetail           PlanDetail
   products             Product[]
   defaultReachoutModes  ReachoutModes
-  shippingAddress      ShippingAddress
+  showOwnerName        Boolean              @default(false)
+  shippingAddress      String?
   deliveryInstructions String?
   shipments            Shipment[]
   cancelledAt          DateTime?
@@ -22,12 +22,18 @@ model Order {
 }
 
 type PlanDetail {
-  quantity               Int
+  plan                OrderPlan
+  quantity            Int
+  price               Float
+  currency            String
   /// Maximum distinct users assigned to products in this order.
-  maxRecoveryProfiles    Int
-  pricePerEverydayVariant Float
-  pricePerFabricVariant   Float
-  pricePerToughVariant    Float
+  maxRecoveryProfiles Int?
+  allocations         PlanVariantAllocation[]
+}
+
+type PlanVariantAllocation {
+  variant  String
+  quantity Int
 }
 
 type ReachoutModes {
@@ -36,17 +42,6 @@ type ReachoutModes {
   chat  Boolean @default(false)
 }
 
-type ShippingAddress {
-  recipientName String
-  email         String?
-  phone         String?
-  addressLine1  String
-  addressLine2  String?
-  city          String
-  region        String?
-  postalCode    String?
-  countryCode   String
-}
 
 enum OrderPlan {
   Starter

@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { CirclePlay } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
@@ -31,7 +32,7 @@ export default function WebHero() {
             {t("desktopSubtitle")}
           </TypographyParagraph>
           <div className="mt-7 flex flex-wrap gap-4">
-            <Button type="button" className="h-12 min-w-48 bg-destructive px-7 text-primary-foreground hover:bg-destructive/90">
+            <Button render={<Link href="/checkout" />} nativeButton={false} className="h-12 min-w-48 bg-destructive px-7 text-primary-foreground hover:bg-destructive/90">
               <TypographyBody className="text-sm font-semibold">{t("getYourStickers")}</TypographyBody>
             </Button>
             <Button type="button" variant="outline" className="h-12 gap-2 border-primary-foreground/60 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">

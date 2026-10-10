@@ -14,12 +14,13 @@ type Props = {
     variants: CheckoutVariant[];
     limit: number;
     total: number;
-    invalid: boolean;
-    overLimit: boolean;
+    error?: string;
+    quantityIsMinimum: boolean;
+    onQuantityKeyUp: () => void;
 };
 
 /** Presents sticker quantities and the allocation limit for a purchase. */
-export default function CheckoutAllocation({ control, variants, limit, total, invalid, overLimit }: Props) {
+export default function CheckoutAllocation({ control, variants, limit, total, error, quantityIsMinimum, onQuantityKeyUp }: Props) {
     const t = useTranslations("Checkout");
 
     return (
@@ -31,20 +32,20 @@ export default function CheckoutAllocation({ control, variants, limit, total, in
                             <FieldLabel htmlFor={`allocation-${variant.id}`}>
                                 <TypographyBody className="text-sm">{t(`variants.${variant.key}.title`)}</TypographyBody>
                             </FieldLabel>
-                            <Input id={`allocation-${variant.id}`} type="number" inputMode="numeric" min={0} max={limit} step={1}
+                            <Input id={`allocation-${variant.id}`} type="number" inputMode="numeric" min={0} max={quantityIsMinimum ? undefined : limit} step={1}
                                 name={field.name} ref={field.ref} value={field.value ?? ""} onBlur={field.onBlur}
                                 onChange={event => field.onChange(event.target.value === "" ? "" : event.target.valueAsNumber)}
-                                aria-invalid={overLimit || invalid} aria-describedby="allocation-status" />
+                                onKeyUp={onQuantityKeyUp}
+                                aria-invalid={!!error} aria-describedby="allocation-status" />
                         </Field>
                     )} />
                 ))}
             </FieldGroup>
             <div id="allocation-status" aria-live="polite" className="space-y-2">
                 <TypographyParagraph className="text-xs text-muted-foreground">
-                    {t("allocation.total", { total: Number.isFinite(total) ? total : 0, limit })}
+                    {t(quantityIsMinimum ? "allocation.minimumTotal" : "allocation.total", { total: Number.isFinite(total) ? total : 0, limit })}
                 </TypographyParagraph>
-                {overLimit && <TypographyParagraph className="text-xs text-destructive">{t("allocation.overLimit", { limit })}</TypographyParagraph>}
-                {invalid && <TypographyParagraph className="text-xs text-destructive">{t("allocation.invalid")}</TypographyParagraph>}
+                {error && <div role="alert"><TypographyParagraph className="text-xs text-destructive">{error}</TypographyParagraph></div>}
             </div>
         </div>
     );

@@ -1,5 +1,11 @@
 import type { CheckoutVariant } from "@/features/checkout/data/checkout.variants";
 
+export type CheckoutCustomer = {
+    email: string;
+    name: string | null;
+    phone: string | null;
+};
+
 export type CheckoutPlan = {
     id: "personal" | "family" | "business";
     title: "Starter" | "Family" | "Business";
@@ -21,4 +27,5 @@ export type CheckoutValues = {
     showName: boolean;
     contactByPhone: boolean;
     shippingAddress: string;
+    deliveryInstructions: string;
 };

@@ -7,7 +7,7 @@ export default function OrderReceivedPage() {
         <>
             <MobileNavbar appearance="solid" />
             <WebNavbar appearance="primary" showGetStarted={false} />
-            <main className="flex min-h-svh items-center justify-center px-5 pt-24 pb-[calc(10rem+env(safe-area-inset-bottom))] sm:px-6 xl:pb-8">
+            <main className="flex min-h-svh items-start justify-center px-5 pt-24 pb-[calc(10rem+env(safe-area-inset-bottom))] sm:px-6 xl:pb-8">
                 <OrderReceived />
             </main>
         </>

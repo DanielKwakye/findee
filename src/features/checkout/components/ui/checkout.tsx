@@ -14,21 +14,23 @@ import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
 import CheckoutPlans from "@/features/checkout/components/ui/checkout-plans";
 import CheckoutAllocation from "@/features/checkout/components/ui/checkout-allocation";
 import CheckoutDetails from "@/features/checkout/components/ui/checkout-details";
+import { CustomerOtpForm } from "@/features/auth/components/ui/customer-otp-form";
+import type { CheckoutCustomer } from "@/features/checkout/utils/checkout.types";
 
 /** Renders the checkout steps and variant choices. */
-export default function Checkout() {
+export default function Checkout({ customer }: { customer: CheckoutCustomer | null }) {
     const { t, form, stepper, steps, currentIndex, continueDisabled, plansQuery, onContinue, onBack,
-        variants, plan, allocationTotal, allocationInvalid, allocationOverLimit,
-        contactInputs, shippingInput, contactMissing, submission, onPay } = useCheckout();
+        variants, plan, allocationTotal, allocationError, onAllocationKeyUp,
+        contactInputs, shippingInput, contactMissing, submission, onPay, onVerified } = useCheckout(customer);
 
     return (
         <Stepper steps={steps} currentIndex={currentIndex} onBack={onBack} onContinue={onContinue} continueDisabled={continueDisabled}
-            scrollContent
+            hideContinue={stepper.current.id === "verification"}
             finalAction={<Button type="button" size="lg" disabled={contactMissing || submission.isPending} onClick={onPay}><TypographyBody className="text-sm">{t(submission.isPending ? "details.submitting" : "details.pay")}</TypographyBody></Button>}
             introduction={(
                 <>
-                    <TypographyH3 className={stepper.current.id === "variants" ? "text-xl sm:text-2xl xl:text-xl" : "text-lg sm:text-xl xl:text-lg"}>{t(stepper.current.id === "variants" ? "variants.title" : stepper.current.id === "plan" ? "plans.title" : stepper.current.id === "allocation" ? "allocation.title" : "details.title")}</TypographyH3>
-                    <TypographyParagraph className={stepper.current.id === "variants" ? "hidden text-muted-foreground xl:block xl:text-sm" : "hidden text-xs leading-5 text-muted-foreground xl:block"}>{t(stepper.current.id === "variants" ? "variants.description" : stepper.current.id === "plan" ? "plans.description" : stepper.current.id === "allocation" ? "allocation.description" : "details.description")}</TypographyParagraph>
+                    <TypographyH3 className={stepper.current.id === "variants" ? "text-xl sm:text-2xl xl:text-xl" : "text-lg sm:text-xl xl:text-lg"}>{t(stepper.current.id === "variants" ? "variants.title" : stepper.current.id === "plan" ? "plans.title" : stepper.current.id === "allocation" ? "allocation.title" : stepper.current.id === "verification" ? "verification.title" : "details.title")}</TypographyH3>
+                    <TypographyParagraph className={stepper.current.id === "variants" ? "hidden text-muted-foreground xl:block xl:text-sm" : "hidden text-xs leading-5 text-muted-foreground xl:block"}>{t(stepper.current.id === "variants" ? "variants.description" : stepper.current.id === "plan" ? "plans.description" : stepper.current.id === "allocation" ? "allocation.description" : stepper.current.id === "verification" ? "verification.description" : "details.description")}</TypographyParagraph>
                 </>
             )}>
             {stepper.current.id === "variants" ? (
@@ -71,7 +73,9 @@ export default function Checkout() {
                 )
             ) : stepper.current.id === "allocation" ? (
                 <CheckoutAllocation control={form.control} variants={variants} limit={plan?.quantity ?? 0}
-                    total={allocationTotal} invalid={allocationInvalid} overLimit={allocationOverLimit} />
+                    total={allocationTotal} error={allocationError} quantityIsMinimum={!!plan?.quantityIsMinimum} onQuantityKeyUp={onAllocationKeyUp} />
+            ) : stepper.current.id === "verification" ? (
+                <CustomerOtpForm onVerified={onVerified} />
             ) : (
                 <CheckoutDetails form={form} contactInputs={contactInputs} shippingInput={shippingInput}
                     maxProfiles={plan?.maxRecoveryProfiles ?? null} contactMissing={contactMissing} isSubmitting={submission.isPending} submitError={submission.isError} />
