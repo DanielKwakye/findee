@@ -10,5 +10,5 @@ export function useNavbarAccount() {
     const t = useTranslations("Auth");
     const session = useQuery({ queryKey: ["auth", "session"], queryFn: getAuthSession });
     const logout = useLogout();
-    return { t, isAuthenticated: session.data?.isAuthenticated ?? false, session, logout };
+    return { t, isAuthenticated: !!session.data?.isAuthenticated && session.data.role === "CUSTOMER", session, logout };
 }

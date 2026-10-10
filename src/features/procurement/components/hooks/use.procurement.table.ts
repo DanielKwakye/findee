@@ -4,6 +4,7 @@ import {useMemo, useRef, useState} from "react";
 import {useForm} from "react-hook-form";
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
+import {toast} from "@/components/core/ui/toast";
 import {useUserDateTime} from "@/components/platform";
 import type {SortingState} from "@tanstack/react-table";
 import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
@@ -50,13 +51,15 @@ export function useProcurementTable() {
             : updateProcurementProducts(values.codes, values.action),
         retry: false,
         /** Synchronizes inventory and selection after a successful bulk action. */
-        async onSuccess() {
+        async onSuccess(_data, values) {
+            toast.add({title: t(`actionSuccess.${values.action}`), type: "success"});
             setRowSelection({});
             await Promise.all([
                 queryClient.invalidateQueries({queryKey: ["procurement"]}),
                 queryClient.invalidateQueries({queryKey: ["products"]}),
             ]);
         },
+        onError: () => { toast.add({title: t("actionError"), type: "error"}); },
     });
     const columns = useMemo(() => getProcurementColumns({code: t("code"),
             published: t("published"),
@@ -72,7 +75,11 @@ export function useProcurementTable() {
     const downloadMutation = useMutation({
         mutationFn: getProcurementRecoveryUrls,
         retry: false,
-        onSuccess: urls => downloadProcurementCsv(urls, t("csvHeading"), t("csvFilename")),
+        onSuccess: urls => {
+            downloadProcurementCsv(urls, t("csvHeading"), t("csvFilename"));
+            toast.add({title: t("downloadSuccess"), type: "success"});
+        },
+        onError: () => { toast.add({title: t("downloadError"), type: "error"}); },
     });
 
     /** Exports selected recovery links across inventory pages. */

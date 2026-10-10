@@ -59,9 +59,9 @@ export function PortalNavMain({
                                         {item.items?.map((subItem) => (
                                             <SidebarMenuSubItem key={subItem.title}>
                                                 <SidebarMenuSubButton
-                                                    isActive={isActive(subItem.url)}
+                                                    isActive={isActive(subItem.url, true)}
                                                     render={
-                                                        <Link href={subItem.url} aria-current={isActive(subItem.url) ? "page" : undefined}>
+                                                        <Link href={subItem.url} aria-current={isActive(subItem.url, true) ? "page" : undefined}>
                                                             <TypographyBody className="text-sm">{t(subItem.title)}</TypographyBody>
                                                         </Link>
                                                     }

@@ -6,8 +6,9 @@ import {
     ChevronsUpDown,
     CreditCard,
     LogOut,
-    Sparkles,
+    Globe,
 } from "lucide-react"
+import Link from "next/link";
 
 import {
     Avatar,
@@ -89,9 +90,9 @@ export function PortalNavUser({
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <Sparkles />
-                                Upgrade to Pro
+                            <DropdownMenuItem render={<Link href="/" />}>
+                                <Globe />
+                                <TypographyBody className="text-sm">{t("website")}</TypographyBody>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />

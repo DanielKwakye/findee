@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import {TooltipProvider} from "@/components/core/ui/tooltip";
 import {ReactNode} from "react";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { Toaster } from "@/components/core/ui/toast";
 
 const notoSansHeading = Noto_Sans({subsets:['latin'],variable:'--font-heading'});
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode } ) {
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
           <QueryProvider><TooltipProvider>{children}</TooltipProvider></QueryProvider>
+          <Toaster />
         </NextIntlClientProvider>
       </body>
     </html>

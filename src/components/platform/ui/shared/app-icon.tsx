@@ -28,7 +28,7 @@ export default function AppIcon({ brightness = "dark", size = "default", classNa
           brightness === "primary" ? "text-primary-foreground" : brightness === "light" ? "text-background" : "text-foreground",
         )}
       >
-        Findee
+        Findmus
       </TypographyBody>}
     </span>
   );

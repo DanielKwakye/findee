@@ -3,16 +3,8 @@ model Shipment {
   id                  String         @id @default(auto()) @map("_id") @db.ObjectId
   orderId             String         @db.ObjectId
   order               Order          @relation(fields: [orderId], references: [id])
-  productCodes        String[]
   carrier             String?
-  service             String?
   trackingNumber      String?
-  trackingUrl         String?
-  status              ShipmentStatus @default(PENDING)
-  shippedAt           DateTime?
-  estimatedDeliveryAt DateTime?
-  deliveredAt         DateTime?
-  receivedBy          String?
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
 

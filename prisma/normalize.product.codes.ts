@@ -14,16 +14,9 @@ async function normalizeExistingProductCodes() {
             codes.add(code);
         }
         const changes = products.filter(product => product.code !== normalizeProductCode(product.code));
-        const shipments = await db.shipment.findMany({select: {id: true, productCodes: true}});
-        const shipmentChanges = shipments.filter(shipment => shipment.productCodes.some(code => code !== normalizeProductCode(code)));
         if (!process.argv.includes("--apply")) {
-            console.log(`${changes.length} product codes and ${shipmentChanges.length} shipment code lists need normalization. Run with --apply during a maintenance window to update them.`);
+            console.log(`${changes.length} product codes need normalization. Run with --apply during a maintenance window to update them.`);
             return;
-        }
-        for (let offset = 0; offset < shipmentChanges.length; offset += 150) {
-            await db.$transaction(shipmentChanges.slice(offset, offset + 150).map(shipment => db.shipment.update({
-                where: {id: shipment.id}, data: {productCodes: shipment.productCodes.map(normalizeProductCode)},
-            })));
         }
         for (let offset = 0; offset < changes.length; offset += 150) {
             await db.$transaction(changes.slice(offset, offset + 150).map(product => db.product.update({
