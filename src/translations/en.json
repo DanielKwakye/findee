@@ -216,6 +216,7 @@
     },
     "csvFilename": "findee-qrs.csv",
     "actionError": "Unable to update selected products. Please try again.",
+    "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
     "yes": "Yes",
     "no": "No",
     "loadError": "Unable to load products. Please try again.",
@@ -436,6 +437,7 @@
     "chat": "Chat",
     "loadError": "Unable to load products. Please try again.",
     "deleteError": "Unable to delete this product. It may be published or no longer exist.",
+    "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
     "retry": "Retry",
     "placeholder": "Manage"
   },

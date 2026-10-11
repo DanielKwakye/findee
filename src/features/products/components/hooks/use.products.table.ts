@@ -3,6 +3,7 @@
 import {useMemo, useRef, useState} from "react";
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
+import {toast} from "@/components/core/ui/toast";
 import {usePortalTableSearch, useUserDateTime} from "@/components/platform";
 import type {SortingState} from "@tanstack/react-table";
 import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
@@ -29,8 +30,14 @@ export function useProductsTable() {
         placeholderData: keepPreviousData,
     });
     const mutation = useMutation({
-        mutationFn: deleteProducts,
+        /** Deletes inventory and reports assignment conflicts for the selected products. */
+        async mutationFn(codes: string[]) {
+            const result = await deleteProducts(codes).catch(() => {throw new Error(t("deleteError"));});
+            if ("assignedCode" in result) throw new Error(t("assignedDeleteError", {code: result.assignedCode, user: result.assignedUser}));
+            return result;
+        },
         retry: false,
+        onError: error => {toast.add({title: error.message, type: "error"});},
         /** Refreshes both product views after deleting inventory. */
         async onSuccess() {
             setRowSelection({});
@@ -53,6 +60,7 @@ export function useProductsTable() {
         confirmRef.current?.open({
             title: t("bulkDeleteConfirmTitle"), description: t("bulkDeleteConfirmDescription", {count: codes.length}),
             errorMessage: t("deleteError"), confirmLabel: t("deleteSelected"), destructive: true,
+            getErrorMessage: error => error instanceof Error ? error.message : t("deleteError"),
             onConfirm: () => mutation.mutateAsync(codes),
         });
     }

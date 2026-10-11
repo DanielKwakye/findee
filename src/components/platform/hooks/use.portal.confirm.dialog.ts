@@ -33,8 +33,8 @@ export function usePortalConfirmDialog(ref: Ref<PortalConfirmDialogHandle>) {
         try {
             await options.onConfirm();
             setOptions(null);
-        } catch {
-            setError(options.errorMessage);
+        } catch (error) {
+            setError(options.getErrorMessage?.(error) ?? options.errorMessage);
         } finally {
             pending.current = false;
             setIsPending(false);

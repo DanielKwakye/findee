@@ -2,6 +2,7 @@
 
 import {PortalConfirmDialog, PortalTable} from "@/components/platform";
 import {Button} from "@/components/core/ui/button";
+import {ButtonGroup} from "@/components/core/ui/button-group";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/core/ui/select";
 import {Controller} from "react-hook-form";
 import {procurementStatuses} from "@/features/procurement/utils/procurement.types";
@@ -25,7 +26,7 @@ export default function ProcurementTable() {
             )}
             {mutation.isError && (
                 <div role="alert">
-                    <TypographyBody className="text-sm text-destructive">{t("actionError")}</TypographyBody>
+                    <TypographyBody className="text-sm text-destructive">{mutation.error.message || t("actionError")}</TypographyBody>
                 </div>
             )}
             {downloadMutation.isError && (
@@ -42,7 +43,8 @@ export default function ProcurementTable() {
                     <>
                         <ProductVariantFilter value={variant} onChange={changeVariant} disabled={query.isFetching || mutation.isPending} />
                         {selectedCount > 0 && <>
-                        <form className="flex flex-wrap items-center gap-2" onSubmit={statusForm.handleSubmit(updateSelectedStatus)}>
+                        <form onSubmit={statusForm.handleSubmit(updateSelectedStatus)}>
+                            <ButtonGroup aria-label={t("procurementStatus")}>
                             <Controller name="status" control={statusForm.control} render={({field}) => (
                                 <Select<ProcurementStatus> value={field.value} onValueChange={value => {if (value) field.onChange(value);}} disabled={query.isFetching || mutation.isPending}>
                                     <SelectTrigger ref={field.ref} onBlur={field.onBlur} aria-label={t("procurementStatus")}>
@@ -53,11 +55,12 @@ export default function ProcurementTable() {
                                     </SelectContent>
                                 </Select>
                             )} />
-                            <Button type="submit" variant="default" className="bg-primary/10 text-primary hover:bg-primary/20" disabled={query.isFetching || mutation.isPending}>
+                            <Button type="submit" variant="outline" className="border-input" disabled={query.isFetching || mutation.isPending}>
                                 <TypographyBody className="text-sm">{t("updateStatus")}</TypographyBody>
                             </Button>
+                            </ButtonGroup>
                         </form>
-                        <Button type="button" variant="outline" disabled={query.isFetching || mutation.isPending || downloadMutation.isPending} onClick={downloadSelected}>
+                        <Button type="button" variant="default" disabled={query.isFetching || mutation.isPending || downloadMutation.isPending} onClick={downloadSelected}>
                             <TypographyBody className="text-sm">{t("downloadSelected")}</TypographyBody>
                         </Button>
                         <Button type="button" variant="outline" disabled={query.isFetching || mutation.isPending} onClick={() => updateSelected("publish")}>

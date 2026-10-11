@@ -10,9 +10,10 @@ const statusStyles = {
 };
 
 /** Defines the inventory fields displayed in the procurement table. */
-export function getProcurementColumns(labels: {code: string; published: string; procurementStatus: string; inactive: string; requested: string; received: string; createdAt: string; yes: string; no: string}, formatDate: (date: Date) => string): PortalTableColumnDef<ProcurementProduct>[] {
+export function getProcurementColumns(labels: {code: string; variant: string; published: string; procurementStatus: string; inactive: string; requested: string; received: string; assignedTo: string; unset: string; createdAt: string; yes: string; no: string}, formatDate: (date: Date) => string, variants: Record<ProcurementProduct["variant"], string>): PortalTableColumnDef<ProcurementProduct>[] {
     return [
         {accessorKey: "code", header: labels.code},
+        {accessorKey: "variant", header: labels.variant, cell: ({row}) => variants[row.original.variant] ?? row.original.variant},
         {accessorKey: "published", header: labels.published, cell: ({row}) => {
             const props = {children: row.original.published ? "✅" : "❌", "aria-label": row.original.published ? labels.yes : labels.no};
             return createElement("span", props);
@@ -24,6 +25,7 @@ export function getProcurementColumns(labels: {code: string; published: string; 
             };
             return createElement(TypographyBody, props);
         }},
+        {id: "assignedTo", header: labels.assignedTo, enableSorting: false, cell: ({row}) => row.original.assignedTo?.name || row.original.assignedTo?.email || labels.unset},
         {accessorKey: "createdAt", header: labels.createdAt, cell: ({row}) => formatDate(row.original.createdAt)},
     ];
 }

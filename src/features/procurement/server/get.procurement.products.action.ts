@@ -16,12 +16,12 @@ export async function getProcurementProducts(params: ProcurementQuery) {
         ...(params.variant === "all" ? {} : {variant: params.variant}),
         ...(search ? {code: {contains: search, mode: "insensitive" as const}} : {}),
     };
-    const sortBy = params.sortBy === "code" || params.sortBy === "published" || params.sortBy === "createdAt" || params.sortBy === "procurementStatus" ? params.sortBy : "createdAt";
+    const sortBy = params.sortBy === "code" || params.sortBy === "variant" || params.sortBy === "published" || params.sortBy === "createdAt" || params.sortBy === "procurementStatus" ? params.sortBy : "createdAt";
     const direction = params.direction === "asc" ? "asc" as const : "desc" as const;
     const total = await db.product.count({where});
     const page = Math.min(params.page, Math.max(1, Math.ceil(total / params.pageSize)));
     const products = await db.product.findMany({
-        where, select: {code: true, published: true, procurementStatus: true, createdAt: true},
+        where, select: {code: true, variant: true, published: true, procurementStatus: true, assignedTo: {select: {name: true, email: true}}, createdAt: true},
         skip: (page - 1) * params.pageSize, take: params.pageSize,
         orderBy: [{[sortBy]: direction}, {code: "asc"}],
     });

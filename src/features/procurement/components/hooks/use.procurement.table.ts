@@ -20,6 +20,7 @@ import type {ProductVariantFilterValue} from "@/features/products/utils/product.
 /** Manages procurement inventory requests, table controls, and selected products. */
 export function useProcurementTable() {
     const t = useTranslations("procurement");
+    const products = useTranslations("products");
     const formatDateTime = useUserDateTime();
     const queryClient = useQueryClient();
     const confirmRef = useRef<PortalConfirmDialogHandle>(null);
@@ -33,7 +34,7 @@ export function useProcurementTable() {
         queryKey: ["procurement", pagination, debouncedSearch, sorting, variant],
         queryFn: () => getProcurementProducts({
             ...pagination, search: debouncedSearch, variant,
-            sortBy: sorting[0] ? (sorting[0].id === "published" || sorting[0].id === "createdAt" || sorting[0].id === "procurementStatus" ? sorting[0].id : "code") : "createdAt",
+            sortBy: sorting[0] ? (sorting[0].id === "variant" || sorting[0].id === "published" || sorting[0].id === "createdAt" || sorting[0].id === "procurementStatus" ? sorting[0].id : "code") : "createdAt",
             direction: !sorting[0] || sorting[0].desc ? "desc" : "asc",
         }),
         placeholderData: keepPreviousData,
@@ -46,9 +47,14 @@ export function useProcurementTable() {
     }
     const selectedCodes = Object.keys(rowSelection).filter(code => rowSelection[code]);
     const mutation = useMutation({
-        mutationFn: (values: ProcurementMutation) => values.action === "status"
+        /** Applies inventory actions and reports assignment conflicts before deletion. */
+        async mutationFn(values: ProcurementMutation) {
+            const result = await (values.action === "status"
             ? updateProcurementStatus(values.codes, values.status)
-            : updateProcurementProducts(values.codes, values.action),
+            : updateProcurementProducts(values.codes, values.action)).catch(() => {throw new Error(t("actionError"));});
+            if ("assignedCode" in result) throw new Error(t("assignedDeleteError", {code: result.assignedCode, user: result.assignedUser}));
+            return result;
+        },
         retry: false,
         /** Synchronizes inventory and selection after a successful bulk action. */
         async onSuccess(_data, values) {
@@ -59,18 +65,21 @@ export function useProcurementTable() {
                 queryClient.invalidateQueries({queryKey: ["products"]}),
             ]);
         },
-        onError: () => { toast.add({title: t("actionError"), type: "error"}); },
+        onError: error => { toast.add({title: error.message || t("actionError"), type: "error"}); },
     });
     const columns = useMemo(() => getProcurementColumns({code: t("code"),
+            variant: t("generation.variant"),
             published: t("published"),
             procurementStatus: t("procurementStatus"),
             inactive: t("inactive"),
             requested: t("requested"),
             received: t("received"),
+            assignedTo: products("assignedTo"),
+            unset: products("unset"),
             createdAt: t("createdAt"),
             yes: t("yes"),
             no: t("no")
-        }, formatDateTime), [t, formatDateTime]);
+        }, formatDateTime, {Everyday: t("generation.Everyday"), Fabric: t("generation.Fabric"), Tough: t("generation.Tough")}), [t, products, formatDateTime]);
 
     const downloadMutation = useMutation({
         mutationFn: getProcurementRecoveryUrls,
@@ -104,6 +113,7 @@ export function useProcurementTable() {
         confirmRef.current?.open({
             title: t("deleteConfirmTitle"), description: t("deleteConfirmDescription", {count: codes.length}),
             errorMessage: t("actionError"), confirmLabel: t("deleteSelected"), destructive: true,
+            getErrorMessage: error => error instanceof Error ? error.message : t("actionError"),
             onConfirm: () => mutation.mutateAsync({action, codes}),
         });
     }
