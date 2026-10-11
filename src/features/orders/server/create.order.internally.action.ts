@@ -12,7 +12,12 @@ export async function createOrderInternally(values: CheckoutValues): Promise<str
     await requireAdmin();
     validateCheckoutValues(values);
     const email = normalizeEmail(values.email);
-    const customer = await db.user.findUnique({ where: { email }, select: { id: true, role: true } });
-    if (!customer || customer.role !== "CUSTOMER") throw new Error("Customer account not found");
+    const customer = await db.user.upsert({
+        where: { email },
+        create: { email, name: values.name.trim() || null, phone: values.phone.trim() || null, role: "CUSTOMER" },
+        update: {},
+        select: { id: true, role: true },
+    });
+    if (customer.role !== "CUSTOMER") throw new Error("Customer account not found");
     return createOrder(customer.id, { ...values, email });
 }

@@ -7,6 +7,7 @@ export type OrderRow = Awaited<ReturnType<typeof getOrders>>["orders"][number];
 export type OrderDetails = Awaited<ReturnType<typeof getOrderDetails>>;
 export type OrderDetailsDialogHandle = { open: (id: string) => void };
 export type EditOrderDialogHandle = { open: (id: string) => void };
+export type CreateOrderDialogHandle = { open: () => void };
 export type OrderStatusValues = { status: OrderStatus };
 export type OrderStatusUpdate = OrderStatusValues & { id: string };
 export type OrderStatusDialogRecord = Pick<OrderRow, "id" | "number" | "status">;

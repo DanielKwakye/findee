@@ -5,6 +5,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import type { SortingState } from "@tanstack/react-table";
 import type { PortalTableColumnDef, PortalTablePaginationState } from "@/components/platform";
+import { usePortalTableSearch } from "@/components/platform";
 import { getOrders } from "@/features/orders/server/get.orders.action";
 import { getOrderColumns } from "@/features/orders/utils/order.columns";
 import type { OrderColumnLabels } from "@/features/orders/utils/order.columns";
@@ -37,11 +38,11 @@ export function useOrdersTable(status: OrderStatusFilter) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const [pagination, setPagination] = useState<PortalTablePaginationState>({ page: 1, pageSize: 10 });
-    const [search, setSearch] = useState("");
+    const {search, setSearch, debouncedSearch} = usePortalTableSearch(setPagination);
     const [sorting, setSorting] = useState<SortingState>([]);
     const query = useQuery({
-        queryKey: ["orders", status, pagination, search, sorting],
-        queryFn: () => getOrders({ ...pagination, status, search, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc" }),
+        queryKey: ["orders", status, pagination, debouncedSearch, sorting],
+        queryFn: () => getOrders({ ...pagination, status, search: debouncedSearch, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc" }),
         placeholderData: keepPreviousData,
     });
     const columns = useMemo<PortalTableColumnDef<OrderRow>[]>(() => {

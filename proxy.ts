@@ -6,7 +6,7 @@ export const proxy = auth((request) => {
     const user = request.auth?.user;
     if (request.nextUrl.pathname === "/login") {
         if (!user?.id) return NextResponse.next();
-        const destination = user.role === "ADMIN" ? "/admin/products" : "/customer";
+        const destination = user.role === "ADMIN" ? "/admin" : "/customer";
         return NextResponse.redirect(new URL(destination, request.url));
     }
     const isAdminRoute = request.nextUrl.pathname === "/admin" || request.nextUrl.pathname.startsWith("/admin/");

@@ -47,7 +47,7 @@ export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
         const next = functionalUpdate(updater, search ?? globalFilter);
         setGlobalFilter(next);
         onSearchChange?.(next);
-        if (pagination) onPaginationChange?.({page: 1, pageSize: pagination.pageSize});
+        if (pagination && !onSearchChange) onPaginationChange?.({page: 1, pageSize: pagination.pageSize});
     }
 
     /** Coordinates sorting with either local row models or a server query. */

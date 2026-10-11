@@ -1,5 +1,5 @@
 # Build image:
-# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v5 --push .
+# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v6 --push .
 
 
 # -----------------------------
@@ -79,6 +79,7 @@ COPY --from=builder /app/next.config.ts ./next.config.ts
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prisma/generated ./prisma/generated
 COPY --from=builder /app/package*.json ./
 
 # Fix permissions

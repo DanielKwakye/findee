@@ -157,6 +157,7 @@
     "orders": "Orders",
     "showAll": "Show all",
     "pending": "Pending",
+    "confirmed": "Confirmed",
     "processing": "Processing",
     "outForDelivery": "Out for Delivery",
     "delivered": "Delivered",
@@ -253,6 +254,8 @@
     "next": "Next"
   },
   "orders": {
+    "options": "Options",
+    "createNewOrder": "Create New Order",
     "edit": {
       "title": "Edit Order",
       "description": "Update this order’s purchase, contact, and delivery details.",
@@ -260,6 +263,7 @@
     },
     "create": {
       "heading": "Create new order",
+      "close": "Close order creation",
       "description": "Create an order on behalf of a customer with their sticker, contact, and delivery details.",
       "purchase": "Order details",
       "variants": "Select variants",
@@ -283,7 +287,7 @@
       "error": "Unable to create the order. Please check the details and try again."
     },
     "heading": "Orders",
-    "description": "View customer orders and their fulfillment status.",
+    "description": "Manage customer orders",
     "tabsLabel": "Order status",
     "changeStatus": "Change order status",
     "shipments": {

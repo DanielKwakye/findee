@@ -1,5 +1,3 @@
-"use client";
-
 import { Controller } from "react-hook-form";
 import { Button } from "@/components/core/ui/button";
 import { Checkbox } from "@/components/core/ui/checkbox";
@@ -13,12 +11,12 @@ import CheckoutAllocation from "@/features/checkout/components/ui/checkout-alloc
 import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
 import { checkoutContactFields } from "@/features/checkout/data/checkout.contact.fields";
 import type { useOrderForm } from "@/features/orders/components/hooks/use.order.form";
-import type { FormEventHandler } from "react";
+import type { SubmitEventHandler } from "react";
 
 type Props = {
     state: ReturnType<typeof useOrderForm>;
     mutation: { isPending: boolean; isError: boolean };
-    submit: FormEventHandler<HTMLFormElement>;
+    submit: SubmitEventHandler<HTMLFormElement>;
     readOnlyEmail?: boolean;
     submitLabel: string;
     errorMessage: string;
@@ -59,8 +57,8 @@ export default function OrderFormFields({ state, mutation, submit, readOnlyEmail
                         </div>}
                     </Field>
                 </div>
-                <TypographyBody className="text-sm font-medium">{t("allocation")}</TypographyBody>
-                {plan && <CheckoutAllocation control={form.control} variants={variants} limit={plan.quantity} total={total}
+                {variants.length > 1 && <TypographyBody className="text-sm font-medium">{t("allocation")}</TypographyBody>}
+                {plan && variants.length > 1 && <CheckoutAllocation control={form.control} variants={variants} limit={plan.quantity} total={total}
                     quantityIsMinimum={!!plan.quantityIsMinimum} onQuantityKeyUp={validateAllocation} error={errors.root?.allocation?.message} />}
                 {!plan && errors.root?.allocation && <TypographyBody className="text-sm text-destructive">{errors.root.allocation.message}</TypographyBody>}
             </section>

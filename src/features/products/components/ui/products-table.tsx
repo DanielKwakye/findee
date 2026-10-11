@@ -24,7 +24,7 @@ export default function ProductsTable() {
                 search={search} onSearchChange={setSearch} onSortingChange={setSorting}
                 enableRowSelection getRowId={row => row.code} isRowSelectable={row => !row.published}
                 rowSelection={rowSelection} onRowSelectionChange={setRowSelection}
-                isLoading={query.isFetching || mutation.isPending}
+                isLoading={query.isLoading}
                 toolbarActions={(
                     <>
                         <ProductVariantFilter value={variant} onChange={changeVariant} disabled={query.isFetching || mutation.isPending} />

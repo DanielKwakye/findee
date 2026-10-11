@@ -36,7 +36,7 @@ export default function ProcurementTable() {
             <PortalTable data={query.data?.products ?? []} columns={columns}
                 pagination={pagination} onPaginationChange={setPagination}
                 search={search} onSearchChange={setSearch} onSortingChange={setSorting}
-                isLoading={query.isFetching || mutation.isPending} enableRowSelection getRowId={row => row.code}
+                isLoading={query.isLoading} enableRowSelection getRowId={row => row.code}
                 rowSelection={rowSelection} onRowSelectionChange={setRowSelection}
                 toolbarActions={(
                     <>

@@ -3,7 +3,7 @@
 import {useMemo, useRef, useState} from "react";
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
-import {useUserDateTime} from "@/components/platform";
+import {usePortalTableSearch, useUserDateTime} from "@/components/platform";
 import type {SortingState} from "@tanstack/react-table";
 import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
 import {getProducts} from "@/features/products/server/get.products.action";
@@ -20,12 +20,12 @@ export function useProductsTable() {
     const confirmRef = useRef<PortalConfirmDialogHandle>(null);
     const [rowSelection, setRowSelection] = useState<PortalTableRowSelection>({});
     const [pagination, setPagination] = useState<PortalTablePaginationState>({page: 1, pageSize: 10});
-    const [search, setSearch] = useState("");
+    const {search, setSearch, debouncedSearch} = usePortalTableSearch(setPagination);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [variant, setVariant] = useState<ProductVariantFilterValue>("all");
     const query = useQuery({
-        queryKey: ["products", pagination, search, sorting, variant],
-        queryFn: () => getProducts({...pagination, search, variant, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc"}),
+        queryKey: ["products", pagination, debouncedSearch, sorting, variant],
+        queryFn: () => getProducts({...pagination, search: debouncedSearch, variant, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc"}),
         placeholderData: keepPreviousData,
     });
     const mutation = useMutation({

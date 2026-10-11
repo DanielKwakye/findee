@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useTranslations} from "next-intl";
 import {toast} from "@/components/core/ui/toast";
-import {useUserDateTime} from "@/components/platform";
+import {usePortalTableSearch, useUserDateTime} from "@/components/platform";
 import type {SortingState} from "@tanstack/react-table";
 import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
 import {getProcurementProducts} from "@/features/procurement/server/get.procurement.products.action";
@@ -26,13 +26,13 @@ export function useProcurementTable() {
     const statusForm = useForm<ProcurementStatusValues>({defaultValues: {status: "inactive"}});
     const [rowSelection, setRowSelection] = useState<PortalTableRowSelection>({});
     const [pagination, setPagination] = useState<PortalTablePaginationState>({page: 1, pageSize: 10});
-    const [search, setSearch] = useState("");
+    const {search, setSearch, debouncedSearch} = usePortalTableSearch(setPagination);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [variant, setVariant] = useState<ProductVariantFilterValue>("all");
     const query = useQuery({
-        queryKey: ["procurement", pagination, search, sorting, variant],
+        queryKey: ["procurement", pagination, debouncedSearch, sorting, variant],
         queryFn: () => getProcurementProducts({
-            ...pagination, search, variant,
+            ...pagination, search: debouncedSearch, variant,
             sortBy: sorting[0] ? (sorting[0].id === "published" || sorting[0].id === "createdAt" || sorting[0].id === "procurementStatus" ? sorting[0].id : "code") : "createdAt",
             direction: !sorting[0] || sorting[0].desc ? "desc" : "asc",
         }),

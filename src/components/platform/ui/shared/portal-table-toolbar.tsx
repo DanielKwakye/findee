@@ -27,7 +27,7 @@ export default function PortalTableToolbar<T extends object>({
             {/* Global search */}
             {showSearch && (
                 <Input className="w-full sm:max-w-sm" value={table.state.globalFilter ?? ""}
-                    placeholder={t("search")} aria-label={t("search")} disabled={isLoading}
+                    placeholder={t("search")} aria-label={t("search")}
                     onChange={event => table.setGlobalFilter(event.currentTarget.value)} />
             )}
             <div className="flex flex-wrap items-center gap-2 sm:ml-auto">

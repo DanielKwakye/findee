@@ -1,10 +1,12 @@
 "use client";
 
 import { useForm, useWatch } from "react-hook-form";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
 import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
 import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
+import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
 import type { CheckoutValues } from "@/features/checkout/utils/checkout.types";
 import type { OrderDetails } from "@/features/orders/utils/order.types";
 
@@ -19,6 +21,15 @@ export function useOrderForm(initialValues: CheckoutValues, planDetail?: OrderDe
     const plans = (plansQuery.data ?? []).map(option => planDetail && option.id === initialValues.plan
         ? { ...option, ...planDetail } : option);
     const plan = plans.find(option => option.id === values.plan);
+    const singleVariant = values.variants?.length === 1 ? values.variants[0] : undefined;
+    const quantity = plan?.quantity;
+    const {setValue, clearErrors} = form;
+
+    useEffect(() => {
+        if (!singleVariant || quantity === undefined) return;
+        setValue("allocation", distributeCheckoutQuantity([singleVariant], quantity));
+        clearErrors("root.allocation");
+    }, [singleVariant, quantity, setValue, clearErrors]);
     const inputs = {
         variants: { validate: (value: CheckoutValues["variants"]) => value.length > 0 || t("variantsRequired") },
         plan: { required: t("planRequired") },

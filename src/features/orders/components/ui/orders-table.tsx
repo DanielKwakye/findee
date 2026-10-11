@@ -24,8 +24,8 @@ export default function OrdersTable({ status }: { status: OrderStatusFilter }) {
                 </Button>
             </div>}
             <PortalTable data={query.data?.orders ?? []} columns={columns} pagination={pagination} onPaginationChange={setPagination}
-                search={search} onSearchChange={setSearch} onSortingChange={setSorting} isLoading={query.isFetching} onRowClick={openOrder}
-                toolbarActions={<OrderStatusSelector value={status} onChange={changeStatus} disabled={query.isFetching} />} />
+                search={search} onSearchChange={setSearch} onSortingChange={setSorting} isLoading={query.isLoading} onRowClick={openOrder}
+                toolbarActions={<OrderStatusSelector value={status} onChange={changeStatus} disabled={false} />} />
             <OrderDetailsDialog ref={detailsRef} />
             <EditOrderDialog ref={editRef} />
             <OrderStatusDialog ref={statusRef} />

@@ -23,6 +23,7 @@ export const portalInventoryItems: PortalInventoryItem[] = [
         items: [
             { title: "showAll", url: "/admin/orders" },
             { title: "pending", url: "/admin/orders?status=PENDING" },
+            { title: "confirmed", url: "/admin/orders?status=CONFIRMED" },
             { title: "processing", url: "/admin/orders?status=PROCESSING" },
             { title: "outForDelivery", url: "/admin/orders?status=SHIPPED" },
             { title: "delivered", url: "/admin/orders?status=DELIVERED" },
