@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { CirclePlay } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
@@ -32,8 +32,8 @@ export default function WebHero() {
             <Button render={<Link href="/checkout" />} nativeButton={false} className="h-12 min-w-48 bg-destructive px-7 text-primary-foreground hover:bg-destructive/90">
               <TypographyBody className="text-sm font-semibold">{t("getYourStickers")}</TypographyBody>
             </Button>
-            <Button type="button" variant="outline" className="h-12 gap-2 border-primary-foreground/60 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
-              <CirclePlay aria-hidden="true" className="size-5" />
+            <Button render={<Link href="#how-it-works" />} nativeButton={false} variant="outline" className="h-12 gap-2 border-primary-foreground/60 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground">
+              <CircleHelp aria-hidden="true" className="size-5" />
               <TypographyBody className="text-sm font-semibold">{t("howItWorks")}</TypographyBody>
             </Button>
           </div>

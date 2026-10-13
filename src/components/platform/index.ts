@@ -7,6 +7,7 @@ export { default as AppIcon } from "@/components/platform/ui/shared/app-icon";
 export {useUserDateTime} from "@/components/platform/hooks/use.user.datetime";
 export { default as MobileHero } from "@/components/platform/ui/mobile/hero";
 export { default as WebHero } from "@/components/platform/ui/web/hero";
+export { default as InnerPageHero } from "@/components/platform/ui/shared/inner-page-hero";
 export { default as HowItWorks } from "@/components/platform/ui/shared/how-it-works";
 export { default as FAQ } from "@/components/platform/ui/shared/faq";
 export { default as Testimonials } from "@/components/platform/ui/shared/testimonials";

@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 export default function WebNavbar({ appearance = "overlay", showGetStarted = true }: { appearance?: "overlay" | "solid" | "primary"; showGetStarted?: boolean }) {
   const { isScrolled, showAccount } = useNavbarWeb();
   const t = useTranslations("recovery");
+  const tLinks = useTranslations("Footer.links");
 
   return (
     <header
@@ -34,13 +35,13 @@ export default function WebNavbar({ appearance = "overlay", showGetStarted = tru
         <div className="flex items-center gap-7">
           {webNavbarMenuItems.map(({ label, href }) => (
             <Link key={label} href={href} className="whitespace-nowrap transition-opacity hover:opacity-70">
-              <TypographyBody className="text-sm">{label}</TypographyBody>
+              <TypographyBody className="text-sm">{href === "/pricing" ? tLinks("pricing") : label}</TypographyBody>
             </Link>
           ))}
         </div>
 
         <div className="flex shrink-0 items-center gap-6">
-          {showGetStarted && <Button variant={appearance === "primary" ? "secondary" : "default"} render={<Link href="/checkout" />} nativeButton={false}>
+          {showGetStarted && <Button variant={isScrolled ? "default" : "outline"} render={<Link href="/checkout" />} nativeButton={false} className={cn(!isScrolled && appearance !== "solid" && "border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground")}>
             <TypographyBody className="text-sm">Get Started</TypographyBody>
           </Button>}
           {showAccount && <NavbarAccount />}

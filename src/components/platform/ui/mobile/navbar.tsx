@@ -21,9 +21,9 @@ export default function MobileNavbar({ appearance = "overlay" }: MobileNavbarPro
 
   return (
     <>
-      <header className={cn("absolute inset-x-0 top-0 z-50 flex h-16 items-center justify-between px-5 xl:hidden", appearance === "primary" ? "bg-primary text-primary-foreground" : appearance === "solid" ? "bg-background text-foreground" : "text-background")}>
+      <header className={cn("inset-x-0 top-0 z-50 flex h-16 items-center justify-between px-5 xl:hidden", appearance === "solid" ? "fixed border-b border-border bg-background text-foreground shadow-sm" : "absolute", appearance === "primary" ? "bg-primary text-primary-foreground" : appearance === "overlay" && "text-background")}>
         <Link href="/" aria-label={t("home")}>
-          <AppIcon brightness={appearance === "solid" ? "dark" : "light"} size="compact" showName={false} />
+          <AppIcon brightness={appearance === "solid" ? "dark" : "light"} size="compact" showName={!showAccount} />
         </Link>
         {showAccount && <NavbarAccount />}
       </header>

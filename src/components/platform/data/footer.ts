@@ -4,18 +4,18 @@ export const footerLinkGroups = [
     links: [
       { key: "howItWorks", href: "/#how-it-works" },
       { key: "stickers", href: "/checkout" },
-      { key: "pricing", href: "/checkout" },
+      { key: "pricing", href: "/pricing" },
       { key: "faqs", href: "/#faq" },
     ],
   },
   {
     key: "company",
     links: [
-      { key: "about", href: "#" },
-      { key: "blog", href: "#" },
-      { key: "contact", href: "#" },
-      { key: "privacy", href: "#" },
-      { key: "terms", href: "#" },
+      { key: "about", href: "/about" },
+      { key: "blog", href: "/blog" },
+      { key: "contact", href: "/contact" },
+      { key: "privacy", href: "/privacy" },
+      { key: "terms", href: "/terms" },
     ],
   },
 ] as const;

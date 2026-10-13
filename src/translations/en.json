@@ -20,7 +20,7 @@
       "stickersPlus": "{quantity, number}+ stickers",
       "profiles": "Up to {profiles, number} recovery profiles",
       "unlimitedProfiles": "Unlimited recovery profiles",
-      "profilesExplanation": "Maximum recovery profiles is the total number of people, including you, who can use the stickers in that plan.",
+      "profilesExplanation": "Recovery profiles is the total number of people, including you, who can use the stickers in that plan.",
       "loading": "Loading plans…",
       "error": "Unable to load plans. Please try again.",
       "retry": "Try again"
@@ -573,6 +573,41 @@
         "alt": "A phone showing notifications that a lost item has been found"
       }
     }
+  },
+  "Privacy": {
+    "title": "Privacy",
+    "titleAccent": "Policy",
+    "subtitle": "Information about personal data and privacy when using Findmus."
+  },
+  "Terms": {
+    "title": "Terms of",
+    "titleAccent": "Service",
+    "subtitle": "The terms for using Findmus and ordering our QR stickers."
+  },
+  "Contact": {
+    "title": "Contact",
+    "titleAccent": "Us",
+    "subtitle": "Have a question about Findmus, your stickers, or an order? Get in touch — we're here to help."
+  },
+  "Blog": {
+    "title": "Stories &",
+    "titleAccent": "Tips",
+    "subtitle": "Tips for keeping track of your belongings, stories of happy reunions, and ideas for making everyday life a little less lost."
+  },
+  "UseCases": {
+    "title": "Everyday Items.",
+    "titleAccent": "Endless Possibilities.",
+    "subtitle": "From keys and backpacks to laptops and luggage, give the things you carry a way home. Discover where Findmus QR stickers can make a difference."
+  },
+  "About": {
+    "title": "About",
+    "titleAccent": "Findmus",
+    "subtitle": "We make it simple for lost belongings to find their way home. Our ready-to-use QR stickers help finders connect with owners, turning lost items into happy reunions."
+  },
+  "Pricing": {
+    "title": "Affordable",
+    "titleAccent": "Pricing Plans",
+    "subtitle": "Give your belongings a way back without breaking the bank. Choose a sticker plan that fits your everyday essentials."
   },
   "Hero": {
     "eyebrow": "A smarter way to get lost items back",

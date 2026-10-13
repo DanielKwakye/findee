@@ -1,14 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Quote, Star, StarHalf } from "lucide-react";
+import { Quote } from "lucide-react";
 import { Badge } from "@/components/core/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/core/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/core/ui/carousel";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyH2 from "@/components/core/ui/typography-h2";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
-import { testimonialKeys, testimonialRatings, testimonialStars } from "@/components/platform/data/testimonials";
+import { testimonialKeys } from "@/components/platform/data/testimonials";
 import { useHeroCarousel } from "@/components/platform/hooks/use.hero.carousel";
 import HeroCarouselIndicators from "@/components/platform/ui/shared/hero-carousel-indicators";
 import { testimonialCarouselOptions } from "@/components/platform/utils/carousel.utils";
@@ -35,18 +35,8 @@ export default function Testimonials() {
             {testimonialKeys.map((key, index) => (
               <CarouselItem key={key} aria-label={t("slideLabel", { number: index + 1, total: testimonialKeys.length })} className="flex pl-6 md:basis-1/2 xl:basis-1/3">
                 <Card className="w-full gap-3 border border-border py-4 ring-0">
-                  <CardHeader className="flex items-center justify-between">
-                    <div role="img" aria-label={t("rating", { rating: testimonialRatings[key] })} className="flex gap-1 text-warning">
-                      {testimonialStars.map(star => (
-                        <span key={star} aria-hidden="true" className="relative">
-                          <Star className={star <= testimonialRatings[key] ? "size-5 fill-current" : "size-5"} />
-                          {star > testimonialRatings[key] && star - 1 < testimonialRatings[key] && (
-                            <StarHalf className="absolute inset-0 size-5 fill-current" />
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                    <Quote aria-hidden="true" className="size-8 fill-current text-chart-1/30" />
+                  <CardHeader className="flex items-center justify-start">
+                    <Quote aria-hidden="true" className="size-6 fill-current text-chart-1/30" />
                   </CardHeader>
                   <CardContent className="flex-1">
                     <blockquote>
