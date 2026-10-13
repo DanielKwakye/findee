@@ -10,7 +10,7 @@ import TypographyH3 from "@/components/core/ui/typography-h3";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { useCheckout } from "@/features/checkout/components/hooks/use.checkout";
-import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
+import { checkoutVariants, type CheckoutVariant } from "@/features/checkout/data/checkout.variants";
 import CheckoutPlans from "@/features/checkout/components/ui/checkout-plans";
 import CheckoutAllocation from "@/features/checkout/components/ui/checkout-allocation";
 import CheckoutDetails from "@/features/checkout/components/ui/checkout-details";
@@ -18,10 +18,10 @@ import { CustomerOtpForm } from "@/features/auth/components/ui/customer-otp-form
 import type { CheckoutCustomer, CheckoutPlan } from "@/features/checkout/utils/checkout.types";
 
 /** Renders the checkout steps and variant choices. */
-export default function Checkout({ customer, initialPlan }: { customer: CheckoutCustomer | null; initialPlan?: CheckoutPlan["id"] }) {
+export default function Checkout({ customer, initialPlan, initialVariant }: { customer: CheckoutCustomer | null; initialPlan?: CheckoutPlan["id"]; initialVariant?: CheckoutVariant }) {
     const { t, form, stepper, steps, currentIndex, continueDisabled, plansQuery, onContinue, onBack,
         variants, plan, allocationTotal, allocationError, onAllocationKeyUp,
-        contactInputs, shippingInput, contactMissing, submission, onPay, onVerified } = useCheckout(customer, initialPlan);
+        contactInputs, shippingInput, contactMissing, submission, onPay, onVerified } = useCheckout(customer, initialPlan, initialVariant);
 
     return (
         <Stepper steps={steps} currentIndex={currentIndex} onBack={onBack} onContinue={onContinue} continueDisabled={continueDisabled}

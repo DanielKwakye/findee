@@ -11,9 +11,10 @@ import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.
 import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
 import { submitCheckout } from "@/features/checkout/server/submit.checkout.action";
 import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
+import type { CheckoutVariant } from "@/features/checkout/data/checkout.variants";
 
 /** Manages checkout navigation and the customer's variant selections. */
-export function useCheckout(customer: CheckoutCustomer | null, initialPlan: CheckoutPlan["id"] = "family") {
+export function useCheckout(customer: CheckoutCustomer | null, initialPlan: CheckoutPlan["id"] = "family", initialVariant: CheckoutVariant = "Everyday") {
     const t = useTranslations("Checkout");
     const router = useRouter();
     const queryClient = useQueryClient();
@@ -21,7 +22,7 @@ export function useCheckout(customer: CheckoutCustomer | null, initialPlan: Chec
     const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
     const authenticatedEmail = customer?.email ?? verifiedEmail;
     const form = useForm<CheckoutValues>({ defaultValues: {
-        variants: ["Everyday"], plan: initialPlan, allocation: {}, email: customer?.email ?? "", name: customer?.name ?? "", phone: customer?.phone ?? "",
+        variants: [initialVariant], plan: initialPlan, allocation: {}, email: customer?.email ?? "", name: customer?.name ?? "", phone: customer?.phone ?? "",
         contactByEmail: true, contactByPhone: false, showName: false, shippingAddress: "", deliveryInstructions: "",
     } });
     useEffect(() => {

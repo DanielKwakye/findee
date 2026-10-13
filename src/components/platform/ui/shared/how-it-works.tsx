@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ArrowRight } from "lucide-react";
@@ -8,14 +10,16 @@ import TypographyH2 from "@/components/core/ui/typography-h2";
 import TypographyH3 from "@/components/core/ui/typography-h3";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { howItWorksSteps, howItWorksTrustCues } from "@/components/platform/data/how.it.works";
+import { useHowItWorks } from "@/components/platform/hooks/use.how.it.works";
 import { cn } from "@/lib/utils";
 
 /** Explains the Findee sticker recovery process. */
 export default function HowItWorks() {
   const t = useTranslations("HowItWorks");
+  const sectionRef = useHowItWorks();
 
   return (
-    <section id="how-it-works" aria-label={t("eyebrow")} className="scroll-mt-24 bg-background py-12 text-foreground sm:py-16 xl:py-20">
+    <section ref={sectionRef} id="how-it-works" aria-label={t("eyebrow")} className="scroll-mt-24 bg-background py-12 text-foreground sm:py-16 xl:py-20">
       <div className="container mx-auto px-6">
         <div className="text-center">
           <Badge className="h-auto bg-chart-1/20 px-5 py-2 text-primary">

@@ -597,7 +597,31 @@
   "UseCases": {
     "title": "Everyday Items.",
     "titleAccent": "Endless Possibilities.",
-    "subtitle": "From keys and backpacks to laptops and luggage, give the things you carry a way home. Discover where Findmus QR stickers can make a difference."
+    "subtitle": "From keys and backpacks to laptops and luggage, give the things you carry a way home. Discover where Findmus QR stickers can make a difference.",
+    "regionLabel": "Ways to use your QR stickers",
+    "pageLabel": "Page {number} of {total}",
+    "previous": "Previous use cases",
+    "next": "Next use cases",
+    "items": {
+      "keys": { "title": "Keys", "description": "Add a sticker to your key holder so misplaced house or car keys have a way home." },
+      "wallets": { "title": "Wallets", "description": "Help someone return the wallet you left at a checkout, café, or bus stop." },
+      "phones": { "title": "Phones", "description": "Put a sticker on your phone case so a finder can reach you even when the screen is locked." },
+      "laptops": { "title": "Laptops & Tablets", "description": "Give devices left in classrooms, offices, or cafés a clear way back to you." },
+      "backpacks": { "title": "Backpacks", "description": "Make your everyday bag easier to return after a busy commute or a day on campus." },
+      "luggage": { "title": "Luggage", "description": "Add a contact option to your suitcase so a finder can help reunite you with your bags." },
+      "waterBottles": { "title": "Water Bottles", "description": "Help your reusable bottle find its way back from the gym, office, or playground." },
+      "headphones": { "title": "Headphones", "description": "Label your headphone or earbud case for an easy return when it slips out of your bag." },
+      "glassesCases": { "title": "Glasses Cases", "description": "Give a finder a way to return the glasses case you left on a desk or train seat." },
+      "jackets": { "title": "Jackets & Coats", "description": "Place a sticker on a suitable clothing label to help a forgotten coat make it home." },
+      "schoolUniforms": { "title": "School Uniforms", "description": "Label suitable areas of uniforms and PE kits to help school staff return mixed-up clothing." },
+      "kidsLunchboxes": { "title": "Kids’ Lunchboxes", "description": "Make lunchboxes easier to return from school, clubs, and trips with a quick scan." },
+      "kidsClothing": { "title": "Kids’ Clothing", "description": "A sticker on a suitable clothing label can help someone contact a parent or guardian." },
+      "supportClothing": { "title": "Caregiver Contact", "description": "For people with additional support needs, a clothing label can help someone reach a trusted contact." },
+      "mobilityAids": { "title": "Mobility Aids", "description": "Label a walking stick or other mobility aid so a finder can contact its owner." },
+      "tools": { "title": "Tools & Toolboxes", "description": "Give tools and their cases a way back when they are left at a job site or shared workspace." },
+      "sportsGear": { "title": "Sports Gear", "description": "Label helmets, rackets, and gear bags to help items left after practice get returned." },
+      "cameraCases": { "title": "Camera Cases", "description": "Help someone return your camera bag after a shoot, day trip, or busy event." }
+    }
   },
   "About": {
     "title": "About",

@@ -37,7 +37,7 @@ export default function PricingPlans() {
         <>
           <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
             {plans.data.map(plan => (
-              <Card key={plan.id} className={cn("relative gap-6 border border-border py-7 ring-0 transition-[border-color,box-shadow] duration-300 hover:border-primary hover:shadow-[0_0_32px_color-mix(in_oklch,var(--primary)_25%,transparent)] focus-within:border-primary focus-within:shadow-[0_0_32px_color-mix(in_oklch,var(--primary)_25%,transparent)]", plan.id === "family" && "border-primary bg-primary/5 shadow-sm")}>
+              <Card key={plan.id} className={cn("relative gap-6 border border-border py-7 ring-0 transition-[scale,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:shadow-[0_0_12px_2px_var(--tw-shadow-color)] hover:shadow-chart-2/10 focus-within:shadow-[0_0_12px_2px_var(--tw-shadow-color)] focus-within:shadow-chart-2/10 motion-reduce:transform-none motion-reduce:scale-100 motion-reduce:transition-none", plan.id === "family" && "border-primary bg-primary/5")}>
                 <CardHeader className="gap-3">
                   <Badge variant="secondary" className={cn("h-auto px-3 py-1", checkoutPlanBadgeClasses[plan.id])}>
                     <TypographyBody className="text-xs font-semibold">{tPlans(`names.${plan.title}`)}</TypographyBody>
