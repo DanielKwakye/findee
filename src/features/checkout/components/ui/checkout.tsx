@@ -15,13 +15,13 @@ import CheckoutPlans from "@/features/checkout/components/ui/checkout-plans";
 import CheckoutAllocation from "@/features/checkout/components/ui/checkout-allocation";
 import CheckoutDetails from "@/features/checkout/components/ui/checkout-details";
 import { CustomerOtpForm } from "@/features/auth/components/ui/customer-otp-form";
-import type { CheckoutCustomer } from "@/features/checkout/utils/checkout.types";
+import type { CheckoutCustomer, CheckoutPlan } from "@/features/checkout/utils/checkout.types";
 
 /** Renders the checkout steps and variant choices. */
-export default function Checkout({ customer }: { customer: CheckoutCustomer | null }) {
+export default function Checkout({ customer, initialPlan }: { customer: CheckoutCustomer | null; initialPlan?: CheckoutPlan["id"] }) {
     const { t, form, stepper, steps, currentIndex, continueDisabled, plansQuery, onContinue, onBack,
         variants, plan, allocationTotal, allocationError, onAllocationKeyUp,
-        contactInputs, shippingInput, contactMissing, submission, onPay, onVerified } = useCheckout(customer);
+        contactInputs, shippingInput, contactMissing, submission, onPay, onVerified } = useCheckout(customer, initialPlan);
 
     return (
         <Stepper steps={steps} currentIndex={currentIndex} onBack={onBack} onContinue={onContinue} continueDisabled={continueDisabled}

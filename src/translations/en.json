@@ -607,7 +607,16 @@
   "Pricing": {
     "title": "Affordable",
     "titleAccent": "Pricing Plans",
-    "subtitle": "Give your belongings a way back without breaking the bank. Choose a sticker plan that fits your everyday essentials."
+    "subtitle": "Give your belongings a way back without breaking the bank. Choose a sticker plan that fits your everyday essentials.",
+    "plansLabel": "Compare sticker plans",
+    "descriptions": {
+      "personal": "For your everyday essentials",
+      "family": "For the whole family",
+      "business": "For your business"
+    },
+    "readyToUse": "Pre-activated and ready to stick",
+    "getStickers": "Get Your Stickers",
+    "choosePlan": "Get stickers with the {plan} plan"
   },
   "Hero": {
     "eyebrow": "A smarter way to get lost items back",

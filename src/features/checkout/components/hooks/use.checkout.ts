@@ -6,14 +6,14 @@ import { useTranslations } from "next-intl";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { checkoutStepper } from "@/features/checkout/data/checkout.steps";
-import type { CheckoutCustomer, CheckoutValues } from "@/features/checkout/utils/checkout.types";
+import type { CheckoutCustomer, CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
 import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
 import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
 import { submitCheckout } from "@/features/checkout/server/submit.checkout.action";
 import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
 
 /** Manages checkout navigation and the customer's variant selections. */
-export function useCheckout(customer: CheckoutCustomer | null) {
+export function useCheckout(customer: CheckoutCustomer | null, initialPlan: CheckoutPlan["id"] = "family") {
     const t = useTranslations("Checkout");
     const router = useRouter();
     const queryClient = useQueryClient();
@@ -21,9 +21,12 @@ export function useCheckout(customer: CheckoutCustomer | null) {
     const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
     const authenticatedEmail = customer?.email ?? verifiedEmail;
     const form = useForm<CheckoutValues>({ defaultValues: {
-        variants: ["Everyday"], plan: "family", allocation: {}, email: customer?.email ?? "", name: customer?.name ?? "", phone: customer?.phone ?? "",
+        variants: ["Everyday"], plan: initialPlan, allocation: {}, email: customer?.email ?? "", name: customer?.name ?? "", phone: customer?.phone ?? "",
         contactByEmail: true, contactByPhone: false, showName: false, shippingAddress: "", deliveryInstructions: "",
     } });
+    useEffect(() => {
+        form.setValue("plan", initialPlan);
+    }, [initialPlan, form]);
     useEffect(() => {
         if (!customer) return;
         form.setValue("email", customer.email);

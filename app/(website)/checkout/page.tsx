@@ -1,16 +1,21 @@
 import Checkout from "@/features/checkout/components/ui/checkout";
 import { MobileNavbar, WebNavbar } from "@/components/platform";
 import { getCustomerUser } from "@/features/auth/server/auth.session";
+import { checkoutPlanParams } from "@/features/checkout/data/checkout.plan.params";
+import type { CheckoutPlan } from "@/features/checkout/utils/checkout.types";
 
 /** Presents the customer checkout flow. */
-export default async function CheckoutPage() {
+export default async function CheckoutPage({ searchParams }: { searchParams: Promise<{ plan?: string | string[] }> }) {
+    const { plan } = await searchParams;
+    const initialPlan = (Object.keys(checkoutPlanParams) as CheckoutPlan["id"][])
+        .find(id => checkoutPlanParams[id] === plan) ?? "family";
     const customer = await getCustomerUser();
     return (
         <>
             <MobileNavbar appearance="solid" />
             <WebNavbar appearance="primary" showGetStarted={false} />
             <main className="flex items-start justify-center px-5 pt-18 pb-[calc(10rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-48 xl:px-40 xl:pt-32 xl:pb-8">
-                <Checkout customer={customer ? { email: customer.email, name: customer.name, phone: customer.phone } : null} />
+                <Checkout key={initialPlan} initialPlan={initialPlan} customer={customer ? { email: customer.email, name: customer.name, phone: customer.phone } : null} />
             </main>
         </>
     )
