@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
-import TypographyH1 from "@/components/core/ui/typography-h1";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import MobileHeroCarousel from "@/components/platform/ui/mobile/hero-carousel";
 import HeroTrustCues from "@/components/platform/ui/shared/hero-trust-cues";
+import HeroTitle from "@/components/platform/ui/shared/hero-title";
 import glowStyles from "@/components/platform/ui/shared/hero-carousel-glow.module.css";
 import { cn } from "@/lib/utils";
-import styles from "./hero.module.css";
+import styles from "@/components/platform/ui/mobile/hero.module.css";
 
 /** Renders the mobile hero copy, carousel, and trust cues. */
 export default function MobileHero() {
@@ -19,10 +19,7 @@ export default function MobileHero() {
     <div className={cn("relative flex flex-col px-5 pt-24 pb-28 sm:px-8 lg:px-10 xl:hidden", styles.topGlow)}>
       {/* Hero text and primary action. */}
       <div className="mx-auto min-h-56 w-full max-w-lg text-center">
-        <TypographyH1 className="font-heading text-[clamp(2.25rem,9vw,3rem)] leading-[1.04] tracking-tight text-primary-foreground">
-          <span className="block">{t("titleFirstLine")}</span>
-          <span className="block text-chart-1">{t("titleSecondLine")}</span>
-        </TypographyH1>
+        <HeroTitle className="text-[clamp(2.25rem,9vw,3rem)] leading-[1.04] tracking-tight" />
         <TypographyParagraph className="mx-auto mt-5 max-w-sm text-base leading-7 text-primary-foreground/75">
           {t("mobileSubtitle")}
         </TypographyParagraph>

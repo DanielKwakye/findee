@@ -6,9 +6,9 @@ import type { CarouselApi } from "@/components/core/ui/carousel";
 import { heroCarouselAutoplayOptions } from "@/components/platform/utils/carousel.utils";
 
 /** Manages slide selection and navigation for the hero carousels. */
-export function useHeroCarousel() {
+export function useHeroCarousel({ autoplay = true, startIndex = 1 }: { autoplay?: boolean; startIndex?: number } = {}) {
   const [api, setApi] = useState<CarouselApi>();
-  const [plugins] = useState(() => [Autoplay(heroCarouselAutoplayOptions)]);
+  const [plugins] = useState(() => autoplay ? [Autoplay(heroCarouselAutoplayOptions)] : []);
 
   /** Subscribes to changes in the carousel's selected slide. */
   const subscribeToSelection = useCallback((notify: () => void) => {
@@ -23,8 +23,12 @@ export function useHeroCarousel() {
   }, [api]);
 
   /** Reads the carousel's current slide, including its initial selection. */
-  const getSelectedIndex = useCallback(() => api?.selectedScrollSnap() ?? 1, [api]);
+  const getSelectedIndex = useCallback(() => api?.selectedScrollSnap() ?? startIndex, [api, startIndex]);
   const selectedIndex = useSyncExternalStore(subscribeToSelection, getSelectedIndex, getSelectedIndex);
+
+  /** Reads the number of navigable positions in the carousel. */
+  const getSnapCount = useCallback(() => api?.scrollSnapList().length ?? 0, [api]);
+  const snapCount = useSyncExternalStore(subscribeToSelection, getSnapCount, getSnapCount);
 
   /** Moves the carousel to the previous slide. */
   const scrollPrevious = useCallback(() => api?.scrollPrev(), [api]);
@@ -49,6 +53,7 @@ export function useHeroCarousel() {
     setApi,
     plugins,
     selectedIndex,
+    snapCount,
     canScrollPrevious: api?.canScrollPrev() ?? false,
     canScrollNext: api?.canScrollNext() ?? false,
     scrollPrevious,

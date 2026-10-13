@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
 import { webNavbarMenuItems } from "@/components/platform/data/web.navbar.menuItems";
@@ -12,6 +13,7 @@ import { cn } from "@/lib/utils";
 /** Renders navigation for the web platform layout. */
 export default function WebNavbar({ appearance = "overlay", showGetStarted = true }: { appearance?: "overlay" | "solid" | "primary"; showGetStarted?: boolean }) {
   const { isScrolled, showAccount } = useNavbarWeb();
+  const t = useTranslations("recovery");
 
   return (
     <header
@@ -25,7 +27,7 @@ export default function WebNavbar({ appearance = "overlay", showGetStarted = tru
       )}
     >
       <nav aria-label="Primary navigation" className="container mx-auto flex h-full items-center justify-between gap-8 px-6">
-        <Link href="/" aria-label="Findee home" className="shrink-0">
+        <Link href="/" aria-label={t("home")} className="shrink-0">
           <AppIcon brightness={appearance === "primary" ? "primary" : isScrolled || appearance === "solid" ? "dark" : "light"} size="compact" />
         </Link>
 

@@ -6,4 +6,7 @@ export const ImageConstants = {
     FindeeOnWallet: `${ImageOrigin}/v1790302433/findee-on-wallet_j29ufq.png`,
     FindeeOnPhone: `${ImageOrigin}/v1790245044/findee-on-phone_joqd2b.png`,
     FindeeOnBusPass: `${ImageOrigin}/v1790245044/findee-on-bus-pass_ay6utl.png`,
+    FindeeOnLaptop2: `${ImageOrigin}/v1791855785/Laptop_Return_Sticker_Product_Render_h3f1ce.png`,
+    ScanQRCode: `${ImageOrigin}/v1791855785/Hand_Scanning_Findmus_QR_Sticker_wgudkp.png`,
+    NotifyItemFound: `${ImageOrigin}/v1791855785/iPhone_Lock_Screen_Notifications_Mockup_bcpjmt.png`,
 }

@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Findee Recovery System",
+  title: "Findmus Recovery System",
   description: "Recover your lost items in the easiest way possible",
 };
 

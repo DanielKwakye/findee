@@ -10,6 +10,13 @@ export const webHeroCarouselOptions = {
   watchDrag: false,
 } as const;
 
+export const testimonialCarouselOptions = {
+  align: "start",
+  loop: true,
+  slidesToScroll: "auto",
+  startIndex: 0,
+} as const;
+
 export const heroCarouselAutoplayOptions = {
   delay: 5000,
   stopOnMouseEnter: true,

@@ -3,10 +3,10 @@ import Link from "next/link";
 import { CirclePlay } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
-import TypographyH1 from "@/components/core/ui/typography-h1";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { webHeroTrustedItems } from "@/components/platform/data/web.hero.trustedItems";
 import HeroTrustCues from "@/components/platform/ui/shared/hero-trust-cues";
+import HeroTitle from "@/components/platform/ui/shared/hero-title";
 import glowStyles from "@/components/platform/ui/shared/hero-carousel-glow.module.css";
 import WebHeroCarousel from "@/components/platform/ui/web/hero-carousel";
 import { cn } from "@/lib/utils";
@@ -24,10 +24,7 @@ export default function WebHero() {
           <TypographyBody className="inline-flex rounded-full border border-primary-foreground/10 bg-primary-foreground/5 px-4 py-1.5 text-[10px] font-semibold tracking-[0.18em] text-chart-1 uppercase">
             {t("eyebrow")}
           </TypographyBody>
-          <TypographyH1 className="mt-5 font-heading text-[clamp(3.5rem,4.3vw,5rem)] leading-[1.05] tracking-tight text-primary-foreground">
-            <span className="block whitespace-nowrap">{t("titleFirstLine")}</span>
-            <span className="block whitespace-nowrap text-chart-1">{t("titleSecondLine")}</span>
-          </TypographyH1>
+          <HeroTitle className="mt-5 text-[clamp(3.5rem,4.3vw,5rem)] leading-[1.05] tracking-tight" />
           <TypographyParagraph className="mt-5 max-w-lg text-base leading-7 text-primary-foreground/75">
             {t("desktopSubtitle")}
           </TypographyParagraph>
@@ -48,7 +45,7 @@ export default function WebHero() {
         </div>
       </div>
       {/* Trusted by people everywhere bar. */}
-      <div className="mt-8 flex min-h-14 items-center gap-8 border-t border-primary-foreground/10 pt-3 text-primary-foreground/75">
+      <div className="mt-8 flex min-h-14 items-center gap-8 pt-3 text-primary-foreground/75">
         <TypographyBody className="shrink-0 text-xs font-semibold tracking-[0.2em] uppercase">
           {t("trustedByPeopleEverywhere")}
         </TypographyBody>

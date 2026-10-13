@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Tabs, TabsList, TabsTrigger } from "@/components/core/ui/tabs";
 import TypographyBody from "@/components/core/ui/typography-body";
 import { mobileNavbarMenuItems } from "@/components/platform/data/mobile.navbar.menuItems";
@@ -16,11 +17,12 @@ type MobileNavbarProps = {
 /** Renders navigation for the mobile platform layout. */
 export default function MobileNavbar({ appearance = "overlay" }: MobileNavbarProps) {
   const { activeTab, showAccount } = useNavbarMobile();
+  const t = useTranslations("recovery");
 
   return (
     <>
       <header className={cn("absolute inset-x-0 top-0 z-50 flex h-16 items-center justify-between px-5 xl:hidden", appearance === "primary" ? "bg-primary text-primary-foreground" : appearance === "solid" ? "bg-background text-foreground" : "text-background")}>
-        <Link href="/" aria-label="Findee home">
+        <Link href="/" aria-label={t("home")}>
           <AppIcon brightness={appearance === "solid" ? "dark" : "light"} size="compact" showName={false} />
         </Link>
         {showAccount && <NavbarAccount />}

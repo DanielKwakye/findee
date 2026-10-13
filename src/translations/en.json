@@ -83,17 +83,17 @@
       "everyday": {
         "title": "Everyday items",
         "description": "Laptops, phones, tablets, water bottles, keys, bikes, luggage and more.",
-        "alt": "Findee QR sticker on a laptop"
+        "alt": "Findmus QR sticker on a laptop"
       },
       "tough": {
         "title": "Toughs",
         "description": "Tools, toolboxes, outdoor gear, sports equipment, bikes, helmets and more.",
-        "alt": "Findee QR tag attached to keys"
+        "alt": "Findmus QR tag attached to keys"
       },
       "fabric": {
         "title": "Fabrics",
         "description": "Clothes, backpacks, hats, school uniforms, fabric bags and more.",
-        "alt": "Findee QR sticker on a backpack"
+        "alt": "Findmus QR sticker on a backpack"
       }
     }
   },
@@ -101,9 +101,9 @@
     "title": "Kindly contact the owner",
     "unreachableGuidance": "If you cannot reach the owner, contact your local police station for help returning this item.",
     "eyebrow": "Found an item? 🎉",
-    "home": "Findee home",
+    "home": "Findmus home",
     "ownerLabel": "This item belongs to",
-    "ownerFallback": "A Findee owner",
+    "ownerFallback": "A Findmus owner",
     "description": "Contact the owner to help return this item.",
     "loading": "Looking up this recovery code…",
     "notFound": "No record found for the given recovery code.",
@@ -184,7 +184,7 @@
     "generate": "Generate",
     "generation": {
       "success": "QR codes generated successfully.",
-      "title": "Generate Findee QRs",
+      "title": "Generate Findmus QRs",
       "description": "Enter the number of QR stickers to generate for each variant.",
       "Everyday": "Everyday",
       "Fabric": "Fabric",
@@ -214,7 +214,7 @@
       "delete": "Selected products deleted.",
       "status": "Procurement status updated."
     },
-    "csvFilename": "findee-qrs.csv",
+    "csvFilename": "findmus-qrs.csv",
     "actionError": "Unable to update selected products. Please try again.",
     "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
     "yes": "Yes",
@@ -446,37 +446,165 @@
     "description": "Add new products to your inventory",
     "placeholder": "Add"
   },
+  "Footer": {
+    "home": "Findmus home",
+    "tagline": "Small stickers. Big reunions.",
+    "description": "Findmus helps lost items find their way home. Attach, get found, and be reunited — simply and securely.",
+    "product": "Product",
+    "company": "Company",
+    "followUs": "Follow Us",
+    "stayUpdated": "Stay updated with tips, stories and more.",
+    "copyright": "© {year, number, ::group-off} Findmus. All rights reserved.",
+    "closing": "Made for a more connected world.",
+    "links": {
+      "howItWorks": "How It Works",
+      "stickers": "Our Stickers",
+      "pricing": "Pricing",
+      "faqs": "FAQs",
+      "about": "About Us",
+      "blog": "Blog",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "social": {
+      "x": "Findmus on X",
+      "facebook": "Findmus on Facebook",
+      "instagram": "Findmus on Instagram",
+      "youtube": "Findmus on YouTube"
+    }
+  },
+  "Testimonials": {
+    "eyebrow": "Sample testimonials",
+    "title": "Real stories.",
+    "titleAccent": "Real happy endings.",
+    "subtitle": "See how Findmus helps people get their belongings back.",
+    "regionLabel": "Findmus testimonials",
+    "slideLabel": "Testimonial {number} of {total}",
+    "rating": "{rating, number} out of 5 stars",
+    "previous": "Previous testimonials",
+    "next": "Next testimonials",
+    "stories": {
+      "laptop": {
+        "quote": "“Honestly, the relief was the best part. My laptop had been handed in at the library, and someone scanned the sticker to reach me. It took until the next morning to collect it, but at least I knew where it was.”",
+        "name": "Michael T.",
+        "location": "St. John’s, NL"
+      },
+      "suitcase": {
+        "quote": "“Two very similar suitcases got mixed up after our flight. The sticker gave the other traveller a way to contact me, and we sorted out a swap. More luggage-friendly tag options would be nice, though.”",
+        "name": "Sarah K.",
+        "location": "Toronto, ON"
+      },
+      "jacket": {
+        "quote": "“Another school jacket gone, or so I thought. A parent found it at the playground and called using the details on the Findmus page. It was back by Monday. Saved us buying another one.”",
+        "name": "Ama S.",
+        "location": "Halifax, NS"
+      },
+      "keys": {
+        "quote": "“Wasn’t sure anyone would bother scanning it. Turns out someone did when my keys were found on a walking trail. We arranged a nearby pickup. A proper keyring version would be handy.”",
+        "name": "Daniel R.",
+        "location": "Ottawa, ON"
+      },
+      "backpack": {
+        "quote": "“Getting my course notes back mattered more than the bag itself. It had been found on the bus, and the person used Findmus to get in touch. We had to work out a pickup time, but it was pretty straightforward.”",
+        "name": "Priya M.",
+        "location": "Vancouver, BC"
+      },
+      "wallet": {
+        "quote": "“The café had my wallet behind the counter before I even realised it was missing. Someone scanned the sticker and let me know. A smaller sticker for narrow card slots would be useful, but this one did the job.”",
+        "name": "James L.",
+        "location": "Calgary, AB"
+      }
+    }
+  },
+  "FAQ": {
+    "eyebrow": "FAQs",
+    "title": "Everything you need to know",
+    "subtitle": "Quick answers to common questions about Findmus.",
+    "questions": {
+      "howItWorks": {
+        "question": "How does Findmus work?",
+        "answer": "You stick a Findmus QR code on your item. If someone finds it, they scan the code and can securely contact you through our platform."
+      },
+      "privacy": {
+        "question": "Is my information private?",
+        "answer": "Yes. Your personal details are never shown. Finders can only message you through a secure, anonymous channel."
+      },
+      "notifications": {
+        "question": "How will I be notified?",
+        "answer": "You’ll receive an instant notification via email or SMS when someone scans your Findmus QR code."
+      },
+      "items": {
+        "question": "What can I use Findmus on?",
+        "answer": "Findmus works on laptops, phones, bags, bikes, keys, clothing, pet items, and almost anything you value."
+      },
+      "subscription": {
+        "question": "Do I need a subscription?",
+        "answer": "No. There’s no subscription required. You only need to activate your Findmus code after purchase."
+      },
+      "help": {
+        "question": "What if I need help?",
+        "answer": "We’re here for you. Contact our support team anytime and we’ll be happy to assist."
+      }
+    }
+  },
+  "HowItWorks": {
+    "eyebrow": "How Findmus works",
+    "title": "Three simple steps.",
+    "subtitle": "Order yours and stick it. Get found. Get it back.",
+    "stepNumber": "{number}",
+    "secure": "Secure",
+    "trusted": "Trusted",
+    "noApp": "No App Required",
+    "steps": {
+      "stick": {
+        "title": "Order yours and stick it",
+        "description": "Attach your Findmus sticker to your item.",
+        "alt": "Findmus QR sticker attached to a laptop"
+      },
+      "scan": {
+        "title": "Someone finds it",
+        "description": "They scan the QR code to get in touch with you.",
+        "alt": "A phone scanning a Findmus QR sticker"
+      },
+      "return": {
+        "title": "Get it back",
+        "description": "Findmus connects you with the finder so you can arrange a safe return.",
+        "alt": "A phone showing notifications that a lost item has been found"
+      }
+    }
+  },
   "Hero": {
     "eyebrow": "A smarter way to get lost items back",
     "titleFirstLine": "Stick. Scan.",
     "titleSecondLine": "Get It Back.",
     "mobileSubtitle": "If someone finds your lost item, they can scan the QR sticker to get in touch with you.",
-    "desktopSubtitle": "Findee QR stickers help you recover your lost items easily. If someone finds your item, they can scan the QR sticker to get in touch with you.",
+    "desktopSubtitle": "Findmus QR stickers help you recover your lost items easily. If someone finds your item, they can scan the QR sticker to get in touch with you.",
     "getYourStickers": "Get Your QR Stickers",
     "howItWorks": "How It Works",
     "secured": "Secured",
     "trusted": "Trusted",
     "trustedByPeopleEverywhere": "Trusted by people everywhere",
     "carousel": {
-      "regionLabel": "Findee QR sticker use cases",
+      "regionLabel": "Findmus QR sticker use cases",
       "laptopsTitle": "Stick on Electronics",
       "laptopsDescription": "Keep your devices within reach.",
-      "laptopsAlt": "Findee QR sticker on a laptop",
+      "laptopsAlt": "Findmus QR sticker on a laptop",
       "bagsTitle": "Stick on Backpacks",
       "bagsDescription": "School bags, travel luggage, gym bags and more.",
-      "bagsAlt": "Findee QR sticker on a black backpack",
+      "bagsAlt": "Findmus QR sticker on a black backpack",
       "keysTitle": "Stick on Keys & Essentials",
       "keysDescription": "Keys, wallets, ID cards and more.",
-      "keysAlt": "Findee QR tag attached to keys",
+      "keysAlt": "Findmus QR tag attached to keys",
       "walletsTitle": "Stick on Wallets & Cards",
       "walletsDescription": "Keep everyday essentials easy to return.",
-      "walletsAlt": "Findee QR sticker on a wallet",
+      "walletsAlt": "Findmus QR sticker on a wallet",
       "phonesTitle": "Stick on Phones & Devices",
       "phonesDescription": "Give your everyday tech a way back.",
-      "phonesAlt": "Findee QR sticker on a phone",
+      "phonesAlt": "Findmus QR sticker on a phone",
       "passesTitle": "Stick on Passes & IDs",
       "passesDescription": "Help lost travel cards find their way home.",
-      "passesAlt": "Findee QR sticker on a bus pass",
+      "passesAlt": "Findmus QR sticker on a bus pass",
       "previous": "Previous item",
       "next": "Next item",
       "slideLabel": "{title}, slide {number} of {total}"
