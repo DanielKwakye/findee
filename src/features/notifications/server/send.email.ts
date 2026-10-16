@@ -12,10 +12,11 @@ type EmailNotification = {
 /** Delivers transactional emails from the application's verified sender. */
 export async function sendEmail({ idempotencyKey, ...message }: EmailNotification) {
     const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) throw new Error("Email delivery is not configured.");
+    const fromEmail = process.env.EMAIL_FROM;
+    if (!apiKey || !fromEmail) throw new Error("Email delivery is not configured.");
     const resend = new Resend(apiKey);
     const { data, error } = await resend.emails.send(
-        { ...message, from: "Findmus <noreply@findmus.com>" },
+        { ...message, from: `Findmus <${fromEmail}>` },
         idempotencyKey ? { idempotencyKey } : undefined,
     );
     if (error) throw new Error("Email delivery failed.", { cause: error });
