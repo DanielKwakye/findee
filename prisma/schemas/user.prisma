@@ -12,6 +12,7 @@ model User {
   reservedProducts Product[] @relation("ProductReservation")
   assignedProducts Product[] @relation("ProductAssignment")
   orders Order[]
+  tickets Ticket[]
 }
 
 enum UserRole {

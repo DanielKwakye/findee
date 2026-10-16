@@ -9,7 +9,7 @@
       "howItWorks": { "label": "How It Works", "description": "See how QR stickers help lost items find their way home." },
       "pricing": { "label": "Pricing", "description": "Find the right sticker plan for you." },
       "useCases": { "label": "Use Cases", "description": "Discover what you can protect with Findmus." },
-      "about": { "label": "About", "description": "Learn about Findmus and our mission." },
+      "contactUs": { "label": "Contact Us", "description": "Get help from the Findmus team." },
       "blog": { "label": "Blog", "description": "Read stories and tips for keeping your belongings safe." }
     }
   },
@@ -198,6 +198,9 @@
     "serverError": "Unable to log in. Please try again."
   },
   "PortalNavigation": {
+    "yourTickets": "Support Tickets",
+    "tickets": "Tickets",
+    "contactUs": "Contact Support",
     "account": "Account",
     "profile": "Profile",
     "inventory": "Inventory",
@@ -275,6 +278,8 @@
     "pending": "Please wait…"
   },
   "PortalBreadcrumb": {
+    "your-tickets": "Support Tickets",
+    "tickets": "Tickets",
     "profile": "Profile",
     "label": "Breadcrumb",
     "create-order": "Create Order",
@@ -286,6 +291,85 @@
     "orders": "Orders",
     "settings": "Settings",
     "record": "{value}"
+  },
+  "TicketNotifications": {
+    "created": {
+      "title": "We received your message",
+      "subject": "Findmus ticket {code} received",
+      "introduction": "Hi {name}, your support ticket {code} has been received and is pending review.",
+      "guidance": "Keep your ticket code for reference. We’ll email you when the status of your request changes."
+    },
+    "updated": {
+      "title": "Your ticket has been updated",
+      "subject": "Update on Findmus ticket {code}",
+      "introduction": "Hi {name}, the status of ticket {code} is now: {status}.",
+      "guidance": "Keep your ticket code for reference when contacting our team."
+    },
+    "support": {
+      "title": "New support ticket",
+      "subject": "New Findmus ticket {code}",
+      "introduction": "A new support ticket {code} has been submitted by {name}.",
+      "details": "Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+    }
+  },
+  "TicketHistory": {
+    "adminTitle": "Tickets",
+    "adminDescription": "Review support requests and manage their progress.",
+    "view": "View ticket",
+    "details": {
+      "title": "Ticket details",
+      "customerDescription": "Your submission for ticket {code}.",
+      "description": "Review the request and update its status and internal remarks.",
+      "close": "Close ticket details",
+      "loading": "Loading ticket…",
+      "remarks": "Internal remarks",
+      "remarksHelp": "Visible to administrators only.",
+      "remarksTooLong": "Use 5,000 characters or fewer for remarks.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "saveSuccess": "Ticket updated successfully.",
+      "notificationWarning": "Ticket saved, but its email notification could not be sent.",
+      "saveError": "Unable to update the ticket. Please try again."
+    },
+    "title": "Support Tickets",
+    "description": "View your previous support requests and their status.",
+    "columns": {
+      "code": "Ticket code",
+      "customerName": "Customer name",
+      "customerEmail": "Customer email",
+      "actions": "Actions",
+      "createdAt": "Date",
+      "message": "Message",
+      "status": "Status"
+    },
+    "statuses": {
+      "PENDING": "Pending",
+      "PROCESSING": "Processing",
+      "RESOLVED": "Resolved"
+    },
+    "messagePreview": "{message}…",
+    "loadError": "Unable to load your tickets. Please try again.",
+    "retry": "Try again"
+  },
+  "TicketForm": {
+    "notificationWarning": "Your ticket is saved. Some email notifications could not be sent; you do not need to submit it again.",
+    "title": "Contact Findmus Team",
+    "description": "Send us a message and we’ll create a support ticket for you.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "nameRequired": "Enter your name.",
+    "nameTooLong": "Use 100 characters or fewer for your name.",
+    "emailRequired": "Enter your email.",
+    "emailInvalid": "Enter a valid email address.",
+    "messageRequired": "Enter your message.",
+    "messageTooLong": "Use 5,000 characters or fewer for your message.",
+    "submit": "Send message",
+    "submitting": "Sending…",
+    "submitError": "Unable to save your message. Please try again.",
+    "success": "Your message has been received. Your ticket code is {code}. We’ll send updates to your email.",
+    "successTracking": "Your message has been received. Your ticket code is {code}. Track your submission in <tickets>Support Tickets</tickets>."
   },
   "portalTable": {
     "search": "Search…",
@@ -520,7 +604,7 @@
       "faqs": "FAQs",
       "about": "About Us",
       "blog": "Blog",
-      "contact": "Contact",
+      "tickets": "Tickets",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
@@ -641,7 +725,7 @@
     "titleAccent": "Service",
     "subtitle": "The terms for using Findmus and ordering our QR stickers."
   },
-  "Contact": {
+  "Ticket": {
     "title": "Contact",
     "titleAccent": "Us",
     "subtitle": "Have a question about Findmus, your stickers, or an order? Get in touch — we're here to help."

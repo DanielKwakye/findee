@@ -13,7 +13,7 @@ export const footerLinkGroups = [
     links: [
       { key: "about", href: "/about" },
       { key: "blog", href: "/blog" },
-      { key: "contact", href: "/contact" },
+      { key: "tickets", href: "/tickets" },
       { key: "privacy", href: "/privacy" },
       { key: "terms", href: "/terms" },
     ],

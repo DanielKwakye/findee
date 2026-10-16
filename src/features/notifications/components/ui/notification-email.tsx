@@ -25,7 +25,7 @@ export default function NotificationEmail({ brand, title, introduction, highligh
                                 <Text className="highlightText" style={{ margin: 0, padding: "22px 24px", fontSize: "28px", fontWeight: 600, lineHeight: "36px", letterSpacing: "normal" }}>{highlight}</Text>
                             </Section>
                         )}
-                        <Text className="bodyText" style={{ margin: "24px 0 36px", fontSize: "16px", lineHeight: "26px" }}>{guidance}</Text>
+                        <Text className="bodyText" style={{ margin: "24px 0 36px", fontSize: "16px", lineHeight: "26px", whiteSpace: "pre-line", overflowWrap: "anywhere" }}>{guidance}</Text>
                         <Text className="bodyText" style={{ margin: 0, fontSize: "14px", lineHeight: "22px", whiteSpace: "pre-line" }}>{signoff}</Text>
                     </Section>
                     <Section className="emailFooter" style={{ padding: "32px 28px" }}>

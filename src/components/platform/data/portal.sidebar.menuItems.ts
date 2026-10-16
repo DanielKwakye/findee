@@ -1,5 +1,7 @@
 import {
     ClipboardList,
+    MessageSquare,
+    Ticket,
     Package,
     PackagePlus,
     ShoppingCart,
@@ -36,10 +38,13 @@ export const portalInventoryItems: PortalInventoryItem[] = [
 
 export const portalInternalItems = [
     { name: "products", url: "/admin/products", icon: Package },
-    { name: "procurements", url: "/admin/procurement", icon: ClipboardList }
+    { name: "procurements", url: "/admin/procurement", icon: ClipboardList },
+    { name: "tickets", url: "/admin/tickets", icon: MessageSquare },
 ]
 
 export const portalCustomerItems: PortalInventoryItem[] = [
     { title: "orders", url: "/customer/orders", icon: ShoppingCart },
     { title: "profile", url: "/customer/profile", icon: UserRound },
+    { title: "contactUs", url: "/customer/tickets", icon: MessageSquare },
+    { title: "yourTickets", url: "/customer/your-tickets", icon: Ticket },
 ]
