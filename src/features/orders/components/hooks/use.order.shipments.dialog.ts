@@ -12,13 +12,13 @@ import { getOrderShipmentGroups } from "@/features/orders/utils/order.shipments"
 import type { AddOrderShipmentDialogHandle, OrderShipmentsDialogHandle, OrderStatusDialogRecord } from "@/features/orders/utils/order.types";
 
 /** Manages the shipment list dialog and confirmed record deletion. */
-export function useOrderShipmentsDialog(ref: Ref<OrderShipmentsDialogHandle>) {
+export function useOrderShipmentsDialog(ref: Ref<OrderShipmentsDialogHandle>, readOnly = false) {
     const t = useTranslations("orders");
     const queryClient = useQueryClient();
     const confirmRef = useRef<PortalConfirmDialogHandle>(null);
     const updateRef = useRef<AddOrderShipmentDialogHandle>(null);
     const [order, setOrder] = useState<OrderStatusDialogRecord | null>(null);
-    const query = useQuery({ queryKey: ["orders", "shipments", order?.id], queryFn: () => getOrderShipments(order!.id), enabled: !!order });
+    const query = useQuery({ queryKey: [readOnly ? "customer-orders" : "orders", "shipments", order?.id], queryFn: () => getOrderShipments(order!.id, readOnly ? "customer" : "admin"), enabled: !!order });
     const mutation = useMutation({ mutationFn: deleteOrderShipment, retry: false,
         /** Refreshes order and shipment views after record deletion. */
         async onSuccess() {

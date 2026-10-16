@@ -1,0 +1,13 @@
+.patternPanel {
+    background-color: color-mix(in oklch, var(--chart-5) 22%, var(--foreground));
+}
+
+.patternPanel::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    opacity: 0.1;
+    background-image: linear-gradient(color-mix(in oklch, var(--chart-2) 40%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklch, var(--chart-2) 40%, transparent) 1px, transparent 1px);
+    background-size: 50px 50px;
+}

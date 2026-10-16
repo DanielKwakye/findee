@@ -17,7 +17,7 @@ export default function UseCases() {
   const pageCount = Math.ceil(useCases.length / pageSize);
 
   return (
-    <section aria-label={t("regionLabel")} className="container mx-auto px-4 py-8 sm:px-6 lg:py-12">
+    <section aria-label={t("regionLabel")} className="container mx-auto px-4 pt-0 pb-8 sm:px-6 lg:pb-12">
       <Carousel key={pageSize} opts={{ align: "start" }} aria-label={t("regionLabel")}>
         <CarouselContent>
           {Array.from({ length: pageCount }, (_, page) => (
@@ -29,7 +29,7 @@ export default function UseCases() {
                     <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
                       <Image src={image} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover" />
                     </div>
-                    <CardContent className="flex h-48 flex-col gap-2 p-3 sm:h-40 sm:p-5">
+                    <CardContent className="flex flex-col gap-2 p-3 sm:p-5">
                       <TypographyBody className="text-sm font-semibold sm:text-lg">{t(`items.${key}.title`)}</TypographyBody>
                       <TypographyParagraph className="text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">{t(`items.${key}.description`)}</TypographyParagraph>
                     </CardContent>

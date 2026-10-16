@@ -14,9 +14,9 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
     const customer = await getCustomerUser();
     return (
         <>
-            <MobileNavbar appearance="solid" />
+            <MobileNavbar appearance="solid" elevated={false} />
             <WebNavbar appearance="primary" showGetStarted={false} />
-            <main className="flex items-start justify-center px-5 pt-18 pb-[calc(10rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-48 xl:px-40 xl:pt-32 xl:pb-8">
+            <main className="flex items-start justify-center px-5 pt-24 pb-[calc(10rem+env(safe-area-inset-bottom))] sm:px-6 sm:pt-48 xl:px-40 xl:pt-32 xl:pb-8">
                 <Checkout key={`${initialPlan}-${initialVariant}`} initialPlan={initialPlan} initialVariant={initialVariant} customer={customer ? { email: customer.email, name: customer.name, phone: customer.phone } : null} />
             </main>
         </>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
-import { webNavbarMenuItems } from "@/components/platform/data/web.navbar.menuItems";
+import { navbarMenuItems } from "@/components/platform/data/navbar.menuItems";
 import { useNavbarWeb } from "@/components/platform/hooks/use.navbar";
 import AppIcon from "@/components/platform/ui/shared/app-icon";
 import NavbarAccount from "@/components/platform/ui/shared/navbar-account";
@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 export default function WebNavbar({ appearance = "overlay", showGetStarted = true }: { appearance?: "overlay" | "solid" | "primary"; showGetStarted?: boolean }) {
   const { isScrolled, showAccount } = useNavbarWeb();
   const t = useTranslations("recovery");
-  const tLinks = useTranslations("Footer.links");
+  const tNav = useTranslations("Navbar");
 
   return (
     <header
@@ -33,9 +33,9 @@ export default function WebNavbar({ appearance = "overlay", showGetStarted = tru
         </Link>
 
         <div className="flex items-center gap-7">
-          {webNavbarMenuItems.map(({ label, href }) => (
-            <Link key={label} href={href} className="whitespace-nowrap transition-opacity hover:opacity-70">
-              <TypographyBody className="text-sm">{href === "/pricing" ? tLinks("pricing") : label}</TypographyBody>
+          {navbarMenuItems.map(({ key, href }) => (
+            <Link key={key} href={href} className="whitespace-nowrap transition-opacity hover:opacity-70">
+              <TypographyBody className="text-sm">{tNav(`items.${key}.label`)}</TypographyBody>
             </Link>
           ))}
         </div>

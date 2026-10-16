@@ -35,15 +35,17 @@ import TypographyBody from "@/components/core/ui/typography-body";
 /** Renders the portal user's profile and account menu. */
 export function PortalNavUser({
                             user,
+                            audience = "admin",
                         }: {
     user: {
         name: string | null
         email: string
         avatar?: string
     }
+    audience?: "admin" | "customer"
 }) {
     const { isMobile, logout, t } = usePortalUser();
-    const name = t("admin");
+    const name = audience === "customer" ? user.name?.trim() || t("account") : t("admin");
     const initials = name.slice(0, 2).toUpperCase();
 
     return (
@@ -96,6 +98,7 @@ export function PortalNavUser({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
+                        {audience === "admin" && <>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>
                                 <BadgeCheck />
@@ -111,6 +114,7 @@ export function PortalNavUser({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
+                        </>}
                         <DropdownMenuItem disabled={logout.isPending} onClick={() => logout.mutate()} closeOnClick={false}>
                             <LogOut />
                             <TypographyBody className="text-sm">{t(logout.isPending ? "loggingOut" : "logout")}</TypographyBody>

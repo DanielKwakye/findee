@@ -11,7 +11,7 @@ export default function UseCasesPage() {
       <MobileNavbar appearance="solid" />
       <WebNavbar appearance="solid" showGetStarted={false} />
       <main className="min-h-screen bg-background pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] xl:pb-0">
-        <InnerPageHero title={t("title")} titleAccent={t("titleAccent")} subtitle={t("subtitle")} />
+        <InnerPageHero title={t("title")} titleAccent={t("titleAccent")} subtitle={t("subtitle")} className="pb-4" />
         <UseCases />
       </main>
       <Footer />

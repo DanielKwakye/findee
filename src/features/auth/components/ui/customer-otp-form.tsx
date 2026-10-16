@@ -9,9 +9,10 @@ import { Field, FieldLabel, FieldError } from "@/components/core/ui/field";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { useCustomerOtp } from "@/features/auth/components/hooks/use.customer.otp";
+import { cn } from "@/lib/utils";
 
 /** Presents email and code entry for customer authentication. */
-export function CustomerOtpForm({ onVerified }: { onVerified: (email: string) => void }) {
+export function CustomerOtpForm({ onVerified, fullWidth = false }: { onVerified: (email: string) => void; fullWidth?: boolean }) {
     const { t, form, emailInput, codeVisible, busy, request, verification, error, onRequest, onSubmit } = useCustomerOtp(onVerified);
     const { errors } = form.formState;
 
@@ -41,8 +42,8 @@ export function CustomerOtpForm({ onVerified }: { onVerified: (email: string) =>
                 </>
             )}
             {error && <div role="alert"><TypographyParagraph className="text-sm text-destructive">{error}</TypographyParagraph></div>}
-            <div className="flex flex-wrap gap-3">
-                <Button type="submit" disabled={busy}><TypographyBody className="text-sm">{t(verification.isPending ? "verifying" : request.isPending ? "sending" : codeVisible ? "verify" : "send")}</TypographyBody></Button>
+            <div className={cn("flex flex-wrap gap-3", fullWidth && "flex-col")}>
+                <Button type="submit" disabled={busy} className={cn(fullWidth && "w-full")}><TypographyBody className="text-sm">{t(verification.isPending ? "verifying" : request.isPending ? "sending" : codeVisible ? "verify" : "send")}</TypographyBody></Button>
                 {codeVisible && <Button type="button" variant="link" disabled={busy} onClick={onRequest}><TypographyBody className="text-sm">{t("resend")}</TypographyBody></Button>}
             </div>
         </form>

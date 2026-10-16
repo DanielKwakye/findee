@@ -1,5 +1,10 @@
 export type AuthRole = "ADMIN" | "CUSTOMER";
 
+export type CustomerProfileValues = {
+    name: string;
+    phone: string;
+};
+
 export type CustomerOtpValues = {
     email: string;
     code: string;

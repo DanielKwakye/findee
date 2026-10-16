@@ -1,5 +1,6 @@
 const ImageOrigin = `https://res.cloudinary.com/ddnzrzwjx/image/upload/f_auto,q_auto`
 export const ImageConstants = {
+    FindmusIcon: "https://findmus.com/_next/image?url=%2Fimages%2Fpng%2Fapp-icon.png&w=96&q=75",
     FindeeOnLaptop: `${ImageOrigin}/v1790231037/findee-on-laptop_eva3y5.png`,
     FindeeOnBag: `${ImageOrigin}/v1790303521/findee-on-bag-in-bus_hotf68.png`,
     FindeeOnKeyHolder: `${ImageOrigin}/v1790231354/findee-on-key-holder_qz3ogk.png`,

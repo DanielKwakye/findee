@@ -3,6 +3,7 @@ import {
     Package,
     PackagePlus,
     ShoppingCart,
+    UserRound,
     type LucideIcon,
 } from "lucide-react"
 
@@ -36,4 +37,9 @@ export const portalInventoryItems: PortalInventoryItem[] = [
 export const portalInternalItems = [
     { name: "products", url: "/admin/products", icon: Package },
     { name: "procurements", url: "/admin/procurement", icon: ClipboardList }
+]
+
+export const portalCustomerItems: PortalInventoryItem[] = [
+    { title: "orders", url: "/customer/orders", icon: ShoppingCart },
+    { title: "profile", url: "/customer/profile", icon: UserRound },
 ]

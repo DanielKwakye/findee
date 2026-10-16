@@ -36,6 +36,6 @@ export const getCustomerUser = cache(async () => {
 /** Requires customer access at protected pages and server operation boundaries. */
 export async function requireCustomer() {
     const user = await getCustomerUser();
-    if (!user) redirect("/login");
+    if (!user) redirect("/sign-in");
     return user;
 }

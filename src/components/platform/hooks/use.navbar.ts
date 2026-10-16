@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useRef, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { mobileNavbarMenuItems } from "@/components/platform/data/mobile.navbar.menuItems";
 import { getScrollState, getServerScrollState, subscribeToScroll } from "@/components/platform/utils/navbar.utils";
@@ -13,10 +13,12 @@ export function useNavbarWeb() {
 
 /** Coordinates state and interactions for the mobile navigation bar. */
 export function useNavbarMobile() {
+  const menuRef = useRef<{ open: () => void }>(null);
   const pathname = usePathname();
   const activeTab = mobileNavbarMenuItems.find(item => item.href === pathname)?.href ?? null;
 
   return {
+    menuRef,
     activeTab,
     showAccount: pathname !== "/",
   };

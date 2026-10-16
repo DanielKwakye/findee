@@ -26,8 +26,10 @@ import {
 /** Renders the primary portal navigation and its expandable groups. */
 export function PortalNavMain({
                             items,
+                            groupLabel = "inventory",
                         }: {
     items: PortalInventoryItem[]
+    groupLabel?: string
 }) {
     const t = useTranslations("PortalNavigation")
     const {isActive} = usePortalNavigation()
@@ -35,7 +37,7 @@ export function PortalNavMain({
     return (
         <SidebarGroup>
             <SidebarGroupLabel>
-                <TypographyBody className="text-xs">{t("inventory")}</TypographyBody>
+                <TypographyBody className="text-xs">{t(groupLabel)}</TypographyBody>
             </SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (

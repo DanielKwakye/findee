@@ -4,18 +4,18 @@ import { auth } from "@/features/auth/utils/auth";
 /** Redirects portal requests according to the verified session's authentication and role. */
 export const proxy = auth((request) => {
     const user = request.auth?.user;
-    if (request.nextUrl.pathname === "/login") {
+    if (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/sign-in") {
         if (!user?.id) return NextResponse.next();
         const destination = user.role === "ADMIN" ? "/admin" : "/customer";
         return NextResponse.redirect(new URL(destination, request.url));
     }
     const isAdminRoute = request.nextUrl.pathname === "/admin" || request.nextUrl.pathname.startsWith("/admin/");
-    if (!user) return NextResponse.redirect(new URL("/login", request.url));
+    if (!user) return NextResponse.redirect(new URL(isAdminRoute ? "/login" : "/sign-in", request.url));
     if (isAdminRoute && user.role !== "ADMIN") return NextResponse.redirect(new URL("/", request.url));
     if (!isAdminRoute && user.role !== "CUSTOMER") return NextResponse.redirect(new URL("/", request.url));
     return NextResponse.next();
 });
 
 export const config = {
-    matcher: ["/login", "/admin/:path*", "/customer/:path*"],
+    matcher: ["/login", "/sign-in", "/admin/:path*", "/customer/:path*"],
 };

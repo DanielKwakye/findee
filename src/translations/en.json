@@ -1,4 +1,18 @@
 {
+  "Navbar": {
+    "home": "Home",
+    "getYours": "Get Yours",
+    "menus": "More",
+    "primaryNavigation": "Primary navigation",
+    "close": "Close",
+    "items": {
+      "howItWorks": { "label": "How It Works", "description": "See how QR stickers help lost items find their way home." },
+      "pricing": { "label": "Pricing", "description": "Find the right sticker plan for you." },
+      "useCases": { "label": "Use Cases", "description": "Discover what you can protect with Findmus." },
+      "about": { "label": "About", "description": "Learn about Findmus and our mission." },
+      "blog": { "label": "Blog", "description": "Read stories and tips for keeping your belongings safe." }
+    }
+  },
   "Stepper": {
     "progress": "Step progress",
     "status": "Step {current} of {total}",
@@ -115,8 +129,39 @@
     "chatEnabled": "Chat is enabled for this item.",
     "noContact": "No contact methods are available for this item."
   },
+  "Notifications": {
+    "email": {
+      "brand": "Findmus",
+      "signoff": "Best,\nThe Findmus Team",
+      "footer": "This is an automated message from Findmus. Please do not reply to this email."
+    }
+  },
   "Auth": {
+    "customerProfile": {
+      "title": "Profile",
+      "description": "Keep your name and phone number up to date.",
+      "name": "Name (optional)",
+      "phone": "Phone number (optional)",
+      "nameTooLong": "Use 100 characters or fewer for your name.",
+      "phoneTooLong": "Use 50 characters or fewer for your phone number.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saveSuccess": "Your profile has been updated.",
+      "saveError": "Unable to update your profile. Please try again."
+    },
+    "customerSignIn": {
+      "title": "Sign in to Findmus",
+      "description": "Enter your email and we’ll send you a verification code. No password needed.",
+      "home": "Findmus home",
+      "termsNotice": "By continuing, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+    },
     "customerOtp": {
+      "emailMessage": {
+        "subject": "Your Findmus verification code",
+        "title": "Verify your email",
+        "introduction": "Enter this verification code to continue with Findmus:",
+        "guidance": "Keep this code private and do not share it with anyone. If you did not request this code, you can safely ignore this email."
+      },
       "email": "Email",
       "emailRequired": "Enter your email.",
       "emailInvalid": "Enter a valid email address.",
@@ -153,6 +198,8 @@
     "serverError": "Unable to log in. Please try again."
   },
   "PortalNavigation": {
+    "account": "Account",
+    "profile": "Profile",
     "inventory": "Inventory",
     "orders": "Orders",
     "showAll": "Show all",
@@ -228,6 +275,7 @@
     "pending": "Please wait…"
   },
   "PortalBreadcrumb": {
+    "profile": "Profile",
     "label": "Breadcrumb",
     "create-order": "Create Order",
     "admin": "Admin",
@@ -255,6 +303,15 @@
     "next": "Next"
   },
   "orders": {
+    "customer": {
+      "description": "View your sticker orders and follow their delivery progress.",
+      "date": "Order date",
+      "action": "Action",
+      "shipment": "Shipment",
+      "track": "Track Order",
+      "trackingDescription": "Delivery progress and tracking details for order {number}.",
+      "noTracking": "Tracking details will appear here when your order is shipped."
+    },
     "options": "Options",
     "createNewOrder": "Create New Order",
     "edit": {

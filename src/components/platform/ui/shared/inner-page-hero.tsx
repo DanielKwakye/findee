@@ -3,19 +3,21 @@ import { Badge } from "@/components/core/ui/badge";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyH1 from "@/components/core/ui/typography-h1";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
+import { cn } from "@/lib/utils";
 
 type InnerPageHeroProps = {
   title: string;
   titleAccent: string;
   subtitle: string;
+  className?: string;
 };
 
 /** Presents the shared patterned heading for public inner pages. */
-export default function InnerPageHero({ title, titleAccent, subtitle }: InnerPageHeroProps) {
+export default function InnerPageHero({ title, titleAccent, subtitle, className }: InnerPageHeroProps) {
   const t = useTranslations("Hero");
 
   return (
-    <section className="relative isolate overflow-hidden bg-background px-5 pt-8 pb-16 text-center text-foreground sm:px-6 sm:py-20 xl:pt-20 xl:pb-24">
+    <section className={cn("relative isolate overflow-hidden bg-background px-5 pt-8 pb-16 text-center text-foreground sm:px-6 sm:pt-20 sm:pb-8 lg:pb-10", className)}>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 opacity-40"

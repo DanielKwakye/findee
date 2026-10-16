@@ -1,7 +1,6 @@
+import { redirect } from "next/navigation";
+
+/** Opens the customer's orders section on entering the portal. */
 export default function CustomerPage() {
-    return (
-        <div className={"flex justify-center items-center"}>
-            Customer page
-        </div>
-    )
+    redirect("/customer/orders");
 }

@@ -2,6 +2,9 @@ import type { OrderStatus } from "@/generated/client";
 import type { getOrders } from "@/features/orders/server/get.orders.action";
 import type { getOrderDetails } from "@/features/orders/server/get.order.details.action";
 import type { getOrderShipments } from "@/features/orders/server/get.order.shipments.action";
+import type { getCustomerOrders } from "@/features/orders/server/get.customer.orders.action";
+
+export type CustomerOrderRow = Awaited<ReturnType<typeof getCustomerOrders>>["orders"][number];
 
 export type OrderRow = Awaited<ReturnType<typeof getOrders>>["orders"][number];
 export type OrderDetails = Awaited<ReturnType<typeof getOrderDetails>>;

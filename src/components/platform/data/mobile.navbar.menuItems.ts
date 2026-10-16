@@ -1,7 +1,6 @@
-import { HouseIcon, QrCodeIcon, UserRoundIcon} from "lucide-react";
+import { HouseIcon, QrCodeIcon } from "lucide-react";
 
 export const mobileNavbarMenuItems = [
-  { label: "Home", href: "/", icon: HouseIcon },
-  { label: "Get Yours", href: "/checkout", icon: QrCodeIcon },
-  { label: "Account", href: "#account", icon: UserRoundIcon },
+  { label: "home", href: "/", icon: HouseIcon },
+  { label: "getYours", href: "/checkout", icon: QrCodeIcon },
 ];
