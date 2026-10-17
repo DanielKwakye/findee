@@ -1,4 +1,4 @@
-import { timingSafeEqual } from "node:crypto";
+import { randomUUID, timingSafeEqual } from "node:crypto";
 import { confirmPendingOrders } from "@/features/orders/server/confirm.pending.orders";
 
 export const runtime = "nodejs";
@@ -15,12 +15,24 @@ export async function POST(request: Request) {
         return Response.json({ error: "unauthorized" }, { status: 401 });
     }
 
+    const runId = randomUUID();
+    const startedAt = Date.now();
+    console.info("Scheduled order confirmation started", { runId, timestamp: new Date(startedAt).toISOString() });
+
     try {
         // Await the five-order batch so the caller receives its actual outcomes.
         const summary = await confirmPendingOrders();
+        console.info("Scheduled order confirmation completed", {
+            runId, timestamp: new Date().toISOString(), durationMs: Date.now() - startedAt,
+            status: summary.status, attempted: summary.attempted, confirmed: summary.confirmed,
+            held: summary.held, failed: summary.failed, skipped: summary.skipped,
+            notificationsPending: summary.notificationsPending,
+        });
         return Response.json(summary);
     } catch (error) {
-        console.error("Scheduled order confirmation failed", { error });
+        console.error("Scheduled order confirmation failed", {
+            runId, timestamp: new Date().toISOString(), durationMs: Date.now() - startedAt, error,
+        });
         return Response.json({ error: "order_confirmation_failed" }, { status: 500 });
     }
 }
