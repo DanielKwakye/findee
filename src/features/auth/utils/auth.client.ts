@@ -5,7 +5,7 @@ import type { LoginValues } from "@/features/auth/utils/auth.types";
 
 /** Submits credentials through Auth.js and classifies safe login failures. */
 export async function login(values: LoginValues) {
-    const result = await signIn("credentials", { ...values, redirect: false, redirectTo: "/login" });
+    const result = await signIn("credentials", { ...values, redirect: false, redirectTo: "/admin" });
     if (!result || result.error || !result.ok || !result.url) {
         throw new Error(result?.code === "rate_limited" ? "rateLimited" : result?.error === "CredentialsSignin" ? "invalidCredentials" : "serverError");
     }

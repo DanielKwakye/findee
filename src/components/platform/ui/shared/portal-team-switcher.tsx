@@ -1,6 +1,11 @@
 "use client"
 
 import * as React from "react";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import TypographyBody from "@/components/core/ui/typography-body";
+import AddAdminDialog from "@/features/auth/components/ui/add-admin-dialog";
+import type { AddAdminDialogHandle } from "@/features/auth/utils/auth.types";
 import { ChevronsUpDown, Plus } from "lucide-react";
 
 import {
@@ -31,7 +36,9 @@ export function PortalTeamSwitcher({
     }[]
 }) {
     const { isMobile } = useSidebar()
-    const [activeTeam, setActiveTeam] = React.useState(teams[0])
+    const t = useTranslations("PortalTeamSwitcher")
+    const addAdminRef = React.useRef<AddAdminDialogHandle>(null)
+    const activeTeam = teams[0]
 
     if (!activeTeam) {
         return null
@@ -51,8 +58,8 @@ export function PortalTeamSwitcher({
                                     <activeTeam.logo className="size-4" />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-medium">{activeTeam.name}</span>
-                                    <span className="truncate text-xs">{activeTeam.plan}</span>
+                                    <TypographyBody className="truncate font-medium">{t(activeTeam.name)}</TypographyBody>
+                                    <TypographyBody className="truncate text-xs">{t(activeTeam.plan)}</TypographyBody>
                                 </div>
                                 <ChevronsUpDown className="ml-auto" />
                             </SidebarMenuButton>
@@ -66,31 +73,32 @@ export function PortalTeamSwitcher({
                     >
                         <DropdownMenuGroup>
                             <DropdownMenuLabel className="text-xs text-muted-foreground">
-                                Teams
+                                <TypographyBody className="text-xs">{t("admins")}</TypographyBody>
                             </DropdownMenuLabel>
                             {teams.map((team, index) => (
                                 <DropdownMenuItem
                                     key={team.name}
-                                    onClick={() => setActiveTeam(team)}
+                                    render={<Link href="/admin/admins" />}
                                     className="gap-2 p-2"
                                 >
                                     <div className="flex size-6 items-center justify-center rounded-md border">
                                         <team.logo className="size-3.5 shrink-0" />
                                     </div>
-                                    {team.name}
+                                    <TypographyBody>{t("manageAdmin")}</TypographyBody>
                                     <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                                 </DropdownMenuItem>
                             ))}
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="gap-2 p-2">
+                        <DropdownMenuItem className="gap-2 p-2" onClick={() => addAdminRef.current?.open()}>
                             <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                                 <Plus className="size-4" />
                             </div>
-                            <div className="font-medium text-muted-foreground">Add team</div>
+                            <TypographyBody className="font-medium text-muted-foreground">{t("addAdmin")}</TypographyBody>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+                <AddAdminDialog ref={addAdminRef} />
             </SidebarMenuItem>
         </SidebarMenu>
     )

@@ -11,7 +11,7 @@ export const getAuthenticatedUser = cache(async () => {
     return db.user.findFirst({
         where: { id: session.user.id, OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
         // Missing fields on older MongoDB accounts also mean the account is active.
-        select: { id: true, email: true, name: true, phone: true, role: true },
+        select: { id: true, email: true, name: true, phone: true, role: true, mustChangePassword: true },
     });
 });
 
@@ -22,9 +22,10 @@ export const getAdminUser = cache(async () => {
 });
 
 /** Requires administrator access at protected pages and server operation boundaries. */
-export async function requireAdmin() {
+export async function requireAdmin({ allowPasswordChange = false }: { allowPasswordChange?: boolean } = {}) {
     const user = await getAdminUser();
     if (!user) redirect("/login");
+    if (user.mustChangePassword && !allowPasswordChange) redirect("/change-password");
     return user;
 }
 

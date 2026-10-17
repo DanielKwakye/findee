@@ -1,5 +1,10 @@
 export type AuthRole = "ADMIN" | "CUSTOMER";
 
+export type AddAdminValues = { name: string; email: string };
+export type AddAdminDialogHandle = { open: () => void };
+export type AdminRow = { id: string; name: string | null; email: string; mustChangePassword: boolean };
+export type ChangeAdminPasswordValues = { password: string; confirmPassword: string };
+
 export type CustomerProfileValues = {
     name: string;
     phone: string;

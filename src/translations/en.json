@@ -1,4 +1,56 @@
 {
+  "PortalTeamSwitcher": {
+    "brand": "Findmus",
+    "plan": "Enterprise",
+    "admins": "Admins",
+    "manageAdmin": "Manage Admins",
+    "addAdmin": "Add Admin",
+    "addForm": {
+      "title": "Add Admin",
+      "description": "Create an administrator account. We will email them a temporary password and login instructions.",
+      "name": "Name (optional)",
+      "email": "Email",
+      "nameInvalid": "Use no more than 100 characters.",
+      "emailInvalid": "Enter a valid email address.",
+      "invalid": "Check the account details and try again.",
+      "duplicate": "An account with this email already exists.",
+      "error": "Unable to create the administrator. Please try again.",
+      "success": "Administrator created and login instructions emailed.",
+      "delivery": "The invitation could not be sent. Please try adding the administrator again.",
+      "cancel": "Cancel",
+      "save": "Add Admin",
+      "saving": "Adding…"
+    }
+  },
+  "Admins": {
+    "title": "Manage Admins",
+    "name": "Name",
+    "email": "Email",
+    "status": "Password setup",
+    "pending": "Password change required",
+    "ready": "Complete",
+    "noName": "Not provided",
+    "loadError": "Unable to load administrators. Please try again.",
+    "retry": "Try again"
+  },
+  "AdminInvitation": {
+    "subject": "Your Findmus administrator account",
+    "title": "Welcome to Findmus",
+    "introduction": "An administrator account has been created for {email}. Your temporary password is:",
+    "guidance": "Sign in at {url} using your email address and the temporary password above. After signing in, you must choose a new password on the password change page before continuing to the admin portal."
+  },
+  "AdminPasswordChange": {
+    "title": "Change your password",
+    "description": "Choose a new password to replace your temporary password before continuing in the admin portal.",
+    "password": "New password",
+    "confirmPassword": "Confirm new password",
+    "invalid": "Use a password between 8 and 1024 characters.",
+    "mismatch": "The passwords must match.",
+    "samePassword": "Choose a different password from your temporary password.",
+    "error": "Unable to change your password. Please try again.",
+    "save": "Change password",
+    "saving": "Saving…"
+  },
   "Navbar": {
     "home": "Home",
     "getYours": "Get Yours",
@@ -296,6 +348,7 @@
     "pending": "Please wait…"
   },
   "PortalBreadcrumb": {
+    "admins": "Manage Admins",
     "blog": "Blog",
     "your-tickets": "Support Tickets",
     "tickets": "Tickets",

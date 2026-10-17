@@ -4,8 +4,6 @@ import * as React from "react"
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
-    AudioWaveform,
-    Command,
     GalleryVerticalEnd,
 } from "lucide-react"
 import {
@@ -29,19 +27,9 @@ import AppIcon from "@/components/platform/ui/shared/app-icon";
 const data = {
     teams: [
         {
-            name: "Acme Inc",
+            name: "brand",
             logo: GalleryVerticalEnd,
-            plan: "Enterprise",
-        },
-        {
-            name: "Acme Corp.",
-            logo: AudioWaveform,
-            plan: "Startup",
-        },
-        {
-            name: "Evil Corp.",
-            logo: Command,
-            plan: "Free",
+            plan: "plan",
         },
     ],
 }
