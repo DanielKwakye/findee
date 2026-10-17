@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
         pathname: "/ddnzrzwjx/image/upload/**",
         search: "",
       },
+      {
+        protocol: "https",
+        hostname: "findmus.com",
+        pathname: "/images/**",
+        search: "",
+      },
+      {
+        protocol: "https",
+        hostname: "findmus.com",
+        pathname: "/_next/static/media/**",
+        search: "",
+      },
     ],
   },
 };

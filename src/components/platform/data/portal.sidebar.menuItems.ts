@@ -6,6 +6,7 @@ import {
     PackagePlus,
     ShoppingCart,
     UserRound,
+    Newspaper,
     type LucideIcon,
 } from "lucide-react"
 import type { OrderStatus } from "@/generated/client"
@@ -42,6 +43,7 @@ export const portalInternalItems = [
     { name: "products", url: "/admin/products", icon: Package },
     { name: "procurements", url: "/admin/procurement", icon: ClipboardList },
     { name: "tickets", url: "/admin/tickets", icon: MessageSquare },
+    { name: "blog", url: "/admin/blog", icon: Newspaper },
 ]
 
 export const portalCustomerItems: PortalInventoryItem[] = [
