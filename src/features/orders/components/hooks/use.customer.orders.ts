@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useCallback, useMemo, useRef, useState } from "react";
+import { createElement, Fragment, useCallback, useMemo, useRef, useState } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
 import type { SortingState } from "@tanstack/react-table";
@@ -32,8 +32,12 @@ export function useCustomerOrders() {
     const columns = useMemo<PortalTableColumnDef<CustomerOrderRow>[]>(() => [
         ...getCustomerOrderColumns(t, formatDate, (price, currency) => formatter.number(price, { style: "currency", currency })),
         { id: "actions", header: t("customer.action"), enableSorting: false, enableHiding: false,
-            cell: ({ row }) => createElement(Button, { type: "button", variant: "outline", size: "sm", className: "[&>span]:text-sm", onClick: () => trackOrder(row.original) },
-                createElement(TypographyBody, null, t("customer.track"))) },
+            cell: ({ row }) => createElement(Fragment, null,
+                createElement(Button, { type: "button", variant: "outline", size: "sm", className: "[&>span]:text-sm", onClick: () => trackOrder(row.original) },
+                    createElement(TypographyBody, null, t("customer.track"))),
+                row.original.cancellable && row.original.status === "CONFIRMED" && createElement(Button,
+                    { type: "button", variant: "outline", size: "sm", className: "ms-2 [&>span]:text-sm" },
+                    createElement(TypographyBody, null, t("customer.cancel")))) },
     ], [t, formatDate, formatter, trackOrder]);
 
     return { t, query, columns, search, setSearch, setSorting, setPagination, trackingRef,

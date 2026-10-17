@@ -4,6 +4,11 @@ model Order {
   customerId           String               @db.ObjectId
   customer             User                 @relation(fields: [customerId], references: [id])
   status               OrderStatus          @default(PENDING)
+  cancellable          Boolean              @default(false)
+  confirmationNotifiedAt DateTime?
+  customerConfirmationNotifiedAt DateTime?
+  adminConfirmationNotifiedAt DateTime?
+  nextConfirmationAttemptAt DateTime?
   planDetail           PlanDetail
   products             Product[]
   defaultReachoutModes  ReachoutModes

@@ -292,6 +292,30 @@
     "settings": "Settings",
     "record": "{value}"
   },
+  "OrderNotifications": {
+    "allocation": "{variant}: {quantity, number} stickers",
+    "restockTicket": "Order {number} is on hold awaiting restocking. No stickers have been assigned.\n\nRequested quantities:\n{allocations}",
+    "processing": {
+      "title": "Your order is confirmed",
+      "subject": "Findmus order {number} confirmed and processing",
+      "introduction": "Hi {name}, your order {number} is confirmed. Your stickers have been reserved and we’re actively processing your order.",
+      "guidance": "We’ll prepare your stickers before shipping. No activation or setup is required after delivery."
+    },
+    "restocking": {
+      "title": "Your order is awaiting restocking",
+      "subject": "Findmus order {number} confirmed — awaiting restocking",
+      "introduction": "Hi {name}, your order {number} is confirmed but on hold while we restock. We’ll process the whole order once every requested sticker variant is available.",
+      "guidance": "If you would prefer to cancel, go to your portal orders page: {url}"
+    },
+    "admin": {
+      "title": "Order confirmation",
+      "subject": "Order {number}: {status}",
+      "introduction": "Order {number} for {name} ({email}) is {status}.",
+      "guidance": "Requested quantities:\n{allocations}",
+      "processing": "confirmed and processing",
+      "restocking": "on hold awaiting restocking"
+    }
+  },
   "TicketNotifications": {
     "created": {
       "title": "We received your message",
@@ -393,6 +417,7 @@
       "action": "Action",
       "shipment": "Shipment",
       "track": "Track Order",
+      "cancel": "Cancel order",
       "trackingDescription": "Delivery progress and tracking details for order {number}.",
       "noTracking": "Tracking details will appear here when your order is shipped."
     },

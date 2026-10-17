@@ -1,5 +1,5 @@
 # Build image:
-# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v11 --push .
+# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v12 --push .
 
 
 # -----------------------------
@@ -81,6 +81,9 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma/generated ./prisma/generated
 COPY --from=builder /app/package*.json ./
+
+# Include the stylesheet loaded from disk when rendering notification emails.
+COPY --from=builder /app/src/features/notifications/components/ui/notification-email.module.css ./src/features/notifications/components/ui/notification-email.module.css
 
 # Fix permissions
 RUN mkdir -p .next/cache && \

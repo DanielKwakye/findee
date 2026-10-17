@@ -3,6 +3,14 @@ import type { getOrders } from "@/features/orders/server/get.orders.action";
 import type { getOrderDetails } from "@/features/orders/server/get.order.details.action";
 import type { getOrderShipments } from "@/features/orders/server/get.order.shipments.action";
 import type { getCustomerOrders } from "@/features/orders/server/get.customer.orders.action";
+import type { getConfirmationOrder } from "@/features/orders/utils/order.confirmation.utils";
+
+export type OrderConfirmationOptions = { deadline?: number };
+export type ConfirmationOrder = Awaited<ReturnType<typeof getConfirmationOrder>>;
+export type OrderConfirmationResult = { outcome: "processing" | "restocking" | "skipped"; notified: boolean };
+export type ConfirmationBatchOptions = { batchSize?: number; timeBudgetMs?: number; retryDelayMs?: number };
+export type ConfirmationBatchStatus = "completed" | "busy" | "time_budget";
+export type ConfirmationResult = { id: string } & (OrderConfirmationResult | { outcome: "failed"; error: string });
 
 export type CustomerOrderRow = Awaited<ReturnType<typeof getCustomerOrders>>["orders"][number];
 

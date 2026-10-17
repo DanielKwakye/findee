@@ -20,7 +20,7 @@ export async function getCustomerOrders(params: OrderQuery) {
         where, skip: (page - 1) * params.pageSize, take: params.pageSize,
         orderBy: [{ [sortBy]: direction }, { number: "asc" }],
         select: {
-            id: true, number: true, status: true, createdAt: true,
+            id: true, number: true, status: true, createdAt: true, cancellable: true,
             planDetail: { select: { quantity: true, price: true, currency: true } },
         },
     });
