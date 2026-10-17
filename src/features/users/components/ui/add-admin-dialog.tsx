@@ -6,8 +6,8 @@ import { Button } from "@/components/core/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/core/ui/field";
 import { Input } from "@/components/core/ui/input";
 import TypographyBody from "@/components/core/ui/typography-body";
-import { useAddAdminDialog } from "@/features/auth/components/hooks/use.add.admin.dialog";
-import type { AddAdminDialogHandle } from "@/features/auth/utils/auth.types";
+import { useAddAdminDialog } from "@/features/users/components/hooks/use.add.admin.dialog";
+import type { AddAdminDialogHandle } from "@/features/users/utils/users.types";
 
 /** Presents the form for creating an administrator account. */
 export default function AddAdminDialog({ ref }: { ref: Ref<AddAdminDialogHandle> }) {

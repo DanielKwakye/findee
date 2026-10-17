@@ -3,14 +3,14 @@
 import { createElement, useCallback, useMemo, useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { getUsers } from "@/features/auth/server/get.users.action";
-import { getCustomerColumns } from "@/features/auth/utils/customer.columns";
+import { getUsers } from "@/features/users/server/get.users.action";
+import { getCustomerColumns } from "@/features/users/utils/customer.columns";
 import { useUserDateTime } from "@/components/platform";
 import type { PortalConfirmDialogHandle, PortalTableColumnDef } from "@/components/platform";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
-import type { CustomerRow } from "@/features/auth/utils/auth.types";
-import { setCustomerDeactivation } from "@/features/auth/server/set.customer.deactivation.action";
+import type { CustomerRow } from "@/features/users/utils/users.types";
+import { setCustomerDeactivation } from "@/features/users/server/set.customer.deactivation.action";
 
 /** Manages customer records and the customer management table's behavior. */
 export function useCustomersTable() {

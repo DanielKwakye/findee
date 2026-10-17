@@ -4,9 +4,9 @@ import { useImperativeHandle, useState, type Ref } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { createAdmin } from "@/features/auth/server/create.admin.action";
+import { createAdmin } from "@/features/users/server/create.admin.action";
 import { isValidEmail } from "@/features/auth/utils/auth.validation";
-import type { AddAdminDialogHandle, AddAdminValues } from "@/features/auth/utils/auth.types";
+import type { AddAdminDialogHandle, AddAdminValues } from "@/features/users/utils/users.types";
 import { toast } from "@/components/core/ui/toast";
 
 /** Manages the administrator creation form and dialog lifecycle. */

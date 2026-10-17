@@ -1,5 +1,5 @@
 import type { PortalTableColumnDef } from "@/components/platform";
-import type { CustomerRow } from "@/features/auth/utils/auth.types";
+import type { CustomerRow } from "@/features/users/utils/users.types";
 
 /** Defines customer contact and account status columns. */
 export function getCustomerColumns(labels: {

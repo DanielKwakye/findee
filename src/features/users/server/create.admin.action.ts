@@ -7,7 +7,7 @@ import { generateReferenceCode } from "@/components/platform/utils/reference.cod
 import { getTranslations } from "next-intl/server";
 import { renderNotificationEmail } from "@/features/notifications/server/notification.email";
 import { sendEmail } from "@/features/notifications/server/send.email";
-import type { AddAdminValues } from "@/features/auth/utils/auth.types";
+import type { AddAdminValues } from "@/features/users/utils/users.types";
 import { db } from "@/lib/db";
 
 /** Creates a new administrator account for an authorized administrator. */

@@ -1,5 +1,5 @@
 import type { PortalTableColumnDef } from "@/components/platform";
-import type { AdminRow } from "@/features/auth/utils/auth.types";
+import type { AdminRow } from "@/features/users/utils/users.types";
 
 /** Defines the administrator table's account and password setup columns. */
 export function getAdminColumns(labels: {

@@ -4,8 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import TypographyBody from "@/components/core/ui/typography-body";
-import AddAdminDialog from "@/features/auth/components/ui/add-admin-dialog";
-import type { AddAdminDialogHandle } from "@/features/auth/utils/auth.types";
+import AddAdminDialog from "@/features/users/components/ui/add-admin-dialog";
+import type { AddAdminDialogHandle } from "@/features/users/utils/users.types";
 import { ChevronsUpDown, Plus, Users } from "lucide-react";
 
 import {

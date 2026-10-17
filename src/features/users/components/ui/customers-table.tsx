@@ -1,14 +1,14 @@
 "use client";
 
-import { PortalTable } from "@/components/platform";
+import { PortalTable, PortalConfirmDialog } from "@/components/platform";
 import { Button } from "@/components/core/ui/button";
 import TypographyH1 from "@/components/core/ui/typography-h1";
 import TypographyBody from "@/components/core/ui/typography-body";
-import { useAdminsTable } from "@/features/auth/components/hooks/use.admins.table";
+import { useCustomersTable } from "@/features/users/components/hooks/use.customers.table";
 
-/** Presents searchable administrator accounts using the shared portal table. */
-export default function AdminsTable() {
-    const { t, query, columns } = useAdminsTable();
+/** Presents customer accounts and customer management controls. */
+export default function CustomersTable() {
+    const { t, query, columns, confirmRef } = useCustomersTable();
     return (
         <section aria-label={t("title")} className="min-w-0 space-y-4">
             <TypographyH1>{t("title")}</TypographyH1>
@@ -19,6 +19,7 @@ export default function AdminsTable() {
                 </Button>
             </div>}
             <PortalTable data={query.data ?? []} columns={columns} isLoading={query.isLoading} />
+            <PortalConfirmDialog ref={confirmRef} />
         </section>
     );
 }
