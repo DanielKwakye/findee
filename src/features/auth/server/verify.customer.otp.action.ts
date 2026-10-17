@@ -1,6 +1,6 @@
 "use server";
 
-import { AuthError } from "next-auth";
+import { AuthError, CredentialsSignin } from "next-auth";
 import { signIn } from "@/features/auth/utils/auth";
 import { isValidEmail, normalizeEmail } from "@/features/auth/utils/auth.validation";
 import type { CustomerOtpValues } from "@/features/auth/utils/auth.types";
@@ -13,6 +13,8 @@ export async function verifyCustomerOtp(values: CustomerOtpValues) {
     try {
         await signIn("customer-otp", { email, code: values.code, redirect: false });
     } catch (error) {
+        if (error instanceof CredentialsSignin && error.code === "disposable_email") throw new Error("disposableEmail");
+        if (error instanceof CredentialsSignin && error.code === "email_check_unavailable") throw new Error("emailCheckUnavailable");
         if (error instanceof AuthError && error.type === "CredentialsSignin") throw new Error("codeInvalid");
         throw error;
     }

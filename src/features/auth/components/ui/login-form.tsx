@@ -9,10 +9,11 @@ import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { useLogin } from "@/features/auth/components/hooks/use.login";
 import { isValidEmail } from "@/features/auth/utils/auth.validation";
+import { TurnstileCheck } from "@/features/auth/components/ui/turnstile-check";
 
 /** Renders the credentials-only sign-in card and accessible form feedback. */
 export function LoginForm() {
-    const { form, mutation, error, t } = useLogin();
+    const { form, mutation, error, t, onBotToken, botCheckReset } = useLogin();
     const { register, handleSubmit, formState: { errors } } = form;
 
     return (
@@ -73,6 +74,9 @@ export function LoginForm() {
                                 </FieldError>
                             )}
                         </Field>
+                        <input type="hidden" {...register("turnstileToken", { required: t("botCheck.required") })} />
+                        <TurnstileCheck action="admin-login" onToken={onBotToken} resetKey={botCheckReset} />
+                        {errors.turnstileToken && <FieldError><TypographyBody className="text-sm">{errors.turnstileToken.message}</TypographyBody></FieldError>}
                         {error && <FieldError><TypographyBody className="text-sm">{error}</TypographyBody></FieldError>}
                     </FieldGroup>
                 </CardContent>

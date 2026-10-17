@@ -10,10 +10,11 @@ import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { useCustomerOtp } from "@/features/auth/components/hooks/use.customer.otp";
 import { cn } from "@/lib/utils";
+import { TurnstileCheck } from "@/features/auth/components/ui/turnstile-check";
 
 /** Presents email and code entry for customer authentication. */
 export function CustomerOtpForm({ onVerified, fullWidth = false }: { onVerified: (email: string) => void; fullWidth?: boolean }) {
-    const { t, form, emailInput, codeVisible, busy, request, verification, error, onRequest, onSubmit } = useCustomerOtp(onVerified);
+    const { t, form, emailInput, codeVisible, busy, request, verification, error, onRequest, onSubmit, onBotToken, botCheckReset } = useCustomerOtp(onVerified);
     const { errors } = form.formState;
 
     return (
@@ -41,6 +42,9 @@ export function CustomerOtpForm({ onVerified, fullWidth = false }: { onVerified:
                     </Field>
                 </>
             )}
+            <input type="hidden" {...form.register("turnstileToken")} />
+            <TurnstileCheck action="customer-otp" onToken={onBotToken} resetKey={botCheckReset} />
+            {errors.turnstileToken && <FieldError><TypographyBody className="text-sm">{errors.turnstileToken.message}</TypographyBody></FieldError>}
             {error && <div role="alert"><TypographyParagraph className="text-sm text-destructive">{error}</TypographyParagraph></div>}
             <div className={cn("flex flex-wrap gap-3", fullWidth && "flex-col")}>
                 <Button type="submit" disabled={busy} className={cn(fullWidth && "w-full")}><TypographyBody className="text-sm">{t(verification.isPending ? "verifying" : request.isPending ? "sending" : codeVisible ? "verify" : "send")}</TypographyBody></Button>

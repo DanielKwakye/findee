@@ -1,6 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { validateBotCheck } from "@/features/auth/utils/auth.turnstile";
 import { getTranslations } from "next-intl/server";
 import { isValidEmail, normalizeEmail } from "@/features/auth/utils/auth.validation";
 import { db } from "@/lib/db";
@@ -10,8 +11,13 @@ import { sendEmail } from "@/features/notifications/server/send.email";
 import { renderNotificationEmail } from "@/features/notifications/server/notification.email";
 
 /** Validates the customer email for the placeholder verification flow. */
-export async function requestCustomerOtp(email: string) {
+export async function requestCustomerOtp(email: string, turnstileToken?: string) {
     if (typeof email !== "string" || !isValidEmail(email)) throw new Error("emailInvalid");
+    try {
+        await validateBotCheck(turnstileToken, "customer-otp");
+    } catch {
+        throw new Error("botCheckFailed");
+    }
     const normalizedEmail = normalizeEmail(email);
     const user = await db.user.upsert({
         where: { email: normalizedEmail },

@@ -225,6 +225,11 @@
     }
   },
   "Auth": {
+    "botCheck": {
+      "label": "Security check",
+      "required": "Please finish the security check to continue.",
+      "unavailable": "The security check couldn’t load. Please refresh the page and try again."
+    },
     "closeAccount": {
       "title": "Close account",
       "description": "Closing your account ends access to your dashboard and hides your recovery contact details on stickers still assigned to you. Stickers transferred to other owners are unaffected.",
@@ -265,10 +270,13 @@
       "emailRequired": "Enter your email.",
       "emailInvalid": "Enter a valid email address.",
       "code": "Verification code",
-      "codeSent": "A verification code has been sent to your email. Kindly check your email and enter the code below.",
-      "codeInvalid": "The verification code is invalid. Please try again.",
-      "verificationFailed": "Unable to sign in with this email. Please use a customer email.",
-      "serverError": "Unable to complete verification. Please try again.",
+      "codeSent": "Check your inbox for your verification code, then enter it below.",
+      "codeInvalid": "That code didn’t work. Check the code in your email or request a new one.",
+      "verificationFailed": "You can’t sign in with this email. Try a different email address or contact support for help.",
+      "botCheckFailed": "The security check didn’t go through. Please try again.",
+      "disposableEmail": "Please use an email address you’ll keep. Temporary email addresses aren’t supported.",
+      "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
+      "serverError": "We couldn’t sign you in. Please try again.",
       "send": "Send verification code",
       "sending": "Sending…",
       "verify": "Verify email",
@@ -293,9 +301,12 @@
     "emailInvalid": "Enter a valid email address.",
     "passwordRequired": "Enter your password.",
     "passwordInvalid": "The password is too long.",
-    "invalidCredentials": "Invalid email or password.",
+    "invalidCredentials": "Your email or password doesn’t match. Please check both and try again.",
+    "botCheckFailed": "The security check didn’t go through. Please try again.",
+    "disposableEmail": "Please use an email address you’ll keep. Temporary email addresses aren’t supported.",
+    "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
     "rateLimited": "Too many login attempts. Please try again in 15 minutes.",
-    "serverError": "Unable to log in. Please try again."
+    "serverError": "We couldn’t sign you in. Please try again."
   },
   "PortalNavigation": {
     "lowStockAlert": "Low product stock alert",

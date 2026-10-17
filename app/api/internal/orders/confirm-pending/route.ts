@@ -1,19 +1,14 @@
-import { randomUUID, timingSafeEqual } from "node:crypto";
+import { randomUUID } from "node:crypto";
+import { authorizeCronRequest } from "@/lib/cron.authorization";
 import { confirmPendingOrders } from "@/features/orders/server/confirm.pending.orders";
 
 export const runtime = "nodejs";
 
 /** Authenticates scheduled requests and returns the completed order confirmation batch summary. */
 export async function POST(request: Request) {
-    const secret = process.env.CRON_SECRET;
-    if (!secret) return Response.json({ error: "cron_not_configured" }, { status: 503 });
-
     // Reject unauthenticated requests before reading orders or starting the batch.
-    const authorization = Buffer.from(request.headers.get("authorization") ?? "");
-    const expected = Buffer.from(`Bearer ${secret}`);
-    if (authorization.length !== expected.length || !timingSafeEqual(authorization, expected)) {
-        return Response.json({ error: "unauthorized" }, { status: 401 });
-    }
+    const authorizationError = authorizeCronRequest(request);
+    if (authorizationError) return authorizationError;
 
     const runId = randomUUID();
     const startedAt = Date.now();

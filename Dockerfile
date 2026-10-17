@@ -46,6 +46,7 @@ COPY . .
 RUN mkdir -p .next/cache
 
 # Build full Next.js app
+ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
 RUN DATABASE_URL="mongodb://localhost:27017/findee" npm run build
 
 # Remove development dependencies before copying dependencies to the runtime stage

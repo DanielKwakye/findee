@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { isValidEmail, normalizeEmail } from "@/features/auth/utils/auth.validation";
 import type { AuthUser } from "@/features/auth/utils/auth.types";
 import { verifyPassword } from "@/features/auth/server/auth.password";
+import { validateSignInEmail } from "@/features/auth/utils/auth.email";
 
 /** Resolves customer accounts using the placeholder email verification code. */
 export async function authenticateCustomerOtp(credentials: Partial<Record<string, unknown>>): Promise<AuthUser | null> {
@@ -18,6 +19,7 @@ export async function authenticateCustomerOtp(credentials: Partial<Record<string
     });
     if (!user || user.role !== "CUSTOMER" || !user.otp || !user.otpCreatedAt
         || !await verifyPassword(user.otp, credentials.code)) return null;
+    await validateSignInEmail(user.email);
     const consumed = await db.user.updateMany({
         where: { id: user.id, role: "CUSTOMER", otp: user.otp, otpCreatedAt: user.otpCreatedAt,
             AND: [
