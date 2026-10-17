@@ -1,6 +1,7 @@
 "use client";
 
 import { Controller } from "react-hook-form";
+import Link from "next/link";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { Button } from "@/components/core/ui/button";
 import { Input } from "@/components/core/ui/input";
@@ -45,7 +46,9 @@ export function CustomerOtpForm({ onVerified, fullWidth = false }: { onVerified:
             <input type="hidden" {...form.register("turnstileToken")} />
             <TurnstileCheck action="customer-otp" onToken={onBotToken} resetKey={botCheckReset} />
             {errors.turnstileToken && <FieldError><TypographyBody className="text-sm">{errors.turnstileToken.message}</TypographyBody></FieldError>}
-            {error && <div role="alert"><TypographyParagraph className="text-sm text-destructive">{error}</TypographyParagraph></div>}
+            {error && <div role="alert"><TypographyParagraph className="text-sm text-destructive">{t.rich(error, {
+                contact: chunks => <Link href="/tickets" className="underline underline-offset-4">{chunks}</Link>,
+            })}</TypographyParagraph></div>}
             <div className={cn("flex flex-wrap gap-3", fullWidth && "flex-col")}>
                 <Button type="submit" disabled={busy} className={cn(fullWidth && "w-full")}><TypographyBody className="text-sm">{t(verification.isPending ? "verifying" : request.isPending ? "sending" : codeVisible ? "verify" : "send")}</TypographyBody></Button>
                 {codeVisible && <Button type="button" variant="link" disabled={busy} onClick={onRequest}><TypographyBody className="text-sm">{t("resend")}</TypographyBody></Button>}

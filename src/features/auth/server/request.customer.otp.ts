@@ -1,6 +1,8 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { CredentialsSignin } from "next-auth";
+import { validateSignInEmail } from "@/features/auth/utils/auth.email";
 import { validateBotCheck } from "@/features/auth/utils/auth.turnstile";
 import { getTranslations } from "next-intl/server";
 import { isValidEmail, normalizeEmail } from "@/features/auth/utils/auth.validation";
@@ -19,6 +21,13 @@ export async function requestCustomerOtp(email: string, turnstileToken?: string)
         throw new Error("botCheckFailed");
     }
     const normalizedEmail = normalizeEmail(email);
+    try {
+        await validateSignInEmail(normalizedEmail);
+    } catch (error) {
+        if (error instanceof CredentialsSignin && error.code === "disposable_email") return { error: "disposableEmail" as const };
+        if (error instanceof CredentialsSignin && error.code === "email_check_unavailable") return { error: "emailCheckUnavailable" as const };
+        throw error;
+    }
     const user = await db.user.upsert({
         where: { email: normalizedEmail },
         create: { email: normalizedEmail, role: "CUSTOMER" },

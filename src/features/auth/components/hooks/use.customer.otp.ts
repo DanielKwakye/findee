@@ -22,13 +22,21 @@ export function useCustomerOtp(onVerified: (email: string) => void) {
         if (token) clearErrors("turnstileToken");
     }, [setValue, clearErrors]);
     const email = useWatch({ control: form.control, name: "email" });
-    const request = useMutation({ mutationFn: (values: CustomerOtpValues) => requestCustomerOtp(values.email, values.turnstileToken), retry: false,
+    const request = useMutation({ mutationFn: async (values: CustomerOtpValues) => {
+        const result = await requestCustomerOtp(values.email, values.turnstileToken);
+        if ("error" in result) throw new Error(result.error);
+        return result;
+    }, retry: false,
         /** Prepares code entry after a verification request. */
         onSuccess() { form.setValue("code", ""); form.clearErrors("code"); },
         /** Refreshes the single-use check for the next code request. */
         onSettled() { setValue("turnstileToken", ""); setBotCheckReset(value => value + 1); },
     });
-    const verification = useMutation({ mutationFn: verifyCustomerOtp, retry: false,
+    const verification = useMutation({ mutationFn: async (values: CustomerOtpValues) => {
+        const result = await verifyCustomerOtp(values);
+        if ("error" in result) throw new Error(result.error);
+        return result;
+    }, retry: false,
         /** Reports the authenticated email to the consuming flow. */
         onSuccess(result) { onVerified(result.email); },
     });
@@ -41,7 +49,7 @@ export function useCustomerOtp(onVerified: (email: string) => void) {
         onChange() { request.reset(); verification.reset(); form.setValue("code", ""); },
     });
     const failure = verification.error ?? request.error;
-    const error = failure ? t(failure.message === "emailInvalid" ? "emailInvalid"
+    const error = failure ? (failure.message === "emailInvalid" ? "emailInvalid"
         : failure.message === "disposableEmail" ? "disposableEmail"
         : failure.message === "emailCheckUnavailable" ? "emailCheckUnavailable"
         : failure.message === "botCheckFailed" ? "botCheckFailed"

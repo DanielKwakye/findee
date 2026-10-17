@@ -1,5 +1,5 @@
 # Build image:
-# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v18 --push .
+# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v21 --push .
 
 
 # -----------------------------
@@ -46,8 +46,9 @@ COPY . .
 RUN mkdir -p .next/cache
 
 # Build full Next.js app
-ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
-RUN DATABASE_URL="mongodb://localhost:27017/findee" npm run build
+ARG DATABASE_URL=mongodb://localhost:27017/findee
+ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAAFZdOyFh6GkHLAir
+RUN DATABASE_URL="$DATABASE_URL" NEXT_PUBLIC_TURNSTILE_SITE_KEY="$NEXT_PUBLIC_TURNSTILE_SITE_KEY" npm run build
 
 # Remove development dependencies before copying dependencies to the runtime stage
 RUN npm prune --omit=dev

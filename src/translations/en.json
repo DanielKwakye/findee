@@ -274,7 +274,7 @@
       "codeInvalid": "That code didn’t work. Check the code in your email or request a new one.",
       "verificationFailed": "You can’t sign in with this email. Try a different email address or contact support for help.",
       "botCheckFailed": "The security check didn’t go through. Please try again.",
-      "disposableEmail": "Please use an email address you’ll keep. Temporary email addresses aren’t supported.",
+      "disposableEmail": "This email address was flagged as temporary. Please use a permanent email address. If you believe this is a mistake, <contact>contact support</contact>.",
       "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
       "serverError": "We couldn’t sign you in. Please try again.",
       "send": "Send verification code",
