@@ -52,6 +52,7 @@ export function useOrdersTable(status: OrderStatusFilter) {
         };
         return [...getOrderColumns(labels, {
             PENDING: t("statuses.PENDING"), CONFIRMED: t("statuses.CONFIRMED"), PROCESSING: t("statuses.PROCESSING"),
+            HOLD: t("statuses.HOLD"),
             SHIPPED: t("statuses.SHIPPED"), DELIVERED: t("statuses.DELIVERED"), CANCELLED: t("statuses.CANCELLED"), RETURNED: t("statuses.RETURNED"),
         }), { id: "actions", header: labels.actions, enableSorting: false, enableHiding: false,
             cell: ({ row }) => createElement(OrderActions, { order: row.original, label: labels.viewDetails, onOpen: openDetails, onEdit: openEdit, onChangeStatus: openStatus, onViewShipments: openShipments, onAddShipment: openAddShipment }) }];

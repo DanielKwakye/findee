@@ -19,6 +19,7 @@ export async function getPendingConfirmationOrders(batchSize: number) {
             AND: [
                 { OR: [
                     { status: "PENDING" },
+                    { status: "HOLD" },
                     { status: "CONFIRMED", OR: [
                         { cancellable: true }, { confirmationNotifiedAt: null },
                         { confirmationNotifiedAt: { isSet: false } },

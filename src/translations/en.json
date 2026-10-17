@@ -78,7 +78,7 @@
       "title": "Order received",
       "description": "Thank you for the order. We're processing your order and we'll get back to you soon.",
       "goHome": "Go Home",
-      "trackDelivery": "Track Delivery"
+      "trackDelivery": "Track Order"
     },
     "allocation": {
       "title": "How many of each variant?",
@@ -198,6 +198,12 @@
     "serverError": "Unable to log in. Please try again."
   },
   "PortalNavigation": {
+    "ordersInView": "{label}: {count, plural, one {# order} other {# orders}}",
+    "hold": "On hold",
+    "holdOrders": "{count, plural, one {# order on hold} other {# orders on hold}}",
+    "pendingOrders": "{count, plural, one {# pending order} other {# pending orders}}",
+    "unresolvedTickets": "{count, plural, one {# unresolved ticket} other {# unresolved tickets}}",
+    "unpublishedProducts": "{count, plural, one {# unpublished product} other {# unpublished products}}",
     "yourTickets": "Support Tickets",
     "tickets": "Tickets",
     "contactUs": "Contact Support",
@@ -297,15 +303,15 @@
     "restockTicket": "Order {number} is on hold awaiting restocking. No stickers have been assigned.\n\nRequested quantities:\n{allocations}",
     "processing": {
       "title": "Your order is confirmed",
-      "subject": "Findmus order {number} confirmed and processing",
-      "introduction": "Hi {name}, your order {number} is confirmed. Your stickers have been reserved and we’re actively processing your order.",
-      "guidance": "We’ll prepare your stickers before shipping. No activation or setup is required after delivery."
+      "subject": "Your Findmus order {number} is confirmed",
+      "introduction": "Hi {name}, thank you for choosing Findmus! Your order {number} is confirmed, and we’re getting your stickers ready. We appreciate you trusting us to help protect the things that matter to you.",
+      "guidance": "We’ll take care of setting up your stickers before shipping, so they’ll be ready to use when they arrive. Just stick them on your belongings — no activation or setup needed.\n\nWe’re glad to be part of making your everyday a little more worry-free."
     },
     "restocking": {
-      "title": "Your order is awaiting restocking",
-      "subject": "Findmus order {number} confirmed — awaiting restocking",
-      "introduction": "Hi {name}, your order {number} is confirmed but on hold while we restock. We’ll process the whole order once every requested sticker variant is available.",
-      "guidance": "If you would prefer to cancel, go to your portal orders page: {url}"
+      "title": "Order confirmed — an important delivery update",
+      "subject": "An update on your Findmus order {number}",
+      "introduction": "Hi {name}, thank you for choosing Findmus. Your order {number} is confirmed, but some of the stickers you chose are temporarily out of stock. We’re sorry we can’t prepare your order right away. This means dispatch and delivery may take longer than expected.",
+      "guidance": "We’ll prepare your complete order as soon as all your stickers are available, and we’ll email you when processing begins. We appreciate your patience and the opportunity to help protect the things that matter to you.\n\nYou can check your order in your portal: {url}\n\nIf the extra wait no longer works for you, you also have the option to cancel your order there."
     },
     "admin": {
       "title": "Order confirmation",
@@ -502,6 +508,7 @@
     "statuses": {
       "PENDING": "Pending",
       "CONFIRMED": "Confirmed",
+      "HOLD": "On hold",
       "PROCESSING": "Processing",
       "SHIPPED": "Shipped",
       "DELIVERED": "Delivered",

@@ -57,6 +57,7 @@ enum OrderPlan {
 enum OrderStatus {
   PENDING
   CONFIRMED
+  HOLD
   PROCESSING
   SHIPPED
   DELIVERED

@@ -4,6 +4,8 @@ import { ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import {usePortalNavigation} from "@/components/platform/hooks/use.portal.navigation"
+import { usePortalOrderCounts } from "@/components/platform/hooks/use.portal.order.counts"
+import { Badge } from "@/components/core/ui/badge"
 import TypographyBody from "@/components/core/ui/typography-body"
 import type { PortalInventoryItem } from "@/components/platform/data/portal.sidebar.menuItems"
 
@@ -33,6 +35,7 @@ export function PortalNavMain({
 }) {
     const t = useTranslations("PortalNavigation")
     const {isActive} = usePortalNavigation()
+    const { data: orderCounts } = usePortalOrderCounts(items.some(item => item.items?.some(subItem => subItem.badgeStatus)))
 
     return (
         <SidebarGroup>
@@ -65,6 +68,9 @@ export function PortalNavMain({
                                                     render={
                                                         <Link href={subItem.url} aria-current={isActive(subItem.url, true) ? "page" : undefined}>
                                                             <TypographyBody className="text-sm">{t(subItem.title)}</TypographyBody>
+                                                            {subItem.badgeStatus && (orderCounts?.[subItem.badgeStatus] ?? 0) > 0 && <Badge variant="destructive" className="ms-auto bg-destructive text-primary-foreground tabular-nums dark:bg-destructive" aria-label={t("ordersInView", { label: t(subItem.title), count: orderCounts?.[subItem.badgeStatus] ?? 0 })}>
+                                                                <TypographyBody className="text-xs">{orderCounts?.[subItem.badgeStatus]}</TypographyBody>
+                                                            </Badge>}
                                                         </Link>
                                                     }
                                                 />

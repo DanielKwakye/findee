@@ -8,13 +8,14 @@ import {
     UserRound,
     type LucideIcon,
 } from "lucide-react"
+import type { OrderStatus } from "@/generated/client"
 
 export type PortalInventoryItem = {
     title: string
     url: string
     icon: LucideIcon
     isActive?: boolean
-    items?: { title: string; url: string }[]
+    items?: { title: string; url: string; badgeStatus?: OrderStatus | "all" }[]
 }
 
 export const portalInventoryItems: PortalInventoryItem[] = [
@@ -25,10 +26,11 @@ export const portalInventoryItems: PortalInventoryItem[] = [
         isActive: true,
         items: [
             { title: "showAll", url: "/admin/orders" },
-            { title: "pending", url: "/admin/orders?status=PENDING" },
-            { title: "confirmed", url: "/admin/orders?status=CONFIRMED" },
-            { title: "processing", url: "/admin/orders?status=PROCESSING" },
-            { title: "outForDelivery", url: "/admin/orders?status=SHIPPED" },
+            { title: "pending", url: "/admin/orders?status=PENDING", badgeStatus: "PENDING" },
+            { title: "confirmed", url: "/admin/orders?status=CONFIRMED", badgeStatus: "CONFIRMED" },
+            { title: "hold", url: "/admin/orders?status=HOLD", badgeStatus: "HOLD" },
+            { title: "processing", url: "/admin/orders?status=PROCESSING", badgeStatus: "PROCESSING" },
+            { title: "outForDelivery", url: "/admin/orders?status=SHIPPED", badgeStatus: "SHIPPED" },
             { title: "delivered", url: "/admin/orders?status=DELIVERED" },
             { title: "canceled", url: "/admin/orders?status=CANCELLED" },
         ],

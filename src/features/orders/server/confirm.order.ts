@@ -13,6 +13,7 @@ import { db } from "@/lib/db";
  * - Validates the order ID and notification configuration; authentication belongs to the calling endpoint.
  * - Checks any supplied deadline before processing the database transaction.
  * - Skips orders outside PENDING or CONFIRMED; confirmed orders without a hold only retry outstanding notifications.
+ * - Internal HOLD orders are also retried; customers continue to see them as confirmed.
  * - Validates variant quantities and selects published stickers without a purchaser, owner, or linked order.
  * - Selects each variant's oldest stickers by createdAt, using the ID to break ties, before assigning anything.
  * - If any variant is short, assigns nothing, confirms the order on hold, and makes it cancellable.
@@ -35,13 +36,20 @@ export async function confirmOrder(id: string, options: OrderConfirmationOptions
         // Load only the order details needed for allocation and notifications.
         const order = await getConfirmationOrder(transaction, id);
         // Retry allocation only for pending orders or confirmed orders waiting for stock.
-        if (order.status !== "PENDING" && order.status !== "CONFIRMED") return null;
+        if (order.status !== "PENDING" && order.status !== "CONFIRMED" && order.status !== "HOLD") return null;
         if (order.status === "CONFIRMED" && !order.cancellable) return order;
 
         // Validate the requested variants and find the complete oldest-first sticker selection.
         const { productIds, restocking } = await findOrderConfirmationProducts(transaction, order.planDetail.allocations);
         // Repeated shortages leave the existing hold and support ticket intact.
-        if (restocking && order.status === "CONFIRMED" && order.cancellable) return order;
+        if (restocking && (order.status === "HOLD" || order.status === "CONFIRMED") && order.cancellable) {
+            // Upgrade existing restocking orders without recreating their ticket or resending delivered emails.
+            if (order.status === "CONFIRMED") {
+                await transaction.order.update({ where: { id }, data: { status: "HOLD" }, select: { id: true } });
+                return { ...order, status: "HOLD" as const };
+            }
+            return order;
+        }
         if (restocking) {
             // Record all requested quantities for the administrator without assigning any stickers.
             await createOrderRestockTicket(transaction, order, context.t);
@@ -53,7 +61,7 @@ export async function confirmOrder(id: string, options: OrderConfirmationOptions
         return saveOrderConfirmation(transaction, order, restocking);
     });
     if (!result) return { outcome: "skipped", notified: false };
-    const event = result.cancellable ? "restocking" : "processing";
+    const event = result.status === "HOLD" ? "restocking" : "processing";
     if (result.confirmationNotifiedAt) return { outcome: event, notified: true };
 
     // Send after commit so delivery failures do not undo fulfillment; later calls can retry delivery.

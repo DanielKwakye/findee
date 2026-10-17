@@ -86,11 +86,12 @@ export async function assignOrderConfirmationProducts(transaction: Prisma.Transa
 
 /** Saves the confirmed fulfillment state and resets delivery tracking for its notifications. */
 export async function saveOrderConfirmation(transaction: Prisma.TransactionClient, order: ConfirmationOrder, restocking: boolean) {
+    const status = restocking ? "HOLD" as const : "CONFIRMED" as const;
     await transaction.order.update({
-        where: { id: order.id }, data: { status: "CONFIRMED", cancellable: restocking, confirmationNotifiedAt: null,
+        where: { id: order.id }, data: { status, cancellable: restocking, confirmationNotifiedAt: null,
             customerConfirmationNotifiedAt: null, adminConfirmationNotifiedAt: null },
         select: { id: true },
     });
-    return { ...order, status: "CONFIRMED" as const, cancellable: restocking, confirmationNotifiedAt: null,
+    return { ...order, status, cancellable: restocking, confirmationNotifiedAt: null,
         customerConfirmationNotifiedAt: null, adminConfirmationNotifiedAt: null };
 }

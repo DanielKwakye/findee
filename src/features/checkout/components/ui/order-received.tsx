@@ -26,7 +26,7 @@ export default function OrderReceived() {
                     <House aria-hidden="true" data-icon="inline-start" />
                     <TypographyBody className="text-sm">{t("goHome")}</TypographyBody>
                 </Button>
-                <Button render={<Link href="#" />} nativeButton={false}>
+                <Button render={<Link href="/customer/orders" />} nativeButton={false}>
                     <Truck aria-hidden="true" data-icon="inline-start" />
                     <TypographyBody className="text-sm">{t("trackDelivery")}</TypographyBody>
                 </Button>

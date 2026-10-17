@@ -24,7 +24,7 @@ export async function getOrderNotificationContext() {
 async function deliverNotification(order: ConfirmationOrder, recipient: "customer" | "admin", context: OrderNotificationContext,
     options: OrderConfirmationOptions) {
     const { t, tEmail, ordersEmail, ordersUrl } = context;
-    const event = order.cancellable ? "restocking" : "processing";
+    const event = order.status === "HOLD" ? "restocking" : "processing";
     const deliveryField = recipient === "admin" ? "adminConfirmationNotifiedAt" : "customerConfirmationNotifiedAt";
     if (order[deliveryField]) return true;
     const allocations = order.planDetail.allocations.map(allocation => t("allocation", allocation)).join("\n");
@@ -50,7 +50,7 @@ async function deliverNotification(order: ConfirmationOrder, recipient: "custome
                 idempotencyKey: `order-confirmation/${order.id}/${event}/${recipient}`,
             }, { minIntervalMs: 600, rateLimitRetries: 1, deadline: options.deadline, timeoutMs: 10_000 });
             await db.order.updateMany({
-                where: { id: order.id, status: "CONFIRMED", cancellable: order.cancellable },
+                where: { id: order.id, status: order.status, cancellable: order.cancellable },
                 data: { [deliveryField]: new Date() },
             });
             return true;
@@ -75,7 +75,7 @@ export async function sendOrderConfirmationNotifications(order: ConfirmationOrde
     const notified = deliveries.every(Boolean);
     // Mark delivery only when both recipients succeed and the order still matches this notification.
     if (notified) await db.order.updateMany({
-        where: { id: order.id, status: "CONFIRMED", cancellable: order.cancellable },
+        where: { id: order.id, status: order.status, cancellable: order.cancellable },
         data: { confirmationNotifiedAt: new Date() },
     });
     return notified;

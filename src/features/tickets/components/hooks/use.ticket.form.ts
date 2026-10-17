@@ -17,6 +17,7 @@ export function useTicketForm(initialValues: TicketValues, readOnly = false) {
         onSuccess() {
             form.reset({ ...form.getValues(), message: "" });
             void queryClient.invalidateQueries({ queryKey: ["customer-tickets"] });
+            void queryClient.invalidateQueries({ queryKey: ["admin-tickets"] });
         },
     });
     const fields = {

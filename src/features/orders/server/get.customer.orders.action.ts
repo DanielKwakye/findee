@@ -24,5 +24,6 @@ export async function getCustomerOrders(params: OrderQuery) {
             planDetail: { select: { quantity: true, price: true, currency: true } },
         },
     });
-    return { orders, total, page };
+    // Keep fulfillment holds internal while the customer's order remains confirmed.
+    return { orders: orders.map(order => ({ ...order, status: order.status === "HOLD" ? "CONFIRMED" as const : order.status })), total, page };
 }

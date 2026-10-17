@@ -45,6 +45,7 @@ export function useCheckout(customer: CheckoutCustomer | null, initialPlan: Chec
         retry: false,
         /** Opens the order acknowledgement after a valid checkout response. */
         onSuccess() {
+            void queryClient.invalidateQueries({ queryKey: ["orders"] });
             router.push("/checkout/order-received");
         },
     });
