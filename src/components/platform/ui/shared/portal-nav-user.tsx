@@ -1,10 +1,8 @@
 "use client"
 
 import {
-    BadgeCheck,
-    Bell,
+    KeyRound,
     ChevronsUpDown,
-    CreditCard,
     LogOut,
     Globe,
     FileText,
@@ -115,17 +113,9 @@ export function PortalNavUser({
                         </>}
                         {audience === "admin" && <>
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <BadgeCheck />
-                                Account
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <CreditCard />
-                                Billing
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Bell />
-                                Notifications
+                            <DropdownMenuItem render={<Link href="/change-password" />}>
+                                <KeyRound />
+                                <TypographyBody className="text-sm">{t("changePassword")}</TypographyBody>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />

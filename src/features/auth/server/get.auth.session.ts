@@ -1,9 +1,9 @@
 "use server";
 
-import { auth } from "@/features/auth/utils/auth";
+import { getAuthenticatedUser } from "@/features/auth/server/auth.session";
 
 /** Reports whether the current visitor has an authenticated session. */
 export async function getAuthSession() {
-    const session = await auth();
-    return { isAuthenticated: !!session?.user?.id, role: session?.user?.role ?? null };
+    const user = await getAuthenticatedUser();
+    return { isAuthenticated: !!user, role: user?.role ?? null };
 }

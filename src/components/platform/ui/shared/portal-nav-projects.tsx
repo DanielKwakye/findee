@@ -6,6 +6,7 @@ import Link from "next/link"
 import {usePortalNavigation} from "@/components/platform/hooks/use.portal.navigation"
 import { usePortalTicketCount } from "@/components/platform/hooks/use.portal.ticket.count"
 import { usePortalProcurementCount } from "@/components/platform/hooks/use.portal.procurement.count"
+import { useLowVariantStock } from "@/features/procurement/components/hooks/use.low.variant.stock"
 import { Badge } from "@/components/core/ui/badge"
 import TypographyBody from "@/components/core/ui/typography-body"
 import {
@@ -30,6 +31,7 @@ export function PortalNavProjects({
     const {isActive} = usePortalNavigation()
     const { data: unresolvedTickets = 0 } = usePortalTicketCount()
     const { data: unpublishedProducts = 0 } = usePortalProcurementCount()
+    const { data: lowStock = [] } = useLowVariantStock()
 
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -45,6 +47,9 @@ export function PortalNavProjects({
                                 <Link href={item.url} aria-current={isActive(item.url) ? "page" : undefined}>
                                     <item.icon />
                                     <TypographyBody className="text-sm">{t(item.name)}</TypographyBody>
+                                    {item.name === "products" && lowStock.length > 0 && <Badge variant="destructive" className="ms-auto bg-destructive text-primary-foreground tabular-nums dark:bg-destructive" aria-label={t("lowStockAlert")}>
+                                        <TypographyBody className="text-xs">{1}</TypographyBody>
+                                    </Badge>}
                                     {item.name === "tickets" && unresolvedTickets > 0 && <Badge variant="destructive" className="ms-auto bg-destructive text-primary-foreground tabular-nums dark:bg-destructive" aria-label={t("unresolvedTickets", { count: unresolvedTickets })}>
                                         <TypographyBody className="text-xs">{unresolvedTickets}</TypographyBody>
                                     </Badge>}

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import TypographyBody from "@/components/core/ui/typography-body";
 import AddAdminDialog from "@/features/auth/components/ui/add-admin-dialog";
 import type { AddAdminDialogHandle } from "@/features/auth/utils/auth.types";
-import { ChevronsUpDown, Plus } from "lucide-react";
+import { ChevronsUpDown, Plus, Users } from "lucide-react";
 
 import {
     DropdownMenu,
@@ -88,6 +88,12 @@ export function PortalTeamSwitcher({
                                     <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                                 </DropdownMenuItem>
                             ))}
+                            <DropdownMenuItem render={<Link href="/admin/customers" />} className="gap-2 p-2">
+                                <div className="flex size-6 items-center justify-center rounded-md border">
+                                    <Users className="size-3.5 shrink-0" />
+                                </div>
+                                <TypographyBody>{t("manageCustomers")}</TypographyBody>
+                            </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="gap-2 p-2" onClick={() => addAdminRef.current?.open()}>

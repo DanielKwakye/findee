@@ -4,15 +4,17 @@ import {
     SidebarTrigger,
 } from "@/components/core/ui/sidebar";
 import {Separator} from "@/components/core/ui/separator";
-import {PortalSidebar, PortalBreadcrumb} from "@/components/platform";
+import {PortalSidebar, PortalBreadcrumb, PortalBadgeAlert} from "@/components/platform";
 import {ReactNode} from "react";
 import {requireAdmin} from "@/features/auth/server/auth.session";
+import PortalSessionGuard from "@/features/auth/components/ui/portal-session-guard";
 
 /** Provides the authorized administrator's portal layout. */
 export default async function AdminLayout({ children }: { children: ReactNode }) {
     const user = await requireAdmin();
     return (
         <SidebarProvider>
+            <PortalSessionGuard key={user.id} role="ADMIN" />
             <PortalSidebar user={user} />
             <SidebarInset className="min-w-0">
                 <header className="sticky top-0 z-20 bg-background flex min-h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">
@@ -26,6 +28,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                     </div>
                 </header>
                 <div className="flex min-w-0 flex-1 flex-col gap-4 p-4 pt-0">
+                    <PortalBadgeAlert />
                     {children}
                 </div>
             </SidebarInset>

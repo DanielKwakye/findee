@@ -12,6 +12,7 @@ export async function getTickets(params: TicketQuery, audience: "customer" | "ad
     const { search, sortBy, direction } = validateTicketQuery(params);
     const where: Prisma.TicketWhereInput = {
         ...(audience === "admin" ? {} : { customerId: user.id }),
+        ...(params.status && params.status !== "all" ? { status: params.status } : {}),
         ...(search ? { OR: [
             { code: { contains: search, mode: "insensitive" } },
             { message: { contains: search, mode: "insensitive" } },

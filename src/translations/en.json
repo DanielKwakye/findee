@@ -4,6 +4,7 @@
     "plan": "Enterprise",
     "admins": "Admins",
     "manageAdmin": "Manage Admins",
+    "manageCustomers": "Manage Customers",
     "addAdmin": "Add Admin",
     "addForm": {
       "title": "Add Admin",
@@ -33,6 +34,41 @@
     "loadError": "Unable to load administrators. Please try again.",
     "retry": "Try again"
   },
+  "Customers": {
+    "deactivated": "Deactivated",
+    "actions": "Actions",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "deactivateDescription": "Temporarily block portal access for {email}. You can reactivate this account later.",
+    "reactivateDescription": "Restore portal access for {email}.",
+    "accessError": "Unable to update customer access. Please try again.",
+    "createdAt": "Date Joined",
+    "lastVisited": "Last Visited",
+    "notRecorded": "Not recorded",
+    "title": "Manage Customers",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "status": "Account status",
+    "active": "Active",
+    "closed": "Closed",
+    "noName": "Not provided",
+    "loadError": "Unable to load customers. Please try again.",
+    "retry": "Try again"
+  },
+  "ProcurementStock": {
+    "title": "Low product stock",
+    "summary": "Some variants are below their configured minimum stock levels.",
+    "variant": "{variant}: {count, number} available · Minimum {threshold, number}",
+    "loadError": "Unable to check stock thresholds. Please try again.",
+    "email": {
+      "subject": "Findmus low-stock notification",
+      "title": "Product stock is running low",
+      "introduction": "The following variants have fewer published, unassigned products than their configured minimum:",
+      "variant": "{variant}: {count, number} available (minimum {threshold, number})",
+      "guidance": "{summary}\n\nReview inventory and arrange more stock at {url}."
+    }
+  },
   "AdminInvitation": {
     "subject": "Your Findmus administrator account",
     "title": "Welcome to Findmus",
@@ -41,12 +77,12 @@
   },
   "AdminPasswordChange": {
     "title": "Change your password",
-    "description": "Choose a new password to replace your temporary password before continuing in the admin portal.",
+    "description": "Choose a new password for your administrator account.",
     "password": "New password",
     "confirmPassword": "Confirm new password",
     "invalid": "Use a password between 8 and 1024 characters.",
     "mismatch": "The passwords must match.",
-    "samePassword": "Choose a different password from your temporary password.",
+    "samePassword": "Choose a different password from your current password.",
     "error": "Unable to change your password. Please try again.",
     "save": "Change password",
     "saving": "Saving…"
@@ -251,6 +287,7 @@
     "website": "Website",
     "account": "Account",
     "loggingOut": "Logging out…",
+    "changePassword": "Change Password",
     "logoutError": "Unable to log out. Please try again.",
     "emailRequired": "Enter your email.",
     "emailInvalid": "Enter a valid email address.",
@@ -261,6 +298,7 @@
     "serverError": "Unable to log in. Please try again."
   },
   "PortalNavigation": {
+    "lowStockAlert": "Low product stock alert",
     "blog": "Blog",
     "ordersInView": "{label}: {count, plural, one {# order} other {# orders}}",
     "hold": "On hold",
@@ -289,6 +327,17 @@
     "internal": "Internal",
     "procurements": "Procurements",
     "settings": "Settings"
+  },
+  "PortalBadgeAlert": {
+    "procurement": "There {count, plural, one {is # unpublished product} other {are # unpublished products}}.",
+    "tickets": "There {count, plural, one {is # unresolved support ticket} other {are # unresolved support tickets}}.",
+    "orders": {
+      "PENDING": "There {count, plural, one {is # pending order} other {are # pending orders}}.",
+      "CONFIRMED": "There {count, plural, one {is # confirmed order} other {are # confirmed orders}}.",
+      "HOLD": "There {count, plural, one {is # order on hold} other {are # orders on hold}}.",
+      "PROCESSING": "There {count, plural, one {is # order being processed} other {are # orders being processed}}.",
+      "SHIPPED": "There {count, plural, one {is # shipped order} other {are # shipped orders}}."
+    }
   },
   "procurement": {
     "heading": "Procurements",
@@ -348,6 +397,7 @@
     "pending": "Please wait…"
   },
   "PortalBreadcrumb": {
+    "customers": "Manage Customers",
     "admins": "Manage Admins",
     "blog": "Blog",
     "your-tickets": "Support Tickets",
@@ -409,6 +459,7 @@
     }
   },
   "TicketHistory": {
+    "allStatuses": "All statuses",
     "adminTitle": "Tickets",
     "adminDescription": "Review support requests and manage their progress.",
     "view": "View ticket",

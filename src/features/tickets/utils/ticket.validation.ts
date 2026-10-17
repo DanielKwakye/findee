@@ -20,6 +20,9 @@ export function validateTicketQuery(params: TicketQuery) {
     if (!params || !Number.isSafeInteger(params.page) || params.page < 1
         || !Number.isSafeInteger(params.pageSize) || params.pageSize < 1 || params.pageSize > 100
         || typeof params.search !== "string") throw new Error("invalidTicketQuery");
+    if (params.status !== undefined && params.status !== "all" && !ticketStatuses.some(status => status === params.status)) {
+        throw new Error("invalidTicketQuery");
+    }
     return {
         search: params.search.trim().slice(0, 255),
         sortBy: params.sortBy === "code" || params.sortBy === "status" ? params.sortBy : "createdAt" as const,

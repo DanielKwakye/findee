@@ -11,10 +11,12 @@ import {getProducts} from "@/features/products/server/get.products.action";
 import {deleteProducts} from "@/features/products/server/delete.products.action";
 import {getProductColumns} from "@/features/products/utils/product.columns";
 import type {ProductVariantFilterValue} from "@/features/products/utils/product.types";
+import {useLowVariantStock} from "@/features/procurement/components/hooks/use.low.variant.stock";
 
 /** Manages product inventory queries, table controls, and unpublished product deletion. */
 export function useProductsTable() {
     const t = useTranslations("products");
+    const stockT = useTranslations("ProcurementStock");
     const variants = useTranslations("procurement.generation");
     const formatDateTime = useUserDateTime();
     const queryClient = useQueryClient();
@@ -24,6 +26,7 @@ export function useProductsTable() {
     const {search, setSearch, debouncedSearch} = usePortalTableSearch(setPagination);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [variant, setVariant] = useState<ProductVariantFilterValue>("all");
+    const stockQuery = useLowVariantStock();
     const query = useQuery({
         queryKey: ["products", pagination, debouncedSearch, sorting, variant],
         queryFn: () => getProducts({...pagination, search: debouncedSearch, variant, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc"}),
@@ -71,7 +74,7 @@ export function useProductsTable() {
         phone: t("phone"), email: t("email"), chat: t("chat"),
     }, formatDateTime,
     {Everyday: variants("Everyday"), Fabric: variants("Fabric"), Tough: variants("Tough")}), [t, variants, formatDateTime]);
-    return {t, query, mutation, columns, search, setSearch, setSorting, setPagination, confirmRef, requestDelete,
+    return {t, stockT, query, stockQuery, variants, mutation, columns, search, setSearch, setSorting, setPagination, confirmRef, requestDelete,
         rowSelection, setRowSelection, selectedCount: selectedCodes.length, variant, changeVariant,
         pagination: {...pagination, page: query.isPlaceholderData ? pagination.page : query.data?.page ?? pagination.page, total: query.data?.total ?? 0}};
 }

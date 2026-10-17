@@ -24,8 +24,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }
             // Reject previously issued sessions as soon as the account is closed.
             if (token.sub) {
-                const account = await db.user.findUnique({ where: { id: token.sub }, select: { closedAt: true } });
-                if (!account || account.closedAt) return null;
+                const account = await db.user.findUnique({ where: { id: token.sub }, select: { closedAt: true, deactivatedAt: true } });
+                if (!account || account.closedAt || account.deactivatedAt) return null;
             }
             return token;
         },

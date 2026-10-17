@@ -10,7 +10,7 @@ import { getTickets } from "@/features/tickets/server/get.tickets.action";
 import { getTicketColumns } from "@/features/tickets/utils/ticket.columns";
 import { Button } from "@/components/core/ui/button";
 import TypographyBody from "@/components/core/ui/typography-body";
-import type { TicketDialogHandle, TicketRow } from "@/features/tickets/utils/ticket.types";
+import type { TicketDialogHandle, TicketRow, TicketStatusFilter } from "@/features/tickets/utils/ticket.types";
 
 /** Manages customer ticket history queries and server-side table controls. */
 export function useTicketTable(audience: "customer" | "admin" = "customer") {
@@ -21,10 +21,11 @@ export function useTicketTable(audience: "customer" | "admin" = "customer") {
     const openTicket = useCallback((ticket: TicketRow) => { detailsRef.current?.open(ticket.id); }, []);
     const [pagination, setPagination] = useState<PortalTablePaginationState>({ page: 1, pageSize: 10 });
     const [sorting, setSorting] = useState<SortingState>([]);
+    const [status, setStatus] = useState<TicketStatusFilter>("all");
     const { search, setSearch, debouncedSearch } = usePortalTableSearch(setPagination);
     const query = useQuery({
-        queryKey: [audience === "admin" ? "admin-tickets" : "customer-tickets", pagination, debouncedSearch, sorting],
-        queryFn: () => getTickets({ ...pagination, search: debouncedSearch,
+        queryKey: [audience === "admin" ? "admin-tickets" : "customer-tickets", pagination, debouncedSearch, sorting, status],
+        queryFn: () => getTickets({ ...pagination, search: debouncedSearch, status,
             sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc" }, audience),
         placeholderData: keepPreviousData,
     });
@@ -35,6 +36,12 @@ export function useTicketTable(audience: "customer" | "admin" = "customer") {
                 createElement(TypographyBody, null, t("view"))) }] : []),
     ], [t, formatDate, audience, openTicket]);
 
-    return { t, query, columns, search, setSearch, setSorting, setPagination, detailsRef, openTicket,
+    /** Starts at the first page when the ticket status filter changes. */
+    function changeStatus(next: TicketStatusFilter) {
+        setStatus(next);
+        setPagination(current => ({ ...current, page: 1 }));
+    }
+
+    return { t, query, columns, search, setSearch, setSorting, setPagination, detailsRef, openTicket, status, changeStatus,
         pagination: { ...pagination, page: query.isPlaceholderData ? pagination.page : query.data?.page ?? pagination.page, total: query.data?.total ?? 0 } };
 }

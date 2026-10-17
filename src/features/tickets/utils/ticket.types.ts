@@ -21,8 +21,10 @@ export type TicketRow = Awaited<ReturnType<typeof getTickets>>["tickets"][number
 export type TicketDialogHandle = { open: (id: string) => void };
 export type TicketUpdateValues = { status: TicketStatus; remarks: string };
 export type TicketUpdate = TicketUpdateValues & { id: string };
+export type TicketStatusFilter = TicketStatus | "all";
 
 export type TicketQuery = {
+    status?: TicketStatusFilter;
     page: number;
     pageSize: number;
     search: string;

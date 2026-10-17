@@ -9,11 +9,14 @@ import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { useTicketTable } from "@/features/tickets/components/hooks/use.ticket.table";
 import TicketDetailsDialog from "@/features/tickets/components/ui/ticket-details-dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/core/ui/select";
+import { ticketStatuses } from "@/features/tickets/data/ticket.statuses";
+import type { TicketStatusFilter } from "@/features/tickets/utils/ticket.types";
 
 /** Presents the signed-in customer's support ticket history. */
 export default function TicketTable({ audience = "customer" }: { audience?: "customer" | "admin" }) {
     const tNavigation = useTranslations("PortalNavigation");
-    const { t, query, columns, search, setSearch, setSorting, pagination, setPagination, detailsRef, openTicket } = useTicketTable(audience);
+    const { t, query, columns, search, setSearch, setSorting, pagination, setPagination, detailsRef, openTicket, status, changeStatus } = useTicketTable(audience);
     return (
         <section aria-label={t(audience === "admin" ? "adminTitle" : "title")} className="min-w-0 space-y-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
@@ -30,7 +33,18 @@ export default function TicketTable({ audience = "customer" }: { audience?: "cus
                 <Button type="button" variant="outline" disabled={query.isFetching} onClick={() => query.refetch()}><TypographyBody className="text-sm">{t("retry")}</TypographyBody></Button>
             </div>}
             <PortalTable data={query.data?.tickets ?? []} columns={columns} pagination={pagination} onPaginationChange={setPagination}
-                search={search} onSearchChange={setSearch} onSortingChange={setSorting} isLoading={query.isLoading} onRowClick={openTicket} />
+                search={search} onSearchChange={setSearch} onSortingChange={setSorting} isLoading={query.isLoading} onRowClick={openTicket}
+                toolbarActions={(
+                    <Select<TicketStatusFilter> value={status} onValueChange={value => { if (value) changeStatus(value); }} disabled={query.isFetching}>
+                        <SelectTrigger aria-label={t("columns.status")}>
+                            <SelectValue><TypographyBody className="text-sm">{status === "all" ? t("allStatuses") : t(`statuses.${status}`)}</TypographyBody></SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all"><TypographyBody className="text-sm">{t("allStatuses")}</TypographyBody></SelectItem>
+                            {ticketStatuses.map(value => <SelectItem key={value} value={value}><TypographyBody className="text-sm">{t(`statuses.${value}`)}</TypographyBody></SelectItem>)}
+                        </SelectContent>
+                    </Select>
+                )} />
             <TicketDetailsDialog ref={detailsRef} audience={audience} />
         </section>
     );

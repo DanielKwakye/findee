@@ -15,6 +15,12 @@ export type ProcurementQuery = {
 export type GenerateQrValues = { Everyday: number; Fabric: number; Tough: number };
 export type GenerateQrDialogHandle = { open: () => void };
 
+export type VariantStock = {
+    variant: keyof GenerateQrValues;
+    count: number;
+    threshold: number;
+};
+
 export const procurementStatuses = ["inactive", "requested", "received"] as const;
 export type ProcurementStatusValues = {status: ProcurementStatus};
 export type ProcurementMutation = {codes: string[]} & (

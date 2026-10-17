@@ -16,6 +16,7 @@ export { default as Testimonials } from "@/components/platform/ui/shared/testimo
 export { default as Footer } from "@/components/platform/ui/shared/footer";
 export { PortalSidebar } from "@/components/platform/ui/shared/portal-sidebar";
 export { PortalBreadcrumb } from "@/components/platform/ui/shared/portal-breadcrumb";
+export { PortalBadgeAlert } from "@/components/platform/ui/shared/portal-badge-alert";
 export { PortalConfirmDialog } from "@/components/platform/ui/shared/portal-confirm-dialog";
 export type { PortalConfirmDialogHandle } from "@/components/platform/utils/portal.confirm.dialog.types";
 export { default as PortalTable } from "@/components/platform/ui/shared/portal-table";

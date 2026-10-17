@@ -1,6 +1,7 @@
 import { createElement } from "react";
 import type { useTranslations } from "next-intl";
 import { Badge } from "@/components/core/ui/badge";
+import TypographyBody from "@/components/core/ui/typography-body";
 import type { PortalTableColumnDef } from "@/components/platform";
 import type { TicketRow } from "@/features/tickets/utils/ticket.types";
 import { ticketStatusBadgeClasses } from "@/features/tickets/data/ticket.statuses";
@@ -15,7 +16,7 @@ export function getTicketColumns(t: ReturnType<typeof useTranslations>, formatDa
             { accessorKey: "customerEmail", header: t("columns.customerEmail"), enableSorting: false },
         ] : []),
         { accessorKey: "message", header: t("columns.message"), enableSorting: false,
-            cell: ({ row }) => row.original.message.length > 100 ? t("messagePreview", { message: row.original.message.slice(0, 100) }) : row.original.message },
+            cell: ({ row }) => <TypographyBody className="block max-w-xs truncate text-sm">{row.original.message.length > 100 ? t("messagePreview", { message: row.original.message.slice(0, 100) }) : row.original.message}</TypographyBody> },
         { accessorKey: "status", header: t("columns.status"),
             cell: ({ row }) => createElement(Badge, { variant: "secondary", className: ticketStatusBadgeClasses[row.original.status] }, t(`statuses.${row.original.status}`)) },
     ];
