@@ -13,7 +13,7 @@ export async function updateCustomerProfile(values: CustomerProfileValues) {
         throw new Error("invalidProfile");
     }
     const profile = await db.user.update({
-        where: { id: user.id, role: "CUSTOMER" },
+        where: { id: user.id, role: "CUSTOMER", OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
         data: { name: values.name.trim() || null, phone: values.phone.trim() || null },
         select: { name: true, phone: true },
     });

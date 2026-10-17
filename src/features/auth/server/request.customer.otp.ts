@@ -17,13 +17,13 @@ export async function requestCustomerOtp(email: string) {
         where: { email: normalizedEmail },
         create: { email: normalizedEmail, role: "CUSTOMER" },
         update: {},
-        select: { role: true },
+        select: { role: true, closedAt: true },
     });
-    if (user.role !== "CUSTOMER") throw new Error("verificationFailed");
+    if (user.role !== "CUSTOMER" || user.closedAt) throw new Error("verificationFailed");
     const code = generateOtpCode();
     const otp = await hashPassword(code);
     const updated = await db.user.updateMany({
-        where: { email: normalizedEmail, role: "CUSTOMER" },
+        where: { email: normalizedEmail, role: "CUSTOMER", OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
         data: { otp, otpCreatedAt: new Date() },
     });
     if (updated.count !== 1) throw new Error("verificationFailed");

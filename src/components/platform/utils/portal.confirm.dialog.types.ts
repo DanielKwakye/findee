@@ -5,6 +5,8 @@ export type PortalConfirmDialogOptions = {
     getErrorMessage?: (error: unknown) => string;
     confirmLabel?: string;
     destructive?: boolean;
+    confirmationText?: string;
+    confirmationLabel?: string;
     onConfirm: () => Promise<unknown> | void;
 };
 

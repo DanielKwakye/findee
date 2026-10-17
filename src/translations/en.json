@@ -137,6 +137,17 @@
     }
   },
   "Auth": {
+    "closeAccount": {
+      "title": "Close account",
+      "description": "Closing your account ends access to your dashboard and hides your recovery contact details on stickers still assigned to you. Stickers transferred to other owners are unaffected.",
+      "support": "Have an unfulfilled order? <contact>Contact support</contact> before closing your account. We retain account and related records as explained in our <privacy>Privacy Policy</privacy>.",
+      "confirmTitle": "Close your Findmus account?",
+      "confirmation": "You will be signed out and unable to sign in again. Finders will no longer see your contact details on stickers still assigned to you. This closes access; it does not erase your retained account, order or support records. Contact support first if you have an unfulfilled order.",
+      "confirm": "Close my account",
+      "confirmationLabel": "Type delete to confirm account closure.",
+      "outstandingOrders": "You have an unfulfilled order. Please contact support before closing your account.",
+      "error": "Unable to close your account. Please try again or contact support."
+    },
     "customerProfile": {
       "title": "Profile",
       "description": "Keep your name and phone number up to date.",
@@ -636,7 +647,7 @@
       "faqs": "FAQs",
       "about": "About Us",
       "blog": "Blog",
-      "tickets": "Tickets",
+      "tickets": "Contact Us",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
@@ -747,15 +758,293 @@
       }
     }
   },
+  "CookieNotice": {
+    "dismiss": "Dismiss cookie notice",
+    "title": "Cookies on Findmus",
+    "description": "We use cookies for secure sign-in and to remember choices you make on Findmus.",
+    "learnMore": "Read our <privacy>Privacy Policy</privacy> to learn how cookies and your information are used.",
+    "accept": "Accept cookies"
+  },
   "Privacy": {
     "title": "Privacy",
     "titleAccent": "Policy",
-    "subtitle": "Information about personal data and privacy when using Findmus."
+    "subtitle": "How Findmus handles your information, what a finder can see, and the choices available to you.",
+    "contentLabel": "Findmus privacy policy",
+    "contents": "In this policy",
+    "updatedAt": "2026-10-17T00:00:00.000Z",
+    "lastUpdated": "Last updated: {date} (UTC)",
+    "sectionHeading": "{number}. {title}",
+    "summary": {
+      "title": "The essentials, before you read on",
+      "points": [
+        "Anyone with a sticker’s recovery link can see the assigned owner’s name and the email or phone details enabled for that sticker. Calls and emails go directly to that owner.",
+        "Your shipping address, order history and sign-in information are not part of the public recovery page. The stickers themselves do not track your location.",
+        "You can ask us about your information, request corrections or deletion, and get help changing the recovery details linked to your stickers."
+      ]
+    },
+    "sections": [
+      {
+        "title": "Who this policy covers",
+        "paragraphs": [
+          "Findmus (“we”, “us” and “our”) operates in Canada and provides QR stickers and an online recovery service that helps people return lost belongings. This policy explains how personal information is handled through our website, customer portal, orders, recovery pages and support services. Applicable Canadian federal and provincial privacy requirements govern how we handle personal information.",
+          "It applies to customers who buy stickers, people assigned as a sticker’s owner, finders who open recovery links, and anyone who contacts us. You can make a privacy enquiry through our <contact>contact form</contact>."
+        ]
+      },
+      {
+        "title": "Information we collect",
+        "paragraphs": [
+          "Account and contact information: your name, email address, phone number where provided, account role, sign-in records and the information needed to verify access to your account. Customers sign in using an emailed verification code. Authentication credentials, such as verification codes or administrator passwords, are stored in hashed form rather than as readable passwords or codes.",
+          "Orders and delivery: your order number, selected plan, sticker variants and quantities, order value and currency, shipping address, delivery instructions, order status, shipment references and related customer-service records. The current checkout does not ask you to submit payment-card details.",
+          "Sticker and recovery information: each sticker’s unique QR code, its original purchaser, its assigned owner, enabled recovery contact methods and the order it belongs to. An assigned owner can be different from the purchaser and may not have a password or have created an account themselves.",
+          "Support information: the name, email address, message and other information you provide when asking for help, together with ticket references, handling status and internal support notes. Please do not send passwords, verification codes, payment-card numbers or unnecessary sensitive information in a support message.",
+          "Technical information: visiting a web page sends information such as your network address, requested URL, browser details and request time to the servers handling the request. Our infrastructure and service providers may retain operational or security logs to run the website, investigate faults and address misuse."
+        ]
+      },
+      {
+        "title": "What a finder can see",
+        "paragraphs": [
+          "A Findmus QR code opens a recovery page that is accessible without signing in. That page can display the assigned owner’s name and the email address or phone number enabled for the sticker. The details shown belong to the assigned owner, who may be someone other than the person who bought the stickers.",
+          "The recovery URL is not a private account page. Anyone who scans the sticker or receives a copy of its link may be able to view those details. A link or its contents can be forwarded, photographed or saved. Only provide recovery contact details you are comfortable sharing for this purpose.",
+          "Using the phone or email options opens a direct call or email through the finder’s own service. Findmus does not currently provide an anonymous messaging relay between the finder and owner. Any further information you choose to exchange directly is also handled by the people and communications providers involved.",
+          "Your delivery address, order history, account sign-in credentials and internal support notes are not included in the public recovery profile. You can update your own name and phone number in your <profile>customer profile</profile>. For changes to other recovery details, removal of a recovery page or concerns about unwanted contact, <contact>contact our team</contact>. Removing information from our service cannot recall copies already saved by someone else."
+        ]
+      },
+      {
+        "title": "Why we use this information",
+        "paragraphs": [
+          "We use information to create and manage accounts, verify sign-ins, record and fulfil orders, prepare stickers before shipping, associate QR codes with the correct purchaser and owner, and display the recovery contact details needed to help return an item. Your stickers are configured before shipping; you do not need to activate them after delivery.",
+          "We also use information to send verification codes and order or support updates, answer enquiries, correct records, investigate security incidents or misuse, maintain reliable services, and meet legal, accounting and record-keeping obligations. Service emails are part of operating your account or order; they are separate from optional promotional communications.",
+          "Where the law requires a legal basis, we rely on the basis appropriate to the purpose: providing the service or fulfilling an order, complying with legal obligations, protecting legitimate operational and security interests while considering your privacy, or consent where required. Merely reading this policy does not replace a separate consent that the law requires."
+        ]
+      },
+      {
+        "title": "Information about someone else and sticker transfers",
+        "paragraphs": [
+          "If you provide a recipient’s or another owner’s personal information, you must have the authority or permission required to do so and explain how their recovery details will be used. In particular, they should understand that the name and enabled contact details associated with a sticker can be viewed through its recovery link.",
+          "When a sticker is reassigned, its recovery page uses the assigned owner’s information. We retain the original purchaser and order association where needed for order administration, customer support, ownership history or legal obligations. Reassignment does not turn the purchaser’s delivery or order records into public recovery information."
+        ]
+      },
+      {
+        "title": "Who receives information",
+        "paragraphs": [
+          "Recovery-page visitors receive the owner details described above. Authorised Findmus staff can access information needed to prepare orders, manage assignments, provide support and operate the service.",
+          "We use services for hosting, database infrastructure, email delivery and website assets. Our application uses Resend to send transactional emails, Cloudinary for image assets and LottieFiles for animation assets. Depending on their role, providers process information such as email recipients and message contents, or the technical requests needed to serve an asset. Delivery providers receive the contact and address information needed to ship your order. These disclosures are for the relevant service purpose.",
+          "We may disclose information where required by law or reasonably necessary to respond to a lawful request, address fraud or threats, or establish, exercise or defend legal rights. We seek to limit a disclosure to information appropriate to its purpose and the applicable law.",
+          "If Findmus is reorganised, acquired or transfers its business, relevant records may be transferred as part of that transaction, subject to applicable privacy obligations and appropriate confidentiality arrangements. We will provide any notice or obtain any consent the law requires."
+        ]
+      },
+      {
+        "title": "Cookies and third-party services",
+        "paragraphs": [
+          "Findmus uses cookies for sign-in sessions and authentication security. When you choose a sidebar layout, a cookie remembers that choice. Accepting the cookie notice stores a preference cookie for up to 180 days so the notice does not appear on every visit. Your browser can block or remove cookies, but doing so may prevent sign-in or interrupt account features. Signing out ends access through your current authenticated session.",
+          "Loading third-party assets or using an external phone or email service can send technical information to the provider involved. Their privacy practices apply to information they handle independently. Visiting our website does not authorise those providers to use your account or recovery details for unrelated purposes.",
+          "If we introduce optional analytics, advertising or other non-essential tracking, we will explain the relevant practices and provide the choices or consent controls required by applicable law. Necessary sign-in cookies are not a substitute for any consent needed for optional tracking."
+        ]
+      },
+      {
+        "title": "Location and QR scans",
+        "paragraphs": [
+          "Findmus stickers are passive QR labels. They do not contain GPS or Bluetooth and do not report the location of an item or person. The current recovery page does not request precise device location or provide continuous tracking. Opening it still creates an ordinary web request, which can generate the technical information described in this policy.",
+          "If you choose to share a location or meeting point directly with an owner or finder, consider what is necessary to arrange a safe return. Information exchanged outside Findmus is not automatically collected into a Findmus recovery conversation."
+        ]
+      },
+      {
+        "title": "How long information is kept",
+        "paragraphs": [
+          "You can close your account from your customer profile. Account closure disables sign-in, prevents existing sessions from accessing protected account features, and hides recovery contact details for stickers still assigned to you. It does not remove the recovery details of someone to whom a sticker has already been transferred. If you have an unfulfilled order, contact support before closure so we can address that order.",
+          "Account closure is not automatic erasure of your records. Account identifiers, closure information, purchaser and assignment history, orders, shipments and support records remain held internally. Access is restricted to authorised staff and service providers for the purposes described here. Retention must be limited to what is necessary for identified purposes, such as legal or accounting obligations, fraud prevention, a specific security investigation, or handling a dispute or legal claim; the possibility of an unspecified future investigation is not a reason to retain every record indefinitely.",
+          "You can separately request access, correction or deletion through our <contact>contact form</contact> after closure. We review what can be deleted or anonymised and what must be retained, explain any lawful exception and its retention criteria, and respond within the period required by applicable law. Closing your account does not waive these rights. You can raise an unresolved concern with the Office of the Privacy Commissioner of Canada or the provincial privacy regulator with jurisdiction.",
+          "We keep account and recovery information while it is needed to provide an active account or linked recovery service. A sticker may remain in use for a long time, so its QR-to-owner association can be needed beyond the date of purchase.",
+          "We keep order and shipment records where needed to fulfil an order, handle delivery issues or disputes, establish purchase history, and satisfy applicable tax, accounting or other legal retention requirements. Support records are kept where needed to resolve the enquiry, manage follow-up or disputes, and protect the service. Security and diagnostic records are kept according to their operational purpose and any investigation or legal requirement.",
+          "Retention depends on the type of information, the ongoing service, outstanding issues and applicable law, rather than a single period for every record. Information that is no longer needed should be deleted or anonymised. Where backups exist, deletion from active systems may precede removal through the backup cycle; retained backup copies should remain limited to appropriate recovery or legal purposes.",
+          "You may <contact>ask us about retention or request deletion</contact>. We may need to retain a limited record to meet a legal obligation or handle an outstanding claim. Removing an account or recovery information can affect whether a sticker still allows a finder to contact its owner."
+        ]
+      },
+      {
+        "title": "Security and safe use",
+        "paragraphs": [
+          "We use access controls and authentication safeguards to limit access to account and administrative functions. No internet service or storage system can guarantee absolute security. If a security incident affects personal information, we will assess it and provide notifications where required by applicable law.",
+          "Keep access to your email account and verification codes secure. Do not publish a recovery URL or contact detail more widely than you intend. If information is incorrect, a sticker is being misused or you receive unwanted contact, <contact>tell our team</contact> so we can review the affected record. Finders should use recovery details only to help return the item."
+        ]
+      },
+      {
+        "title": "Your choices and privacy rights",
+        "paragraphs": [
+          "You can review and update the name and phone number in your <profile>customer profile</profile>. Contact us to ask what information we hold about you, request a correction or deletion, or get help with recovery-page contact details and assignments.",
+          "Depending on the law that applies to you, you may also be entitled to access or receive a copy of your information, withdraw consent, object to certain uses, restrict processing or request a portable copy. A request may be subject to lawful exceptions, including the need to keep records or protect another person’s information. Withdrawing consent does not undo processing that was already lawful.",
+          "Use our <contact>contact form</contact> and identify your message as a privacy request. We may ask for information reasonably necessary to confirm your identity and authority over the record. We will respond within the time required by applicable law and explain any restriction or refusal. You may also complain to the privacy regulator with authority over your concern."
+        ]
+      },
+      {
+        "title": "Children and family belongings",
+        "paragraphs": [
+          "If you place stickers on a child’s belongings, use a parent’s or responsible adult’s recovery name and contact details. Avoid displaying a child’s full name, school, home address, routine or other information that is not needed for a finder to reach that adult.",
+          "Do not provide a child’s information without the authority and consent required by applicable law. If you believe a child’s information has been provided inappropriately or exposed through a recovery page, <contact>contact us</contact> so we can review it and take appropriate action."
+        ]
+      },
+      {
+        "title": "International processing",
+        "paragraphs": [
+          "Our infrastructure and service providers may process information outside the country where you live. Information processed in another country may be subject to that country’s laws and lawful access by its courts or authorities.",
+          "Where cross-border processing requires safeguards under applicable law, we are responsible for arranging the safeguards applicable to that processing. You can <contact>request more information</contact> about providers and international handling relevant to your data."
+        ]
+      },
+      {
+        "title": "Changes to this policy",
+        "paragraphs": [
+          "We may update this policy as the service, providers or applicable requirements change. The updated notice will appear here with a revised update date. For material changes, we will provide additional notice and obtain fresh consent where required. A policy update does not override privacy rights or any separate consent the law requires."
+        ]
+      },
+      {
+        "title": "Contact us about privacy",
+        "paragraphs": [
+          "For a privacy question, access or deletion request, correction, or concern about information shown on a recovery page, please use our <contact>contact form</contact>. Include the email associated with the relevant account and, where helpful, an order number or sticker reference. Please do not include passwords, sign-in codes or unnecessary identity documents."
+        ]
+      }
+    ]
   },
   "Terms": {
     "title": "Terms of",
-    "titleAccent": "Service",
-    "subtitle": "The terms for using Findmus and ordering our QR stickers."
+    "titleAccent": "Use",
+    "subtitle": "What to expect when you order Findmus stickers, use a recovery page, or manage your account.",
+    "contentLabel": "Findmus terms of use",
+    "contents": "In these terms",
+    "updatedAt": "2026-10-17T00:00:00.000Z",
+    "lastUpdated": "Last updated: {date} (UTC)",
+    "sectionHeading": "{number}. {title}",
+    "summary": {
+      "title": "The essentials, before you read on",
+      "points": [
+        "Your stickers are configured before shipping and arrive ready to use. Keeping the linked owner’s contact details accurate helps a finder reach the right person.",
+        "A QR sticker gives someone a way to contact the owner. It does not track an item, prove ownership, insure your belongings or guarantee their return.",
+        "If an order is held for restocking, you can request cancellation through our team. Your mandatory consumer rights continue to apply."
+      ]
+    },
+    "sections": [
+      {
+        "title": "About these terms",
+        "paragraphs": [
+          "These Terms of Use govern the Findmus website, customer portal, QR recovery pages, physical stickers and associated support services. “Findmus”, “we”, “us” and “our” refer to the operator of the Findmus service. “You” includes customers, assigned sticker owners, finders and other visitors, as appropriate to the activity described.",
+          "Please read these terms before placing an order or using the service. Where these terms are presented for acceptance during sign-in or ordering, proceeding confirms your agreement to them. Our <privacy>Privacy Policy</privacy> explains how we handle personal information. Accepting these terms does not replace any separate privacy consent required by law.",
+          "Nothing in these terms removes a mandatory consumer right, legal guarantee or remedy that applies to you. If a provision conflicts with such a right, that right takes priority."
+        ]
+      },
+      {
+        "title": "How Findmus works",
+        "paragraphs": [
+          "Findmus sells stickers containing unique QR codes linked to recovery pages. We configure the stickers for the relevant customer or assigned owner before shipping. After delivery, attach them to suitable belongings; no separate activation or setup is required.",
+          "If someone finds an item and opens its QR link, they can use the contact details enabled for that sticker to reach its assigned owner. Recovery depends on someone finding the item, reading the code and choosing to make contact, as well as the recovery page and contact details being accessible.",
+          "The stickers are passive labels, not GPS or Bluetooth trackers. Findmus does not guarantee that an item will be found, that a finder will contact you, or that an item will be returned. The service is not an emergency response service, insurance policy or proof of legal ownership."
+        ]
+      },
+      {
+        "title": "Accounts, authority and accurate details",
+        "paragraphs": [
+          "You must have the legal capacity and authority needed for the transaction or activity you undertake. If you cannot enter a binding purchase contract yourself, a parent, guardian or other legally authorised adult should arrange the purchase and manage the recovery contact details. If you act for an organisation or another person, you must have permission to do so.",
+          "Provide accurate account, contact and delivery information and keep it up to date. Protect access to your email account and sign-in codes. Do not use someone else’s account, share verification codes with an unauthorised person, or misrepresent your identity or authority. <contact>Contact us</contact> if you suspect unauthorised access.",
+          "Purchasing stickers does not give you permission to publish another person’s information without the authority or consent required by law. Use an adult’s recovery contact details for a child’s belongings and avoid displaying unnecessary information about the child."
+        ]
+      },
+      {
+        "title": "Recovery pages and direct contact",
+        "paragraphs": [
+          "A recovery page is accessible without signing in. Anyone with a sticker’s QR link can potentially see the assigned owner’s name and the email or phone details enabled for that sticker. A link and its contents can be copied or shared. Only provide information you are comfortable making available for item recovery.",
+          "Calls and emails go directly through the finder’s and owner’s communications services. Findmus does not currently provide an anonymous messaging relay. We do not verify every finder or guarantee the accuracy of a person’s claim to an item. Use reasonable care when exchanging further information or arranging a return, and follow applicable lost-property laws.",
+          "You can update your own name and phone number in your <profile>customer profile</profile>. <contact>Contact our team</contact> about other recovery details, incorrect assignments, unwanted contact or a request to remove a recovery page."
+        ]
+      },
+      {
+        "title": "Orders, prices and confirmation",
+        "paragraphs": [
+          "Before submitting an order, review the selected plan, sticker variants, quantities, price, currency and delivery details. Any applicable charges must be disclosed before you agree to them. We will ask you to agree to a correction if a pricing or order-detail error affects what you would pay; we will not treat an error as permission to charge an undisclosed amount.",
+          "Submitting an order records your request. An order acknowledgement confirms receipt of that request. We check stock before allocating stickers. A confirmation may indicate that the order is being prepared or explain that it is waiting for restocking; confirmation alone does not promise immediate dispatch.",
+          "An order may contain stickers linked to more than one assigned owner where the chosen plan and our assignment process allow it. We retain the original purchaser and order association when an assignment changes. The current assigned owner’s contact details are used for recovery."
+        ]
+      },
+      {
+        "title": "Stock shortages and orders on hold",
+        "paragraphs": [
+          "We check availability for every sticker variant requested. If there is not enough stock to fulfil the whole order, we put the whole order on hold rather than allocating some variants and leaving the rest unfulfilled. We will explain the restocking delay in the order confirmation.",
+          "A held order may continue to appear as “Confirmed” in your customer portal while our team records the restocking hold internally. We retry stock allocation and prepare the order once all requested variants are available. Restocking may delay dispatch and delivery; we will not promise a specific replenishment date unless we can confirm one.",
+          "If the additional wait no longer works for you, <contact>contact us</contact> with the order number to request cancellation before fulfilment resumes. Restocking holds are eligible for cancellation under our order process, in addition to any rights you have by law."
+        ]
+      },
+      {
+        "title": "Cancellations, returns and refunds",
+        "paragraphs": [
+          "Ordinary orders are not cancellable through our standard order process unless we agree otherwise. The restocking exception is described above. This standard process does not restrict a statutory cancellation or withdrawal right, or a remedy for non-delivery, a faulty product or another failure to meet a legal obligation.",
+          "To request a cancellation, return, replacement or refund, <contact>contact our team</contact> with the order number and a description of the issue. We will explain the available options, any information reasonably needed, and the return instructions where a return is appropriate. You do not need to rely on a portal button to make a request. Treat the order as active until we confirm cancellation.",
+          "If a refund is legally due or otherwise agreed, we will confirm the amount and arrangements and meet applicable legal deadlines. Any voluntary return arrangement will be confirmed with you in writing. Any additional return promise or warranty provided with your order remains relevant, together with your mandatory rights. Please confirm the return address and process before sending an item back."
+        ]
+      },
+      {
+        "title": "Delivery and order problems",
+        "paragraphs": [
+          "Give us a complete and accurate delivery address and only the instructions needed to deliver the parcel. Review your details promptly and tell us about any error as soon as you notice it. We will explain whether a requested change is still possible; a change may not be possible once an order has been prepared or dispatched.",
+          "Delivery estimates are estimates unless a specific date is expressly agreed. Stock availability, preparation, carriers, customs or events outside our reasonable control can affect delivery. We will provide available shipment information and work with you on reported delivery problems. These provisions do not remove any legal responsibility we have for delivering your order.",
+          "Please report missing, damaged, incorrect or defective deliveries through our <contact>contact form</contact>, including the order reference and helpful details. A request to report an issue promptly does not shorten a statutory period for raising a claim."
+        ]
+      },
+      {
+        "title": "Using and caring for your stickers",
+        "paragraphs": [
+          "Choose a sticker variant suited to the intended material and conditions, and follow the product or packaging instructions. Apply stickers carefully to an appropriate surface and keep the code readable. Check that the recovery link and contact details work after application and from time to time while the sticker is in use.",
+          "Adhesion, wear and removal can vary with the surface, preparation, temperature, washing and other conditions. Test an inconspicuous area where appropriate. Do not cover safety information or apply a sticker where it could interfere with equipment or safe use. We do not promise suitability for every surface or indefinite durability unless an express product description says otherwise.",
+          "Care and suitability guidance does not remove your rights if a sticker is defective, does not match its description or is otherwise supplied in breach of a legal guarantee."
+        ]
+      },
+      {
+        "title": "Acceptable use and finder responsibilities",
+        "paragraphs": [
+          "Use Findmus and recovery contact information for lawful item recovery and legitimate account, order or support purposes. Do not use them for harassment, stalking, impersonation, fraud, unwanted marketing, unlawful demands or collecting information about people who have not authorised it.",
+          "Do not enumerate or scrape recovery links to build contact lists, copy codes to mislead people about an item’s owner, bypass access controls, interfere with the website, or attempt to access another person’s account or private records. Do not submit information you have no right to use or disclose.",
+          "If you find an item, use the recovery details only for a genuine attempt to arrange its return. Contacting an owner does not automatically give you a right to a reward or payment from Findmus. We do not authorise a finder to collect a fee on our behalf."
+        ]
+      },
+      {
+        "title": "Ownership and permission to use the service",
+        "paragraphs": [
+          "Findmus branding, website design, software and other service materials belong to Findmus or the relevant rights holder. You may use the website and purchased stickers for their intended personal or organisational recovery purposes. That permission does not authorise you to reproduce our branding, resell access to the service without agreement, or use the service to mislead others.",
+          "You retain rights you have in information you provide. You allow us to use it as needed to process your order, operate the linked recovery service and support your account, consistently with our <privacy>Privacy Policy</privacy> and applicable law. Providing information does not waive another person’s rights or authorise unrelated uses of their data."
+        ]
+      },
+      {
+        "title": "Availability, maintenance and restrictions",
+        "paragraphs": [
+          "We aim to keep Findmus available and functioning, but maintenance, faults, network problems and third-party outages can interrupt access. Keep another appropriate way of identifying important belongings and do not rely on a QR sticker as your only protection against loss.",
+          "We may restrict an account, recovery page or activity where reasonably necessary to address suspected misuse, an incorrect assignment, a security threat or a legal requirement. We will consider the circumstances and provide an explanation or notice where appropriate and lawful. A restriction does not automatically remove your privacy rights, ownership of an item or an entitlement to a refund or other remedy.",
+          "A sticker purchase does not by itself promise that a particular website feature will remain unchanged forever. If we plan to materially withdraw a purchased service, we will give appropriate notice where practicable and respect any resulting rights or remedies. We will not treat these terms as permission to add an undisclosed recurring charge."
+        ]
+      },
+      {
+        "title": "Our responsibility and recovery limitations",
+        "paragraphs": [
+          "We remain responsible for meeting our contractual and legal obligations. A Findmus sticker gives a finder a way to contact an owner; it does not insure the value of the item. An item being lost or not returned does not, by itself, establish a failure by Findmus. Any claim arising from our own breach or failure to use legally required care remains subject to applicable law.",
+          "For consumers, nothing here removes a right to compensation or another remedy that the applicable law provides for our breach. In particular, we do not exclude responsibility for fraud, wilful misconduct, death or personal injury caused by negligence where it cannot lawfully be excluded, or mandatory rights relating to goods, services or personal information.",
+          "If you use Findmus for business purposes, we do not accept responsibility for lost profits, business interruption or lost commercial opportunities arising as indirect business losses, except where applicable law requires otherwise. This provision does not exclude a mandatory remedy or responsibility that cannot lawfully be limited."
+        ]
+      },
+      {
+        "title": "Questions, complaints and disputes",
+        "paragraphs": [
+          "If something goes wrong, please <contact>contact our team</contact> with the relevant order or sticker reference and a clear description of the issue. We will review it and explain the next steps. An attempt to resolve an issue with us does not prevent you from using a regulator, court or other dispute process available under applicable law.",
+          "The mandatory consumer protections and legal procedures applicable to your transaction continue to apply. These terms do not require you to waive a protected right, accept compulsory arbitration or give up a lawful complaint route."
+        ]
+      },
+      {
+        "title": "Changes to these terms",
+        "paragraphs": [
+          "We may update these terms as the service or applicable requirements change. The updated text and date will appear here. Material changes affecting an ongoing service will be communicated where appropriate, and we will obtain fresh agreement where the law requires it.",
+          "Changes do not retrospectively remove a right attached to an existing order or excuse a breach that has already occurred. Any continuing service changes remain subject to your contract and mandatory rights. If part of these terms cannot be enforced, the remainder applies only to the extent it can operate lawfully and fairly."
+        ]
+      },
+      {
+        "title": "Contact Findmus",
+        "paragraphs": [
+          "For a question about these terms, an order, a return or a recovery page, use our <contact>contact form</contact>. You can review your purchase references in <orders>your orders</orders>. Include the information needed to identify the issue, but do not send account passwords, verification codes or payment-card details."
+        ]
+      }
+    ]
   },
   "Ticket": {
     "title": "Contact",
@@ -799,7 +1088,16 @@
   "About": {
     "title": "About",
     "titleAccent": "Findmus",
-    "subtitle": "We make it simple for lost belongings to find their way home. Our ready-to-use QR stickers help finders connect with owners, turning lost items into happy reunions."
+    "subtitle": "We make it simple for lost belongings to find their way home. Our ready-to-use QR stickers help finders connect with owners, turning lost items into happy reunions.",
+    "purpose": {
+      "eyebrow": "Why we’re here",
+      "title": "Lost doesn’t have to mean gone.",
+      "introduction": "A bag left on a bus. Keys dropped on a walk. A laptop with work you can’t easily replace. Losing something can interrupt your day and leave you wondering whether you’ll ever see it again.",
+      "description": "We believe the person who finds it should have a simple way to help. Findmus gives your belongings a QR sticker that connects a finder with the owner’s recovery contact details — a small step that can make a return possible.",
+      "promise": "Our purpose is simple: make it easier for someone’s good intentions to become a way home for your belongings.",
+      "imageAlt": "A phone scanning a Findmus QR sticker on a belonging.",
+      "caption": "A scan gives a finder a way to reach the owner."
+    }
   },
   "Pricing": {
     "title": "Affordable",

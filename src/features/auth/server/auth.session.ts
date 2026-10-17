@@ -8,8 +8,9 @@ import { db } from "@/lib/db";
 export const getAuthenticatedUser = cache(async () => {
     const session = await auth();
     if (!session?.user?.id || !/^[a-f\d]{24}$/i.test(session.user.id)) return null;
-    return db.user.findUnique({
-        where: { id: session.user.id },
+    return db.user.findFirst({
+        where: { id: session.user.id, OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
+        // Missing fields on older MongoDB accounts also mean the account is active.
         select: { id: true, email: true, name: true, phone: true, role: true },
     });
 });

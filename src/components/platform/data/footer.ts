@@ -20,6 +20,10 @@ export const footerLinkGroups = [
   },
 ] as const;
 
+export const customerAccountLinks = [...footerLinkGroups[0].links, ...footerLinkGroups[1].links]
+  .filter(link => ["faqs", "about", "privacy", "terms"].includes(link.key))
+  .map(link => ({ ...link, href: link.key === "tickets" ? "/customer/tickets" : link.href }));
+
 export const footerSocialLinks = [
   { key: "x", href: "#", path: "M4 3h4l12 18h-4L4 3ZM20 3l-7 8M4 21l7-8" },
   { key: "facebook", href: "#", path: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z" },

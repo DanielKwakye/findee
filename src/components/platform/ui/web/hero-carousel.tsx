@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/core/ui/carousel";
 import TypographyBody from "@/components/core/ui/typography-body";
@@ -10,7 +11,7 @@ import { useHeroCarousel } from "@/components/platform/hooks/use.hero.carousel";
 import HeroCarouselIndicators from "@/components/platform/ui/shared/hero-carousel-indicators";
 import { webHeroCarouselOptions } from "@/components/platform/utils/carousel.utils";
 import { cn } from "@/lib/utils";
-import styles from "./hero-carousel.module.css";
+import styles from "@/components/platform/ui/web/hero-carousel.module.css";
 
 /** Shows the navigable hero image cards in the web layout. */
 export default function WebHeroCarousel() {
@@ -34,7 +35,7 @@ export default function WebHeroCarousel() {
               })}
               className={cn("relative aspect-[0.95] basis-1/2 pl-0", isCurrent && "z-10")}
             >
-              <article className={cn(styles.card, styles[position])}>
+              <Link href="/checkout" aria-label={t(item.titleKey)} className={cn(styles.card, styles[position], "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring")}>
                 <Image
                   src={item.image}
                   alt={t(item.altKey)}
@@ -55,7 +56,7 @@ export default function WebHeroCarousel() {
                     {t(item.descriptionKey)}
                   </TypographyParagraph>
                 </div>
-              </article>
+              </Link>
             </CarouselItem>
           );
         })}

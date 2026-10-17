@@ -7,6 +7,7 @@ import {TooltipProvider} from "@/components/core/ui/tooltip";
 import {ReactNode} from "react";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/core/ui/toast";
+import { CookieNotice } from "@/components/platform";
 
 const notoSansHeading = Noto_Sans({subsets:['latin'],variable:'--font-heading'});
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode } ) {
         <NextIntlClientProvider>
           <QueryProvider><TooltipProvider>{children}</TooltipProvider></QueryProvider>
           <Toaster />
+          <CookieNotice />
         </NextIntlClientProvider>
       </body>
     </html>

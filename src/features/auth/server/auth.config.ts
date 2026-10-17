@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authenticateCredentials } from "@/features/auth/server/auth.service";
 import { authenticateCustomerOtp } from "@/features/auth/server/auth.customer";
+import { db } from "@/lib/db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
     pages: { signIn: "/login" },
@@ -16,10 +17,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     })],
     callbacks: {
         /** Carries the authenticated account identity into the encrypted session token. */
-        jwt({ token, user }) {
+        async jwt({ token, user }) {
             if (user) {
                 token.sub = user.id;
                 token.role = user.role;
+            }
+            // Reject previously issued sessions as soon as the account is closed.
+            if (token.sub) {
+                const account = await db.user.findUnique({ where: { id: token.sub }, select: { closedAt: true } });
+                if (!account || account.closedAt) return null;
             }
             return token;
         },

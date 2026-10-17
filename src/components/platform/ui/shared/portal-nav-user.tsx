@@ -7,8 +7,11 @@ import {
     CreditCard,
     LogOut,
     Globe,
+    FileText,
 } from "lucide-react"
 import Link from "next/link";
+import {useTranslations} from "next-intl";
+import {customerAccountLinks} from "@/components/platform/data/footer";
 
 import {
     Avatar,
@@ -45,6 +48,7 @@ export function PortalNavUser({
     audience?: "admin" | "customer"
 }) {
     const { isMobile, logout, t } = usePortalUser();
+    const tFooter = useTranslations("Footer.links");
     const name = audience === "customer" ? user.name?.trim() || t("account") : t("admin");
     const initials = name.slice(0, 2).toUpperCase();
 
@@ -98,6 +102,17 @@ export function PortalNavUser({
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
+                        {audience === "customer" && <>
+                            <DropdownMenuGroup>
+                                {customerAccountLinks.map(({key, href}) => (
+                                    <DropdownMenuItem key={key} render={<Link href={href} />}>
+                                        <FileText />
+                                        <TypographyBody className="text-sm">{tFooter(key)}</TypographyBody>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                        </>}
                         {audience === "admin" && <>
                         <DropdownMenuGroup>
                             <DropdownMenuItem>

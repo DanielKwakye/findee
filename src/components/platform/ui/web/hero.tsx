@@ -51,11 +51,11 @@ export default function WebHero() {
         </TypographyBody>
         <span aria-hidden="true" className="h-8 w-px shrink-0 bg-primary-foreground/35" />
         <div className="flex flex-1 items-center justify-between gap-3">
-          {webHeroTrustedItems.map(({ labelKey, icon: Icon }) => (
-            <div key={labelKey} className="flex items-center gap-2 whitespace-nowrap">
+          {webHeroTrustedItems.map(({ labelKey, icon: Icon, variant }) => (
+            <Link key={labelKey} href={`/checkout?variant=${variant}`} className="flex items-center gap-2 whitespace-nowrap rounded-sm transition-colors hover:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
               <Icon aria-hidden="true" className="size-6 shrink-0" strokeWidth={1.5} />
               <TypographyBody className="text-sm">{tCategory(labelKey)}</TypographyBody>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

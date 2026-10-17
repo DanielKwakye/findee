@@ -9,7 +9,8 @@ export async function getRecoveryProduct(incomingCode: string) {
     const code = normalizeProductCode(incomingCode);
     if (!code || code.length > 255) return null;
     const product = await db.product.findUnique({
-        where: {code, published: true, assignedToId: {not: null}},
+        where: {code, published: true, assignedToId: {not: null},
+            assignedTo: { is: { OR: [{ closedAt: null }, { closedAt: { isSet: false } }] } }},
         select: {
             published: true,
             reachoutModes: true,

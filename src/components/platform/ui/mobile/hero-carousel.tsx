@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
@@ -12,7 +13,7 @@ import { useHeroCarousel } from "@/components/platform/hooks/use.hero.carousel";
 import HeroCarouselIndicators from "@/components/platform/ui/shared/hero-carousel-indicators";
 import { heroCarouselOptions } from "@/components/platform/utils/carousel.utils";
 import { cn } from "@/lib/utils";
-import styles from "./hero-carousel.module.css";
+import styles from "@/components/platform/ui/mobile/hero-carousel.module.css";
 
 /** Shows the navigable hero image cards in the mobile layout. */
 export default function MobileHeroCarousel() {
@@ -38,9 +39,11 @@ export default function MobileHeroCarousel() {
               className="basis-2/3 pl-3 xl:basis-[54%]"
             >
               <div className="relative aspect-[0.95]">
-                <article
+                <Link
+                  href="/checkout"
+                  aria-label={t(item.titleKey)}
                   className={cn(
-                    "absolute inset-0 overflow-hidden rounded-3xl border transition-[transform,opacity,border-color] duration-500",
+                    "absolute inset-0 overflow-hidden rounded-3xl border transition-[transform,opacity,border-color] duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
                     isCurrent
                       ? "inset-x-0 border-chart-2 opacity-100"
                       : "inset-x-0 border-primary-foreground/15 opacity-75",
@@ -66,7 +69,7 @@ export default function MobileHeroCarousel() {
                       {t(item.descriptionKey)}
                     </TypographyParagraph>
                   </div>
-                </article>
+                </Link>
               </div>
             </CarouselItem>
           );

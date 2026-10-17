@@ -19,13 +19,12 @@ export async function createOrder(customerId: string, values: CheckoutValues): P
     for (let attempt = 0; attempt < 5; attempt++) {
         try {
             const order = await db.$transaction(async transaction => {
-                if (name || phone) {
-                    await transaction.user.update({
-                        where: { id: customerId },
-                        data: { ...(name ? { name } : {}), ...(phone ? { phone } : {}) },
+                // Touch the active customer record so account closure cannot race a new order.
+                await transaction.user.update({
+                        where: { id: customerId, OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
+                        data: { updatedAt: new Date(), ...(name ? { name } : {}), ...(phone ? { phone } : {}) },
                         select: { id: true },
-                    });
-                }
+                });
                 return transaction.order.create({
                     data: {
                         number: generateReferenceCode(),
