@@ -11,6 +11,7 @@ out
 
 # Environment files
 .env*
+docker-build.sh
 
 # Local files
 .DS_Store
