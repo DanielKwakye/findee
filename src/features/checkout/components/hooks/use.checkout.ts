@@ -12,12 +12,19 @@ import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.a
 import { submitCheckout } from "@/features/checkout/server/submit.checkout.action";
 import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
 import type { CheckoutVariant } from "@/features/checkout/data/checkout.variants";
+import { trackEvent } from "@/lib/firebase";
 
 /** Manages checkout navigation and the customer's variant selections. */
 export function useCheckout(customer: CheckoutCustomer | null, initialPlan: CheckoutPlan["id"] = "family", initialVariant: CheckoutVariant = "Everyday") {
     const t = useTranslations("Checkout");
     const router = useRouter();
     const queryClient = useQueryClient();
+    const checkoutTracked = useRef(false);
+    useEffect(() => {
+        if (checkoutTracked.current) return;
+        checkoutTracked.current = true;
+        void trackEvent("begin_checkout");
+    }, []);
     const stepper = checkoutStepper.useStepper();
     const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
     const authenticatedEmail = customer?.email ?? verifiedEmail;
@@ -44,7 +51,11 @@ export function useCheckout(customer: CheckoutCustomer | null, initialPlan: Chec
         mutationFn: submitCheckout,
         retry: false,
         /** Opens the order acknowledgement after a valid checkout response. */
-        onSuccess() {
+        onSuccess(_orderNumber, values) {
+            void trackEvent("order_submitted", {
+                plan: values.plan,
+                sticker_quantity: values.variants.reduce((total, variant) => total + Number(values.allocation[variant] ?? 0), 0),
+            });
             void queryClient.invalidateQueries({ queryKey: ["orders"] });
             router.push("/checkout/order-received");
         },

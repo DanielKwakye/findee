@@ -41,11 +41,11 @@ export default function RecoveryDetails({code}: {code: string}) {
                                     <TypographyParagraph className="font-semibold leading-5">{product.assignedTo.name || t("ownerFallback")}</TypographyParagraph>
                                 </div>
                             </div>
-                            {product.assignedTo.phone && <Button render={<Link href={`tel:${product.assignedTo.phone.replace(/[^+\d]/g, "")}`} prefetch={false} />} nativeButton={false} className="h-auto min-h-12 w-full gap-3 whitespace-normal py-3">
+                            {product.assignedTo.phone && <Button onClick={() => query.onContactClick("phone")} render={<Link href={`tel:${product.assignedTo.phone.replace(/[^+\d]/g, "")}`} prefetch={false} />} nativeButton={false} className="h-auto min-h-12 w-full gap-3 whitespace-normal py-3">
                                 <Phone aria-hidden="true" className="size-4 shrink-0" />
                                 <TypographyBody className="text-sm">{t("phone", {phone: product.assignedTo.phone})}</TypographyBody>
                             </Button>}
-                            {product.assignedTo.email && <Button render={<Link href={`mailto:${product.assignedTo.email}`} prefetch={false} />} nativeButton={false} variant="outline" className="h-auto min-h-12 w-full gap-3 whitespace-normal py-3">
+                            {product.assignedTo.email && <Button onClick={() => query.onContactClick("email")} render={<Link href={`mailto:${product.assignedTo.email}`} prefetch={false} />} nativeButton={false} variant="outline" className="h-auto min-h-12 w-full gap-3 whitespace-normal py-3">
                                 <Mail aria-hidden="true" className="size-4 shrink-0" />
                                 <TypographyBody className="min-w-0 break-all text-sm">{t("email", {email: product.assignedTo.email})}</TypographyBody>
                             </Button>}

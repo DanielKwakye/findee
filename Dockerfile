@@ -1,5 +1,5 @@
 # Build image:
-# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v22 --push .
+# docker buildx build --platform linux/amd64 -t danielkwakye1000/findee:v23 --push .
 
 
 # -----------------------------
@@ -48,7 +48,14 @@ RUN mkdir -p .next/cache
 # Build full Next.js app
 ARG DATABASE_URL=mongodb://localhost:27017/findee
 ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAAFZdOyFh6GkHLAir
-RUN DATABASE_URL="$DATABASE_URL" NEXT_PUBLIC_TURNSTILE_SITE_KEY="$NEXT_PUBLIC_TURNSTILE_SITE_KEY" npm run build
+ARG NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyABUSoalZcZVWBVF7y8iOAiPG62aV0MRQg
+ARG NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=findmus-a2b4d.firebaseapp.com
+ARG NEXT_PUBLIC_FIREBASE_PROJECT_ID=findmus-a2b4d
+ARG NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=findmus-a2b4d.firebasestorage.app
+ARG NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=482723483117
+ARG NEXT_PUBLIC_FIREBASE_APP_ID=1:482723483117:web:0ae78606f0b3cfbfcfabe4
+ARG NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-JRZD45BKFR
+RUN npm run build
 
 # Remove development dependencies before copying dependencies to the runtime stage
 RUN npm prune --omit=dev
