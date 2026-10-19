@@ -1,6 +1,10 @@
 import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from "@/components/platform";
 import UseCases from "@/features/use-cases/components/ui/use-cases";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.useCases };
 
 /** Presents the use cases page and its shared inner-page header. */
 export default function UseCasesPage() {

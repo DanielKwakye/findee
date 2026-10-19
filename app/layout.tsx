@@ -9,6 +9,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/core/ui/toast";
 import { CookieNotice } from "@/components/platform";
 import { FirebaseAnalytics } from "@/components/providers/firebase-analytics";
+import messages from "@/translations/en.json";
 
 const notoSansHeading = Noto_Sans({subsets:['latin'],variable:'--font-heading'});
 
@@ -25,8 +26,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Findmus Recovery System",
-  description: "Recover your lost items in the easiest way possible",
+  title: {
+    default: messages.PageMetadata.defaultTitle,
+    template: messages.PageMetadata.titleTemplate,
+  },
+  description: messages.PageMetadata.description,
 };
 
 /** Provides the shared document layout and translations to app pages. */

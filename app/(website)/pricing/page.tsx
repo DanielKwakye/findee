@@ -1,6 +1,10 @@
 import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from "@/components/platform";
 import PricingPlans from "@/features/pricing/components/ui/pricing-plans";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.pricing };
 
 /** Presents the pricing page and its shared inner-page header. */
 export default function PricingPage() {

@@ -1,6 +1,10 @@
 import { CustomerProfileForm } from "@/features/auth/components/ui/customer-profile-form";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { requireCustomer } from "@/features/auth/server/auth.session";
 import CloseCustomerAccount from "@/features/auth/components/ui/close-customer-account";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.profile };
 
 /** Reserves the customer's account profile page for future content. */
 export default async function CustomerProfilePage() {

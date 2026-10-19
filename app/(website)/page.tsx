@@ -1,4 +1,8 @@
 import { FAQ, Footer, HowItWorks, MobileHero, MobileNavbar, Testimonials, WebHero, WebNavbar } from "@/components/platform";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.home };
 
 /** Renders the home page canvas and its shared navigation. */
 export default function Home() {

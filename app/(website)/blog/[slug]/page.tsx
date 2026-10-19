@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { QueryClient } from "@tanstack/react-query";
 import { Footer, MobileNavbar, WebNavbar } from "@/components/platform";
 import { getBlogStory } from "@/features/blog/server/get.blog.story.action";
 import { BlogStoryDetail } from "@/features/blog/components/ui/blog-story-detail";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.blogStory };
 
 /** Serves a published story at its public URL and returns a 404 for unavailable stories. */
 export default async function BlogStoryPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -1,7 +1,11 @@
 import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from "@/components/platform";
 import { FeaturedStories } from "@/features/blog/components/ui/featured-stories";
 import { LatestStories } from "@/features/blog/components/ui/latest-stories";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.blog };
 
 /** Presents the blog page and its shared inner-page header. */
 export default function BlogPage() {

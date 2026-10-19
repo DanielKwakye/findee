@@ -1,7 +1,11 @@
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from "@/components/platform";
 import TicketForm from "@/features/tickets/components/ui/ticket-form";
 import { getCustomerUser } from "@/features/auth/server/auth.session";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.contact };
 
 /** Presents the contact page and its shared inner-page header. */
 export default async function TicketsPage() {

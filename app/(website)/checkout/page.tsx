@@ -1,9 +1,13 @@
 import Checkout from "@/features/checkout/components/ui/checkout";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { MobileNavbar, WebNavbar } from "@/components/platform";
 import { getCustomerUser } from "@/features/auth/server/auth.session";
 import { checkoutPlanParams } from "@/features/checkout/data/checkout.plan.params";
 import type { CheckoutPlan } from "@/features/checkout/utils/checkout.types";
 import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.checkout };
 
 /** Presents the customer checkout flow. */
 export default async function CheckoutPage({ searchParams }: { searchParams: Promise<{ plan?: string | string[]; variant?: string | string[] }> }) {

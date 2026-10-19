@@ -1,5 +1,9 @@
 import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import { Footer, InnerPageHero, LegalPageContent, MobileNavbar, WebNavbar } from "@/components/platform";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.privacy };
 
 /** Presents the privacy page and its shared inner-page header. */
 export default function PrivacyPage() {

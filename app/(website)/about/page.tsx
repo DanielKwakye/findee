@@ -1,9 +1,13 @@
 import { useTranslations } from "next-intl";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import Image from "next/image";
 import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from "@/components/platform";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { ImageConstants } from "@/lib/image.constants";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.about };
 
 /** Presents the about page and its shared inner-page header. */
 export default function AboutPage() {

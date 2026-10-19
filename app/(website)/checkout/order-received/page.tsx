@@ -1,5 +1,9 @@
 import { MobileNavbar, WebNavbar } from "@/components/platform";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import OrderReceived from "@/features/checkout/components/ui/order-received";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.orderReceived };
 
 /** Presents the acknowledgement for a submitted checkout. */
 export default function OrderReceivedPage() {

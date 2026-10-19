@@ -1,7 +1,11 @@
 import RecoveryDetails from "@/features/recovery/components/ui/recovery-details";
+import type { Metadata } from "next";
+import messages from "@/translations/en.json";
 import Link from "next/link";
 import {getTranslations} from "next-intl/server";
 import {AppIcon} from "@/components/platform";
+
+export const metadata: Metadata = { title: messages.PageMetadata.titles.recovery };
 
 /** Provides the unauthenticated recovery page for a sticker's unique code. */
 export default async function RecoveryPage({params}: {params: Promise<{code: string}>}) {
