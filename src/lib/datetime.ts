@@ -1,14 +1,12 @@
 import type {useFormatter} from "next-intl";
 
 /** Formats an unchanged timestamp for display in the user's locale and timezone. */
-export function formatUserDateTime(date: Date | number, formatter: ReturnType<typeof useFormatter>, timeZone: string) {
+export function formatUserDateTime(date: Date | number, formatter: ReturnType<typeof useFormatter>, timeZone: string, options: { dateOnly?: boolean } = {}) {
     return formatter.dateTime(date, {
-        timeZone,
+        timeZone: options.dateOnly ? "UTC" : timeZone,
         year: "numeric",
         month: "short",
         day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
+        ...(!options.dateOnly && { hour: "numeric" as const, minute: "2-digit" as const, hour12: true }),
     });
 }

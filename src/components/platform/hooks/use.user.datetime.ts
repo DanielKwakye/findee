@@ -12,5 +12,5 @@ export function useUserDateTime() {
         () => Intl.DateTimeFormat().resolvedOptions().timeZone,
         () => "UTC",
     );
-    return useCallback((date: Date | number) => formatUserDateTime(date, formatter, timeZone), [formatter, timeZone]);
+    return useCallback((date: Date | number, options?: { dateOnly?: boolean }) => formatUserDateTime(date, formatter, timeZone, options), [formatter, timeZone]);
 }

@@ -1,16 +1,16 @@
 "use client";
 
-import { Controller, type Control } from "react-hook-form";
+import { Controller, useWatch, type Control } from "react-hook-form";
 import { useFormatter, useTranslations } from "next-intl";
-import { Info, Sticker, Users } from "lucide-react";
-import { RadioGroup, RadioGroupItem } from "@/components/core/ui/radio-group";
-import { Badge } from "@/components/core/ui/badge";
-import { checkoutPlanAccentClasses, checkoutPlanBadgeClasses } from "@/features/checkout/data/checkout.plan.badges";
-import { cn } from "@/lib/utils";
-import { Field, FieldContent, FieldLabel, FieldTitle } from "@/components/core/ui/field";
+import { Info } from "lucide-react";
+import { Input } from "@/components/core/ui/input";
+import { Field, FieldContent, FieldLabel } from "@/components/core/ui/field";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import type { CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
+import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
+import { getCheckoutUnitPrice } from "@/features/checkout/utils/checkout.pricing";
+import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
 
 type Props = {
     control: Control<CheckoutValues>;
@@ -20,48 +20,47 @@ type Props = {
 /** Presents the available sticker plans as a single purchase choice. */
 export default function CheckoutPlans({ control, plans }: Props) {
     const t = useTranslations("Checkout.plans");
+    const variantsText = useTranslations("Checkout.variants");
     const format = useFormatter();
+    const variants = useWatch({ control, name: "variants" });
+    const custom = plans.find(plan => plan.id === "custom");
+    if (!custom) return null;
+    const allocation = distributeCheckoutQuantity(variants, custom.quantity);
 
     return (
         <div className="space-y-4">
-            <Controller name="plan" control={control} render={({ field }) => (
-                <RadioGroup name={field.name} value={field.value} onValueChange={field.onChange}
-                    onBlur={field.onBlur} aria-label={t("title")} className="gap-2 sm:gap-3 xl:gap-4">
-                    {plans.map(plan => (
-                        <FieldLabel key={plan.id} className={cn("xl:*:data-[slot=field]:p-3", field.value === plan.id && checkoutPlanAccentClasses[plan.id])}>
-                            <Field orientation="horizontal">
-                                <FieldContent className="gap-2">
-                                    <FieldTitle>
-                                        <Sticker aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
-                                        <TypographyBody className="text-sm font-bold">{t(plan.quantityIsMinimum ? "stickersPlus" : "stickers", { quantity: plan.quantity })}</TypographyBody>
-                                    </FieldTitle>
-                                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
-                                        <div className="flex items-center gap-1.5">
-                                            <Users aria-hidden="true" className="size-3.5 shrink-0" />
-                                            <TypographyBody className="text-xs">{plan.maxRecoveryProfiles === null ? t("unlimitedProfiles") : t("profiles", { profiles: plan.maxRecoveryProfiles })}</TypographyBody>
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <TypographyBody className="text-sm font-bold">
-                                            {format.number(plan.price, { style: "currency", currency: plan.currency, currencyDisplay: "code" })}
-                                        </TypographyBody>
-                                        <Badge variant="secondary" className={checkoutPlanBadgeClasses[plan.id]}>
-                                            <TypographyBody className="text-xs">{t(`names.${plan.title}`)}</TypographyBody>
-                                        </Badge>
-                                    </div>
-                                </FieldContent>
-                                <RadioGroupItem value={plan.id} />
-                            </Field>
-                        </FieldLabel>
+            <Controller name="customQuantity" control={control}
+                rules={{
+                    /** Requires a whole sticker quantity within the custom plan's purchase limits. */
+                    validate: value => (typeof value === "number" && Number.isSafeInteger(value)
+                        && value >= custom.minimumQuantity!) || t("customQuantityInvalid", { minimum: custom.minimumQuantity! }),
+                }}
+                render={({ field, fieldState }) => (
+                    <Field className="gap-2">
+                        <FieldLabel htmlFor="checkout-custom-quantity"><TypographyBody className="text-sm">{t("customQuantity")}</TypographyBody></FieldLabel>
+                        <Input id="checkout-custom-quantity" type="number" inputMode="numeric" min={custom.minimumQuantity} step={1}
+                            name={field.name} ref={field.ref} value={field.value ?? ""} onBlur={field.onBlur}
+                            onChange={event => field.onChange(event.target.value === "" ? "" : event.target.valueAsNumber)}
+                            aria-invalid={fieldState.invalid} aria-describedby="checkout-custom-quantity-help" />
+                        <TypographyParagraph className="text-xs text-muted-foreground"><span id="checkout-custom-quantity-help">{fieldState.error?.message ?? t("customQuantityInvalid", { minimum: custom.minimumQuantity! })}</span></TypographyParagraph>
+                    </Field>
+                )} />
+            <Field className="rounded-xl border border-border p-4">
+                <FieldContent className="gap-3">
+                    <div className="flex items-start gap-2 text-muted-foreground">
+                        <Info aria-hidden="true" className="mt-0.5 size-3.5 shrink-0" />
+                        <TypographyParagraph className="text-xs">{t("pricingReference")}</TypographyParagraph>
+                    </div>
+                    {checkoutVariants.filter(variant => variants.includes(variant.id)).map(variant => (
+                        <div key={variant.id} className="flex flex-wrap items-center justify-between gap-2">
+                            <TypographyBody className="text-sm">{variantsText(`${variant.key}.title`)}</TypographyBody>
+                            <TypographyBody className="text-sm font-semibold">{t("perUnit", { price: format.number(getCheckoutUnitPrice(custom, variant.id, Number(allocation[variant.id]) || 0), {
+                                style: "currency", currency: custom.currency, currencyDisplay: "code", maximumFractionDigits: 3,
+                            }) })}</TypographyBody>
+                        </div>
                     ))}
-                </RadioGroup>
-            )} />
-            <div className="flex items-start gap-2 text-muted-foreground">
-                <Info aria-hidden="true" className="mt-1 size-3.5 shrink-0" />
-                <TypographyParagraph className="text-xs leading-5">
-                    {t("profilesExplanation")}
-                </TypographyParagraph>
-            </div>
+                </FieldContent>
+            </Field>
         </div>
     );
 }

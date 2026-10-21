@@ -6,14 +6,26 @@ import type { OrderDetails } from "@/features/orders/utils/order.types";
 import { orderDetailGroups } from "@/features/orders/data/order.details";
 import { getOrderShipmentGroups } from "@/features/orders/utils/order.shipments";
 
+/** Identifies whether a scheduled shipping date has passed in the shipping calendar's UTC timezone. */
+export function getShippingDateClass(date: string, status?: OrderDetails["status"]): string {
+    if (status === "SHIPPED" || status === "DELIVERED") return "";
+    return date < new Date().toISOString().slice(0, 10) ? "text-destructive" : "";
+}
+
 /** Formats order fields and related records as localized label-and-value rows. */
-export function getOrderDetailGroups(order: OrderDetails, t: ReturnType<typeof useTranslations>, formatDate: (date: Date) => string, formatPrice: (price: number, currency: string) => string) {
+export function getOrderDetailGroups(order: OrderDetails, t: ReturnType<typeof useTranslations>, formatDate: (date: Date, options?: { dateOnly?: boolean }) => string, formatPrice: (price: number, currency: string) => string) {
     const detail = order.planDetail;
     const unset = t("unset");
     const modes = order.defaultReachoutModes;
     const rows: { id: string; label: string; value: ReactNode }[] = [
         { id: "number", label: t("columns.number"), value: order.number },
         { id: "shippingAddress", label: t("columns.shippingAddress"), value: order.shippingAddress || unset },
+        { id: "expectedPostingDate", label: t("columns.expectedPostingDate"), value: createElement("span", {
+            className: getShippingDateClass(order.expectedPostingDate),
+        }, formatDate(new Date(`${order.expectedPostingDate}T00:00:00Z`), { dateOnly: true })) },
+        { id: "estimatedDeliveryDate", label: t("columns.estimatedDeliveryDate"), value: createElement("span", {
+            className: getShippingDateClass(order.estimatedDeliveryDate, order.status),
+        }, formatDate(new Date(`${order.estimatedDeliveryDate}T00:00:00Z`), { dateOnly: true })) },
         { id: "customerName", label: t("details.customerName"), value: order.customer.name || unset },
         { id: "customerEmail", label: t("email"), value: order.customer.email },
         { id: "customerPhone", label: t("phone"), value: order.customer.phone || unset },
@@ -21,7 +33,6 @@ export function getOrderDetailGroups(order: OrderDetails, t: ReturnType<typeof u
         { id: "plan", label: t("details.plan"), value: t(`plans.${detail.plan}`) },
         { id: "quantity", label: t("details.quantity"), value: String(detail.quantity) },
         { id: "price", label: t("details.price"), value: formatPrice(detail.price, detail.currency) },
-        { id: "profiles", label: t("details.maxRecoveryProfiles"), value: detail.maxRecoveryProfiles === null ? t("unlimitedProfiles") : String(detail.maxRecoveryProfiles) },
         { id: "allocations", label: t("details.allocations"), value: detail.allocations.map(allocation => `${t(`variants.${allocation.variant}`)}: ${allocation.quantity}`).join("\n") || t("none") },
         { id: "reachoutModes", label: t("columns.defaultReachoutModes"), value: [
             `${t("email")}: ${t(modes.email ? "yes" : "no")}`,

@@ -13,6 +13,7 @@ type Props = {
     onBack: () => void;
     onContinue: () => void;
     continueDisabled?: boolean;
+    continueLabel?: string;
     hideContinue?: boolean;
     children: ReactNode;
     introduction?: ReactNode;
@@ -20,7 +21,7 @@ type Props = {
 };
 
 /** Presents a reusable segmented step flow with content and navigation controls. */
-export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisabled = false, hideContinue = false, children, introduction, finalAction }: Props) {
+export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisabled = false, continueLabel, hideContinue = false, children, introduction, finalAction }: Props) {
     const t = useTranslations("Stepper");
 
     return (
@@ -49,7 +50,7 @@ export function Stepper({ steps, currentIndex, onBack, onContinue, continueDisab
                     <TypographyBody className="text-sm sm:text-base xl:text-sm">{t("back")}</TypographyBody>
                 </Button>
                 {!hideContinue && (currentIndex === steps.length - 1 && finalAction ? finalAction : <Button type="button" size="lg" disabled={continueDisabled || currentIndex === steps.length - 1} onClick={() => onContinue()}>
-                    <TypographyBody className="text-sm sm:text-base xl:text-sm">{t("continue")}</TypographyBody>
+                    <TypographyBody className="text-sm sm:text-base xl:text-sm">{continueLabel ?? t("continue")}</TypographyBody>
                     <ArrowRight aria-hidden="true" data-icon="inline-end" />
                 </Button>)}
                     </div>

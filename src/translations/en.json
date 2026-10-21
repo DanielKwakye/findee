@@ -149,12 +149,18 @@
       "names": {
         "Starter": "Starter",
         "Family": "Family",
-        "Business": "Business"
+        "Custom": "Custom"
       },
-      "description": "Choose a plan with enough stickers and recovery profiles for you, your family, or your business.",
-      "details": "{quantity, number} stickers · Up to {profiles, number} recovery profiles",
+      "description": "Choose your total quantity. Each sticker type is priced by how many of that type you order.",
+      "customDescription": "Mix the sticker types you need. Each type's quantity sets its unit price.",
+      "perUnit": "{price} / sticker",
+      "pricingReference": "Unit prices for reference.",
+      "details": "{quantity, number} stickers",
       "stickers": "{quantity, number} stickers",
+      "popular": "Popular",
       "stickersPlus": "{quantity, number}+ stickers",
+      "customQuantity": "Number of stickers",
+      "customQuantityInvalid": "Enter a whole number of at least {minimum, number} stickers.",
       "profiles": "Up to {profiles, number} recovery profiles",
       "unlimitedProfiles": "Unlimited recovery profiles",
       "profilesExplanation": "Recovery profiles is the total number of people, including you, who can use the stickers in that plan.",
@@ -164,7 +170,7 @@
     },
     "steps": {
       "variants": "Variants",
-      "plan": "Plan",
+      "plan": "Quantity",
       "allocation": "Allocation",
       "verification": "Verification",
       "checkout": "Checkout"
@@ -177,7 +183,8 @@
       "title": "Checkout",
       "description": "Choose how finders can reach you and where we should deliver your stickers.",
       "email": "Email",
-      "name": "Name (optional)",
+      "name": "Name",
+      "nameRequired": "Enter your name.",
       "phone": "Phone (optional)",
       "contactByEmail": "Allow finders to contact me by email",
       "showName": "Allow finders to see my name",
@@ -186,24 +193,41 @@
       "emailRequired": "Enter your email.",
       "emailInvalid": "Enter a valid email address.",
       "phoneRequired": "Enter your phone number to allow phone contact.",
-      "shippingAddress": "Shipping address",
+      "shippingAddress": "Address",
+      "postalCode": "Postal code",
+      "postalCodeHelp": "Example: Q6X4P5",
+      "postalCodeRequired": "Enter your postal code.",
+      "deliveryEstimateNote": "Delivery dates are estimates. Weather, postal disruptions, and other unexpected events may cause delays.",
+      "estimatedDelivery": "Estimated delivery: {date}",
+      "deliveryEstimateLoading": "Calculating estimated delivery…",
+      "deliveryEstimateError": "Delivery estimate is currently unavailable.",
+      "postalCodeInvalid": "Enter a postal code in the format Q6X4P5.",
       "deliveryInstructions": "Delivery instructions (optional)",
-      "addressHelp": "Include street number, unit (optional), street, city, province, and country.",
+      "addressHelp": "Example: 44B Abusco Street, Ottawa, ON, Canada.",
       "addressRequired": "Enter your shipping address.",
       "allocationNote": "<strong>After delivery</strong>, you can assign your QR stickers to up to {profiles, number} people, including you.",
       "allocationUnlimited": "<strong>After delivery</strong>, you can assign your QR stickers to an unlimited number of people.",
       "learnHow": "Click here to see how",
       "pay": "Secure Checkout",
+      "payWithAmount": "Secure Checkout · {amount}",
       "submitting": "Submitting…",
       "submitError": "Unable to submit your order. Please try again."
     },
     "orderReceived": {
+      "verifyingTitle": "Checking your payment",
+      "verifyingDescription": "We're confirming your payment with Stripe and recording your order. Please keep this page open.",
+      "verificationErrorTitle": "We couldn't confirm your order",
+      "verificationError": "Your payment or order could not be verified yet. Try checking again or view your orders before making another payment.",
+      "retryVerification": "Check again",
       "title": "Order received",
       "description": "Thank you for the order. We're processing your order and we'll get back to you soon.",
       "goHome": "Go Home",
       "trackDelivery": "Track Order"
     },
     "allocation": {
+      "subtotal": "Subtotal: {amount}",
+      "subtotalWithUnitPrice": "Subtotal: {amount} · {unitPrice} / sticker",
+      "continueWithAmount": "Continue · {amount}",
       "title": "How many of each variant?",
       "description": "Split your stickers between the selected variants. We start with an equal share; you can adjust the quantities within your plan limit.",
       "total": "{total, number} of {limit, number} stickers allocated",
@@ -686,6 +710,8 @@
       "customer": "Customer",
       "status": "Status",
       "planDetail": "Plan details",
+      "estimatedDeliveryDate": "Estimated delivery date",
+      "expectedPostingDate": "Expected shipping date",
       "products": "Products",
       "defaultReachoutModes": "Default reachout modes",
       "showOwnerName": "Show owner name",
@@ -1350,13 +1376,35 @@
   },
   "Pricing": {
     "title": "Affordable",
-    "titleAccent": "Pricing Plans",
-    "subtitle": "Give your belongings a way back without breaking the bank. Choose a sticker plan that fits your everyday essentials.",
-    "plansLabel": "Compare sticker plans",
+    "titleAccent": "Sticker Pricing",
+    "subtitle": "A little peace of mind for the things you care about. Choose the sticker types that suit your belongings and order as many as you need.",
+    "plansLabel": "Compare sticker types and unit prices",
+    "freeShipping": "Free shipping across Canada",
+    "startingAt": "From",
+    "perSticker": "per sticker",
+    "quantityRange": "{minimum, number}–{maximum, number} stickers",
+    "quantityFrom": "{minimum, number}+ stickers",
+    "variantPricingNote": "Each sticker type's quantity determines its unit price.",
+    "minimumOrder": "Minimum {minimum, number} stickers per order.",
+    "chooseVariant": "Choose {variant} stickers",
+    "variants": {
+      "everyday": {
+        "title": "Everyday",
+        "description": "A way home for the essentials that go everywhere with you."
+      },
+      "tough": {
+        "title": "Tough",
+        "description": "For the gear you count on, wherever the day takes you."
+      },
+      "fabric": {
+        "title": "Fabric",
+        "description": "For favourite outfits, school-day staples, and bags full of memories."
+      }
+    },
     "descriptions": {
-      "personal": "For your everyday essentials",
-      "family": "For the whole family",
-      "business": "For your business"
+      "personal": "For your everyday favourites, with a few spare stickers just in case.",
+      "family": "For you and the people you care about, with a few spares just in case.",
+      "custom": "As many as you need, for yourself, your loved ones or the team behind your business."
     },
     "readyToUse": "Pre-activated and ready to stick",
     "getStickers": "Get Your Stickers",

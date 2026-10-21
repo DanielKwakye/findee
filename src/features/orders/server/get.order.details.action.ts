@@ -3,6 +3,7 @@
 import { requireAdmin } from "@/features/auth/server/auth.session";
 import { db } from "@/lib/db";
 import { validateOrderId } from "@/features/orders/utils/order.validations";
+import { getEstimatedDeliveryDate } from "@/features/orders/utils/order.delivery";
 
 /** Retrieves the order data displayed in the administrator's details dialog. */
 export async function getOrderDetails(id: string) {
@@ -23,5 +24,8 @@ export async function getOrderDetails(id: string) {
         },
     });
     if (!order) throw new Error("Order not found");
-    return order;
+    return { ...order,
+        estimatedDeliveryDate: getEstimatedDeliveryDate({ orderedAt: order.createdAt, shippingAddress: order.shippingAddress }),
+        expectedPostingDate: getEstimatedDeliveryDate({ orderedAt: order.createdAt, dateType: "posting" }),
+    };
 }

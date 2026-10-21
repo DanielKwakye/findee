@@ -1,7 +1,7 @@
 export const orderDetailGroups = [
-    { id: "summary", rows: ["number", "shippingAddress", "deliveryInstructions", "status"] },
+    { id: "summary", rows: ["number", "shippingAddress", "deliveryInstructions", "status", "expectedPostingDate", "estimatedDeliveryDate"] },
     { id: "customer", rows: ["customerName", "customerEmail", "customerPhone"] },
-    { id: "plan", rows: ["plan", "quantity", "price", "profiles", "allocations"] },
+    { id: "plan", rows: ["plan", "quantity", "price", "allocations"] },
     { id: "preferences", rows: ["reachoutModes", "showOwnerName"] },
     { id: "fulfillment", rows: ["products", "shipments"] },
     { id: "activity", rows: ["cancelledAt", "cancellationReason", "completedAt", "createdAt", "updatedAt"] },

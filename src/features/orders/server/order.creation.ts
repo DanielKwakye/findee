@@ -9,7 +9,7 @@ import { generateReferenceCode } from "@/components/platform/utils/reference.cod
 import { checkoutOrderPlans } from "@/features/checkout/data/checkout.order.plans";
 
 /** Validates purchase details and creates an order for the supplied customer. */
-export async function createOrder(customerId: string, values: CheckoutValues): Promise<string> {
+export async function createOrder(customerId: string, values: CheckoutValues, orderNumber?: string): Promise<string> {
     validateCheckoutValues(values);
     const plans = await getCheckoutPlans();
     const plan = validateCheckoutAllocation(values, plans);
@@ -27,7 +27,7 @@ export async function createOrder(customerId: string, values: CheckoutValues): P
                 });
                 return transaction.order.create({
                     data: {
-                        number: generateReferenceCode(),
+                        number: orderNumber ?? generateReferenceCode(),
                         customerId: customerId,
                         planDetail: {
                             plan: checkoutOrderPlans[plan.id],
@@ -51,6 +51,11 @@ export async function createOrder(customerId: string, values: CheckoutValues): P
             return order.number;
         } catch (error) {
             if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") throw error;
+            if (orderNumber) {
+                const existing = await db.order.findUnique({ where: { number: orderNumber }, select: { number: true, customerId: true } });
+                if (existing?.customerId === customerId) return existing.number;
+                throw error;
+            }
         }
     }
     throw new Error("Unable to generate a unique order number. Please try again.");

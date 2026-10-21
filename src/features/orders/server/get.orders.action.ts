@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { validateOrderQuery } from "@/features/orders/utils/order.validations";
 import type { OrderQuery } from "@/features/orders/utils/order.types";
 import type { Prisma } from "@/generated/client";
+import { getEstimatedDeliveryDate } from "@/features/orders/utils/order.delivery";
 
 /** Retrieves paginated orders and their customer and fulfillment summaries. */
 export async function getOrders(params: OrderQuery) {
@@ -25,7 +26,12 @@ export async function getOrders(params: OrderQuery) {
         orderBy: [{ [sortBy]: direction }, { number: "asc" }],
         select: {
             id: true, number: true, customer: { select: { name: true, email: true } }, status: true,
+            createdAt: true, shippingAddress: true,
         },
     });
-    return { orders, total, page };
+    return { orders: orders.map(order => ({
+        id: order.id, number: order.number, customer: order.customer, status: order.status,
+        estimatedDeliveryDate: getEstimatedDeliveryDate({ orderedAt: order.createdAt, shippingAddress: order.shippingAddress }),
+        expectedPostingDate: getEstimatedDeliveryDate({ orderedAt: order.createdAt, dateType: "posting" }),
+    })), total, page };
 }

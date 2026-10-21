@@ -1,5 +1,5 @@
 export const checkoutPlanParams = {
     personal: "starter",
     family: "family",
-    business: "business",
+    custom: "custom",
 } as const;

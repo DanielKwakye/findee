@@ -5,7 +5,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import type { SortingState } from "@tanstack/react-table";
 import type { PortalTableColumnDef, PortalTablePaginationState } from "@/components/platform";
-import { usePortalTableSearch } from "@/components/platform";
+import { usePortalTableSearch, useUserDateTime } from "@/components/platform";
 import { getOrders } from "@/features/orders/server/get.orders.action";
 import { getOrderColumns } from "@/features/orders/utils/order.columns";
 import type { OrderColumnLabels } from "@/features/orders/utils/order.columns";
@@ -17,6 +17,7 @@ import type { EditOrderDialogHandle } from "@/features/orders/utils/order.types"
 /** Manages order queries and server-side table controls for a status view. */
 export function useOrdersTable(status: OrderStatusFilter) {
     const t = useTranslations("orders");
+    const formatDate = useUserDateTime();
     const detailsRef = useRef<OrderDetailsDialogHandle>(null);
     const editRef = useRef<EditOrderDialogHandle>(null);
     /** Opens the internally managed editor for a selected order. */
@@ -49,14 +50,16 @@ export function useOrdersTable(status: OrderStatusFilter) {
         const labels: OrderColumnLabels = {
             number: t("columns.number"), customer: t("columns.customer"), status: t("columns.status"),
             actions: t("columns.actions"), viewDetails: t("details.view"),
+            estimatedDeliveryDate: t("columns.estimatedDeliveryDate"),
+            expectedPostingDate: t("columns.expectedPostingDate"),
         };
         return [...getOrderColumns(labels, {
             PENDING: t("statuses.PENDING"), CONFIRMED: t("statuses.CONFIRMED"), PROCESSING: t("statuses.PROCESSING"),
             HOLD: t("statuses.HOLD"),
             SHIPPED: t("statuses.SHIPPED"), DELIVERED: t("statuses.DELIVERED"), CANCELLED: t("statuses.CANCELLED"), RETURNED: t("statuses.RETURNED"),
-        }), { id: "actions", header: labels.actions, enableSorting: false, enableHiding: false,
+        }, formatDate), { id: "actions", header: labels.actions, enableSorting: false, enableHiding: false,
             cell: ({ row }) => createElement(OrderActions, { order: row.original, label: labels.viewDetails, onOpen: openDetails, onEdit: openEdit, onChangeStatus: openStatus, onViewShipments: openShipments, onAddShipment: openAddShipment }) }];
-    }, [t, openDetails, openEdit, openStatus, openShipments, openAddShipment]);
+    }, [t, formatDate, openDetails, openEdit, openStatus, openShipments, openAddShipment]);
     /** Opens the selected order status while preserving unrelated URL parameters. */
     function changeStatus(next: OrderStatusFilter) {
         const params = new URLSearchParams(searchParams.toString());

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useFormatter } from "next-intl";
 import { Controller } from "react-hook-form";
 import { Stepper } from "@/components/platform";
 import { Checkbox } from "@/components/core/ui/checkbox";
@@ -19,14 +20,18 @@ import type { CheckoutCustomer, CheckoutPlan } from "@/features/checkout/utils/c
 
 /** Renders the checkout steps and variant choices. */
 export default function Checkout({ customer, initialPlan, initialVariant }: { customer: CheckoutCustomer | null; initialPlan?: CheckoutPlan["id"]; initialVariant?: CheckoutVariant }) {
+    const format = useFormatter();
     const { t, form, stepper, steps, currentIndex, continueDisabled, plansQuery, onContinue, onBack,
-        variants, plan, allocationTotal, allocationError, onAllocationKeyUp,
-        contactInputs, shippingInput, contactMissing, submission, onPay, onVerified } = useCheckout(customer, initialPlan, initialVariant);
+        variants, plan, checkoutPlans, allocationTotal, allocationError, onAllocationKeyUp,
+        contactInputs, shippingInput, postalCodeRules, onPostalCodePaste, deliveryEstimate, contactMissing, submission, onPay, onVerified } = useCheckout(customer, initialPlan, initialVariant);
 
     return (
         <Stepper steps={steps} currentIndex={currentIndex} onBack={onBack} onContinue={onContinue} continueDisabled={continueDisabled}
+            continueLabel={stepper.current.id === "allocation" && plan ? t("allocation.continueWithAmount", {
+                amount: format.number(plan.price, { style: "currency", currency: plan.currency, currencyDisplay: "code" }),
+            }) : undefined}
             hideContinue={stepper.current.id === "verification"}
-            finalAction={<Button type="button" size="lg" disabled={contactMissing || submission.isPending} onClick={onPay}><TypographyBody className="text-sm">{t(submission.isPending ? "details.submitting" : "details.pay")}</TypographyBody></Button>}
+            finalAction={<Button type="button" size="lg" disabled={contactMissing || submission.isPending} onClick={onPay}><TypographyBody className="text-sm">{submission.isPending ? t("details.submitting") : plan ? t("details.payWithAmount", { amount: format.number(plan.price, { style: "currency", currency: plan.currency, currencyDisplay: "code" }) }) : t("details.pay")}</TypographyBody></Button>}
             introduction={(
                 <>
                     <TypographyH3 className={stepper.current.id === "variants" ? "text-xl sm:text-2xl xl:text-xl" : "text-lg sm:text-xl xl:text-lg"}>{t(stepper.current.id === "variants" ? "variants.title" : stepper.current.id === "plan" ? "plans.title" : stepper.current.id === "allocation" ? "allocation.title" : stepper.current.id === "verification" ? "verification.title" : "details.title")}</TypographyH3>
@@ -69,16 +74,19 @@ export default function Checkout({ customer, initialPlan, initialVariant }: { cu
                         </Button>
                     </div>
                 ) : (
-                    <CheckoutPlans control={form.control} plans={plansQuery.data} />
+                    <CheckoutPlans control={form.control} plans={checkoutPlans ?? []} />
                 )
             ) : stepper.current.id === "allocation" ? (
                 <CheckoutAllocation control={form.control} variants={variants} limit={plan?.quantity ?? 0}
+                    plan={plan}
                     total={allocationTotal} error={allocationError} quantityIsMinimum={!!plan?.quantityIsMinimum} onQuantityKeyUp={onAllocationKeyUp} />
             ) : stepper.current.id === "verification" ? (
                 <CustomerOtpForm onVerified={onVerified} />
             ) : (
                 <CheckoutDetails form={form} contactInputs={contactInputs} shippingInput={shippingInput}
-                    maxProfiles={plan?.maxRecoveryProfiles ?? null} contactMissing={contactMissing} isSubmitting={submission.isPending} submitError={submission.isError} />
+                    postalCodeRules={postalCodeRules} onPostalCodePaste={onPostalCodePaste}
+                    deliveryEstimate={deliveryEstimate}
+                    contactMissing={contactMissing} isSubmitting={submission.isPending} submitError={submission.isError} />
             )}
         </Stepper>
     );

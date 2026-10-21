@@ -1,5 +1,6 @@
 import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
 import type { CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
+import { getCheckoutPlanPrice } from "@/features/checkout/utils/checkout.pricing";
 
 /** Validates purchase, contact, and shipping inputs for checkout. */
 export function validateCheckoutValues(values: CheckoutValues) {
@@ -8,7 +9,7 @@ export function validateCheckoutValues(values: CheckoutValues) {
         || values.variants.some(variant => !checkoutVariants.some(option => option.id === variant))
         || !values.allocation || typeof values.allocation !== "object"
         || typeof values.email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)
-        || typeof values.name !== "string" || typeof values.phone !== "string"
+        || typeof values.name !== "string" || !values.name.trim() || typeof values.phone !== "string"
         || typeof values.shippingAddress !== "string" || !values.shippingAddress.trim()
         || typeof values.deliveryInstructions !== "string"
         || typeof values.contactByEmail !== "boolean" || typeof values.contactByPhone !== "boolean"
@@ -20,8 +21,15 @@ export function validateCheckoutValues(values: CheckoutValues) {
 
 /** Validates sticker quantities against the selected checkout plan. */
 export function validateCheckoutAllocation(values: CheckoutValues, plans: CheckoutPlan[]) {
-    const plan = plans.find(plan => plan.id === values.plan);
-    if (!plan || getCheckoutAllocationError(values, plan)) {
+    const selected = plans.find(plan => plan.id === values.plan);
+    if (!selected || (selected.minimumQuantity !== undefined && values.customQuantity !== undefined
+        && (typeof values.customQuantity !== "number" || !Number.isSafeInteger(values.customQuantity)
+            || values.customQuantity < selected.minimumQuantity))) {
+        throw new Error("Invalid checkout quantity");
+    }
+    const plan = getCheckoutPlanPrice(selected, values.customQuantity,
+        Object.fromEntries(values.variants.map(variant => [variant, values.allocation[variant]])));
+    if (getCheckoutAllocationError(values, plan)) {
         throw new Error("Invalid sticker allocation");
     }
     return plan;
