@@ -433,7 +433,7 @@
       "close": "Close",
       "submit": "Submit",
       "submitting": "Generating…",
-      "quantityInvalid": "Enter a whole number between 0 and 50.",
+      "quantityInvalid": "Enter a whole number between 0 and 250.",
       "quantityRequired": "Enter at least one sticker to generate.",
       "quantityLimit": "Generate no more than {max} stickers at a time.",
       "serverError": "Unable to generate QR stickers. Please try again."

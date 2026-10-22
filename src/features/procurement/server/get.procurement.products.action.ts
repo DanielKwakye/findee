@@ -7,7 +7,7 @@ import type {ProcurementQuery} from "@/features/procurement/utils/procurement.ty
 /** Retrieves product inventory for the authorized procurement workspace. */
 export async function getProcurementProducts(params: ProcurementQuery) {
     await requireAdmin();
-    if (!params || !Number.isSafeInteger(params.page) || params.page < 1 || !Number.isSafeInteger(params.pageSize) || params.pageSize < 1 || params.pageSize > 100 || typeof params.search !== "string") {
+    if (!params || !Number.isSafeInteger(params.page) || params.page < 1 || !Number.isSafeInteger(params.pageSize) || params.pageSize < 1 || params.pageSize > 250 || typeof params.search !== "string") {
         throw new Error("Invalid procurement query");
     }
     const search = params.search.slice(0, 255);

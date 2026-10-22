@@ -2,8 +2,8 @@ import type {GenerateQrValues} from "@/features/procurement/utils/procurement.ty
 
 export const qrVariants = ["Everyday", "Fabric", "Tough"] as const;
 export const initialQrQuantities: GenerateQrValues = {Everyday: 0, Fabric: 0, Tough: 0};
-export const maxQrVariantQuantity = 50;
-export const maxQrGenerationQuantity = 150;
+export const maxQrVariantQuantity = 250;
+export const maxQrGenerationQuantity = 750;
 
 /** Checks that a variant quantity is within the permitted whole-number range. */
 export function isValidQrQuantity(value: unknown): value is number {
