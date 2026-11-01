@@ -30,12 +30,20 @@ async function getStripeCustomerId(customerId: string): Promise<string> {
 
 /** Creates a hosted payment session containing the customer's checkout details. */
 export async function createStripeCheckout(customer: { id: string; email: string }, values: CheckoutValues, plan: CheckoutPlan): Promise<string> {
-    const metadata: Record<string, string> = { customerId: customer.id, orderNumber: generateReferenceCode() };
+    const metadata: Record<string, string> = {};
     for (const [key, value] of Object.entries(values)) {
         const encoded = JSON.stringify(value);
         if (encoded.length > 500) throw new Error("Checkout field exceeds the payment provider's length limit");
         metadata[key] = encoded;
     }
+    metadata.customerId = customer.id;
+    metadata.orderNumber = generateReferenceCode();
+    metadata.email = JSON.stringify(customer.email);
+    metadata.checkoutPlan = JSON.stringify({
+        id: plan.id, title: plan.title, price: plan.price, currency: plan.currency,
+        quantity: plan.quantity, quantityIsMinimum: plan.quantityIsMinimum,
+        minimumQuantity: plan.minimumQuantity, maxRecoveryProfiles: plan.maxRecoveryProfiles,
+    });
     const stripeCustomerId = await getStripeCustomerId(customer.id);
     const t = await getTranslations("Checkout.plans");
     const session = await stripe.checkout.sessions.create({
@@ -69,4 +77,11 @@ export async function createStripeCheckout(customer: { id: string; email: string
 /** Retrieves a checkout session for server-side payment verification. */
 export async function getStripeCheckout(sessionId: string) {
     return stripe.checkout.sessions.retrieve(sessionId);
+}
+
+/** Authenticates Stripe event deliveries using the endpoint's signing secret. */
+export function verifyStripeWebhook(payload: string, signature: string) {
+    const secret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!secret) throw new Error("Stripe webhook signing secret is not configured");
+    return stripe.webhooks.constructEvent(payload, signature, secret);
 }

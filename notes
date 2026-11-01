@@ -1,8 +1,9 @@
 TODO
-- USE canada post API to estimate delivery (from postal code to postal code)
+- USE canada post API to estimate delivery (from postal code to postal code) -- DONE | letter delivery does not require api
 - Stripe Payment Integration
 - Images on the use cases page must be changed
 - Prices must be re-evaluated
-- Go through and correct false info on faq
-- Remove disable the concept of recovery profiles for now.
-- Let customers specify the number of stickers they need.
+- Go through and correct false info on faq -- DONE
+- Remove disable the concept of recovery profiles for now -- DONE
+- Let customers specify the number of stickers they need -- DONE
+- use stripe webhook for reconciliations.

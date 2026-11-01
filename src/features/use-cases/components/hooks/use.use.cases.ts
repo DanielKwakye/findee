@@ -11,12 +11,12 @@ function subscribe(notify: () => void) {
 
 /** Reads the number of cards that fit on a use cases page. */
 function getPageSize() {
-  return window.matchMedia("(min-width: 1024px)").matches ? 9 : 2;
+  return window.matchMedia("(min-width: 1024px)").matches ? 9 : 1;
 }
 
 /** Provides the mobile layout during server rendering. */
 function getServerPageSize() {
-  return 2;
+  return 1;
 }
 
 /** Manages the responsive layout of the use cases carousel. */

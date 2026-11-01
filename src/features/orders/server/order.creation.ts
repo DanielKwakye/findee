@@ -2,16 +2,16 @@ import "server-only";
 
 import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
 import { validateCheckoutValues, validateCheckoutAllocation } from "@/features/checkout/utils/checkout.validations";
-import type { CheckoutValues } from "@/features/checkout/utils/checkout.types";
+import type { CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
 import { db } from "@/lib/db";
 import { Prisma } from "@/generated/client";
 import { generateReferenceCode } from "@/components/platform/utils/reference.code.utils";
 import { checkoutOrderPlans } from "@/features/checkout/data/checkout.order.plans";
 
 /** Validates purchase details and creates an order for the supplied customer. */
-export async function createOrder(customerId: string, values: CheckoutValues, orderNumber?: string): Promise<string> {
+export async function createOrder(customerId: string, values: CheckoutValues, orderNumber?: string, paidPlan?: CheckoutPlan): Promise<string> {
     validateCheckoutValues(values);
-    const plans = await getCheckoutPlans();
+    const plans = paidPlan ? [paidPlan] : await getCheckoutPlans();
     const plan = validateCheckoutAllocation(values, plans);
 
     const name = values.name.trim();
@@ -50,6 +50,7 @@ export async function createOrder(customerId: string, values: CheckoutValues, or
             });
             return order.number;
         } catch (error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2034") continue;
             if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") throw error;
             if (orderNumber) {
                 const existing = await db.order.findUnique({ where: { number: orderNumber }, select: { number: true, customerId: true } });

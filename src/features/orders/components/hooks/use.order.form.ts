@@ -1,38 +1,42 @@
 "use client";
 
 import { useForm, useWatch } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
 import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
 import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
 import type { CheckoutValues } from "@/features/checkout/utils/checkout.types";
 import type { OrderDetails } from "@/features/orders/utils/order.types";
+import { getCheckoutPlanPrice } from "@/features/checkout/utils/checkout.pricing";
 
 /** Manages shared order fields, purchase options, and form validation. */
 export function useOrderForm(initialValues: CheckoutValues, planDetail?: OrderDetails["planDetail"]) {
     const t = useTranslations("orders.create");
     const checkout = useTranslations("Checkout");
-    const format = useFormatter();
     const form = useForm<CheckoutValues>({ defaultValues: initialValues });
     const values = useWatch({ control: form.control });
     const plansQuery = useQuery({ queryKey: ["checkout", "plans"], queryFn: getCheckoutPlans });
-    const plans = (plansQuery.data ?? []).map(option => planDetail && option.id === initialValues.plan
-        ? { ...option, ...planDetail } : option);
+    const plans = (plansQuery.data ?? []).map(option => getCheckoutPlanPrice(
+        planDetail && option.id === initialValues.plan ? { ...option, ...planDetail } : option,
+        values.customQuantity,
+        Object.fromEntries((values.variants ?? []).map(variant => [variant, values.allocation?.[variant]])),
+    ));
     const plan = plans.find(option => option.id === values.plan);
-    const singleVariant = values.variants?.length === 1 ? values.variants[0] : undefined;
     const quantity = plan?.quantity;
-    const {setValue, clearErrors} = form;
+    const allocationSetup = useRef(JSON.stringify([initialValues.plan, initialValues.customQuantity, initialValues.variants]));
+    const setup = JSON.stringify([values.plan, quantity, values.variants ?? []]);
+    const {setValue, clearErrors, getValues} = form;
 
     useEffect(() => {
-        if (!singleVariant || quantity === undefined) return;
-        setValue("allocation", distributeCheckoutQuantity([singleVariant], quantity));
+        if (quantity === undefined || allocationSetup.current === setup) return;
+        allocationSetup.current = setup;
+        setValue("allocation", distributeCheckoutQuantity(getValues("variants"), quantity));
         clearErrors("root.allocation");
-    }, [singleVariant, quantity, setValue, clearErrors]);
+    }, [setup, quantity, setValue, clearErrors, getValues]);
     const inputs = {
         variants: { validate: (value: CheckoutValues["variants"]) => value.length > 0 || t("variantsRequired") },
-        plan: { required: t("planRequired") },
         recoveryContact: {
             /** Requires at least one channel through which finders can contact the customer. */
             validate: () => form.getValues("contactByEmail") || form.getValues("contactByPhone") || checkout("details.contactRequired"),
@@ -54,6 +58,11 @@ export function useOrderForm(initialValues: CheckoutValues, planDetail?: OrderDe
     function validateAllocation() {
         form.clearErrors("root.allocation");
         const current = form.getValues();
+        if (plan?.minimumQuantity !== undefined && (typeof current.customQuantity !== "number"
+            || !Number.isSafeInteger(current.customQuantity) || current.customQuantity < plan.minimumQuantity)) {
+            form.setError("customQuantity", { message: checkout("plans.customQuantityInvalid", { minimum: plan.minimumQuantity }) });
+            return false;
+        }
         if (!plan || !current.variants.length) {
             form.setError("root.allocation", { message: t("purchaseRequired") });
             return false;
@@ -69,9 +78,5 @@ export function useOrderForm(initialValues: CheckoutValues, planDetail?: OrderDe
 
     const variants = values.variants ?? [];
     const total = variants.reduce((sum, variant) => sum + Number(values.allocation?.[variant] ?? 0), 0);
-    const planOptions = plans.map(option => ({ value: option.id,
-        label: t("planOption", { name: checkout(`plans.names.${option.title}`), quantity: option.quantity,
-            price: format.number(option.price, { style: "currency", currency: option.currency, currencyDisplay: "code" }) }),
-    }));
-    return { t, checkout, form, inputs, plansQuery, planOptions, plan, variants, total, validateAllocation };
+    return { t, checkout, form, inputs, plansQuery, plans, plan, variants, total, validateAllocation };
 }

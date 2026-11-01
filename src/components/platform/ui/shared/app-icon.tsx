@@ -1,6 +1,7 @@
 import Image from "next/image";
 import TypographyBody from "@/components/core/ui/typography-body";
 import { cn } from "@/lib/utils";
+import { ImageConstants } from "@/lib/image.constants";
 
 type AppIconProps = {
   brightness?: "dark" | "light" | "primary";
@@ -14,10 +15,10 @@ export default function AppIcon({ brightness = "dark", size = "default", classNa
   return (
     <span className={cn("inline-flex items-center", size === "compact" ? "gap-2" : "gap-2.5", className)}>
       <Image
-        src="/images/png/app-icon.png"
+        src={brightness === "dark" ? ImageConstants.FindmusLogoOnLight : ImageConstants.FindmusLogoOnDark}
         alt=""
-        width={36}
-        height={39}
+        width={1312}
+        height={1199}
         className={cn("w-auto shrink-0", size === "compact" ? "h-7" : "h-9")}
         priority
       />

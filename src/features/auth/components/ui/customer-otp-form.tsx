@@ -12,6 +12,7 @@ import TypographyParagraph from "@/components/core/ui/typography-paragraph";
 import { useCustomerOtp } from "@/features/auth/components/hooks/use.customer.otp";
 import { cn } from "@/lib/utils";
 import { TurnstileCheck } from "@/features/auth/components/ui/turnstile-check";
+import { SignInTermsNotice } from "@/features/auth/components/ui/sign-in-terms-notice";
 
 /** Presents email and code entry for customer authentication. */
 export function CustomerOtpForm({ onVerified, fullWidth = false }: { onVerified: (email: string) => void; fullWidth?: boolean }) {
@@ -26,6 +27,7 @@ export function CustomerOtpForm({ onVerified, fullWidth = false }: { onVerified:
                     aria-invalid={!!errors.email} aria-describedby={errors.email ? "customer-email-error" : undefined} />
                 {errors.email && <FieldError id="customer-email-error"><TypographyBody className="text-sm">{errors.email.message}</TypographyBody></FieldError>}
             </Field>
+            <SignInTermsNotice />
             {codeVisible && (
                 <>
                     <div role="status"><TypographyParagraph className="text-sm text-muted-foreground">{t("codeSent")}</TypographyParagraph></div>

@@ -14,6 +14,7 @@ export async function getRecoveryProduct(incomingCode: string) {
         select: {
             published: true,
             reachoutModes: true,
+            order: {select: {showOwnerName: true}},
             assignedTo: {select: {name: true, email: true, phone: true}},
         },
     });
@@ -22,7 +23,7 @@ export async function getRecoveryProduct(incomingCode: string) {
         published: product.published,
         reachoutModes: product.reachoutModes,
         assignedTo: {
-            name: product.assignedTo.name,
+            name: product.order?.showOwnerName ? product.assignedTo.name : null,
             email: product.reachoutModes?.email ? product.assignedTo.email : null,
             phone: product.reachoutModes?.phone ? product.assignedTo.phone : null,
         },

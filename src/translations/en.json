@@ -242,7 +242,7 @@
       "title": "Where do you want to stick them?",
       "description": "Choose the sticker variants that suit your belongings. You can select more than one.",
       "everyday": {
-        "title": "Everyday items",
+        "title": "Everyday",
         "description": "Laptops, phones, tablets, water bottles, keys, bikes, luggage and more.",
         "alt": "Findmus QR sticker on a laptop"
       },
@@ -316,7 +316,7 @@
       "title": "Sign in to Findmus",
       "description": "Enter your email and we’ll send you a verification code. No password needed.",
       "home": "Findmus home",
-      "termsNotice": "By continuing, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+      "termsNotice": "By providing your email, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
     },
     "customerOtp": {
       "emailMessage": {
@@ -837,7 +837,7 @@
     }
   },
   "Testimonials": {
-    "eyebrow": "Sample testimonials",
+    "eyebrow": "Testimonials",
     "title": "Real stories.",
     "titleAccent": "Real happy endings.",
     "subtitle": "See how Findmus helps people get their belongings back.",
@@ -890,23 +890,23 @@
       },
       "privacy": {
         "question": "Is my information private?",
-        "answer": "Yes. Your personal details are never shown. Finders can only message you through a secure, anonymous channel."
+        "answer": "At checkout, you choose whether finders can see your name and contact you by email, phone, or both. Only the details you choose to share appear on your QR page."
       },
       "notifications": {
-        "question": "How will I be notified?",
-        "answer": "You’ll receive an instant notification via email or SMS when someone scans your Findmus QR code."
+        "question": "Do people really return lost items?",
+        "answer": "Yes, people hand in lost belongings to police, banks, and lost-and-found desks to help them get home. Findmus makes helping easier: a quick scan gives the finder a way to contact you directly."
       },
       "items": {
         "question": "What can I use Findmus on?",
-        "answer": "Findmus works on laptops, phones, bags, bikes, keys, clothing, pet items, and almost anything you value."
+        "answer": "Findmus works on cards, bus pass, keys, laptops, phones, bags, bikes, clothing, pet items, and almost anything you value."
       },
       "subscription": {
         "question": "Do I need a subscription?",
-        "answer": "No. There’s no subscription required. You only need to activate your Findmus code after purchase."
+        "answer": "No subscription or ongoing fees. Buy once, use forever. Your stickers arrive pre-activated and ready to use."
       },
       "help": {
         "question": "What if I need help?",
-        "answer": "We’re here for you. Contact our support team anytime and we’ll be happy to assist."
+        "answer": "We’re here for you. <contact>Contact our support team</contact> anytime and we’ll be happy to assist."
       }
     }
   },
@@ -949,13 +949,13 @@
     "subtitle": "How Findmus handles your information, what a finder can see, and the choices available to you.",
     "contentLabel": "Findmus privacy policy",
     "contents": "In this policy",
-    "updatedAt": "2026-10-17T00:00:00.000Z",
+    "updatedAt": "2026-11-01T00:00:00.000Z",
     "lastUpdated": "Last updated: {date} (UTC)",
     "sectionHeading": "{number}. {title}",
     "summary": {
       "title": "The essentials, before you read on",
       "points": [
-        "Anyone with a sticker’s recovery link can see the assigned owner’s name and the email or phone details enabled for that sticker. Calls and emails go directly to that owner.",
+        "Anyone with a sticker’s recovery link can see the assigned owner’s name if name sharing is enabled for the order, and the email or phone details enabled for that sticker. Calls and emails go directly to that owner.",
         "Your shipping address, order history and sign-in information are not part of the public recovery page. The stickers themselves do not track your location.",
         "You can ask us about your information, request corrections or deletion, and get help changing the recovery details linked to your stickers."
       ]
@@ -965,23 +965,24 @@
         "title": "Who this policy covers",
         "paragraphs": [
           "Findmus (“we”, “us” and “our”) operates in Canada and provides QR stickers and an online recovery service that helps people return lost belongings. This policy explains how personal information is handled through our website, customer portal, orders, recovery pages and support services. Applicable Canadian federal and provincial privacy requirements govern how we handle personal information.",
-          "It applies to customers who buy stickers, people assigned as a sticker’s owner, finders who open recovery links, and anyone who contacts us. You can make a privacy enquiry through our <contact>contact form</contact>."
+          "It applies to customers who buy stickers, finders who open recovery links, and anyone who contacts us. You can make a privacy enquiry through our <contact>contact form</contact>."
         ]
       },
       {
         "title": "Information we collect",
         "paragraphs": [
           "Account and contact information: your name, email address, phone number where provided, account role, sign-in records and the information needed to verify access to your account. Customers sign in using an emailed verification code. Authentication credentials, such as verification codes or administrator passwords, are stored in hashed form rather than as readable passwords or codes.",
-          "Orders and delivery: your order number, selected plan, sticker variants and quantities, order value and currency, shipping address, delivery instructions, order status, shipment references and related customer-service records. The current checkout does not ask you to submit payment-card details.",
-          "Sticker and recovery information: each sticker’s unique QR code, its original purchaser, its assigned owner, enabled recovery contact methods and the order it belongs to. An assigned owner can be different from the purchaser and may not have a password or have created an account themselves.",
+          "Orders and delivery: your order number, selected plan, sticker variants and quantities, order value and currency, shipping address, delivery instructions, order status, shipment references and related customer-service records. Stripe processes payment details on its hosted checkout page. Findmus receives payment confirmation and related customer and checkout references; our application does not store full card numbers or card security codes.",
+          "Sticker and recovery information: each sticker’s unique QR code, its owner, enabled recovery contact methods and the order it belongs to. Stickers are linked to the customer who purchased them.",
           "Support information: the name, email address, message and other information you provide when asking for help, together with ticket references, handling status and internal support notes. Please do not send passwords, verification codes, payment-card numbers or unnecessary sensitive information in a support message.",
-          "Technical information: visiting a web page sends information such as your network address, requested URL, browser details and request time to the servers handling the request. Our infrastructure and service providers may retain operational or security logs to run the website, investigate faults and address misuse."
+          "Technical information: visiting a web page sends information such as your network address, requested URL, browser details and request time to the servers handling the request. Our infrastructure and service providers may retain operational or security logs to run the website, investigate faults and address misuse.",
+          "Usage information: when configured and supported by your browser, Google Analytics for Firebase collects page views and interaction events, including checkout activity, recovery-page views and the contact method a finder selects. This can include page URLs containing a sticker’s recovery code. We use this information to understand how the service is used and improve it."
         ]
       },
       {
         "title": "What a finder can see",
         "paragraphs": [
-          "A Findmus QR code opens a recovery page that is accessible without signing in. That page can display the assigned owner’s name and the email address or phone number enabled for the sticker. The details shown belong to the assigned owner, who may be someone other than the person who bought the stickers.",
+          "A Findmus QR code opens a recovery page that is accessible without signing in. That page displays the owner’s name only if name sharing is enabled for the linked order, and the email address or phone number enabled for the sticker. The details shown belong to the customer who purchased the stickers.",
           "The recovery URL is not a private account page. Anyone who scans the sticker or receives a copy of its link may be able to view those details. A link or its contents can be forwarded, photographed or saved. Only provide recovery contact details you are comfortable sharing for this purpose.",
           "Using the phone or email options opens a direct call or email through the finder’s own service. Findmus does not currently provide an anonymous messaging relay between the finder and owner. Any further information you choose to exchange directly is also handled by the people and communications providers involved.",
           "Your delivery address, order history, account sign-in credentials and internal support notes are not included in the public recovery profile. You can update your own name and phone number in your <profile>customer profile</profile>. For changes to other recovery details, removal of a recovery page or concerns about unwanted contact, <contact>contact our team</contact>. Removing information from our service cannot recall copies already saved by someone else."
@@ -991,15 +992,8 @@
         "title": "Why we use this information",
         "paragraphs": [
           "We use information to create and manage accounts, verify sign-ins, record and fulfil orders, prepare stickers before shipping, associate QR codes with the correct purchaser and owner, and display the recovery contact details needed to help return an item. Your stickers are configured before shipping; you do not need to activate them after delivery.",
-          "We also use information to send verification codes and order or support updates, answer enquiries, correct records, investigate security incidents or misuse, maintain reliable services, and meet legal, accounting and record-keeping obligations. Service emails are part of operating your account or order; they are separate from optional promotional communications.",
+          "We also use information to process payments, send verification codes and order or support updates, answer enquiries, correct records, investigate security incidents or misuse, understand website usage, maintain reliable services, and meet legal, accounting and record-keeping obligations. Service emails are part of operating your account or order; they are separate from optional promotional communications.",
           "Where the law requires a legal basis, we rely on the basis appropriate to the purpose: providing the service or fulfilling an order, complying with legal obligations, protecting legitimate operational and security interests while considering your privacy, or consent where required. Merely reading this policy does not replace a separate consent that the law requires."
-        ]
-      },
-      {
-        "title": "Information about someone else and sticker transfers",
-        "paragraphs": [
-          "If you provide a recipient’s or another owner’s personal information, you must have the authority or permission required to do so and explain how their recovery details will be used. In particular, they should understand that the name and enabled contact details associated with a sticker can be viewed through its recovery link.",
-          "When a sticker is reassigned, its recovery page uses the assigned owner’s information. We retain the original purchaser and order association where needed for order administration, customer support, ownership history or legal obligations. Reassignment does not turn the purchaser’s delivery or order records into public recovery information."
         ]
       },
       {
@@ -1007,6 +1001,8 @@
         "paragraphs": [
           "Recovery-page visitors receive the owner details described above. Authorised Findmus staff can access information needed to prepare orders, manage assignments, provide support and operate the service.",
           "We use services for hosting, database infrastructure, email delivery and website assets. Our application uses Resend to send transactional emails, Cloudinary for image assets and LottieFiles for animation assets. Depending on their role, providers process information such as email recipients and message contents, or the technical requests needed to serve an asset. Delivery providers receive the contact and address information needed to ship your order. These disclosures are for the relevant service purpose.",
+          "Stripe processes payments and receives your email address, customer and order references, selected stickers, quantities, contact-sharing preferences, name, phone number, shipping address and delivery instructions as part of checkout. Payment and any billing details you enter on Stripe’s hosted page are handled by Stripe.",
+          "Google receives website usage and interaction information through Google Analytics for Firebase. Cloudflare Turnstile processes browser and challenge information to help protect sign-in from automated abuse. We also send the domain portion of a sign-in email address to DeBounce to check for disposable email providers; this check does not send the full email address.",
           "We may disclose information where required by law or reasonably necessary to respond to a lawful request, address fraud or threats, or establish, exercise or defend legal rights. We seek to limit a disclosure to information appropriate to its purpose and the applicable law.",
           "If Findmus is reorganised, acquired or transfers its business, relevant records may be transferred as part of that transaction, subject to applicable privacy obligations and appropriate confidentiality arrangements. We will provide any notice or obtain any consent the law requires."
         ]
@@ -1014,9 +1010,9 @@
       {
         "title": "Cookies and third-party services",
         "paragraphs": [
-          "Findmus uses cookies for sign-in sessions and authentication security. When you choose a sidebar layout, a cookie remembers that choice. Accepting the cookie notice stores a preference cookie for up to 180 days so the notice does not appear on every visit. Your browser can block or remove cookies, but doing so may prevent sign-in or interrupt account features. Signing out ends access through your current authenticated session.",
+          "Findmus uses cookies for sign-in sessions and authentication security. When you choose a sidebar layout, a cookie remembers that choice. Accepting the cookie notice stores an acknowledgement cookie for up to 180 days so the notice does not appear on every visit. This acknowledgement does not enable or disable analytics. Your browser can block or remove cookies, but doing so may prevent sign-in or interrupt account features. Signing out ends access through your current authenticated session.",
           "Loading third-party assets or using an external phone or email service can send technical information to the provider involved. Their privacy practices apply to information they handle independently. Visiting our website does not authorise those providers to use your account or recovery details for unrelated purposes.",
-          "If we introduce optional analytics, advertising or other non-essential tracking, we will explain the relevant practices and provide the choices or consent controls required by applicable law. Necessary sign-in cookies are not a substitute for any consent needed for optional tracking."
+          "Google Analytics for Firebase starts automatically when configured and supported by your browser, including before you acknowledge the cookie notice. It uses analytics cookies and collects website usage and interaction information as described above. The current cookie notice can be dismissed or acknowledged; it does not provide an analytics opt-in, opt-out or withdrawal control. Necessary sign-in cookies are separate from analytics cookies."
         ]
       },
       {
@@ -1029,7 +1025,7 @@
       {
         "title": "How long information is kept",
         "paragraphs": [
-          "You can close your account from your customer profile. Account closure disables sign-in, prevents existing sessions from accessing protected account features, and hides recovery contact details for stickers still assigned to you. It does not remove the recovery details of someone to whom a sticker has already been transferred. If you have an unfulfilled order, contact support before closure so we can address that order.",
+          "You can close your account from your customer profile. Account closure disables sign-in, prevents existing sessions from accessing protected account features, and hides recovery contact details for your stickers. If you have an unfulfilled order, contact support before closure so we can address that order.",
           "Account closure is not automatic erasure of your records. Account identifiers, closure information, purchaser and assignment history, orders, shipments and support records remain held internally. Access is restricted to authorised staff and service providers for the purposes described here. Retention must be limited to what is necessary for identified purposes, such as legal or accounting obligations, fraud prevention, a specific security investigation, or handling a dispute or legal claim; the possibility of an unspecified future investigation is not a reason to retain every record indefinitely.",
           "You can separately request access, correction or deletion through our <contact>contact form</contact> after closure. We review what can be deleted or anonymised and what must be retained, explain any lawful exception and its retention criteria, and respond within the period required by applicable law. Closing your account does not waive these rights. You can raise an unresolved concern with the Office of the Privacy Commissioner of Canada or the provincial privacy regulator with jurisdiction.",
           "We keep account and recovery information while it is needed to provide an active account or linked recovery service. A sticker may remain in use for a long time, so its QR-to-owner association can be needed beyond the date of purchase.",
@@ -1087,7 +1083,7 @@
     "subtitle": "What to expect when you order Findmus stickers, use a recovery page, or manage your account.",
     "contentLabel": "Findmus terms of use",
     "contents": "In these terms",
-    "updatedAt": "2026-10-17T00:00:00.000Z",
+    "updatedAt": "2026-11-01T00:00:00.000Z",
     "lastUpdated": "Last updated: {date} (UTC)",
     "sectionHeading": "{number}. {title}",
     "summary": {
@@ -1110,7 +1106,7 @@
       {
         "title": "How Findmus works",
         "paragraphs": [
-          "Findmus sells stickers containing unique QR codes linked to recovery pages. We configure the stickers for the relevant customer or assigned owner before shipping. After delivery, attach them to suitable belongings; no separate activation or setup is required.",
+          "Findmus sells stickers containing unique QR codes linked to recovery pages. We configure the stickers for the customer who purchased them before shipping. After delivery, attach them to suitable belongings; no separate activation or setup is required.",
           "If someone finds an item and opens its QR link, they can use the contact details enabled for that sticker to reach its assigned owner. Recovery depends on someone finding the item, reading the code and choosing to make contact, as well as the recovery page and contact details being accessible.",
           "The stickers are passive labels, not GPS or Bluetooth trackers. Findmus does not guarantee that an item will be found, that a finder will contact you, or that an item will be returned. The service is not an emergency response service, insurance policy or proof of legal ownership."
         ]
@@ -1126,7 +1122,7 @@
       {
         "title": "Recovery pages and direct contact",
         "paragraphs": [
-          "A recovery page is accessible without signing in. Anyone with a sticker’s QR link can potentially see the assigned owner’s name and the email or phone details enabled for that sticker. A link and its contents can be copied or shared. Only provide information you are comfortable making available for item recovery.",
+          "A recovery page is accessible without signing in. Anyone with a sticker’s QR link can see the owner’s name only if name sharing is enabled for the linked order, and the email or phone details enabled for that sticker. A link and its contents can be copied or shared. Only provide information you are comfortable making available for item recovery.",
           "Calls and emails go directly through the finder’s and owner’s communications services. Findmus does not currently provide an anonymous messaging relay. We do not verify every finder or guarantee the accuracy of a person’s claim to an item. Use reasonable care when exchanging further information or arranging a return, and follow applicable lost-property laws.",
           "You can update your own name and phone number in your <profile>customer profile</profile>. <contact>Contact our team</contact> about other recovery details, incorrect assignments, unwanted contact or a request to remove a recovery page."
         ]
@@ -1135,8 +1131,7 @@
         "title": "Orders, prices and confirmation",
         "paragraphs": [
           "Before submitting an order, review the selected plan, sticker variants, quantities, price, currency and delivery details. Any applicable charges must be disclosed before you agree to them. We will ask you to agree to a correction if a pricing or order-detail error affects what you would pay; we will not treat an error as permission to charge an undisclosed amount.",
-          "Submitting an order records your request. An order acknowledgement confirms receipt of that request. We check stock before allocating stickers. A confirmation may indicate that the order is being prepared or explain that it is waiting for restocking; confirmation alone does not promise immediate dispatch.",
-          "An order may contain stickers linked to more than one assigned owner where the chosen plan and our assignment process allow it. We retain the original purchaser and order association when an assignment changes. The current assigned owner’s contact details are used for recovery."
+          "Payment is collected through Stripe at checkout. An order acknowledgement confirms receipt of your order, not dispatch. We check stock before allocating stickers. A confirmation may indicate that the order is being prepared or explain that it is waiting for restocking; confirmation alone does not promise immediate dispatch."
         ]
       },
       {
@@ -1191,7 +1186,7 @@
         "paragraphs": [
           "We aim to keep Findmus available and functioning, but maintenance, faults, network problems and third-party outages can interrupt access. Keep another appropriate way of identifying important belongings and do not rely on a QR sticker as your only protection against loss.",
           "We may restrict an account, recovery page or activity where reasonably necessary to address suspected misuse, an incorrect assignment, a security threat or a legal requirement. We will consider the circumstances and provide an explanation or notice where appropriate and lawful. A restriction does not automatically remove your privacy rights, ownership of an item or an entitlement to a refund or other remedy.",
-          "A sticker purchase does not by itself promise that a particular website feature will remain unchanged forever. If we plan to materially withdraw a purchased service, we will give appropriate notice where practicable and respect any resulting rights or remedies. We will not treat these terms as permission to add an undisclosed recurring charge."
+          "Your sticker purchase includes lifetime access to its linked recovery service with no subscription or ongoing fees. Individual website features may change over time. These changes do not introduce subscription, renewal or ongoing fees for the recovery service included with your purchase."
         ]
       },
       {

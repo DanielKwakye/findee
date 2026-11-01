@@ -4,10 +4,10 @@ import { Checkbox } from "@/components/core/ui/checkbox";
 import { Field, FieldLabel } from "@/components/core/ui/field";
 import { Input } from "@/components/core/ui/input";
 import { Textarea } from "@/components/core/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/core/ui/select";
 import TypographyBody from "@/components/core/ui/typography-body";
 import TypographyH3 from "@/components/core/ui/typography-h3";
 import CheckoutAllocation from "@/features/checkout/components/ui/checkout-allocation";
+import CheckoutPlans from "@/features/checkout/components/ui/checkout-plans";
 import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
 import { checkoutContactFields } from "@/features/checkout/data/checkout.contact.fields";
 import type { useOrderForm } from "@/features/orders/components/hooks/use.order.form";
@@ -24,13 +24,13 @@ type Props = {
 
 /** Renders shared order fields without selecting a create or update action. */
 export default function OrderFormFields({ state, mutation, submit, readOnlyEmail = false, submitLabel, errorMessage }: Props) {
-    const { t, checkout, form, inputs, plansQuery, planOptions, plan, variants, total, validateAllocation } = state;
+    const { t, checkout, form, inputs, plansQuery, plans, plan, variants, total, validateAllocation } = state;
     const { errors } = form.formState;
     return <form noValidate onSubmit={submit} className="space-y-6" aria-busy={mutation.isPending}>
         <fieldset disabled={mutation.isPending} className="min-w-0 space-y-6">
             <section className="space-y-4 rounded-xl border p-4">
                 <TypographyH3 className="text-base">{t("purchase")}</TypographyH3>
-                <div className="grid gap-5 md:grid-cols-2">
+                <div className="grid gap-5">
                     <Field>
                         <TypographyBody className="text-sm font-medium">{t("variants")}</TypographyBody>
                         <Controller name="variants" control={form.control} rules={inputs.variants} render={({ field }) => <div role="group" aria-label={t("variants")} aria-describedby={errors.variants ? "order-variants-error" : undefined} className="flex flex-wrap gap-4">
@@ -42,24 +42,18 @@ export default function OrderFormFields({ state, mutation, submit, readOnlyEmail
                         </div>} />
                         {errors.variants && <div id="order-variants-error" role="alert"><TypographyBody className="text-sm text-destructive">{errors.variants.message}</TypographyBody></div>}
                     </Field>
-                    <Field>
-                        <FieldLabel htmlFor="internal-order-plan"><TypographyBody className="text-sm">{t("plan")}</TypographyBody></FieldLabel>
-                        <Controller name="plan" control={form.control} rules={inputs.plan} render={({ field }) => <Select value={field.value || null} onValueChange={value => { if (value) field.onChange(value); }} disabled={plansQuery.isPending || plansQuery.isError || mutation.isPending}>
-                            <SelectTrigger id="internal-order-plan" className="w-full" onBlur={field.onBlur} ref={field.ref} aria-invalid={!!errors.plan} aria-describedby={errors.plan ? "order-plan-error" : undefined}>
-                                <SelectValue><TypographyBody className="text-sm">{plansQuery.isPending ? t("loading") : planOptions.find(option => option.value === field.value)?.label ?? t("plan")}</TypographyBody></SelectValue>
-                            </SelectTrigger>
-                            <SelectContent>{planOptions.map(option => <SelectItem key={option.value} value={option.value}><TypographyBody className="text-sm">{option.label}</TypographyBody></SelectItem>)}</SelectContent>
-                        </Select>} />
-                        {errors.plan && <div id="order-plan-error" role="alert"><TypographyBody className="text-sm text-destructive">{errors.plan.message}</TypographyBody></div>}
+                    <div className="space-y-2">
+                        {plansQuery.isPending && <TypographyBody className="text-sm">{t("loading")}</TypographyBody>}
+                        <CheckoutPlans control={form.control} plans={plans} />
                         {plansQuery.isError && <div role="alert" className="space-y-2">
                             <TypographyBody className="text-sm text-destructive">{t("plansError")}</TypographyBody>
                             <Button type="button" variant="outline" onClick={() => plansQuery.refetch()}><TypographyBody className="text-sm">{t("retry")}</TypographyBody></Button>
                         </div>}
-                    </Field>
+                    </div>
                 </div>
                 {variants.length > 1 && <TypographyBody className="text-sm font-medium">{t("allocation")}</TypographyBody>}
                 {plan && variants.length > 1 && <CheckoutAllocation control={form.control} variants={variants} limit={plan.quantity} total={total}
-                    quantityIsMinimum={!!plan.quantityIsMinimum} onQuantityKeyUp={validateAllocation} error={errors.root?.allocation?.message} />}
+                    quantityIsMinimum={!!plan.quantityIsMinimum} onQuantityKeyUp={validateAllocation} error={errors.root?.allocation?.message} plan={plan} />}
                 {!plan && errors.root?.allocation && <TypographyBody className="text-sm text-destructive">{errors.root.allocation.message}</TypographyBody>}
             </section>
             <section className="space-y-4 rounded-xl border p-4">

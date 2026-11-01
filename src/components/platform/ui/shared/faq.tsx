@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/core/ui/accordion";
 import { Badge } from "@/components/core/ui/badge";
 import TypographyBody from "@/components/core/ui/typography-body";
@@ -36,8 +37,12 @@ export default function FAQ() {
                 <Icon aria-hidden="true" className="size-7 shrink-0 text-chart-1" strokeWidth={1.75} />
                 <TypographyBody className="flex-1 text-sm font-semibold sm:text-base">{t(`questions.${key}.question`)}</TypographyBody>
               </AccordionTrigger>
-              <AccordionContent>
-                <TypographyParagraph className="pl-11 text-sm leading-6 text-primary-foreground/70 sm:text-base sm:leading-7">{t(`questions.${key}.answer`)}</TypographyParagraph>
+              <AccordionContent className="[&_a]:hover:text-inherit">
+                <TypographyParagraph className="pl-11 text-sm leading-6 text-primary-foreground/70 sm:text-base sm:leading-7">
+                  {t.rich(`questions.${key}.answer`, {
+                    contact: chunks => <Link href="/tickets" className="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-ring">{chunks}</Link>,
+                  })}
+                </TypographyParagraph>
               </AccordionContent>
             </AccordionItem>
           ))}

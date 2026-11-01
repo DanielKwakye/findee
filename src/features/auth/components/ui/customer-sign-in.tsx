@@ -29,12 +29,6 @@ export function CustomerSignIn() {
                         <TypographyParagraph className="text-sm leading-6 text-muted-foreground">{t("description")}</TypographyParagraph>
                     </div>
                     <CustomerOtpForm onVerified={onVerified} fullWidth />
-                    <TypographyParagraph className="mt-8 text-center text-xs leading-5 text-muted-foreground">
-                        {t.rich("termsNotice", {
-                            terms: chunks => <Link href="/terms" className="underline underline-offset-4 hover:text-foreground">{chunks}</Link>,
-                            privacy: chunks => <Link href="/privacy" className="underline underline-offset-4 hover:text-foreground">{chunks}</Link>,
-                        })}
-                    </TypographyParagraph>
                 </div>
             </section>
             <aside className={cn("relative hidden overflow-hidden px-12 py-16 text-primary-foreground lg:flex lg:items-center xl:px-20", styles.patternPanel)}>

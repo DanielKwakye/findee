@@ -1,4 +1,5 @@
 import { ImageConstants } from "@/lib/image.constants";
+import { checkoutVariants } from "@/features/checkout/data/checkout.variants";
 
 export const useCases = [
   { key: "keys", image: ImageConstants.FindeeOnKeyHolder, variant: "Tough" },
@@ -20,3 +21,9 @@ export const useCases = [
   { key: "sportsGear", image: ImageConstants.FindeeOnBag, variant: "Tough" },
   { key: "cameraCases", image: ImageConstants.FindeeOnLaptop, variant: "Fabric" },
 ] as const;
+
+export const useCaseGroups = checkoutVariants.map(({ id, key }) => ({
+  variant: id,
+  key,
+  items: useCases.filter(item => item.variant === id),
+}));
