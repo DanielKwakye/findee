@@ -6,7 +6,17 @@ import { generateReferenceCode } from "@/components/platform/utils/reference.cod
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+let stripe: Stripe | undefined;
+
+/** Provides the shared Stripe client using runtime server credentials. */
+export function getStripe() {
+    if (!stripe) {
+        const secret = process.env.STRIPE_SECRET_KEY;
+        if (!secret) throw new Error("Stripe API key is not configured");
+        stripe = new Stripe(secret);
+    }
+    return stripe;
+}
 
 /** Resolves the Stripe customer associated with a Findee account. */
 export async function getStripeCustomerId(customerId: string): Promise<string> {
@@ -16,7 +26,7 @@ export async function getStripeCustomerId(customerId: string): Promise<string> {
     });
     if (user.stripeCustomerId) return user.stripeCustomerId;
 
-    const customer = await stripe.customers.create({
+    const customer = await getStripe().customers.create({
         email: user.email,
         metadata: { customerId },
     }, { idempotencyKey: `findee-customer-${customerId}` });
@@ -46,7 +56,7 @@ export async function createStripeCheckout(customer: { id: string; email: string
     });
     const stripeCustomerId = await getStripeCustomerId(customer.id);
     const t = await getTranslations("Checkout.plans");
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
         ui_mode: "hosted_page",
         mode: "payment",
         customer: stripeCustomerId,
@@ -76,12 +86,12 @@ export async function createStripeCheckout(customer: { id: string; email: string
 
 /** Retrieves a checkout session for server-side payment verification. */
 export async function getStripeCheckout(sessionId: string) {
-    return stripe.checkout.sessions.retrieve(sessionId);
+    return getStripe().checkout.sessions.retrieve(sessionId);
 }
 
 /** Authenticates Stripe event deliveries using the endpoint's signing secret. */
 export function verifyStripeWebhook(payload: string, signature: string) {
     const secret = process.env.STRIPE_WEBHOOK_SECRET;
     if (!secret) throw new Error("Stripe webhook signing secret is not configured");
-    return stripe.webhooks.constructEvent(payload, signature, secret);
+    return getStripe().webhooks.constructEvent(payload, signature, secret);
 }

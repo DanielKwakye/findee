@@ -2,8 +2,6 @@ import { verifyStripeWebhook } from "@/features/checkout/utils/checkout.stripe";
 import { fulfillCheckoutOrder } from "@/features/orders/server/fulfill.checkout.order";
 import { recordInvoicePayment } from "@/features/orders/server/order.invoice";
 
-export const runtime = "nodejs";
-
 /** Accepts authenticated Stripe payment events and records paid checkout orders. */
 export async function POST(request: Request) {
     if (!process.env.STRIPE_WEBHOOK_SECRET) {

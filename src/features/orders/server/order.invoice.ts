@@ -1,11 +1,12 @@
 import "server-only";
 
 import { getTranslations } from "next-intl/server";
-import { stripe, getStripeCustomerId } from "@/features/checkout/utils/checkout.stripe";
+import { getStripe, getStripeCustomerId } from "@/features/checkout/utils/checkout.stripe";
 import { db } from "@/lib/db";
 
 /** Creates and emails an order's payment invoice, resuming safely after interrupted requests. */
 export async function sendOrderInvoice(number: string, resend = false) {
+    const stripe = getStripe();
     const order = await db.order.findUniqueOrThrow({ where: { number }, select: {
         id: true, customerId: true, paymentAt: true, status: true, stripeInvoiceId: true, invoiceSentAt: true, planDetail: true,
     } });
@@ -44,6 +45,7 @@ export async function sendOrderInvoice(number: string, resend = false) {
 
 /** Verifies an order invoice with Stripe and records its payment once. */
 export async function recordInvoicePayment(invoiceId: string) {
+    const stripe = getStripe();
     const invoice = await stripe.invoices.retrieve(invoiceId);
     const number = invoice.metadata?.orderNumber;
     if (!number || !invoice.metadata?.customerId) return;
