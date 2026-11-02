@@ -6,7 +6,7 @@ import { getCheckoutPlanPrice } from "@/features/checkout/utils/checkout.pricing
 /** Retrieves the available sticker plans and their purchase limits. */
 export async function getCheckoutPlans(): Promise<CheckoutPlan[]> {
     const plans: CheckoutPlan[] = [
-        { id: "custom", title: "Custom", price: 0, currency: "CAD", quantity: 20, minimumQuantity: 10, maxRecoveryProfiles: null,
+        { id: "custom", title: "Findmus", price: 0, currency: "CAD", quantity: 20, minimumQuantity: 10, maxRecoveryProfiles: null,
             unitPrices: [
                 { maximumQuantity: 19, prices: { Everyday: 1.50, Tough: 1.75, Fabric: 2.00 } },
                 { maximumQuantity: 29, prices: { Everyday: 1.25, Tough: 1.50, Fabric: 1.75 } },

@@ -74,7 +74,7 @@ export async function createStripeCheckout(customer: { id: string; email: string
             price_data: {
                 currency: plan.currency.toLowerCase(),
                 unit_amount: Math.round(plan.price * 100),
-                product_data: { name: `${t(`names.${plan.title}`)} · ${t("stickers", { quantity: plan.quantity })}` },
+                product_data: { name: t("productName", { quantity: plan.quantity }) },
             },
             quantity: 1,
         }],

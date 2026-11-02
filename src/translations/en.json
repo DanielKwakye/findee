@@ -158,6 +158,7 @@
       "pricingReference": "Unit prices for reference.",
       "details": "{quantity, number} stickers",
       "stickers": "{quantity, number} stickers",
+      "productName": "{quantity, number} Stickers",
       "popular": "Popular",
       "stickersPlus": "{quantity, number}+ stickers",
       "customQuantity": "Number of stickers",

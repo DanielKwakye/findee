@@ -8,7 +8,7 @@ export type CheckoutCustomer = {
 
 export type CheckoutPlan = {
     id: "personal" | "family" | "custom";
-    title: "Starter" | "Family" | "Custom";
+    title: string;
     price: number;
     currency: string;
     quantity: number;

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useFormatter, useTranslations } from "next-intl";
-import { ArrowRight, Check, Truck } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/core/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/core/ui/card";
 import TypographyBody from "@/components/core/ui/typography-body";
@@ -21,10 +21,6 @@ export default function PricingPlans() {
 
   return (
     <section aria-label={t("plansLabel")} className="container mx-auto px-5 pb-12 sm:px-6 sm:pb-20">
-      <div className="mb-6 flex items-center justify-center gap-2 text-primary">
-        <Truck aria-hidden="true" className="size-5 shrink-0" />
-        <TypographyBody className="text-sm font-semibold">{t("freeShipping")}</TypographyBody>
-      </div>
       {plans.isPending ? (
         <div role="status" className="py-12 text-center">
           <TypographyParagraph className="text-muted-foreground">{tPlans("loading")}</TypographyParagraph>
