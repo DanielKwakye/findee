@@ -20,7 +20,7 @@ export async function getConfirmationOrder(transaction: Prisma.TransactionClient
     const order = await transaction.order.findUnique({
         where: { id },
         select: {
-            id: true, number: true, customerId: true, status: true, cancellable: true,
+            id: true, number: true, customerId: true, status: true, cancellable: true, paymentAt: true,
             confirmationNotifiedAt: true, planDetail: { select: { allocations: true } },
             customerConfirmationNotifiedAt: true, adminConfirmationNotifiedAt: true,
             defaultReachoutModes: true, customer: { select: { name: true, email: true } },

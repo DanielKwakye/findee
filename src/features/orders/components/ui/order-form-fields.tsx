@@ -1,6 +1,7 @@
 import { Controller } from "react-hook-form";
 import { Button } from "@/components/core/ui/button";
 import { Checkbox } from "@/components/core/ui/checkbox";
+import { Card, CardContent } from "@/components/core/ui/card";
 import { Field, FieldLabel } from "@/components/core/ui/field";
 import { Input } from "@/components/core/ui/input";
 import { Textarea } from "@/components/core/ui/textarea";
@@ -18,12 +19,13 @@ type Props = {
     mutation: { isPending: boolean; isError: boolean };
     submit: SubmitEventHandler<HTMLFormElement>;
     readOnlyEmail?: boolean;
+    showPayment?: boolean;
     submitLabel: string;
     errorMessage: string;
 };
 
 /** Renders shared order fields without selecting a create or update action. */
-export default function OrderFormFields({ state, mutation, submit, readOnlyEmail = false, submitLabel, errorMessage }: Props) {
+export default function OrderFormFields({ state, mutation, submit, readOnlyEmail = false, showPayment = false, submitLabel, errorMessage }: Props) {
     const { t, checkout, form, inputs, plansQuery, plans, plan, variants, total, validateAllocation } = state;
     const { errors } = form.formState;
     return <form noValidate onSubmit={submit} className="space-y-6" aria-busy={mutation.isPending}>
@@ -86,6 +88,19 @@ export default function OrderFormFields({ state, mutation, submit, readOnlyEmail
                     </Field>
                 </div>
             </section>
+            {showPayment && <Card size="sm" className="bg-destructive/10 ring-destructive/20">
+                <CardContent>
+                    <Controller name="customerPaid" control={form.control} render={({ field }) => (
+                        <Field>
+                            <FieldLabel>
+                                <Checkbox className="border-foreground/60 data-checked:border-foreground data-checked:bg-foreground data-checked:text-background" checked={!!field.value} onCheckedChange={field.onChange} onBlur={field.onBlur} name={field.name} ref={field.ref} />
+                                <TypographyBody className="text-sm">{t("customerPaid")}</TypographyBody>
+                            </FieldLabel>
+                            <TypographyBody className="text-xs text-muted-foreground">{t("customerPaidHelp")}</TypographyBody>
+                        </Field>
+                    )} />
+                </CardContent>
+            </Card>}
         </fieldset>
         {mutation.isError && <div role="alert"><TypographyBody className="text-sm text-destructive">{errorMessage}</TypographyBody></div>}
         <div className="flex justify-end">

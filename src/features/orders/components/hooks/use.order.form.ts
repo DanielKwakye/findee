@@ -8,14 +8,14 @@ import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.
 import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
 import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
 import type { CheckoutValues } from "@/features/checkout/utils/checkout.types";
-import type { OrderDetails } from "@/features/orders/utils/order.types";
+import type { OrderDetails, OrderFormValues } from "@/features/orders/utils/order.types";
 import { getCheckoutPlanPrice } from "@/features/checkout/utils/checkout.pricing";
 
 /** Manages shared order fields, purchase options, and form validation. */
 export function useOrderForm(initialValues: CheckoutValues, planDetail?: OrderDetails["planDetail"]) {
     const t = useTranslations("orders.create");
     const checkout = useTranslations("Checkout");
-    const form = useForm<CheckoutValues>({ defaultValues: initialValues });
+    const form = useForm<OrderFormValues>({ defaultValues: { customerPaid: false, ...initialValues } });
     const values = useWatch({ control: form.control });
     const plansQuery = useQuery({ queryKey: ["checkout", "plans"], queryFn: getCheckoutPlans });
     const plans = (plansQuery.data ?? []).map(option => getCheckoutPlanPrice(

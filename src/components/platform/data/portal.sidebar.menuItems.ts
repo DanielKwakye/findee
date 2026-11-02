@@ -16,7 +16,7 @@ export type PortalInventoryItem = {
     url: string
     icon: LucideIcon
     isActive?: boolean
-    items?: { title: string; url: string; badgeStatus?: OrderStatus | "all" }[]
+    items?: { title: string; url: string; badgeStatus?: OrderStatus | "all" | "pendingPayments" }[]
 }
 
 export const portalInventoryItems: PortalInventoryItem[] = [
@@ -27,6 +27,7 @@ export const portalInventoryItems: PortalInventoryItem[] = [
         isActive: true,
         items: [
             { title: "showAll", url: "/admin/orders" },
+            { title: "pendingPayments", url: "/admin/orders/pending-payments", badgeStatus: "pendingPayments" },
             { title: "pending", url: "/admin/orders?status=PENDING", badgeStatus: "PENDING" },
             { title: "confirmed", url: "/admin/orders?status=CONFIRMED", badgeStatus: "CONFIRMED" },
             { title: "hold", url: "/admin/orders?status=HOLD", badgeStatus: "HOLD" },

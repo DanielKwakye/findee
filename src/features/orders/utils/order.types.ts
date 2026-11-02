@@ -1,4 +1,7 @@
 import type { OrderStatus } from "@/generated/client";
+import type { CheckoutValues } from "@/features/checkout/utils/checkout.types";
+
+export type OrderFormValues = CheckoutValues & { customerPaid?: boolean };
 import type { getOrders } from "@/features/orders/server/get.orders.action";
 import type { getOrderDetails } from "@/features/orders/server/get.order.details.action";
 import type { getOrderShipments } from "@/features/orders/server/get.order.shipments.action";

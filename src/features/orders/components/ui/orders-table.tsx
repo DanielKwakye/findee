@@ -13,8 +13,8 @@ import AddOrderShipmentDialog from "@/features/orders/components/ui/add-order-sh
 import EditOrderDialog from "@/features/orders/components/ui/edit-order-dialog";
 
 /** Presents order records using the shared server-paginated table. */
-export default function OrdersTable({ status }: { status: OrderStatusFilter }) {
-    const { t, query, columns, search, setSearch, setSorting, pagination, setPagination, changeStatus, detailsRef, editRef, statusRef, shipmentsRef, addShipmentRef, openOrder } = useOrdersTable(status);
+export default function OrdersTable({ status, pendingPayments = false }: { status: OrderStatusFilter; pendingPayments?: boolean }) {
+    const { t, query, columns, search, setSearch, setSorting, pagination, setPagination, changeStatus, detailsRef, editRef, statusRef, shipmentsRef, addShipmentRef, openOrder } = useOrdersTable(status, pendingPayments);
     return (
         <div className="min-w-0 space-y-4">
             {query.isError && <div role="alert" className="flex flex-wrap items-center gap-2">
@@ -25,7 +25,7 @@ export default function OrdersTable({ status }: { status: OrderStatusFilter }) {
             </div>}
             <PortalTable data={query.data?.orders ?? []} columns={columns} pagination={pagination} onPaginationChange={setPagination}
                 search={search} onSearchChange={setSearch} onSortingChange={setSorting} isLoading={query.isLoading} onRowClick={openOrder}
-                toolbarActions={<OrderStatusSelector value={status} onChange={changeStatus} disabled={false} />} />
+                toolbarActions={pendingPayments ? undefined : <OrderStatusSelector value={status} onChange={changeStatus} disabled={false} />} />
             <OrderDetailsDialog ref={detailsRef} />
             <EditOrderDialog ref={editRef} />
             <OrderStatusDialog ref={statusRef} />

@@ -10,7 +10,8 @@ export async function getOrderCounts() {
     // Default to on-hold orders while allowing the pending badge to reuse the same query.
     // Supply every status and the overall total together for all Orders navigation badges.
     const groups = await db.order.groupBy({ by: ["status"], _count: { _all: true } });
-    const counts: Partial<Record<OrderStatus | "all", number>> = { all: 0 };
+    const counts: Partial<Record<OrderStatus | "all" | "pendingPayments", number>> = { all: 0 };
+    counts.pendingPayments = await db.order.count({ where: { status: "AWAITING_PAYMENT" } });
     for (const group of groups) {
         counts[group.status] = group._count._all;
         counts.all = (counts.all ?? 0) + group._count._all;

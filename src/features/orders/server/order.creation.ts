@@ -9,7 +9,7 @@ import { generateReferenceCode } from "@/components/platform/utils/reference.cod
 import { checkoutOrderPlans } from "@/features/checkout/data/checkout.order.plans";
 
 /** Validates purchase details and creates an order for the supplied customer. */
-export async function createOrder(customerId: string, values: CheckoutValues, orderNumber?: string, paidPlan?: CheckoutPlan): Promise<string> {
+export async function createOrder(customerId: string, values: CheckoutValues, orderNumber?: string, paidPlan?: CheckoutPlan, paymentAt: Date | null = new Date()): Promise<string> {
     validateCheckoutValues(values);
     const plans = paidPlan ? [paidPlan] : await getCheckoutPlans();
     const plan = validateCheckoutAllocation(values, plans);
@@ -29,6 +29,8 @@ export async function createOrder(customerId: string, values: CheckoutValues, or
                     data: {
                         number: orderNumber ?? generateReferenceCode(),
                         customerId: customerId,
+                        paymentAt,
+                        status: paymentAt ? "PENDING" : "AWAITING_PAYMENT",
                         planDetail: {
                             plan: checkoutOrderPlans[plan.id],
                             quantity: plan.quantity,

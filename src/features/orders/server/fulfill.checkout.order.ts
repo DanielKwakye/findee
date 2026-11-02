@@ -45,6 +45,9 @@ export async function fulfillCheckoutOrder(sessionId: string, expectedCustomerId
     const existing = await db.order.findUnique({ where: { number: metadata.orderNumber }, select: { customerId: true } });
     if (existing) {
         if (existing.customerId !== metadata.customerId) throw new Error("Order does not belong to this customer");
+        await db.order.updateMany({ where: { number: metadata.orderNumber, OR: [
+            { paymentAt: null }, { paymentAt: { isSet: false } },
+        ] }, data: { paymentAt: new Date(), status: "PENDING" } });
         return metadata.orderNumber;
     }
     return createOrder(metadata.customerId, values, metadata.orderNumber, plan);

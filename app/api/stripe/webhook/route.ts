@@ -1,5 +1,6 @@
 import { verifyStripeWebhook } from "@/features/checkout/utils/checkout.stripe";
 import { fulfillCheckoutOrder } from "@/features/orders/server/fulfill.checkout.order";
+import { recordInvoicePayment } from "@/features/orders/server/order.invoice";
 
 export const runtime = "nodejs";
 
@@ -17,11 +18,12 @@ export async function POST(request: Request) {
     } catch {
         return Response.json({ error: "invalid_signature" }, { status: 400 });
     }
-    if (event.type !== "checkout.session.completed" && event.type !== "checkout.session.async_payment_succeeded") {
+    if (event.type !== "checkout.session.completed" && event.type !== "checkout.session.async_payment_succeeded" && event.type !== "invoice.paid") {
         return Response.json({ received: true });
     }
     try {
-        await fulfillCheckoutOrder(event.data.object.id);
+        if (event.type === "invoice.paid") await recordInvoicePayment(event.data.object.id);
+        else await fulfillCheckoutOrder(event.data.object.id);
         return Response.json({ received: true });
     } catch {
         console.error("Stripe checkout fulfillment failed", { eventId: event.id, sessionId: event.data.object.id });

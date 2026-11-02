@@ -45,6 +45,7 @@ export function getOrderDetailGroups(order: OrderDetails, t: ReturnType<typeof u
         { id: "shipments", label: t("columns.shipments"), value: String(order.shipments.length) },
         { id: "cancelledAt", label: t("columns.cancelledAt"), value: order.cancelledAt ? formatDate(order.cancelledAt) : unset },
         { id: "cancellationReason", label: t("columns.cancellationReason"), value: order.cancellationReason || unset },
+        { id: "paymentAt", label: t("columns.paymentAt"), value: order.paymentAt ? formatDate(order.paymentAt) : unset },
         { id: "completedAt", label: t("columns.completedAt"), value: order.completedAt ? formatDate(order.completedAt) : unset },
         { id: "createdAt", label: t("columns.createdAt"), value: formatDate(order.createdAt) },
         { id: "updatedAt", label: t("columns.updatedAt"), value: formatDate(order.updatedAt) },

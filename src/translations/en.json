@@ -125,6 +125,7 @@
   "Navbar": {
     "home": "Home",
     "getYours": "Get Yours",
+    "getYourQrs": "Get Your QRs",
     "menus": "More",
     "primaryNavigation": "Primary navigation",
     "close": "Close",
@@ -384,6 +385,7 @@
     "inventory": "Inventory",
     "orders": "Orders",
     "showAll": "Show all",
+    "pendingPayments": "Awaiting Payments",
     "pending": "Pending",
     "confirmed": "Confirmed",
     "processing": "Processing",
@@ -604,6 +606,10 @@
     "next": "Next"
   },
   "orders": {
+    "resendInvoice": "Resend invoice",
+    "resendInvoiceSuccess": "Invoice request completed successfully.",
+    "resendInvoiceError": "Unable to resend the invoice. Please check the order and try again.",
+    "pendingPayments": "Awaiting Payments",
     "customer": {
       "description": "View your sticker orders and follow their delivery progress.",
       "date": "Order date",
@@ -626,6 +632,9 @@
       "close": "Close order creation",
       "description": "Create an order on behalf of a customer with their sticker, contact, and delivery details.",
       "purchase": "Order details",
+      "customerPaid": "Customer Paid",
+      "customerPaidHelp": "Check if payment has already been received. Otherwise, a Stripe invoice is emailed to the customer and the order waits for payment.",
+      "invoiceDescription": "Findmus order {number} · {quantity, number} stickers",
       "variants": "Select variants",
       "variantsRequired": "Select at least one variant.",
       "plan": "Select plan",
@@ -639,6 +648,7 @@
       "retry": "Retry",
       "purchaseRequired": "Choose a plan and at least one sticker variant.",
       "submit": "Create order",
+      "submitWithAmount": "Create order · {amount}",
       "updateSubmit": "Save changes",
       "updateSuccess": "Order {number} updated successfully.",
       "updateError": "Unable to update the order. Please check the details and try again.",
@@ -695,6 +705,7 @@
     "statuses": {
       "PENDING": "Pending",
       "CONFIRMED": "Confirmed",
+      "AWAITING_PAYMENT": "Awaiting Payment",
       "HOLD": "On hold",
       "PROCESSING": "Processing",
       "SHIPPED": "Shipped",
@@ -721,6 +732,7 @@
       "cancelledAt": "Canceled at",
       "cancellationReason": "Cancellation reason",
       "completedAt": "Completed at",
+      "paymentAt": "Paid at",
       "createdAt": "Created at",
       "updatedAt": "Updated at"
     },

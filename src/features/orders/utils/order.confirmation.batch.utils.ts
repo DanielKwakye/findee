@@ -17,6 +17,7 @@ export async function getPendingConfirmationOrders(batchSize: number) {
     return db.order.findMany({
         where: {
             AND: [
+                { paymentAt: { not: null } },
                 { OR: [
                     { status: "PENDING" },
                     { status: "HOLD" },

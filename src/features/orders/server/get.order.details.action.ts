@@ -16,7 +16,7 @@ export async function getOrderDetails(id: string) {
             customer: { select: { name: true, email: true, phone: true } },
             status: true, planDetail: true, defaultReachoutModes: true, showOwnerName: true,
             shippingAddress: true, deliveryInstructions: true, cancelledAt: true, cancellationReason: true,
-            completedAt: true, createdAt: true, updatedAt: true,
+            completedAt: true, createdAt: true, updatedAt: true, paymentAt: true,
             products: { select: { id: true, code: true, variant: true } },
             shipments: { select: {
                 id: true, carrier: true, trackingNumber: true,

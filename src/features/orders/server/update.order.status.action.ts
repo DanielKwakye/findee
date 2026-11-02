@@ -9,5 +9,9 @@ import type { OrderStatusUpdate } from "@/features/orders/utils/order.types";
 export async function updateOrderStatus(values: OrderStatusUpdate) {
     await requireAdmin();
     validateOrderStatusUpdate(values);
-    await db.order.update({ where: { id: values.id }, data: { status: values.status }, select: { id: true } });
+    const result = await db.order.updateMany({ where: {
+        id: values.id,
+        ...(values.status === "AWAITING_PAYMENT" ? { paymentAt: null } : { paymentAt: { not: null } }),
+    }, data: { status: values.status } });
+    if (result.count !== 1) throw new Error("Order status must match its payment state");
 }

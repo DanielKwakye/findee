@@ -8,7 +8,8 @@ import { getScrollState, getServerScrollState, subscribeToScroll } from "@/compo
 /** Coordinates state and interactions for the web navigation bar. */
 export function useNavbarWeb() {
   const pathname = usePathname();
-  return { isScrolled: useSyncExternalStore(subscribeToScroll, getScrollState, getServerScrollState), showAccount: pathname !== "/" };
+  return { isScrolled: useSyncExternalStore(subscribeToScroll, getScrollState, getServerScrollState), showAccount: pathname !== "/",
+    showGetYourQrs: pathname !== "/" && pathname !== "/checkout" && !pathname.startsWith("/checkout/") };
 }
 
 /** Coordinates state and interactions for the mobile navigation bar. */

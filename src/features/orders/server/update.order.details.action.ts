@@ -16,13 +16,19 @@ export async function updateOrderDetails(id: string, values: CheckoutValues): Pr
     const plans = await getCheckoutPlans();
     return db.$transaction(async transaction => {
         const order = await transaction.order.findUnique({ where: { id }, select: {
-            number: true, customerId: true, customer: { select: { email: true } }, planDetail: true, defaultReachoutModes: true,
+            number: true, customerId: true, customer: { select: { email: true } }, planDetail: true, defaultReachoutModes: true, stripeInvoiceId: true,
         } });
         if (!order) throw new Error("Order not found");
         if (values.email !== order.customer.email) throw new Error("Order customer cannot be changed");
         const plansForOrder = plans.map(plan => checkoutOrderPlans[plan.id] === order.planDetail.plan
             ? { ...plan, ...order.planDetail } : plan);
         const plan = validateCheckoutAllocation(values, plansForOrder);
+        if (order.stripeInvoiceId && (plan.price !== order.planDetail.price || plan.quantity !== order.planDetail.quantity
+            || values.variants.length !== order.planDetail.allocations.length
+            || values.variants.some(variant => !order.planDetail.allocations.some(allocation =>
+                allocation.variant === variant && allocation.quantity === values.allocation[variant])))) {
+            throw new Error("An invoiced order's purchase details cannot be changed");
+        }
         const name = values.name.trim();
         const phone = values.phone.trim();
         if (name || phone) await transaction.user.update({ where: { id: order.customerId },

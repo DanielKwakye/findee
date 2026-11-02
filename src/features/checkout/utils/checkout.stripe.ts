@@ -6,10 +6,10 @@ import { generateReferenceCode } from "@/components/platform/utils/reference.cod
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 /** Resolves the Stripe customer associated with a Findee account. */
-async function getStripeCustomerId(customerId: string): Promise<string> {
+export async function getStripeCustomerId(customerId: string): Promise<string> {
     const user = await db.user.findUniqueOrThrow({
         where: { id: customerId },
         select: { stripeCustomerId: true, email: true },

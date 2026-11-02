@@ -1,8 +1,8 @@
 "use client";
 
 import { createElement, useCallback, useMemo, useRef, useState } from "react";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useFormatter, useTranslations } from "next-intl";
 import type { SortingState } from "@tanstack/react-table";
 import type { PortalTableColumnDef, PortalTablePaginationState } from "@/components/platform";
 import { usePortalTableSearch, useUserDateTime } from "@/components/platform";
@@ -13,11 +13,24 @@ import type { OrderDetailsDialogHandle, OrderRow, OrderStatusFilter, OrderStatus
 import OrderActions from "@/features/orders/components/ui/order-actions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { EditOrderDialogHandle } from "@/features/orders/utils/order.types";
+import { resendOrderInvoice } from "@/features/orders/server/resend.order.invoice.action";
+import { toast } from "@/components/core/ui/toast";
 
 /** Manages order queries and server-side table controls for a status view. */
-export function useOrdersTable(status: OrderStatusFilter) {
+export function useOrdersTable(status: OrderStatusFilter, pendingPayments = false) {
     const t = useTranslations("orders");
+    const format = useFormatter();
     const formatDate = useUserDateTime();
+    const queryClient = useQueryClient();
+    const { mutate: resendInvoice, isPending: invoicePending } = useMutation({
+        mutationFn: resendOrderInvoice, retry: false,
+        /** Refreshes payment records after invoice delivery or payment reconciliation. */
+        async onSuccess() {
+            toast.add({ title: t("resendInvoiceSuccess"), type: "success" });
+            await queryClient.invalidateQueries({ queryKey: ["orders"] });
+        },
+        onError: () => toast.add({ title: t("resendInvoiceError"), type: "error" }),
+    });
     const detailsRef = useRef<OrderDetailsDialogHandle>(null);
     const editRef = useRef<EditOrderDialogHandle>(null);
     /** Opens the internally managed editor for a selected order. */
@@ -42,8 +55,8 @@ export function useOrdersTable(status: OrderStatusFilter) {
     const {search, setSearch, debouncedSearch} = usePortalTableSearch(setPagination);
     const [sorting, setSorting] = useState<SortingState>([]);
     const query = useQuery({
-        queryKey: ["orders", status, pagination, debouncedSearch, sorting],
-        queryFn: () => getOrders({ ...pagination, status, search: debouncedSearch, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc" }),
+        queryKey: ["orders", status, pendingPayments, pagination, debouncedSearch, sorting],
+        queryFn: () => getOrders({ ...pagination, status, search: debouncedSearch, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc" }, pendingPayments),
         placeholderData: keepPreviousData,
     });
     const columns = useMemo<PortalTableColumnDef<OrderRow>[]>(() => {
@@ -53,13 +66,19 @@ export function useOrdersTable(status: OrderStatusFilter) {
             estimatedDeliveryDate: t("columns.estimatedDeliveryDate"),
             expectedPostingDate: t("columns.expectedPostingDate"),
         };
-        return [...getOrderColumns(labels, {
-            PENDING: t("statuses.PENDING"), CONFIRMED: t("statuses.CONFIRMED"), PROCESSING: t("statuses.PROCESSING"),
+        const baseColumns = getOrderColumns(labels, {
+            AWAITING_PAYMENT: t("statuses.AWAITING_PAYMENT"), PENDING: t("statuses.PENDING"), CONFIRMED: t("statuses.CONFIRMED"), PROCESSING: t("statuses.PROCESSING"),
             HOLD: t("statuses.HOLD"),
             SHIPPED: t("statuses.SHIPPED"), DELIVERED: t("statuses.DELIVERED"), CANCELLED: t("statuses.CANCELLED"), RETURNED: t("statuses.RETURNED"),
-        }, formatDate), { id: "actions", header: labels.actions, enableSorting: false, enableHiding: false,
-            cell: ({ row }) => createElement(OrderActions, { order: row.original, label: labels.viewDetails, onOpen: openDetails, onEdit: openEdit, onChangeStatus: openStatus, onViewShipments: openShipments, onAddShipment: openAddShipment }) }];
-    }, [t, formatDate, openDetails, openEdit, openStatus, openShipments, openAddShipment]);
+        }, formatDate);
+        const paymentColumns: PortalTableColumnDef<OrderRow>[] = [
+            { id: "amount", header: t("details.price"), enableSorting: false,
+                cell: ({ row }) => format.number(row.original.price, { style: "currency", currency: row.original.currency, currencyDisplay: "code" }) },
+            { accessorKey: "createdAt", header: t("columns.createdAt"), cell: ({ row }) => formatDate(row.original.createdAt) },
+        ];
+        return [...(pendingPayments ? [...baseColumns.filter(column => !["expectedPostingDate", "estimatedDeliveryDate"].includes("accessorKey" in column ? String(column.accessorKey) : column.id ?? "")), ...paymentColumns] : baseColumns), { id: "actions", header: labels.actions, enableSorting: false, enableHiding: false,
+            cell: ({ row }) => createElement(OrderActions, { order: row.original, label: labels.viewDetails, onOpen: openDetails, onEdit: openEdit, onChangeStatus: openStatus, onViewShipments: openShipments, onAddShipment: openAddShipment, onResendInvoice: resendInvoice, invoicePending }) }];
+    }, [t, formatDate, format, pendingPayments, openDetails, openEdit, openStatus, openShipments, openAddShipment, resendInvoice, invoicePending]);
     /** Opens the selected order status while preserving unrelated URL parameters. */
     function changeStatus(next: OrderStatusFilter) {
         const params = new URLSearchParams(searchParams.toString());

@@ -4,6 +4,7 @@ import { auth } from "@/features/auth/utils/auth";
 /** Redirects portal requests according to the verified session's authentication and role. */
 export const proxy = auth((request) => {
     const user = request.auth?.user;
+    if (request.nextUrl.pathname === "/sign-in" && user?.role !== "CUSTOMER") return NextResponse.next();
     if (request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/sign-in") {
         if (!user?.id) return NextResponse.next();
         const destination = user.role === "ADMIN" ? "/admin" : "/customer";

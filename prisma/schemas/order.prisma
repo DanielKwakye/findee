@@ -5,6 +5,9 @@ model Order {
   customer             User                 @relation(fields: [customerId], references: [id])
   status               OrderStatus          @default(PENDING)
   cancellable          Boolean              @default(false)
+  paymentAt            DateTime?
+  stripeInvoiceId      String?
+  invoiceSentAt        DateTime?
   confirmationNotifiedAt DateTime?
   customerConfirmationNotifiedAt DateTime?
   adminConfirmationNotifiedAt DateTime?
@@ -55,6 +58,7 @@ enum OrderPlan {
 }
 
 enum OrderStatus {
+  AWAITING_PAYMENT
   PENDING
   CONFIRMED
   HOLD

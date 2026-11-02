@@ -8,11 +8,13 @@ import TypographyBody from "@/components/core/ui/typography-body";
 import type { OrderStatusDialogRecord } from "@/features/orders/utils/order.types";
 
 /** Presents the details action for a single order record. */
-export default function OrderActions({ order, label, onOpen, onEdit, onChangeStatus, onViewShipments, onAddShipment }: {
+export default function OrderActions({ order, label, onOpen, onEdit, onChangeStatus, onViewShipments, onAddShipment, onResendInvoice, invoicePending }: {
     order: OrderStatusDialogRecord; label: string; onOpen: (id: string) => void; onChangeStatus: (order: OrderStatusDialogRecord) => void;
     onViewShipments: (order: OrderStatusDialogRecord) => void;
     onAddShipment: (order: OrderStatusDialogRecord) => void;
     onEdit: (id: string) => void;
+    onResendInvoice: (id: string) => void;
+    invoicePending: boolean;
 }) {
     const t = useTranslations("orders");
     return (
@@ -24,6 +26,7 @@ export default function OrderActions({ order, label, onOpen, onEdit, onChangeSta
                 <DropdownMenuGroup>
                     <DropdownMenuItem onClick={() => onOpen(order.id)}><TypographyBody className="text-sm">{label}</TypographyBody></DropdownMenuItem>
                     <DropdownMenuItem onClick={() => onEdit(order.id)}><TypographyBody className="text-sm">{t("edit.title")}</TypographyBody></DropdownMenuItem>
+                    {order.status === "AWAITING_PAYMENT" && <DropdownMenuItem disabled={invoicePending} onClick={() => onResendInvoice(order.id)}><TypographyBody className="text-sm">{t("resendInvoice")}</TypographyBody></DropdownMenuItem>}
                     <DropdownMenuItem onClick={() => onChangeStatus(order)}><TypographyBody className="text-sm">{t("changeStatus")}</TypographyBody></DropdownMenuItem>
                     <DropdownMenuItem onClick={() => onViewShipments(order)}><TypographyBody className="text-sm">{t("shipments.view")}</TypographyBody></DropdownMenuItem>
                     <DropdownMenuItem onClick={() => onAddShipment(order)}><TypographyBody className="text-sm">{t("shipments.add")}</TypographyBody></DropdownMenuItem>

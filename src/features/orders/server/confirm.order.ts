@@ -35,6 +35,7 @@ export async function confirmOrder(id: string, options: OrderConfirmationOptions
         if (options.deadline && Date.now() >= options.deadline) throw new Error("Order confirmation time budget reached");
         // Load only the order details needed for allocation and notifications.
         const order = await getConfirmationOrder(transaction, id);
+        if (order.paymentAt === null) return null;
         // Retry allocation only for pending orders or confirmed orders waiting for stock.
         if (order.status !== "PENDING" && order.status !== "CONFIRMED" && order.status !== "HOLD") return null;
         if (order.status === "CONFIRMED" && !order.cancellable) return order;

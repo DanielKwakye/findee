@@ -1,6 +1,7 @@
 import type { OrderStatus } from "@/generated/client";
 
 export const orderStatusBadgeClasses: Record<OrderStatus, string> = {
+    AWAITING_PAYMENT: "bg-destructive/15 text-destructive",
     PENDING: "bg-warning/15 text-warning",
     CONFIRMED: "bg-chart-1/20 text-foreground",
     HOLD: "bg-warning/15 text-warning",

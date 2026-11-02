@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 /** Renders navigation for the web platform layout. */
 export default function WebNavbar({ appearance = "overlay", showGetStarted = true }: { appearance?: "overlay" | "solid" | "primary"; showGetStarted?: boolean }) {
-  const { isScrolled, showAccount } = useNavbarWeb();
+  const { isScrolled, showAccount, showGetYourQrs } = useNavbarWeb();
   const t = useTranslations("recovery");
   const tNav = useTranslations("Navbar");
 
@@ -33,6 +33,9 @@ export default function WebNavbar({ appearance = "overlay", showGetStarted = tru
         </Link>
 
         <div className="flex items-center gap-7">
+          {showGetYourQrs && <Link href="/checkout" className="whitespace-nowrap transition-opacity hover:opacity-70">
+            <TypographyBody className="text-sm">{tNav("getYourQrs")}</TypographyBody>
+          </Link>}
           {navbarMenuItems.map(({ key, href }) => (
             <Link key={key} href={href} className="whitespace-nowrap transition-opacity hover:opacity-70">
               <TypographyBody className="text-sm">{tNav(`items.${key}.label`)}</TypographyBody>

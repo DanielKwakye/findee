@@ -4,7 +4,7 @@ export const orderDetailGroups = [
     { id: "plan", rows: ["plan", "quantity", "price", "allocations"] },
     { id: "preferences", rows: ["reachoutModes", "showOwnerName"] },
     { id: "fulfillment", rows: ["products", "shipments"] },
-    { id: "activity", rows: ["cancelledAt", "cancellationReason", "completedAt", "createdAt", "updatedAt"] },
+    { id: "activity", rows: ["paymentAt", "cancelledAt", "cancellationReason", "completedAt", "createdAt", "updatedAt"] },
 ] as const;
 
 export const orderShipmentFields = ["trackingNumber", "carrier"] as const;
