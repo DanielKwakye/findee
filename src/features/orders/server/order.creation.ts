@@ -1,15 +1,24 @@
-import "server-only";
+import 'server-only';
 
-import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
-import { validateCheckoutValues, validateCheckoutAllocation } from "@/features/checkout/utils/checkout.validations";
-import type { CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
-import { db } from "@/lib/db";
-import { Prisma } from "@/generated/client";
-import { generateReferenceCode } from "@/components/platform/utils/reference.code.utils";
-import { checkoutOrderPlans } from "@/features/checkout/data/checkout.order.plans";
+import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.action';
+import {
+    validateCheckoutValues,
+    validateCheckoutAllocation,
+} from '@/features/checkout/utils/checkout.validations';
+import type { CheckoutPlan, CheckoutValues } from '@/features/checkout/utils/checkout.types';
+import { db } from '@/lib/db';
+import { Prisma } from '@/generated/client';
+import { generateReferenceCode } from '@/components/platform/utils/reference.code.utils';
+import { checkoutOrderPlans } from '@/features/checkout/data/checkout.order.plans';
 
 /** Validates purchase details and creates an order for the supplied customer. */
-export async function createOrder(customerId: string, values: CheckoutValues, orderNumber?: string, paidPlan?: CheckoutPlan, paymentAt: Date | null = new Date()): Promise<string> {
+export async function createOrder(
+    customerId: string,
+    values: CheckoutValues,
+    orderNumber?: string,
+    paidPlan?: CheckoutPlan,
+    paymentAt: Date | null = new Date(),
+): Promise<string> {
     validateCheckoutValues(values);
     const plans = paidPlan ? [paidPlan] : await getCheckoutPlans();
     const plan = validateCheckoutAllocation(values, plans);
@@ -18,28 +27,42 @@ export async function createOrder(customerId: string, values: CheckoutValues, or
     const phone = values.phone.trim();
     for (let attempt = 0; attempt < 5; attempt++) {
         try {
-            const order = await db.$transaction(async transaction => {
+            const order = await db.$transaction(async (transaction) => {
                 // Touch the active customer record so account closure cannot race a new order.
                 await transaction.user.update({
-                        where: { id: customerId, OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
-                        data: { updatedAt: new Date(), ...(name ? { name } : {}), ...(phone ? { phone } : {}) },
-                        select: { id: true },
+                    where: {
+                        id: customerId,
+                        OR: [{ closedAt: null }, { closedAt: { isSet: false } }],
+                    },
+                    data: {
+                        updatedAt: new Date(),
+                        ...(name ? { name } : {}),
+                        ...(phone ? { phone } : {}),
+                    },
+                    select: { id: true },
                 });
                 return transaction.order.create({
                     data: {
                         number: orderNumber ?? generateReferenceCode(),
                         customerId: customerId,
                         paymentAt,
-                        status: paymentAt ? "PENDING" : "AWAITING_PAYMENT",
+                        status: paymentAt ? 'PENDING' : 'AWAITING_PAYMENT',
                         planDetail: {
                             plan: checkoutOrderPlans[plan.id],
                             quantity: plan.quantity,
                             price: plan.price,
                             currency: plan.currency,
                             maxRecoveryProfiles: plan.maxRecoveryProfiles,
-                            allocations: values.variants.map(variant => ({ variant, quantity: Number(values.allocation[variant]) })),
+                            allocations: values.variants.map((variant) => ({
+                                variant,
+                                quantity: Number(values.allocation[variant]),
+                            })),
                         },
-                        defaultReachoutModes: { email: values.contactByEmail, phone: values.contactByPhone, chat: false },
+                        defaultReachoutModes: {
+                            email: values.contactByEmail,
+                            phone: values.contactByPhone,
+                            chat: false,
+                        },
                         showOwnerName: values.showName,
                         shippingAddress: values.shippingAddress.trim(),
                         deliveryInstructions: values.deliveryInstructions.trim() || null,
@@ -52,14 +75,19 @@ export async function createOrder(customerId: string, values: CheckoutValues, or
             });
             return order.number;
         } catch (error) {
-            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2034") continue;
-            if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") throw error;
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034')
+                continue;
+            if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== 'P2002')
+                throw error;
             if (orderNumber) {
-                const existing = await db.order.findUnique({ where: { number: orderNumber }, select: { number: true, customerId: true } });
+                const existing = await db.order.findUnique({
+                    where: { number: orderNumber },
+                    select: { number: true, customerId: true },
+                });
                 if (existing?.customerId === customerId) return existing.number;
                 throw error;
             }
         }
     }
-    throw new Error("Unable to generate a unique order number. Please try again.");
+    throw new Error('Unable to generate a unique order number. Please try again.');
 }

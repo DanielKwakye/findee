@@ -1,1466 +1,1540 @@
 {
-  "PageMetadata": {
-    "defaultTitle": "Findmus Recovery System",
-    "titleTemplate": "%s | Findmus",
-    "description": "Recover your lost items in the easiest way possible",
-    "titles": {
-      "home": "Home",
-      "pricing": "Pricing",
-      "useCases": "Use cases",
-      "about": "About us",
-      "blog": "Blog",
-      "blogStory": "Blog story",
-      "checkout": "Checkout",
-      "orderReceived": "Order received",
-      "terms": "Terms and conditions",
-      "privacy": "Privacy policy",
-      "contact": "Contact us",
-      "recovery": "Recover a lost item",
-      "signIn": "Customer sign in",
-      "adminLogin": "Administrator sign in",
-      "changePassword": "Change password",
-      "customerOrders": "My orders",
-      "profile": "My profile",
-      "customerSupport": "Contact support",
-      "customerTickets": "My support tickets",
-      "adminOrders": "Manage orders",
-      "createOrder": "Create order",
-      "procurement": "Procurement",
-      "adminBlog": "Manage blog",
-      "admins": "Manage administrators",
-      "addProducts": "Add products",
-      "products": "Manage products",
-      "adminTickets": "Manage support tickets",
-      "customers": "Manage customers"
-    }
-  },
-  "PortalTeamSwitcher": {
-    "brand": "Findmus",
-    "plan": "Enterprise",
-    "admins": "Admins",
-    "manageAdmin": "Manage Admins",
-    "manageCustomers": "Manage Customers",
-    "addAdmin": "Add Admin",
-    "addForm": {
-      "title": "Add Admin",
-      "description": "Create an administrator account. We will email them a temporary password and login instructions.",
-      "name": "Name (optional)",
-      "email": "Email",
-      "nameInvalid": "Use no more than 100 characters.",
-      "emailInvalid": "Enter a valid email address.",
-      "invalid": "Check the account details and try again.",
-      "duplicate": "An account with this email already exists.",
-      "error": "Unable to create the administrator. Please try again.",
-      "success": "Administrator created and login instructions emailed.",
-      "delivery": "The invitation could not be sent. Please try adding the administrator again.",
-      "cancel": "Cancel",
-      "save": "Add Admin",
-      "saving": "Adding…"
-    }
-  },
-  "Admins": {
-    "title": "Manage Admins",
-    "name": "Name",
-    "email": "Email",
-    "status": "Password setup",
-    "pending": "Password change required",
-    "ready": "Complete",
-    "noName": "Not provided",
-    "loadError": "Unable to load administrators. Please try again.",
-    "retry": "Try again"
-  },
-  "Customers": {
-    "deactivated": "Deactivated",
-    "actions": "Actions",
-    "deactivate": "Deactivate",
-    "reactivate": "Reactivate",
-    "deactivateDescription": "Temporarily block portal access for {email}. You can reactivate this account later.",
-    "reactivateDescription": "Restore portal access for {email}.",
-    "accessError": "Unable to update customer access. Please try again.",
-    "createdAt": "Date Joined",
-    "lastVisited": "Last Visited",
-    "notRecorded": "Not recorded",
-    "title": "Manage Customers",
-    "name": "Name",
-    "email": "Email",
-    "phone": "Phone",
-    "status": "Account status",
-    "active": "Active",
-    "closed": "Closed",
-    "noName": "Not provided",
-    "loadError": "Unable to load customers. Please try again.",
-    "retry": "Try again"
-  },
-  "ProcurementStock": {
-    "title": "Low product stock",
-    "summary": "Some variants are below their configured minimum stock levels.",
-    "variant": "{variant}: {count, number} available · Minimum {threshold, number}",
-    "loadError": "Unable to check stock thresholds. Please try again.",
-    "email": {
-      "subject": "Findmus low-stock notification",
-      "title": "Product stock is running low",
-      "introduction": "The following variants have fewer published, unassigned products than their configured minimum:",
-      "variant": "{variant}: {count, number} available (minimum {threshold, number})",
-      "guidance": "{summary}\n\nReview inventory and arrange more stock at {url}."
-    }
-  },
-  "AdminInvitation": {
-    "subject": "Your Findmus administrator account",
-    "title": "Welcome to Findmus",
-    "introduction": "An administrator account has been created for {email}. Your temporary password is:",
-    "guidance": "Sign in at {url} using your email address and the temporary password above. After signing in, you must choose a new password on the password change page before continuing to the admin portal."
-  },
-  "AdminPasswordChange": {
-    "title": "Change your password",
-    "description": "Choose a new password for your administrator account.",
-    "password": "New password",
-    "confirmPassword": "Confirm new password",
-    "invalid": "Use a password between 8 and 1024 characters.",
-    "mismatch": "The passwords must match.",
-    "samePassword": "Choose a different password from your current password.",
-    "error": "Unable to change your password. Please try again.",
-    "save": "Change password",
-    "saving": "Saving…"
-  },
-  "Navbar": {
-    "home": "Home",
-    "getYours": "Get Yours",
-    "getYourQrs": "Get Your QRs",
-    "menus": "More",
-    "primaryNavigation": "Primary navigation",
-    "close": "Close",
-    "items": {
-      "howItWorks": { "label": "How It Works", "description": "See how QR stickers help lost items find their way home." },
-      "pricing": { "label": "Pricing", "description": "Find the right sticker plan for you." },
-      "useCases": { "label": "Use Cases", "description": "Discover what you can protect with Findmus." },
-      "contactUs": { "label": "Contact Us", "description": "Get help from the Findmus team." },
-      "blog": { "label": "Blog", "description": "Read stories and tips for keeping your belongings safe." }
-    }
-  },
-  "Stepper": {
-    "progress": "Step progress",
-    "status": "Step {current} of {total}",
-    "back": "Back",
-    "continue": "Continue"
-  },
-  "Checkout": {
-    "comingSoon": "Coming soon",
-    "plans": {
-      "title": "How many stickers do you want?",
-      "names": {
-        "Starter": "Starter",
-        "Family": "Family",
-        "Custom": "Custom"
-      },
-      "description": "Choose your total quantity. Each sticker type is priced by how many of that type you order.",
-      "customDescription": "Mix the sticker types you need. Each type's quantity sets its unit price.",
-      "perUnit": "{price} / sticker",
-      "pricingReference": "Unit prices for reference.",
-      "details": "{quantity, number} stickers",
-      "stickers": "{quantity, number} stickers",
-      "productName": "{quantity, number} Stickers",
-      "popular": "Popular",
-      "stickersPlus": "{quantity, number}+ stickers",
-      "customQuantity": "Number of stickers",
-      "customQuantityInvalid": "Enter a whole number of at least {minimum, number} stickers.",
-      "profiles": "Up to {profiles, number} recovery profiles",
-      "unlimitedProfiles": "Unlimited recovery profiles",
-      "profilesExplanation": "Recovery profiles is the total number of people, including you, who can use the stickers in that plan.",
-      "loading": "Loading plans…",
-      "error": "Unable to load plans. Please try again.",
-      "retry": "Try again"
+    "PageMetadata": {
+        "defaultTitle": "Findmus Recovery System",
+        "titleTemplate": "%s | Findmus",
+        "adminDefaultTitle": "Admin",
+        "adminTitleTemplate": "Admin | %s | Findmus",
+        "customerDefaultTitle": "Customer",
+        "customerTitleTemplate": "Customer | %s | Findmus",
+        "description": "Recover your lost items in the easiest way possible",
+        "titles": {
+            "home": "Home",
+            "pricing": "Pricing",
+            "useCases": "Use cases",
+            "about": "About us",
+            "blog": "Blog",
+            "blogStory": "Blog story",
+            "checkout": "Checkout",
+            "orderReceived": "Order received",
+            "terms": "Terms and conditions",
+            "privacy": "Privacy policy",
+            "contact": "Contact us",
+            "recovery": "Recover a lost item",
+            "signIn": "Customer sign in",
+            "adminLogin": "Administrator sign in",
+            "changePassword": "Change password",
+            "customerOrders": "My orders",
+            "profile": "My profile",
+            "customerSupport": "Contact support",
+            "customerTickets": "My support tickets",
+            "adminOrders": "Manage orders",
+            "createOrder": "Create order",
+            "procurement": "Procurement",
+            "adminBlog": "Manage blog",
+            "admins": "Manage administrators",
+            "addProducts": "Add products",
+            "products": "Manage products",
+            "adminTickets": "Manage support tickets",
+            "customers": "Manage customers"
+        }
     },
-    "steps": {
-      "variants": "Variants",
-      "plan": "Quantity",
-      "allocation": "Allocation",
-      "verification": "Verification",
-      "checkout": "Checkout"
+    "PortalTeamSwitcher": {
+        "brand": "Findmus",
+        "plan": "Enterprise",
+        "admins": "Admins",
+        "manageAdmin": "Manage Admins",
+        "manageCustomers": "Manage Customers",
+        "addAdmin": "Add Admin",
+        "addForm": {
+            "title": "Add Admin",
+            "description": "Create an administrator account. We will email them a temporary password and login instructions.",
+            "name": "Name (optional)",
+            "email": "Email",
+            "nameInvalid": "Use no more than 100 characters.",
+            "emailInvalid": "Enter a valid email address.",
+            "invalid": "Check the account details and try again.",
+            "duplicate": "An account with this email already exists.",
+            "error": "Unable to create the administrator. Please try again.",
+            "success": "Administrator created and login instructions emailed.",
+            "delivery": "The invitation could not be sent. Please try adding the administrator again.",
+            "cancel": "Cancel",
+            "save": "Add Admin",
+            "saving": "Adding…"
+        }
     },
-    "verification": {
-      "title": "Verify your email",
-      "description": "Sign in or create your customer account to continue checkout."
+    "Admins": {
+        "title": "Manage Admins",
+        "name": "Name",
+        "email": "Email",
+        "status": "Password setup",
+        "pending": "Password change required",
+        "ready": "Complete",
+        "noName": "Not provided",
+        "loadError": "Unable to load administrators. Please try again.",
+        "retry": "Try again"
     },
-    "details": {
-      "title": "Checkout",
-      "description": "Choose how finders can reach you and where we should deliver your stickers.",
-      "email": "Email",
-      "name": "Name",
-      "nameRequired": "Enter your name.",
-      "phone": "Phone (optional)",
-      "contactByEmail": "Allow finders to contact me by email",
-      "showName": "Allow finders to see my name",
-      "contactByPhone": "Allow finders to contact me by phone",
-      "contactRequired": "Allow finders to contact you by email or phone, or both.",
-      "emailRequired": "Enter your email.",
-      "emailInvalid": "Enter a valid email address.",
-      "phoneRequired": "Enter your phone number to allow phone contact.",
-      "shippingAddress": "Address",
-      "postalCode": "Postal code",
-      "postalCodeHelp": "Example: Q6X4P5",
-      "postalCodeRequired": "Enter your postal code.",
-      "deliveryEstimateNote": "Delivery dates are estimates. Weather, postal disruptions, and other unexpected events may cause delays.",
-      "estimatedDelivery": "Estimated delivery: {date}",
-      "deliveryEstimateLoading": "Calculating estimated delivery…",
-      "deliveryEstimateError": "Delivery estimate is currently unavailable.",
-      "postalCodeInvalid": "Enter a postal code in the format Q6X4P5.",
-      "deliveryInstructions": "Delivery instructions (optional)",
-      "addressHelp": "Example: 44B Abusco Street, Ottawa, ON, Canada.",
-      "addressRequired": "Enter your shipping address.",
-      "allocationNote": "<strong>After delivery</strong>, you can assign your QR stickers to up to {profiles, number} people, including you.",
-      "allocationUnlimited": "<strong>After delivery</strong>, you can assign your QR stickers to an unlimited number of people.",
-      "learnHow": "Click here to see how",
-      "pay": "Secure Checkout",
-      "payWithAmount": "Secure Checkout · {amount}",
-      "submitting": "Submitting…",
-      "submitError": "Unable to submit your order. Please try again."
+    "Customers": {
+        "deactivated": "Deactivated",
+        "actions": "Actions",
+        "deactivate": "Deactivate",
+        "reactivate": "Reactivate",
+        "deactivateDescription": "Temporarily block portal access for {email}. You can reactivate this account later.",
+        "reactivateDescription": "Restore portal access for {email}.",
+        "accessError": "Unable to update customer access. Please try again.",
+        "createdAt": "Date Joined",
+        "lastVisited": "Last Visited",
+        "notRecorded": "Not recorded",
+        "title": "Manage Customers",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Account status",
+        "active": "Active",
+        "closed": "Closed",
+        "noName": "Not provided",
+        "loadError": "Unable to load customers. Please try again.",
+        "retry": "Try again"
     },
-    "orderReceived": {
-      "verifyingTitle": "Checking your payment",
-      "verifyingDescription": "We're confirming your payment with Stripe and recording your order. Please keep this page open.",
-      "verificationErrorTitle": "We couldn't confirm your order",
-      "verificationError": "Your payment or order could not be verified yet. Try checking again or view your orders before making another payment.",
-      "retryVerification": "Check again",
-      "title": "Order received",
-      "description": "Thank you for the order. We're processing your order and we'll get back to you soon.",
-      "goHome": "Go Home",
-      "trackDelivery": "Track Order"
+    "ProcurementStock": {
+        "title": "Low product stock",
+        "summary": "Some variants are below their configured minimum stock levels.",
+        "variant": "{variant}: {count, number} available · Minimum {threshold, number}",
+        "loadError": "Unable to check stock thresholds. Please try again.",
+        "email": {
+            "subject": "Findmus low-stock notification",
+            "title": "Product stock is running low",
+            "introduction": "The following variants have fewer published, unassigned products than their configured minimum:",
+            "variant": "{variant}: {count, number} available (minimum {threshold, number})",
+            "guidance": "{summary}\n\nReview inventory and arrange more stock at {url}."
+        }
     },
-    "allocation": {
-      "subtotal": "Subtotal: {amount}",
-      "subtotalWithUnitPrice": "Subtotal: {amount} · {unitPrice} / sticker",
-      "continueWithAmount": "Continue · {amount}",
-      "title": "How many of each variant?",
-      "description": "Split your stickers between the selected variants. We start with an equal share; you can adjust the quantities within your plan limit.",
-      "total": "{total, number} of {limit, number} stickers allocated",
-      "minimumTotal": "{total, number} stickers allocated · Minimum {limit, number}",
-      "remaining": "You have {limit, number} stickers. Allocate the remaining {remaining, number} to continue.",
-      "minimumRemaining": "Your plan requires at least {limit, number} stickers. Allocate {remaining, number} more to continue.",
-      "excess": "You have {limit, number} stickers. Reduce your allocation by {excess, number} to continue.",
-      "overLimit": "Your total cannot exceed {limit, number} stickers.",
-      "invalid": "Enter a whole number of zero or more for each variant."
+    "AdminInvitation": {
+        "subject": "Your Findmus administrator account",
+        "title": "Welcome to Findmus",
+        "introduction": "An administrator account has been created for {email}. Your temporary password is:",
+        "guidance": "Sign in at {url} using your email address and the temporary password above. After signing in, you must choose a new password on the password change page before continuing to the admin portal."
     },
-    "variants": {
-      "title": "Where do you want to stick them?",
-      "description": "Choose the sticker variants that suit your belongings. You can select more than one.",
-      "everyday": {
-        "title": "Everyday",
-        "description": "Laptops, phones, tablets, water bottles, keys, bikes, luggage and more.",
-        "alt": "Findmus QR sticker on a laptop"
-      },
-      "tough": {
-        "title": "Toughs",
-        "description": "Tools, toolboxes, outdoor gear, sports equipment, bikes, helmets and more.",
-        "alt": "Findmus QR tag attached to keys"
-      },
-      "fabric": {
-        "title": "Fabrics",
-        "description": "Clothes, backpacks, hats, school uniforms, fabric bags and more.",
-        "alt": "Findmus QR sticker on a backpack"
-      }
-    }
-  },
-  "recovery": {
-    "title": "Kindly contact the owner",
-    "unreachableGuidance": "If you cannot reach the owner, contact your local police station for help returning this item.",
-    "eyebrow": "Found an item? 🎉",
-    "home": "Findmus home",
-    "ownerLabel": "This item belongs to",
-    "ownerFallback": "A Findmus owner",
-    "description": "Contact the owner to help return this item.",
-    "loading": "Looking up this recovery code…",
-    "notFound": "No record found for the given recovery code.",
-    "error": "Unable to load recovery details. Please try again.",
-    "retry": "Try again",
-    "owner": "Owner: {name}",
-    "email": "Email: {email}",
-    "phone": "Phone: {phone}",
-    "chatEnabled": "Chat is enabled for this item.",
-    "noContact": "No contact methods are available for this item."
-  },
-  "Notifications": {
-    "email": {
-      "brand": "Findmus",
-      "signoff": "Best,\nThe Findmus Team",
-      "footer": "This is an automated message from Findmus. Please do not reply to this email."
-    }
-  },
-  "Auth": {
-    "botCheck": {
-      "label": "Security check",
-      "required": "Please finish the security check to continue.",
-      "unavailable": "The security check couldn’t load. Please refresh the page and try again."
+    "AdminPasswordChange": {
+        "title": "Change your password",
+        "description": "Choose a new password for your administrator account.",
+        "password": "New password",
+        "confirmPassword": "Confirm new password",
+        "invalid": "Use a password between 8 and 1024 characters.",
+        "mismatch": "The passwords must match.",
+        "samePassword": "Choose a different password from your current password.",
+        "error": "Unable to change your password. Please try again.",
+        "save": "Change password",
+        "saving": "Saving…"
     },
-    "closeAccount": {
-      "title": "Close account",
-      "description": "Closing your account ends access to your dashboard and hides your recovery contact details on stickers still assigned to you. Stickers transferred to other owners are unaffected.",
-      "support": "Have an unfulfilled order? <contact>Contact support</contact> before closing your account. We retain account and related records as explained in our <privacy>Privacy Policy</privacy>.",
-      "confirmTitle": "Close your Findmus account?",
-      "confirmation": "You will be signed out and unable to sign in again. Finders will no longer see your contact details on stickers still assigned to you. This closes access; it does not erase your retained account, order or support records. Contact support first if you have an unfulfilled order.",
-      "confirm": "Close my account",
-      "confirmationLabel": "Type delete to confirm account closure.",
-      "outstandingOrders": "You have an unfulfilled order. Please contact support before closing your account.",
-      "error": "Unable to close your account. Please try again or contact support."
+    "Navbar": {
+        "home": "Home",
+        "getYours": "Get Yours",
+        "getYourQrs": "Get Your QRs",
+        "menus": "More",
+        "primaryNavigation": "Primary navigation",
+        "close": "Close",
+        "items": {
+            "howItWorks": {
+                "label": "How It Works",
+                "description": "See how QR stickers help lost items find their way home."
+            },
+            "pricing": {
+                "label": "Pricing",
+                "description": "Find the right sticker plan for you."
+            },
+            "useCases": {
+                "label": "Use Cases",
+                "description": "Discover what you can protect with Findmus."
+            },
+            "contactUs": {
+                "label": "Contact Us",
+                "description": "Get help from the Findmus team."
+            },
+            "blog": {
+                "label": "Blog",
+                "description": "Read stories and tips for keeping your belongings safe."
+            }
+        }
     },
-    "customerProfile": {
-      "title": "Profile",
-      "description": "Keep your name and phone number up to date.",
-      "name": "Name (optional)",
-      "phone": "Phone number (optional)",
-      "nameTooLong": "Use 100 characters or fewer for your name.",
-      "phoneTooLong": "Use 50 characters or fewer for your phone number.",
-      "save": "Save changes",
-      "saving": "Saving…",
-      "saveSuccess": "Your profile has been updated.",
-      "saveError": "Unable to update your profile. Please try again."
+    "Stepper": {
+        "progress": "Step progress",
+        "status": "Step {current} of {total}",
+        "back": "Back",
+        "continue": "Continue"
     },
-    "customerSignIn": {
-      "title": "Sign in to Findmus",
-      "description": "Enter your email and we’ll send you a verification code. No password needed.",
-      "home": "Findmus home",
-      "termsNotice": "By providing your email, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+    "Checkout": {
+        "comingSoon": "Coming soon",
+        "plans": {
+            "title": "How many stickers do you want?",
+            "names": {
+                "Starter": "Starter",
+                "Family": "Family",
+                "Custom": "Custom"
+            },
+            "description": "Choose your total quantity. Each sticker type is priced by how many of that type you order.",
+            "customDescription": "Mix the sticker types you need. Each type's quantity sets its unit price.",
+            "perUnit": "{price} / sticker",
+            "pricingReference": "Unit prices for reference.",
+            "details": "{quantity, number} stickers",
+            "stickers": "{quantity, number} stickers",
+            "productName": "{quantity, number} Stickers",
+            "popular": "Popular",
+            "stickersPlus": "{quantity, number}+ stickers",
+            "customQuantity": "Number of stickers",
+            "customQuantityInvalid": "Enter a whole number of at least {minimum, number} stickers.",
+            "profiles": "Up to {profiles, number} recovery profiles",
+            "unlimitedProfiles": "Unlimited recovery profiles",
+            "profilesExplanation": "Recovery profiles is the total number of people, including you, who can use the stickers in that plan.",
+            "loading": "Loading plans…",
+            "error": "Unable to load plans. Please try again.",
+            "retry": "Try again"
+        },
+        "steps": {
+            "variants": "Variants",
+            "plan": "Quantity",
+            "allocation": "Allocation",
+            "verification": "Verification",
+            "checkout": "Checkout"
+        },
+        "verification": {
+            "title": "Verify your email",
+            "description": "Sign in or create your customer account to continue checkout."
+        },
+        "details": {
+            "title": "Checkout",
+            "description": "Choose how finders can reach you and where we should deliver your stickers.",
+            "email": "Email",
+            "name": "Name",
+            "nameRequired": "Enter your name.",
+            "phone": "Phone (optional)",
+            "contactByEmail": "Allow finders to contact me by email",
+            "showName": "Allow finders to see my name",
+            "contactByPhone": "Allow finders to contact me by phone",
+            "contactRequired": "Allow finders to contact you by email or phone, or both.",
+            "emailRequired": "Enter your email.",
+            "emailInvalid": "Enter a valid email address.",
+            "phoneRequired": "Enter your phone number to allow phone contact.",
+            "shippingAddress": "Address",
+            "postalCode": "Postal code",
+            "postalCodeHelp": "Example: Q6X4P5",
+            "postalCodeRequired": "Enter your postal code.",
+            "deliveryEstimateNote": "Delivery dates are estimates. Weather, postal disruptions, and other unexpected events may cause delays.",
+            "estimatedDelivery": "Estimated delivery: {date}",
+            "deliveryEstimateLoading": "Calculating estimated delivery…",
+            "deliveryEstimateError": "Delivery estimate is currently unavailable.",
+            "postalCodeInvalid": "Enter a postal code in the format Q6X4P5.",
+            "deliveryInstructions": "Delivery instructions (optional)",
+            "addressHelp": "Example: 44B Abusco Street, Ottawa, ON, Canada.",
+            "addressRequired": "Enter your shipping address.",
+            "allocationNote": "<strong>After delivery</strong>, you can assign your QR stickers to up to {profiles, number} people, including you.",
+            "allocationUnlimited": "<strong>After delivery</strong>, you can assign your QR stickers to an unlimited number of people.",
+            "learnHow": "Click here to see how",
+            "pay": "Secure Checkout",
+            "payWithAmount": "Secure Checkout · {amount}",
+            "submitting": "Submitting…",
+            "submitError": "Unable to submit your order. Please try again."
+        },
+        "orderReceived": {
+            "verifyingTitle": "Checking your payment",
+            "verifyingDescription": "We're confirming your payment with Stripe and recording your order. Please keep this page open.",
+            "verificationErrorTitle": "We couldn't confirm your order",
+            "verificationError": "Your payment or order could not be verified yet. Try checking again or view your orders before making another payment.",
+            "retryVerification": "Check again",
+            "title": "Order received",
+            "description": "Thank you for the order. We're processing your order and we'll get back to you soon.",
+            "goHome": "Go Home",
+            "trackDelivery": "Track Order"
+        },
+        "allocation": {
+            "subtotal": "Subtotal: {amount}",
+            "subtotalWithUnitPrice": "Subtotal: {amount} · {unitPrice} / sticker",
+            "continueWithAmount": "Continue · {amount}",
+            "title": "How many of each variant?",
+            "description": "Split your stickers between the selected variants. We start with an equal share; you can adjust the quantities within your plan limit.",
+            "total": "{total, number} of {limit, number} stickers allocated",
+            "minimumTotal": "{total, number} stickers allocated · Minimum {limit, number}",
+            "remaining": "You have {limit, number} stickers. Allocate the remaining {remaining, number} to continue.",
+            "minimumRemaining": "Your plan requires at least {limit, number} stickers. Allocate {remaining, number} more to continue.",
+            "excess": "You have {limit, number} stickers. Reduce your allocation by {excess, number} to continue.",
+            "overLimit": "Your total cannot exceed {limit, number} stickers.",
+            "invalid": "Enter a whole number of zero or more for each variant."
+        },
+        "variants": {
+            "title": "Where do you want to stick them?",
+            "description": "Choose the sticker variants that suit your belongings. You can select more than one.",
+            "everyday": {
+                "title": "Everyday",
+                "description": "Laptops, phones, tablets, water bottles, keys, bikes, luggage and more.",
+                "alt": "Findmus QR sticker on a laptop"
+            },
+            "tough": {
+                "title": "Toughs",
+                "description": "Tools, toolboxes, outdoor gear, sports equipment, bikes, helmets and more.",
+                "alt": "Findmus QR tag attached to keys"
+            },
+            "fabric": {
+                "title": "Fabrics",
+                "description": "Clothes, backpacks, hats, school uniforms, fabric bags and more.",
+                "alt": "Findmus QR sticker on a backpack"
+            }
+        }
     },
-    "customerOtp": {
-      "emailMessage": {
-        "subject": "Your Findmus verification code",
-        "title": "Verify your email",
-        "introduction": "Enter this verification code to continue with Findmus:",
-        "guidance": "Keep this code private and do not share it with anyone. If you did not request this code, you can safely ignore this email."
-      },
-      "email": "Email",
-      "emailRequired": "Enter your email.",
-      "emailInvalid": "Enter a valid email address.",
-      "code": "Verification code",
-      "codeSent": "Check your inbox for your verification code, then enter it below.",
-      "codeInvalid": "Invalid verification code. Kindly check the code in your email or request a new one",
-      "verificationFailed": "You can’t sign in with this email. Try a different email address or contact support for help.",
-      "botCheckFailed": "The security check didn’t go through. Please try again.",
-      "disposableEmail": "This email address was flagged as a temporary email and is not supported. If you believe this is a mistake, <contact>contact support</contact>.",
-      "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
-      "serverError": "We couldn’t sign you in. Please try again.",
-      "send": "Send verification code",
-      "sending": "Sending…",
-      "verify": "Verify email",
-      "verifying": "Verifying…",
-      "resend": "Resend OTP"
+    "recovery": {
+        "title": "Kindly contact the owner",
+        "unreachableGuidance": "If you cannot reach the owner, contact your local police station for help returning this item.",
+        "eyebrow": "Found an item? 🎉",
+        "home": "Findmus home",
+        "ownerLabel": "This item belongs to",
+        "ownerFallback": "A Findmus owner",
+        "description": "Contact the owner to help return this item.",
+        "loading": "Looking up this recovery code…",
+        "notFound": "No record found for the given recovery code.",
+        "error": "Unable to load recovery details. Please try again.",
+        "retry": "Try again",
+        "owner": "Owner: {name}",
+        "email": "Email: {email}",
+        "phone": "Phone: {phone}",
+        "chatEnabled": "Chat is enabled for this item.",
+        "noContact": "No contact methods are available for this item."
     },
-    "admin": "Admin",
-    "title": "Login to your account",
-    "description": "Enter your email below to login to your account",
-    "email": "Email",
-    "emailPlaceholder": "m@example.com",
-    "password": "Password",
-    "login": "Login",
-    "loggingIn": "Logging in…",
-    "logout": "Log out",
-    "website": "Website",
-    "account": "Account",
-    "loggingOut": "Logging out…",
-    "changePassword": "Change Password",
-    "logoutError": "Unable to log out. Please try again.",
-    "emailRequired": "Enter your email.",
-    "emailInvalid": "Enter a valid email address.",
-    "passwordRequired": "Enter your password.",
-    "passwordInvalid": "The password is too long.",
-    "invalidCredentials": "Your email or password doesn’t match. Please check both and try again.",
-    "botCheckFailed": "The security check didn’t go through. Please try again.",
-    "disposableEmail": "Temporary email addresses aren’t supported.",
-    "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
-    "rateLimited": "Too many login attempts. Please try again in 15 minutes.",
-    "serverError": "We couldn’t sign you in. Please try again."
-  },
-  "PortalNavigation": {
-    "lowStockAlert": "Low product stock alert",
-    "blog": "Blog",
-    "ordersInView": "{label}: {count, plural, one {# order} other {# orders}}",
-    "hold": "On hold",
-    "holdOrders": "{count, plural, one {# order on hold} other {# orders on hold}}",
-    "pendingOrders": "{count, plural, one {# pending order} other {# pending orders}}",
-    "unresolvedTickets": "{count, plural, one {# unresolved ticket} other {# unresolved tickets}}",
-    "unpublishedProducts": "{count, plural, one {# unpublished product} other {# unpublished products}}",
-    "yourTickets": "Support Tickets",
-    "tickets": "Tickets",
-    "contactUs": "Contact Support",
-    "account": "Account",
-    "profile": "Profile",
-    "inventory": "Inventory",
-    "orders": "Orders",
-    "showAll": "Show all",
-    "pendingPayments": "Awaiting Payments",
-    "pending": "Pending",
-    "confirmed": "Confirmed",
-    "processing": "Processing",
-    "outForDelivery": "Out for Delivery",
-    "delivered": "Delivered",
-    "canceled": "Canceled",
-    "createOrder": "Create Order",
-    "products": "Products",
-    "viewProducts": "View Products",
-    "addNew": "Add New",
-    "internal": "Internal",
-    "procurements": "Procurements",
-    "settings": "Settings"
-  },
-  "PortalBadgeAlert": {
-    "procurement": "There {count, plural, one {is # unpublished product} other {are # unpublished products}}.",
-    "tickets": "There {count, plural, one {is # unresolved support ticket} other {are # unresolved support tickets}}.",
-    "orders": {
-      "PENDING": "There {count, plural, one {is # pending order} other {are # pending orders}}.",
-      "CONFIRMED": "There {count, plural, one {is # confirmed order} other {are # confirmed orders}}.",
-      "HOLD": "There {count, plural, one {is # order on hold} other {are # orders on hold}}.",
-      "PROCESSING": "There {count, plural, one {is # order being processed} other {are # orders being processed}}.",
-      "SHIPPED": "There {count, plural, one {is # shipped order} other {are # shipped orders}}."
-    }
-  },
-  "procurement": {
-    "heading": "Procurements",
-    "description": "View and manage all QR sticker inventory, published and unpublished",
-    "procurementStatus": "Procurement Status",
-    "updateStatus": "Apply status",
-    "inactive": "Inactive",
-    "requested": "Requested",
-    "received": "Received",
-    "code": "Code",
-    "published": "Published",
-    "createdAt": "Date Created",
-    "generate": "Generate",
-    "generation": {
-      "success": "QR codes generated successfully.",
-      "title": "Generate Findmus QRs",
-      "description": "Enter the number of QR stickers to generate for each variant.",
-      "Everyday": "Everyday",
-      "Fabric": "Fabric",
-      "Tough": "Tough",
-      "variant": "Variant",
-      "quantityFor": "{variant} quantity",
-      "close": "Close",
-      "submit": "Submit",
-      "submitting": "Generating…",
-      "quantityInvalid": "Enter a whole number between 0 and 250.",
-      "quantityRequired": "Enter at least one sticker to generate.",
-      "quantityLimit": "Generate no more than {max} stickers at a time.",
-      "serverError": "Unable to generate QR stickers. Please try again."
+    "Notifications": {
+        "email": {
+            "brand": "Findmus",
+            "signoff": "Best,\nThe Findmus Team",
+            "footer": "This is an automated message from Findmus. Please do not reply to this email."
+        }
     },
-    "publishSelected": "Publish selected",
-    "unpublishSelected": "Unpublish selected",
-    "deleteSelected": "Delete selected",
-    "deleteConfirmTitle": "Delete selected products?",
-    "deleteConfirmDescription": "Permanently delete {count, plural, one {this product} other {these # products}}? This cannot be undone.",
-    "downloadSelected": "Download CSV",
-    "csvHeading": "QR Code",
-    "downloadError": "Unable to download recovery links. Please try again.",
-    "downloadSuccess": "Recovery links exported successfully.",
-    "actionSuccess": {
-      "publish": "Selected products published.",
-      "unpublish": "Selected products unpublished.",
-      "delete": "Selected products deleted.",
-      "status": "Procurement status updated."
+    "Auth": {
+        "botCheck": {
+            "label": "Security check",
+            "required": "Please finish the security check to continue.",
+            "unavailable": "The security check couldn’t load. Please refresh the page and try again."
+        },
+        "closeAccount": {
+            "title": "Close account",
+            "description": "Closing your account ends access to your dashboard and hides your recovery contact details on stickers still assigned to you. Stickers transferred to other owners are unaffected.",
+            "support": "Have an unfulfilled order? <contact>Contact support</contact> before closing your account. We retain account and related records as explained in our <privacy>Privacy Policy</privacy>.",
+            "confirmTitle": "Close your Findmus account?",
+            "confirmation": "You will be signed out and unable to sign in again. Finders will no longer see your contact details on stickers still assigned to you. This closes access; it does not erase your retained account, order or support records. Contact support first if you have an unfulfilled order.",
+            "confirm": "Close my account",
+            "confirmationLabel": "Type delete to confirm account closure.",
+            "outstandingOrders": "You have an unfulfilled order. Please contact support before closing your account.",
+            "error": "Unable to close your account. Please try again or contact support."
+        },
+        "customerProfile": {
+            "title": "Profile",
+            "description": "Keep your name and phone number up to date.",
+            "name": "Name (optional)",
+            "phone": "Phone number (optional)",
+            "nameTooLong": "Use 100 characters or fewer for your name.",
+            "phoneTooLong": "Use 50 characters or fewer for your phone number.",
+            "save": "Save changes",
+            "saving": "Saving…",
+            "saveSuccess": "Your profile has been updated.",
+            "saveError": "Unable to update your profile. Please try again."
+        },
+        "customerSignIn": {
+            "title": "Sign in to Findmus",
+            "description": "Enter your email and we’ll send you a verification code. No password needed.",
+            "home": "Findmus home",
+            "termsNotice": "By providing your email, you agree to our <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>."
+        },
+        "customerOtp": {
+            "emailMessage": {
+                "subject": "Your Findmus verification code",
+                "title": "Verify your email",
+                "introduction": "Enter this verification code to continue with Findmus:",
+                "guidance": "Keep this code private and do not share it with anyone. If you did not request this code, you can safely ignore this email."
+            },
+            "email": "Email",
+            "emailRequired": "Enter your email.",
+            "emailInvalid": "Enter a valid email address.",
+            "code": "Verification code",
+            "codeSent": "Check your inbox for your verification code, then enter it below.",
+            "codeInvalid": "Invalid verification code. Kindly check the code in your email or request a new one",
+            "verificationFailed": "You can’t sign in with this email. Try a different email address or contact support for help.",
+            "botCheckFailed": "The security check didn’t go through. Please try again.",
+            "disposableEmail": "This email address was flagged as a temporary email and is not supported. If you believe this is a mistake, <contact>contact support</contact>.",
+            "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
+            "serverError": "We couldn’t sign you in. Please try again.",
+            "send": "Send verification code",
+            "sending": "Sending…",
+            "verify": "Verify email",
+            "verifying": "Verifying…",
+            "resend": "Resend OTP"
+        },
+        "admin": "Admin",
+        "title": "Login to your account",
+        "description": "Enter your email below to login to your account",
+        "email": "Email",
+        "emailPlaceholder": "m@example.com",
+        "password": "Password",
+        "login": "Login",
+        "loggingIn": "Logging in…",
+        "logout": "Log out",
+        "website": "Website",
+        "account": "Account",
+        "loggingOut": "Logging out…",
+        "changePassword": "Change Password",
+        "logoutError": "Unable to log out. Please try again.",
+        "emailRequired": "Enter your email.",
+        "emailInvalid": "Enter a valid email address.",
+        "passwordRequired": "Enter your password.",
+        "passwordInvalid": "The password is too long.",
+        "invalidCredentials": "Your email or password doesn’t match. Please check both and try again.",
+        "botCheckFailed": "The security check didn’t go through. Please try again.",
+        "disposableEmail": "Temporary email addresses aren’t supported.",
+        "emailCheckUnavailable": "We couldn’t check your email address right now. Please try again in a moment.",
+        "rateLimited": "Too many login attempts. Please try again in 15 minutes.",
+        "serverError": "We couldn’t sign you in. Please try again."
     },
-    "csvFilename": "findmus-qrs.csv",
-    "actionError": "Unable to update selected products. Please try again.",
-    "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
-    "yes": "Yes",
-    "no": "No",
-    "loadError": "Unable to load products. Please try again.",
-    "retry": "Retry"
-  },
-  "PortalConfirmDialog": {
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "pending": "Please wait…"
-  },
-  "PortalBreadcrumb": {
-    "customers": "Manage Customers",
-    "admins": "Manage Admins",
-    "blog": "Blog",
-    "your-tickets": "Support Tickets",
-    "tickets": "Tickets",
-    "profile": "Profile",
-    "label": "Breadcrumb",
-    "create-order": "Create Order",
-    "admin": "Admin",
-    "products": "Products",
-    "procurement": "Procurements",
-    "add": "Add Products",
-    "customer": "Customer",
-    "orders": "Orders",
-    "settings": "Settings",
-    "record": "{value}"
-  },
-  "OrderNotifications": {
-    "allocation": "{variant}: {quantity, number} stickers",
-    "restockTicket": "Order {number} is on hold awaiting restocking. No stickers have been assigned.\n\nRequested quantities:\n{allocations}",
-    "processing": {
-      "title": "Your order is confirmed",
-      "subject": "Your Findmus order {number} is confirmed",
-      "introduction": "Hi {name}, thank you for choosing Findmus! Your order {number} is confirmed, and we’re getting your stickers ready. We appreciate you trusting us to help protect the things that matter to you.",
-      "guidance": "We’ll take care of setting up your stickers before shipping, so they’ll be ready to use when they arrive. Just stick them on your belongings — no activation or setup needed.\n\nWe’re glad to be part of making your everyday a little more worry-free."
+    "PortalNavigation": {
+        "lowStockAlert": "Low product stock alert",
+        "blog": "Blog",
+        "ordersInView": "{label}: {count, plural, one {# order} other {# orders}}",
+        "hold": "On hold",
+        "holdOrders": "{count, plural, one {# order on hold} other {# orders on hold}}",
+        "pendingOrders": "{count, plural, one {# pending order} other {# pending orders}}",
+        "unresolvedTickets": "{count, plural, one {# unresolved ticket} other {# unresolved tickets}}",
+        "unpublishedProducts": "{count, plural, one {# unpublished product} other {# unpublished products}}",
+        "yourTickets": "Support Tickets",
+        "tickets": "Tickets",
+        "contactUs": "Contact Support",
+        "account": "Account",
+        "profile": "Profile",
+        "inventory": "Inventory",
+        "orders": "Orders",
+        "showAll": "Show all",
+        "pendingPayments": "Awaiting Payments",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "processing": "Processing",
+        "outForDelivery": "Out for Delivery",
+        "delivered": "Delivered",
+        "canceled": "Canceled",
+        "createOrder": "Create Order",
+        "products": "Products",
+        "viewProducts": "View Products",
+        "addNew": "Add New",
+        "internal": "Internal",
+        "procurements": "Procurements",
+        "settings": "Settings"
     },
-    "restocking": {
-      "title": "Order confirmed — an important delivery update",
-      "subject": "An update on your Findmus order {number}",
-      "introduction": "Hi {name}, thank you for choosing Findmus. Your order {number} is confirmed, but some of the stickers you chose are temporarily out of stock. We’re sorry we can’t prepare your order right away. This means dispatch and delivery may take longer than expected.",
-      "guidance": "We’ll prepare your complete order as soon as all your stickers are available, and we’ll email you when processing begins. We appreciate your patience and the opportunity to help protect the things that matter to you.\n\nYou can check your order in your portal: {url}\n\nIf the extra wait no longer works for you, you also have the option to cancel your order there."
+    "PortalBadgeAlert": {
+        "procurement": "There {count, plural, one {is # unpublished product} other {are # unpublished products}}.",
+        "tickets": "There {count, plural, one {is # unresolved support ticket} other {are # unresolved support tickets}}.",
+        "orders": {
+            "PENDING": "There {count, plural, one {is # pending order} other {are # pending orders}}.",
+            "CONFIRMED": "There {count, plural, one {is # confirmed order} other {are # confirmed orders}}.",
+            "HOLD": "There {count, plural, one {is # order on hold} other {are # orders on hold}}.",
+            "PROCESSING": "There {count, plural, one {is # order being processed} other {are # orders being processed}}.",
+            "SHIPPED": "There {count, plural, one {is # shipped order} other {are # shipped orders}}."
+        }
     },
-    "admin": {
-      "title": "Order confirmation",
-      "subject": "Order {number}: {status}",
-      "introduction": "Order {number} for {name} ({email}) is {status}.",
-      "guidance": "Requested quantities:\n{allocations}",
-      "processing": "confirmed and processing",
-      "restocking": "on hold awaiting restocking"
-    }
-  },
-  "TicketNotifications": {
-    "created": {
-      "title": "We received your message",
-      "subject": "Findmus ticket {code} received",
-      "introduction": "Hi {name}, your support ticket {code} has been received and is pending review.",
-      "guidance": "Keep your ticket code for reference. We’ll email you when the status of your request changes."
+    "procurement": {
+        "heading": "Procurements",
+        "description": "View and manage all QR sticker inventory, published and unpublished",
+        "procurementStatus": "Procurement Status",
+        "updateStatus": "Apply status",
+        "inactive": "Inactive",
+        "requested": "Requested",
+        "received": "Received",
+        "code": "Code",
+        "published": "Published",
+        "createdAt": "Date Created",
+        "generate": "Generate",
+        "generation": {
+            "success": "QR codes generated successfully.",
+            "title": "Generate Findmus QRs",
+            "description": "Enter the number of QR stickers to generate for each variant.",
+            "Everyday": "Everyday",
+            "Fabric": "Fabric",
+            "Tough": "Tough",
+            "variant": "Variant",
+            "quantityFor": "{variant} quantity",
+            "close": "Close",
+            "submit": "Submit",
+            "submitting": "Generating…",
+            "quantityInvalid": "Enter a whole number between 0 and 250.",
+            "quantityRequired": "Enter at least one sticker to generate.",
+            "quantityLimit": "Generate no more than {max} stickers at a time.",
+            "serverError": "Unable to generate QR stickers. Please try again."
+        },
+        "publishSelected": "Publish selected",
+        "unpublishSelected": "Unpublish selected",
+        "deleteSelected": "Delete selected",
+        "deleteConfirmTitle": "Delete selected products?",
+        "deleteConfirmDescription": "Permanently delete {count, plural, one {this product} other {these # products}}? This cannot be undone.",
+        "downloadSelected": "Download CSV",
+        "csvHeading": "QR Code",
+        "downloadError": "Unable to download recovery links. Please try again.",
+        "downloadSuccess": "Recovery links exported successfully.",
+        "actionSuccess": {
+            "publish": "Selected products published.",
+            "unpublish": "Selected products unpublished.",
+            "delete": "Selected products deleted.",
+            "status": "Procurement status updated."
+        },
+        "csvFilename": "findmus-qrs.csv",
+        "actionError": "Unable to update selected products. Please try again.",
+        "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
+        "yes": "Yes",
+        "no": "No",
+        "loadError": "Unable to load products. Please try again.",
+        "retry": "Retry"
     },
-    "updated": {
-      "title": "Your ticket has been updated",
-      "subject": "Update on Findmus ticket {code}",
-      "introduction": "Hi {name}, the status of ticket {code} is now: {status}.",
-      "guidance": "Keep your ticket code for reference when contacting our team."
-    },
-    "support": {
-      "title": "New support ticket",
-      "subject": "New Findmus ticket {code}",
-      "introduction": "A new support ticket {code} has been submitted by {name}.",
-      "details": "Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
-    }
-  },
-  "TicketHistory": {
-    "allStatuses": "All statuses",
-    "adminTitle": "Tickets",
-    "adminDescription": "Review support requests and manage their progress.",
-    "view": "View ticket",
-    "details": {
-      "title": "Ticket details",
-      "customerDescription": "Your submission for ticket {code}.",
-      "description": "Review the request and update its status and internal remarks.",
-      "close": "Close ticket details",
-      "loading": "Loading ticket…",
-      "remarks": "Internal remarks",
-      "remarksHelp": "Visible to administrators only.",
-      "remarksTooLong": "Use 5,000 characters or fewer for remarks.",
-      "save": "Save changes",
-      "saving": "Saving…",
-      "cancel": "Cancel",
-      "saveSuccess": "Ticket updated successfully.",
-      "notificationWarning": "Ticket saved, but its email notification could not be sent.",
-      "saveError": "Unable to update the ticket. Please try again."
-    },
-    "title": "Support Tickets",
-    "description": "View your previous support requests and their status.",
-    "columns": {
-      "code": "Ticket code",
-      "customerName": "Customer name",
-      "customerEmail": "Customer email",
-      "actions": "Actions",
-      "createdAt": "Date",
-      "message": "Message",
-      "status": "Status"
-    },
-    "statuses": {
-      "PENDING": "Pending",
-      "PROCESSING": "Processing",
-      "RESOLVED": "Resolved"
-    },
-    "messagePreview": "{message}…",
-    "loadError": "Unable to load your tickets. Please try again.",
-    "retry": "Try again"
-  },
-  "TicketForm": {
-    "notificationWarning": "Your ticket is saved. Some email notifications could not be sent; you do not need to submit it again.",
-    "title": "Contact Findmus Team",
-    "description": "Send us a message and we’ll create a support ticket for you.",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "nameRequired": "Enter your name.",
-    "nameTooLong": "Use 100 characters or fewer for your name.",
-    "emailRequired": "Enter your email.",
-    "emailInvalid": "Enter a valid email address.",
-    "messageRequired": "Enter your message.",
-    "messageTooLong": "Use 5,000 characters or fewer for your message.",
-    "submit": "Send message",
-    "submitting": "Sending…",
-    "submitError": "Unable to save your message. Please try again.",
-    "success": "Your message has been received. Your ticket code is {code}. We’ll send updates to your email.",
-    "successTracking": "Your message has been received. Your ticket code is {code}. Track your submission in <tickets>Support Tickets</tickets>."
-  },
-  "portalTable": {
-    "search": "Search…",
-    "rowsPerPage": "Rows per page",
-    "columns": "Columns",
-    "column": "Column {number}",
-    "selectedCount": "{count, plural, one {# selected} other {# selected}}",
-    "clearSelection": "Clear selection",
-    "selectPage": "Select all rows on this page",
-    "selectRow": "Select row",
-    "loading": "Loading…",
-    "noResults": "No results found.",
-    "pageStatus": "Page {page} of {pages} · {total} total",
-    "previous": "Previous",
-    "next": "Next"
-  },
-  "orders": {
-    "resendInvoice": "Resend invoice",
-    "resendInvoiceSuccess": "Invoice request completed successfully.",
-    "resendInvoiceError": "Unable to resend the invoice. Please check the order and try again.",
-    "pendingPayments": "Awaiting Payments",
-    "customer": {
-      "description": "View your sticker orders and follow their delivery progress.",
-      "date": "Order date",
-      "action": "Action",
-      "shipment": "Shipment",
-      "track": "Track Order",
-      "cancel": "Cancel order",
-      "trackingDescription": "Delivery progress and tracking details for order {number}.",
-      "noTracking": "Tracking details will appear here when your order is shipped."
-    },
-    "options": "Options",
-    "createNewOrder": "Create New Order",
-    "edit": {
-      "title": "Edit Order",
-      "description": "Update this order’s purchase, contact, and delivery details.",
-      "close": "Close order editor"
-    },
-    "create": {
-      "heading": "Create new order",
-      "close": "Close order creation",
-      "description": "Create an order on behalf of a customer with their sticker, contact, and delivery details.",
-      "purchase": "Order details",
-      "customerPaid": "Customer Paid",
-      "customerPaidHelp": "Check if payment has already been received. Otherwise, a Stripe invoice is emailed to the customer and the order waits for payment.",
-      "invoiceDescription": "Findmus order {number} · {quantity, number} stickers",
-      "variants": "Select variants",
-      "variantsRequired": "Select at least one variant.",
-      "plan": "Select plan",
-      "planRequired": "Select a plan.",
-      "planOption": "{name} · {quantity, number} stickers · {price}",
-      "allocation": "Sticker allocation",
-      "customer": "Customer details",
-      "delivery": "Delivery details",
-      "loading": "Loading plans…",
-      "plansError": "Unable to load plans. Please try again.",
-      "retry": "Retry",
-      "purchaseRequired": "Choose a plan and at least one sticker variant.",
-      "submit": "Create order",
-      "submitWithAmount": "Create order · {amount}",
-      "updateSubmit": "Save changes",
-      "updateSuccess": "Order {number} updated successfully.",
-      "updateError": "Unable to update the order. Please check the details and try again.",
-      "saving": "Creating…",
-      "success": "Order {number} created successfully.",
-      "error": "Unable to create the order. Please check the details and try again."
-    },
-    "heading": "Orders",
-    "description": "Manage customer orders",
-    "tabsLabel": "Order status",
-    "changeStatus": "Change order status",
-    "shipments": {
-      "view": "View shipments",
-      "add": "Add shipment",
-      "update": "Update",
-      "deleteSuccess": "Shipment deleted successfully.",
-      "addForm": {
-        "title": "Add shipment",
-        "updateTitle": "Update shipment",
-        "updateSave": "Save changes",
-        "saveSuccess": "Shipment added successfully.",
-        "updateSuccess": "Shipment updated successfully.",
-        "updateError": "Unable to update the shipment. Please try again.",
-        "description": "Add tracking information for order {number}.",
-        "close": "Close shipment form",
-        "carrier": "Carrier (optional)",
-        "trackingNumber": "Tracking number (optional)",
+    "PortalConfirmDialog": {
         "cancel": "Cancel",
-        "save": "Add shipment",
-        "saving": "Saving…",
-        "saveError": "Unable to add the shipment. Please try again."
-      },
-      "description": "Shipment records for order {number}.",
-      "close": "Close shipment list",
-      "loading": "Loading shipments…",
-      "empty": "No shipments have been added to this order.",
-      "loadError": "Unable to load shipments. Please try again.",
-      "delete": "Delete shipment",
-      "deleteRecord": "Delete {shipment}",
-      "deleteTitle": "Delete shipment?",
-      "deleteDescription": "Permanently delete this shipment record?",
-      "deleteError": "Unable to delete the shipment. Please try again."
+        "confirm": "Confirm",
+        "pending": "Please wait…"
     },
-    "statusDialog": {
-      "saveSuccess": "Order status updated successfully.",
-      "description": "Choose a new status for order {number}.",
-      "close": "Close status editor",
-      "cancel": "Cancel",
-      "save": "Save",
-      "saving": "Saving…",
-      "saveError": "Unable to update the order status. Please try again."
-    },
-    "all": "Show all",
-    "statuses": {
-      "PENDING": "Pending",
-      "CONFIRMED": "Confirmed",
-      "AWAITING_PAYMENT": "Awaiting Payment",
-      "HOLD": "On hold",
-      "PROCESSING": "Processing",
-      "SHIPPED": "Shipped",
-      "DELIVERED": "Delivered",
-      "CANCELLED": "Canceled",
-      "RETURNED": "Returned"
-    },
-    "columns": {
-      "id": "Order ID",
-      "number": "Order number",
-      "actions": "Actions",
-      "customerId": "Customer ID",
-      "customer": "Customer",
-      "status": "Status",
-      "planDetail": "Plan details",
-      "estimatedDeliveryDate": "Estimated delivery date",
-      "expectedPostingDate": "Expected shipping date",
-      "products": "Products",
-      "defaultReachoutModes": "Default reachout modes",
-      "showOwnerName": "Show owner name",
-      "shippingAddress": "Shipping address",
-      "deliveryInstructions": "Delivery instructions",
-      "shipments": "Shipments",
-      "cancelledAt": "Canceled at",
-      "cancellationReason": "Cancellation reason",
-      "completedAt": "Completed at",
-      "paymentAt": "Paid at",
-      "createdAt": "Created at",
-      "updatedAt": "Updated at"
-    },
-    "details": {
-      "view": "Order Details",
-      "title": "Order details",
-      "description": "Customer, plan, delivery, and fulfillment information for this order.",
-      "close": "Close order details",
-      "loading": "Loading order details…",
-      "loadError": "Unable to load this order. Please try again.",
-      "customerName": "Customer name",
-      "plan": "Plan",
-      "quantity": "Sticker quantity",
-      "price": "Plan price",
-      "currency": "Currency",
-      "maxRecoveryProfiles": "Maximum recovery profiles",
-      "allocations": "Variant allocations",
-      "groups": {
-        "summary": "Order and delivery",
+    "PortalBreadcrumb": {
+        "customers": "Manage Customers",
+        "admins": "Manage Admins",
+        "blog": "Blog",
+        "your-tickets": "Support Tickets",
+        "tickets": "Tickets",
+        "profile": "Profile",
+        "label": "Breadcrumb",
+        "create-order": "Create Order",
+        "admin": "Admin",
+        "products": "Products",
+        "procurement": "Procurements",
+        "add": "Add Products",
         "customer": "Customer",
-        "plan": "Plan and allocations",
-        "preferences": "Recovery preferences",
-        "fulfillment": "Products and shipments",
-        "activity": "Order activity"
-      },
-      "shipmentHeading": "Shipment {number}",
-      "productSummary": "{code} · {variant} · ID: {id}",
-      "shipmentField": "Shipment {number} · {field}",
-      "shipmentFields": {
-        "carrier": "Carrier", "trackingNumber": "Tracking number"
-      }
+        "orders": "Orders",
+        "settings": "Settings",
+        "record": "{value}"
     },
-    "plans": { "Starter": "Starter", "Pro": "Pro", "Premium": "Premium" },
-    "variants": { "Everyday": "Everyday", "Fabric": "Fabric", "Tough": "Tough" },
-    "planSummary": "{plan} · {quantity, number} stickers · {price} · {profiles} · {allocations}",
-    "profileLimit": "Up to {count, number} recovery profiles",
-    "unlimitedProfiles": "Unlimited recovery profiles",
-    "yes": "Yes",
-    "no": "No",
-    "unset": "Not set",
-    "none": "None",
-    "email": "Email",
-    "phone": "Phone",
-    "chat": "Chat",
-    "loadError": "Unable to load orders. Please try again.",
-    "retry": "Try again"
-  },
-  "products": {
-    "heading": "Products",
-    "description": "View published products. Only published products appear here.",
-    "code": "Code",
-    "variant": "Variant",
-    "allVariants": "All variants",
-    "published": "Published",
-    "reachoutModes": "Reachout Modes",
-    "reservedBy": "Reserved By",
-    "reservedAt": "Date Reserved",
-    "assignedTo": "Assigned To",
-    "assignedAt": "Date Assigned",
-    "order": "Order Number",
-    "createdAt": "Date Created",
-    "actions": "Actions",
-    "delete": "Delete",
-    "deleteProduct": "Delete product {code}",
-    "deleteSelected": "Delete selected",
-    "bulkDeleteConfirmTitle": "Delete selected products?",
-    "bulkDeleteConfirmDescription": "Permanently delete {count, plural, one {this unpublished product} other {these # unpublished products}}? This cannot be undone.",
-    "deleteConfirmTitle": "Delete product?",
-    "deleteConfirmDescription": "Permanently delete {code}? This cannot be undone.",
-    "yes": "Yes",
-    "no": "No",
-    "unset": "Not set",
-    "none": "None",
-    "phone": "Phone",
-    "email": "Email",
-    "chat": "Chat",
-    "loadError": "Unable to load products. Please try again.",
-    "deleteError": "Unable to delete this product. It may be published or no longer exist.",
-    "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
-    "retry": "Retry",
-    "placeholder": "Manage"
-  },
-  "addProducts": {
-    "heading": "Add Products",
-    "description": "Add new products to your inventory",
-    "placeholder": "Add"
-  },
-  "Footer": {
-    "home": "Findmus home",
-    "tagline": "Small stickers. Big reunions.",
-    "description": "Findmus helps lost items find their way home. Attach, get found, and be reunited — simply and securely.",
-    "product": "Product",
-    "company": "Company",
-    "followUs": "Follow Us",
-    "stayUpdated": "Stay updated with tips, stories and more.",
-    "copyright": "© {year, number, ::group-off} Findmus. All rights reserved.",
-    "closing": "Made for a more connected world.",
-    "links": {
-      "howItWorks": "How It Works",
-      "stickers": "Our Stickers",
-      "pricing": "Pricing",
-      "faqs": "FAQs",
-      "about": "About Us",
-      "blog": "Blog",
-      "tickets": "Contact Us",
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service"
+    "OrderNotifications": {
+        "allocation": "{variant}: {quantity, number} stickers",
+        "restockTicket": "Order {number} is on hold awaiting restocking. No stickers have been assigned.\n\nRequested quantities:\n{allocations}",
+        "processing": {
+            "title": "Your order is confirmed",
+            "subject": "Your Findmus order {number} is confirmed",
+            "introduction": "Hi {name}, thank you for choosing Findmus! Your order {number} is confirmed, and we’re getting your stickers ready. We appreciate you trusting us to help protect the things that matter to you.",
+            "guidance": "We’ll take care of setting up your stickers before shipping, so they’ll be ready to use when they arrive. Just stick them on your belongings — no activation or setup needed.\n\nWe’re glad to be part of making your everyday a little more worry-free."
+        },
+        "restocking": {
+            "title": "Order confirmed — an important delivery update",
+            "subject": "An update on your Findmus order {number}",
+            "introduction": "Hi {name}, thank you for choosing Findmus. Your order {number} is confirmed, but some of the stickers you chose are temporarily out of stock. We’re sorry we can’t prepare your order right away. This means dispatch and delivery may take longer than expected.",
+            "guidance": "We’ll prepare your complete order as soon as all your stickers are available, and we’ll email you when processing begins. We appreciate your patience and the opportunity to help protect the things that matter to you.\n\nYou can check your order in your portal: {url}\n\nIf the extra wait no longer works for you, you also have the option to cancel your order there."
+        },
+        "admin": {
+            "title": "Order confirmation",
+            "subject": "Order {number}: {status}",
+            "introduction": "Order {number} for {name} ({email}) is {status}.",
+            "guidance": "Requested quantities:\n{allocations}",
+            "processing": "confirmed and processing",
+            "restocking": "on hold awaiting restocking"
+        }
     },
-    "social": {
-      "x": "Findmus on X",
-      "facebook": "Findmus on Facebook",
-      "instagram": "Findmus on Instagram",
-      "youtube": "Findmus on YouTube"
-    }
-  },
-  "Testimonials": {
-    "eyebrow": "Testimonials",
-    "title": "Real stories.",
-    "titleAccent": "Real happy endings.",
-    "subtitle": "See how Findmus helps people get their belongings back.",
-    "regionLabel": "Findmus testimonials",
-    "slideLabel": "Testimonial {number} of {total}",
-    "rating": "{rating, number} out of 5 stars",
-    "previous": "Previous testimonials",
-    "next": "Next testimonials",
-    "stories": {
-      "laptop": {
-        "quote": "“Honestly, the relief was the best part. My laptop had been handed in at the library, and someone scanned the sticker to reach me. It took until the next morning to collect it, but at least I knew where it was.”",
-        "name": "Michael T.",
-        "location": "St. John’s, NL"
-      },
-      "suitcase": {
-        "quote": "“Two very similar suitcases got mixed up after our flight. The sticker gave the other traveller a way to contact me, and we sorted out a swap. More luggage-friendly tag options would be nice, though.”",
-        "name": "Sarah K.",
-        "location": "Toronto, ON"
-      },
-      "jacket": {
-        "quote": "“Another school jacket gone, or so I thought. A parent found it at the playground and called using the details on the Findmus page. It was back by Monday. Saved us buying another one.”",
-        "name": "Ama S.",
-        "location": "Halifax, NS"
-      },
-      "keys": {
-        "quote": "“Wasn’t sure anyone would bother scanning it. Turns out someone did when my keys were found on a walking trail. We arranged a nearby pickup. A proper keyring version would be handy.”",
-        "name": "Daniel R.",
-        "location": "Ottawa, ON"
-      },
-      "backpack": {
-        "quote": "“Getting my course notes back mattered more than the bag itself. It had been found on the bus, and the person used Findmus to get in touch. We had to work out a pickup time, but it was pretty straightforward.”",
-        "name": "Priya M.",
-        "location": "Vancouver, BC"
-      },
-      "wallet": {
-        "quote": "“The café had my wallet behind the counter before I even realised it was missing. Someone scanned the sticker and let me know. A smaller sticker for narrow card slots would be useful, but this one did the job.”",
-        "name": "James L.",
-        "location": "Calgary, AB"
-      }
-    }
-  },
-  "FAQ": {
-    "eyebrow": "FAQs",
-    "title": "Everything you need to know",
-    "subtitle": "Quick answers to common questions about Findmus.",
-    "questions": {
-      "howItWorks": {
-        "question": "How does Findmus work?",
-        "answer": "You stick a Findmus QR code on your item. If someone finds it, they scan the code and can securely contact you through our platform."
-      },
-      "privacy": {
-        "question": "Is my information private?",
-        "answer": "At checkout, you choose whether finders can see your name and contact you by email, phone, or both. Only the details you choose to share appear on your QR page."
-      },
-      "notifications": {
-        "question": "Do people really return lost items?",
-        "answer": "Yes, people hand in lost belongings to police, banks, and lost-and-found desks to help them get home. Findmus makes helping easier: a quick scan gives the finder a way to contact you directly."
-      },
-      "items": {
-        "question": "What can I use Findmus on?",
-        "answer": "Findmus works on cards, bus pass, keys, laptops, phones, bags, bikes, clothing, pet items, and almost anything you value."
-      },
-      "subscription": {
-        "question": "Do I need a subscription?",
-        "answer": "No subscription or ongoing fees. Buy once, use forever. Your stickers arrive pre-activated and ready to use."
-      },
-      "help": {
-        "question": "What if I need help?",
-        "answer": "We’re here for you. <contact>Contact our support team</contact> anytime and we’ll be happy to assist."
-      }
-    }
-  },
-  "HowItWorks": {
-    "eyebrow": "How Findmus works",
-    "title": "Three simple steps.",
-    "subtitle": "Order yours and stick it. Get found. Get it back.",
-    "stepNumber": "{number}",
-    "secure": "Secure",
-    "trusted": "Trusted",
-    "noApp": "No App Required",
-    "steps": {
-      "stick": {
-        "title": "Order yours and stick it",
-        "description": "Attach your Findmus sticker to your item.",
-        "alt": "Findmus QR sticker attached to a laptop"
-      },
-      "scan": {
-        "title": "Someone finds it",
-        "description": "They scan the QR code to get in touch with you.",
-        "alt": "A phone scanning a Findmus QR sticker"
-      },
-      "return": {
-        "title": "Get it back",
-        "description": "Findmus connects you with the finder so you can arrange a safe return.",
-        "alt": "A phone showing notifications that a lost item has been found"
-      }
-    }
-  },
-  "CookieNotice": {
-    "dismiss": "Dismiss cookie notice",
-    "title": "Cookies on Findmus",
-    "description": "We use cookies for secure sign-in and to remember choices you make on Findmus.",
-    "learnMore": "Read our <privacy>Privacy Policy</privacy> to learn how cookies and your information are used.",
-    "accept": "Accept cookies"
-  },
-  "Privacy": {
-    "title": "Privacy",
-    "titleAccent": "Policy",
-    "subtitle": "How Findmus handles your information, what a finder can see, and the choices available to you.",
-    "contentLabel": "Findmus privacy policy",
-    "contents": "In this policy",
-    "updatedAt": "2026-11-01T00:00:00.000Z",
-    "lastUpdated": "Last updated: {date} (UTC)",
-    "sectionHeading": "{number}. {title}",
-    "summary": {
-      "title": "The essentials, before you read on",
-      "points": [
-        "Anyone with a sticker’s recovery link can see the assigned owner’s name if name sharing is enabled for the order, and the email or phone details enabled for that sticker. Calls and emails go directly to that owner.",
-        "Your shipping address, order history and sign-in information are not part of the public recovery page. The stickers themselves do not track your location.",
-        "You can ask us about your information, request corrections or deletion, and get help changing the recovery details linked to your stickers."
-      ]
+    "TicketNotifications": {
+        "created": {
+            "title": "We received your message",
+            "subject": "Findmus ticket {code} received",
+            "introduction": "Hi {name}, your support ticket {code} has been received and is pending review.",
+            "guidance": "Keep your ticket code for reference. We’ll email you when the status of your request changes."
+        },
+        "updated": {
+            "title": "Your ticket has been updated",
+            "subject": "Update on Findmus ticket {code}",
+            "introduction": "Hi {name}, the status of ticket {code} is now: {status}.",
+            "guidance": "Keep your ticket code for reference when contacting our team."
+        },
+        "support": {
+            "title": "New support ticket",
+            "subject": "New Findmus ticket {code}",
+            "introduction": "A new support ticket {code} has been submitted by {name}.",
+            "details": "Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        }
     },
-    "sections": [
-      {
-        "title": "Who this policy covers",
-        "paragraphs": [
-          "Findmus (“we”, “us” and “our”) operates in Canada and provides QR stickers and an online recovery service that helps people return lost belongings. This policy explains how personal information is handled through our website, customer portal, orders, recovery pages and support services. Applicable Canadian federal and provincial privacy requirements govern how we handle personal information.",
-          "It applies to customers who buy stickers, finders who open recovery links, and anyone who contacts us. You can make a privacy enquiry through our <contact>contact form</contact>."
-        ]
-      },
-      {
-        "title": "Information we collect",
-        "paragraphs": [
-          "Account and contact information: your name, email address, phone number where provided, account role, sign-in records and the information needed to verify access to your account. Customers sign in using an emailed verification code. Authentication credentials, such as verification codes or administrator passwords, are stored in hashed form rather than as readable passwords or codes.",
-          "Orders and delivery: your order number, selected plan, sticker variants and quantities, order value and currency, shipping address, delivery instructions, order status, shipment references and related customer-service records. Stripe processes payment details on its hosted checkout page. Findmus receives payment confirmation and related customer and checkout references; our application does not store full card numbers or card security codes.",
-          "Sticker and recovery information: each sticker’s unique QR code, its owner, enabled recovery contact methods and the order it belongs to. Stickers are linked to the customer who purchased them.",
-          "Support information: the name, email address, message and other information you provide when asking for help, together with ticket references, handling status and internal support notes. Please do not send passwords, verification codes, payment-card numbers or unnecessary sensitive information in a support message.",
-          "Technical information: visiting a web page sends information such as your network address, requested URL, browser details and request time to the servers handling the request. Our infrastructure and service providers may retain operational or security logs to run the website, investigate faults and address misuse.",
-          "Usage information: when configured and supported by your browser, Google Analytics for Firebase collects page views and interaction events, including checkout activity, recovery-page views and the contact method a finder selects. This can include page URLs containing a sticker’s recovery code. We use this information to understand how the service is used and improve it."
-        ]
-      },
-      {
-        "title": "What a finder can see",
-        "paragraphs": [
-          "A Findmus QR code opens a recovery page that is accessible without signing in. That page displays the owner’s name only if name sharing is enabled for the linked order, and the email address or phone number enabled for the sticker. The details shown belong to the customer who purchased the stickers.",
-          "The recovery URL is not a private account page. Anyone who scans the sticker or receives a copy of its link may be able to view those details. A link or its contents can be forwarded, photographed or saved. Only provide recovery contact details you are comfortable sharing for this purpose.",
-          "Using the phone or email options opens a direct call or email through the finder’s own service. Findmus does not currently provide an anonymous messaging relay between the finder and owner. Any further information you choose to exchange directly is also handled by the people and communications providers involved.",
-          "Your delivery address, order history, account sign-in credentials and internal support notes are not included in the public recovery profile. You can update your own name and phone number in your <profile>customer profile</profile>. For changes to other recovery details, removal of a recovery page or concerns about unwanted contact, <contact>contact our team</contact>. Removing information from our service cannot recall copies already saved by someone else."
-        ]
-      },
-      {
-        "title": "Why we use this information",
-        "paragraphs": [
-          "We use information to create and manage accounts, verify sign-ins, record and fulfil orders, prepare stickers before shipping, associate QR codes with the correct purchaser and owner, and display the recovery contact details needed to help return an item. Your stickers are configured before shipping; you do not need to activate them after delivery.",
-          "We also use information to process payments, send verification codes and order or support updates, answer enquiries, correct records, investigate security incidents or misuse, understand website usage, maintain reliable services, and meet legal, accounting and record-keeping obligations. Service emails are part of operating your account or order; they are separate from optional promotional communications.",
-          "Where the law requires a legal basis, we rely on the basis appropriate to the purpose: providing the service or fulfilling an order, complying with legal obligations, protecting legitimate operational and security interests while considering your privacy, or consent where required. Merely reading this policy does not replace a separate consent that the law requires."
-        ]
-      },
-      {
-        "title": "Who receives information",
-        "paragraphs": [
-          "Recovery-page visitors receive the owner details described above. Authorised Findmus staff can access information needed to prepare orders, manage assignments, provide support and operate the service.",
-          "We use services for hosting, database infrastructure, email delivery and website assets. Our application uses Resend to send transactional emails, Cloudinary for image assets and LottieFiles for animation assets. Depending on their role, providers process information such as email recipients and message contents, or the technical requests needed to serve an asset. Delivery providers receive the contact and address information needed to ship your order. These disclosures are for the relevant service purpose.",
-          "Stripe processes payments and receives your email address, customer and order references, selected stickers, quantities, contact-sharing preferences, name, phone number, shipping address and delivery instructions as part of checkout. Payment and any billing details you enter on Stripe’s hosted page are handled by Stripe.",
-          "Google receives website usage and interaction information through Google Analytics for Firebase. Cloudflare Turnstile processes browser and challenge information to help protect sign-in from automated abuse. We also send the domain portion of a sign-in email address to DeBounce to check for disposable email providers; this check does not send the full email address.",
-          "We may disclose information where required by law or reasonably necessary to respond to a lawful request, address fraud or threats, or establish, exercise or defend legal rights. We seek to limit a disclosure to information appropriate to its purpose and the applicable law.",
-          "If Findmus is reorganised, acquired or transfers its business, relevant records may be transferred as part of that transaction, subject to applicable privacy obligations and appropriate confidentiality arrangements. We will provide any notice or obtain any consent the law requires."
-        ]
-      },
-      {
-        "title": "Cookies and third-party services",
-        "paragraphs": [
-          "Findmus uses cookies for sign-in sessions and authentication security. When you choose a sidebar layout, a cookie remembers that choice. Accepting the cookie notice stores an acknowledgement cookie for up to 180 days so the notice does not appear on every visit. This acknowledgement does not enable or disable analytics. Your browser can block or remove cookies, but doing so may prevent sign-in or interrupt account features. Signing out ends access through your current authenticated session.",
-          "Loading third-party assets or using an external phone or email service can send technical information to the provider involved. Their privacy practices apply to information they handle independently. Visiting our website does not authorise those providers to use your account or recovery details for unrelated purposes.",
-          "Google Analytics for Firebase starts automatically when configured and supported by your browser, including before you acknowledge the cookie notice. It uses analytics cookies and collects website usage and interaction information as described above. The current cookie notice can be dismissed or acknowledged; it does not provide an analytics opt-in, opt-out or withdrawal control. Necessary sign-in cookies are separate from analytics cookies."
-        ]
-      },
-      {
-        "title": "Location and QR scans",
-        "paragraphs": [
-          "Findmus stickers are passive QR labels. They do not contain GPS or Bluetooth and do not report the location of an item or person. The current recovery page does not request precise device location or provide continuous tracking. Opening it still creates an ordinary web request, which can generate the technical information described in this policy.",
-          "If you choose to share a location or meeting point directly with an owner or finder, consider what is necessary to arrange a safe return. Information exchanged outside Findmus is not automatically collected into a Findmus recovery conversation."
-        ]
-      },
-      {
-        "title": "How long information is kept",
-        "paragraphs": [
-          "You can close your account from your customer profile. Account closure disables sign-in, prevents existing sessions from accessing protected account features, and hides recovery contact details for your stickers. If you have an unfulfilled order, contact support before closure so we can address that order.",
-          "Account closure is not automatic erasure of your records. Account identifiers, closure information, purchaser and assignment history, orders, shipments and support records remain held internally. Access is restricted to authorised staff and service providers for the purposes described here. Retention must be limited to what is necessary for identified purposes, such as legal or accounting obligations, fraud prevention, a specific security investigation, or handling a dispute or legal claim; the possibility of an unspecified future investigation is not a reason to retain every record indefinitely.",
-          "You can separately request access, correction or deletion through our <contact>contact form</contact> after closure. We review what can be deleted or anonymised and what must be retained, explain any lawful exception and its retention criteria, and respond within the period required by applicable law. Closing your account does not waive these rights. You can raise an unresolved concern with the Office of the Privacy Commissioner of Canada or the provincial privacy regulator with jurisdiction.",
-          "We keep account and recovery information while it is needed to provide an active account or linked recovery service. A sticker may remain in use for a long time, so its QR-to-owner association can be needed beyond the date of purchase.",
-          "We keep order and shipment records where needed to fulfil an order, handle delivery issues or disputes, establish purchase history, and satisfy applicable tax, accounting or other legal retention requirements. Support records are kept where needed to resolve the enquiry, manage follow-up or disputes, and protect the service. Security and diagnostic records are kept according to their operational purpose and any investigation or legal requirement.",
-          "Retention depends on the type of information, the ongoing service, outstanding issues and applicable law, rather than a single period for every record. Information that is no longer needed should be deleted or anonymised. Where backups exist, deletion from active systems may precede removal through the backup cycle; retained backup copies should remain limited to appropriate recovery or legal purposes.",
-          "You may <contact>ask us about retention or request deletion</contact>. We may need to retain a limited record to meet a legal obligation or handle an outstanding claim. Removing an account or recovery information can affect whether a sticker still allows a finder to contact its owner."
-        ]
-      },
-      {
-        "title": "Security and safe use",
-        "paragraphs": [
-          "We use access controls and authentication safeguards to limit access to account and administrative functions. No internet service or storage system can guarantee absolute security. If a security incident affects personal information, we will assess it and provide notifications where required by applicable law.",
-          "Keep access to your email account and verification codes secure. Do not publish a recovery URL or contact detail more widely than you intend. If information is incorrect, a sticker is being misused or you receive unwanted contact, <contact>tell our team</contact> so we can review the affected record. Finders should use recovery details only to help return the item."
-        ]
-      },
-      {
-        "title": "Your choices and privacy rights",
-        "paragraphs": [
-          "You can review and update the name and phone number in your <profile>customer profile</profile>. Contact us to ask what information we hold about you, request a correction or deletion, or get help with recovery-page contact details and assignments.",
-          "Depending on the law that applies to you, you may also be entitled to access or receive a copy of your information, withdraw consent, object to certain uses, restrict processing or request a portable copy. A request may be subject to lawful exceptions, including the need to keep records or protect another person’s information. Withdrawing consent does not undo processing that was already lawful.",
-          "Use our <contact>contact form</contact> and identify your message as a privacy request. We may ask for information reasonably necessary to confirm your identity and authority over the record. We will respond within the time required by applicable law and explain any restriction or refusal. You may also complain to the privacy regulator with authority over your concern."
-        ]
-      },
-      {
-        "title": "Children and family belongings",
-        "paragraphs": [
-          "If you place stickers on a child’s belongings, use a parent’s or responsible adult’s recovery name and contact details. Avoid displaying a child’s full name, school, home address, routine or other information that is not needed for a finder to reach that adult.",
-          "Do not provide a child’s information without the authority and consent required by applicable law. If you believe a child’s information has been provided inappropriately or exposed through a recovery page, <contact>contact us</contact> so we can review it and take appropriate action."
-        ]
-      },
-      {
-        "title": "International processing",
-        "paragraphs": [
-          "Our infrastructure and service providers may process information outside the country where you live. Information processed in another country may be subject to that country’s laws and lawful access by its courts or authorities.",
-          "Where cross-border processing requires safeguards under applicable law, we are responsible for arranging the safeguards applicable to that processing. You can <contact>request more information</contact> about providers and international handling relevant to your data."
-        ]
-      },
-      {
-        "title": "Changes to this policy",
-        "paragraphs": [
-          "We may update this policy as the service, providers or applicable requirements change. The updated notice will appear here with a revised update date. For material changes, we will provide additional notice and obtain fresh consent where required. A policy update does not override privacy rights or any separate consent the law requires."
-        ]
-      },
-      {
-        "title": "Contact us about privacy",
-        "paragraphs": [
-          "For a privacy question, access or deletion request, correction, or concern about information shown on a recovery page, please use our <contact>contact form</contact>. Include the email associated with the relevant account and, where helpful, an order number or sticker reference. Please do not include passwords, sign-in codes or unnecessary identity documents."
-        ]
-      }
-    ]
-  },
-  "Terms": {
-    "title": "Terms of",
-    "titleAccent": "Use",
-    "subtitle": "What to expect when you order Findmus stickers, use a recovery page, or manage your account.",
-    "contentLabel": "Findmus terms of use",
-    "contents": "In these terms",
-    "updatedAt": "2026-11-01T00:00:00.000Z",
-    "lastUpdated": "Last updated: {date} (UTC)",
-    "sectionHeading": "{number}. {title}",
-    "summary": {
-      "title": "The essentials, before you read on",
-      "points": [
-        "Your stickers are configured before shipping and arrive ready to use. Keeping the linked owner’s contact details accurate helps a finder reach the right person.",
-        "A QR sticker gives someone a way to contact the owner. It does not track an item, prove ownership, insure your belongings or guarantee their return.",
-        "If an order is held for restocking, you can request cancellation through our team. Your mandatory consumer rights continue to apply."
-      ]
+    "TicketHistory": {
+        "allStatuses": "All statuses",
+        "adminTitle": "Tickets",
+        "adminDescription": "Review support requests and manage their progress.",
+        "view": "View ticket",
+        "details": {
+            "title": "Ticket details",
+            "customerDescription": "Your submission for ticket {code}.",
+            "description": "Review the request and update its status and internal remarks.",
+            "close": "Close ticket details",
+            "loading": "Loading ticket…",
+            "remarks": "Internal remarks",
+            "remarksHelp": "Visible to administrators only.",
+            "remarksTooLong": "Use 5,000 characters or fewer for remarks.",
+            "save": "Save changes",
+            "saving": "Saving…",
+            "cancel": "Cancel",
+            "saveSuccess": "Ticket updated successfully.",
+            "notificationWarning": "Ticket saved, but its email notification could not be sent.",
+            "saveError": "Unable to update the ticket. Please try again."
+        },
+        "title": "Support Tickets",
+        "description": "View your previous support requests and their status.",
+        "columns": {
+            "code": "Ticket code",
+            "customerName": "Customer name",
+            "customerEmail": "Customer email",
+            "actions": "Actions",
+            "createdAt": "Date",
+            "message": "Message",
+            "status": "Status"
+        },
+        "statuses": {
+            "PENDING": "Pending",
+            "PROCESSING": "Processing",
+            "RESOLVED": "Resolved"
+        },
+        "messagePreview": "{message}…",
+        "loadError": "Unable to load your tickets. Please try again.",
+        "retry": "Try again"
     },
-    "sections": [
-      {
-        "title": "About these terms",
-        "paragraphs": [
-          "These Terms of Use govern the Findmus website, customer portal, QR recovery pages, physical stickers and associated support services. “Findmus”, “we”, “us” and “our” refer to the operator of the Findmus service. “You” includes customers, assigned sticker owners, finders and other visitors, as appropriate to the activity described.",
-          "Please read these terms before placing an order or using the service. Where these terms are presented for acceptance during sign-in or ordering, proceeding confirms your agreement to them. Our <privacy>Privacy Policy</privacy> explains how we handle personal information. Accepting these terms does not replace any separate privacy consent required by law.",
-          "Nothing in these terms removes a mandatory consumer right, legal guarantee or remedy that applies to you. If a provision conflicts with such a right, that right takes priority."
-        ]
-      },
-      {
-        "title": "How Findmus works",
-        "paragraphs": [
-          "Findmus sells stickers containing unique QR codes linked to recovery pages. We configure the stickers for the customer who purchased them before shipping. After delivery, attach them to suitable belongings; no separate activation or setup is required.",
-          "If someone finds an item and opens its QR link, they can use the contact details enabled for that sticker to reach its assigned owner. Recovery depends on someone finding the item, reading the code and choosing to make contact, as well as the recovery page and contact details being accessible.",
-          "The stickers are passive labels, not GPS or Bluetooth trackers. Findmus does not guarantee that an item will be found, that a finder will contact you, or that an item will be returned. The service is not an emergency response service, insurance policy or proof of legal ownership."
-        ]
-      },
-      {
-        "title": "Accounts, authority and accurate details",
-        "paragraphs": [
-          "You must have the legal capacity and authority needed for the transaction or activity you undertake. If you cannot enter a binding purchase contract yourself, a parent, guardian or other legally authorised adult should arrange the purchase and manage the recovery contact details. If you act for an organisation or another person, you must have permission to do so.",
-          "Provide accurate account, contact and delivery information and keep it up to date. Protect access to your email account and sign-in codes. Do not use someone else’s account, share verification codes with an unauthorised person, or misrepresent your identity or authority. <contact>Contact us</contact> if you suspect unauthorised access.",
-          "Purchasing stickers does not give you permission to publish another person’s information without the authority or consent required by law. Use an adult’s recovery contact details for a child’s belongings and avoid displaying unnecessary information about the child."
-        ]
-      },
-      {
-        "title": "Recovery pages and direct contact",
-        "paragraphs": [
-          "A recovery page is accessible without signing in. Anyone with a sticker’s QR link can see the owner’s name only if name sharing is enabled for the linked order, and the email or phone details enabled for that sticker. A link and its contents can be copied or shared. Only provide information you are comfortable making available for item recovery.",
-          "Calls and emails go directly through the finder’s and owner’s communications services. Findmus does not currently provide an anonymous messaging relay. We do not verify every finder or guarantee the accuracy of a person’s claim to an item. Use reasonable care when exchanging further information or arranging a return, and follow applicable lost-property laws.",
-          "You can update your own name and phone number in your <profile>customer profile</profile>. <contact>Contact our team</contact> about other recovery details, incorrect assignments, unwanted contact or a request to remove a recovery page."
-        ]
-      },
-      {
-        "title": "Orders, prices and confirmation",
-        "paragraphs": [
-          "Before submitting an order, review the selected plan, sticker variants, quantities, price, currency and delivery details. Any applicable charges must be disclosed before you agree to them. We will ask you to agree to a correction if a pricing or order-detail error affects what you would pay; we will not treat an error as permission to charge an undisclosed amount.",
-          "Payment is collected through Stripe at checkout. An order acknowledgement confirms receipt of your order, not dispatch. We check stock before allocating stickers. A confirmation may indicate that the order is being prepared or explain that it is waiting for restocking; confirmation alone does not promise immediate dispatch."
-        ]
-      },
-      {
-        "title": "Stock shortages and orders on hold",
-        "paragraphs": [
-          "We check availability for every sticker variant requested. If there is not enough stock to fulfil the whole order, we put the whole order on hold rather than allocating some variants and leaving the rest unfulfilled. We will explain the restocking delay in the order confirmation.",
-          "A held order may continue to appear as “Confirmed” in your customer portal while our team records the restocking hold internally. We retry stock allocation and prepare the order once all requested variants are available. Restocking may delay dispatch and delivery; we will not promise a specific replenishment date unless we can confirm one.",
-          "If the additional wait no longer works for you, <contact>contact us</contact> with the order number to request cancellation before fulfilment resumes. Restocking holds are eligible for cancellation under our order process, in addition to any rights you have by law."
-        ]
-      },
-      {
-        "title": "Cancellations, returns and refunds",
-        "paragraphs": [
-          "Ordinary orders are not cancellable through our standard order process unless we agree otherwise. The restocking exception is described above. This standard process does not restrict a statutory cancellation or withdrawal right, or a remedy for non-delivery, a faulty product or another failure to meet a legal obligation.",
-          "To request a cancellation, return, replacement or refund, <contact>contact our team</contact> with the order number and a description of the issue. We will explain the available options, any information reasonably needed, and the return instructions where a return is appropriate. You do not need to rely on a portal button to make a request. Treat the order as active until we confirm cancellation.",
-          "If a refund is legally due or otherwise agreed, we will confirm the amount and arrangements and meet applicable legal deadlines. Any voluntary return arrangement will be confirmed with you in writing. Any additional return promise or warranty provided with your order remains relevant, together with your mandatory rights. Please confirm the return address and process before sending an item back."
-        ]
-      },
-      {
-        "title": "Delivery and order problems",
-        "paragraphs": [
-          "Give us a complete and accurate delivery address and only the instructions needed to deliver the parcel. Review your details promptly and tell us about any error as soon as you notice it. We will explain whether a requested change is still possible; a change may not be possible once an order has been prepared or dispatched.",
-          "Delivery estimates are estimates unless a specific date is expressly agreed. Stock availability, preparation, carriers, customs or events outside our reasonable control can affect delivery. We will provide available shipment information and work with you on reported delivery problems. These provisions do not remove any legal responsibility we have for delivering your order.",
-          "Please report missing, damaged, incorrect or defective deliveries through our <contact>contact form</contact>, including the order reference and helpful details. A request to report an issue promptly does not shorten a statutory period for raising a claim."
-        ]
-      },
-      {
-        "title": "Using and caring for your stickers",
-        "paragraphs": [
-          "Choose a sticker variant suited to the intended material and conditions, and follow the product or packaging instructions. Apply stickers carefully to an appropriate surface and keep the code readable. Check that the recovery link and contact details work after application and from time to time while the sticker is in use.",
-          "Adhesion, wear and removal can vary with the surface, preparation, temperature, washing and other conditions. Test an inconspicuous area where appropriate. Do not cover safety information or apply a sticker where it could interfere with equipment or safe use. We do not promise suitability for every surface or indefinite durability unless an express product description says otherwise.",
-          "Care and suitability guidance does not remove your rights if a sticker is defective, does not match its description or is otherwise supplied in breach of a legal guarantee."
-        ]
-      },
-      {
-        "title": "Acceptable use and finder responsibilities",
-        "paragraphs": [
-          "Use Findmus and recovery contact information for lawful item recovery and legitimate account, order or support purposes. Do not use them for harassment, stalking, impersonation, fraud, unwanted marketing, unlawful demands or collecting information about people who have not authorised it.",
-          "Do not enumerate or scrape recovery links to build contact lists, copy codes to mislead people about an item’s owner, bypass access controls, interfere with the website, or attempt to access another person’s account or private records. Do not submit information you have no right to use or disclose.",
-          "If you find an item, use the recovery details only for a genuine attempt to arrange its return. Contacting an owner does not automatically give you a right to a reward or payment from Findmus. We do not authorise a finder to collect a fee on our behalf."
-        ]
-      },
-      {
-        "title": "Ownership and permission to use the service",
-        "paragraphs": [
-          "Findmus branding, website design, software and other service materials belong to Findmus or the relevant rights holder. You may use the website and purchased stickers for their intended personal or organisational recovery purposes. That permission does not authorise you to reproduce our branding, resell access to the service without agreement, or use the service to mislead others.",
-          "You retain rights you have in information you provide. You allow us to use it as needed to process your order, operate the linked recovery service and support your account, consistently with our <privacy>Privacy Policy</privacy> and applicable law. Providing information does not waive another person’s rights or authorise unrelated uses of their data."
-        ]
-      },
-      {
-        "title": "Availability, maintenance and restrictions",
-        "paragraphs": [
-          "We aim to keep Findmus available and functioning, but maintenance, faults, network problems and third-party outages can interrupt access. Keep another appropriate way of identifying important belongings and do not rely on a QR sticker as your only protection against loss.",
-          "We may restrict an account, recovery page or activity where reasonably necessary to address suspected misuse, an incorrect assignment, a security threat or a legal requirement. We will consider the circumstances and provide an explanation or notice where appropriate and lawful. A restriction does not automatically remove your privacy rights, ownership of an item or an entitlement to a refund or other remedy.",
-          "Your sticker purchase includes lifetime access to its linked recovery service with no subscription or ongoing fees. Individual website features may change over time. These changes do not introduce subscription, renewal or ongoing fees for the recovery service included with your purchase."
-        ]
-      },
-      {
-        "title": "Our responsibility and recovery limitations",
-        "paragraphs": [
-          "We remain responsible for meeting our contractual and legal obligations. A Findmus sticker gives a finder a way to contact an owner; it does not insure the value of the item. An item being lost or not returned does not, by itself, establish a failure by Findmus. Any claim arising from our own breach or failure to use legally required care remains subject to applicable law.",
-          "For consumers, nothing here removes a right to compensation or another remedy that the applicable law provides for our breach. In particular, we do not exclude responsibility for fraud, wilful misconduct, death or personal injury caused by negligence where it cannot lawfully be excluded, or mandatory rights relating to goods, services or personal information.",
-          "If you use Findmus for business purposes, we do not accept responsibility for lost profits, business interruption or lost commercial opportunities arising as indirect business losses, except where applicable law requires otherwise. This provision does not exclude a mandatory remedy or responsibility that cannot lawfully be limited."
-        ]
-      },
-      {
-        "title": "Questions, complaints and disputes",
-        "paragraphs": [
-          "If something goes wrong, please <contact>contact our team</contact> with the relevant order or sticker reference and a clear description of the issue. We will review it and explain the next steps. An attempt to resolve an issue with us does not prevent you from using a regulator, court or other dispute process available under applicable law.",
-          "The mandatory consumer protections and legal procedures applicable to your transaction continue to apply. These terms do not require you to waive a protected right, accept compulsory arbitration or give up a lawful complaint route."
-        ]
-      },
-      {
-        "title": "Changes to these terms",
-        "paragraphs": [
-          "We may update these terms as the service or applicable requirements change. The updated text and date will appear here. Material changes affecting an ongoing service will be communicated where appropriate, and we will obtain fresh agreement where the law requires it.",
-          "Changes do not retrospectively remove a right attached to an existing order or excuse a breach that has already occurred. Any continuing service changes remain subject to your contract and mandatory rights. If part of these terms cannot be enforced, the remainder applies only to the extent it can operate lawfully and fairly."
-        ]
-      },
-      {
-        "title": "Contact Findmus",
-        "paragraphs": [
-          "For a question about these terms, an order, a return or a recovery page, use our <contact>contact form</contact>. You can review your purchase references in <orders>your orders</orders>. Include the information needed to identify the issue, but do not send account passwords, verification codes or payment-card details."
-        ]
-      }
-    ]
-  },
-  "Ticket": {
-    "title": "Contact",
-    "titleAccent": "Us",
-    "subtitle": "Have a question about Findmus, your stickers, or an order? Get in touch — we're here to help."
-  },
-  "Blog": {
-    "title": "Stories &",
-    "titleAccent": "Tips",
-    "subtitle": "Tips for keeping track of your belongings, stories of happy reunions, and ideas for making everyday life a little less lost.",
-    "featuredStories": "Featured Stories",
-    "latestArticles": "Latest Articles",
-    "noLatestStories": "More stories are on their way. Check back soon.",
-    "pagination": "Article pages",
-    "previousPage": "Previous",
-    "nextPage": "Next",
-    "pageNumber": "Page {page, number} of {total, number}",
-    "backToStories": "Back to stories",
-    "contentImage": "Image accompanying this story",
-    "readStory": "Read story: {title}",
-    "featuredBadge": "Featured",
-    "loading": "Loading stories…",
-    "loadError": "We couldn’t load the stories. Please try again.",
-    "retry": "Try again",
-    "noFeaturedStories": "Our first featured stories are on their way. Check back soon.",
-    "admin": {
-      "title": "Blog",
-      "description": "Create stories, prepare drafts, and choose what appears on the Findmus blog. Select a story to edit it.",
-      "createPost": "Create story",
-      "editPost": "Edit story",
-      "editorDescription": "Save a draft while you work. Select Published when your story is ready for everyone to read.",
-      "defaultAuthor": "Findmus Team",
-      "existingTags": "Existing tags — select one to add it",
-      "loadingTags": "Loading tags…",
-      "tagsLoadError": "Unable to load existing tags.",
-      "noTags": "No saved tags yet. Add tags to a story to reuse them here.",
-      "reuseTag": "Add tag: {tag}",
-      "status": "Status",
-      "published": "Published",
-      "draft": "Draft",
-      "yes": "Yes",
-      "no": "No",
-      "createdAt": "Created",
-      "loading": "Loading story…",
-      "loadError": "Unable to load the stories. Please try again.",
-      "retry": "Try again",
-      "close": "Close editor",
-      "cancel": "Cancel",
-      "save": "Save story",
-      "saving": "Saving…",
-      "saved": "Story saved.",
-      "fields": {
-        "title": "Title",
-        "slug": "URL slug",
-        "author": "Author",
-        "coverImageUrl": "Cover image URL (optional)",
-        "tags": "Tags (optional)",
-        "excerpt": "Excerpt",
-        "content": "Story content",
-        "featured": "Featured story",
-        "published": "Published"
-      },
-      "help": {
-        "title": "Give your story a clear, descriptive title.",
-        "slug": "Used in the story URL. Use lowercase letters, numbers and hyphens.",
-        "author": "Leave blank to use Findmus Team.",
-        "coverImageUrl": "Use a Findmus or Findmus Cloudinary image URL. Leave blank for a dark title cover.",
-        "tags": "Separate tags with commas. Up to 20 tags, with 50 characters per tag.",
-        "excerpt": "Write a short introduction for the story card, up to 600 characters. Required to publish.",
-        "content": "Required to publish. Drafts can be saved while you are still writing.",
-        "featured": "Featured stories appear only in Featured Stories, ordered newest first.",
-        "published": "Published stories are visible to visitors. Clear this to return the story to draft."
-      },
-      "errors": {
-        "titleRequired": "Enter a story title.",
-        "slugInvalid": "Use lowercase letters, numbers and single hyphens between words.",
-        "coverInvalid": "Use an HTTPS image URL from Findmus or the Findmus Cloudinary account.",
-        "tagsInvalid": "Use no more than 20 tags, with 50 characters per tag.",
-        "tooLong": "Use {max, number} characters or fewer.",
-        "excerptRequired": "Add an excerpt before publishing.",
-        "contentRequired": "Write your story before publishing.",
-        "slugTaken": "Another story already uses this URL slug. Choose a different one.",
-        "publishIncomplete": "Add both an excerpt and story content before publishing.",
-        "invalidContent": "The story content could not be saved. Check its formatting and links, or shorten the story.",
-        "save": "Unable to save the story. Please check the fields and try again."
-      },
-      "editor": {
-        "label": "Story content",
-        "formatting": "Story formatting",
-        "bold": "Bold",
-        "italic": "Italic",
-        "underline": "Underline",
-        "strike": "Strikethrough",
-        "heading2": "Heading",
-        "heading3": "Subheading",
-        "bulletList": "Bullet list",
-        "orderedList": "Numbered list",
-        "blockquote": "Quote",
-        "unlink": "Remove link",
-        "undo": "Undo",
-        "redo": "Redo",
-        "linkHelp": "Select the text to link, then enter a web address.",
-        "applyLink": "Apply link",
-        "invalidLink": "Enter a complete HTTP or HTTPS web address.",
-        "selectText": "Select some story text before adding a link."
-      }
-    }
-  },
-  "UseCases": {
-    "title": "Everyday Items.",
-    "titleAccent": "Endless Possibilities.",
-    "subtitle": "From keys and backpacks to laptops and luggage, give the things you carry a way home. Discover where Findmus QR stickers can make a difference.",
-    "regionLabel": "Ways to use your QR stickers",
-    "pageLabel": "Page {number} of {total}",
-    "previous": "Previous use cases",
-    "next": "Next use cases",
-    "items": {
-      "keys": { "title": "Keys", "description": "Add a sticker to your key holder so misplaced house or car keys have a way home." },
-      "wallets": { "title": "Wallets", "description": "Help someone return the wallet you left at a checkout, café, or bus stop." },
-      "phones": { "title": "Phones", "description": "Put a sticker on your phone case so a finder can reach you even when the screen is locked." },
-      "laptops": { "title": "Laptops & Tablets", "description": "Give devices left in classrooms, offices, or cafés a clear way back to you." },
-      "backpacks": { "title": "Backpacks", "description": "Make your everyday bag easier to return after a busy commute or a day on campus." },
-      "luggage": { "title": "Luggage", "description": "Add a contact option to your suitcase so a finder can help reunite you with your bags." },
-      "waterBottles": { "title": "Water Bottles", "description": "Help your reusable bottle find its way back from the gym, office, or playground." },
-      "headphones": { "title": "Headphones", "description": "Label your headphone or earbud case for an easy return when it slips out of your bag." },
-      "glassesCases": { "title": "Glasses Cases", "description": "Give a finder a way to return the glasses case you left on a desk or train seat." },
-      "jackets": { "title": "Jackets & Coats", "description": "Place a sticker on a suitable clothing label to help a forgotten coat make it home." },
-      "schoolUniforms": { "title": "School Uniforms", "description": "Label suitable areas of uniforms and PE kits to help school staff return mixed-up clothing." },
-      "kidsLunchboxes": { "title": "Kids’ Lunchboxes", "description": "Make lunchboxes easier to return from school, clubs, and trips with a quick scan." },
-      "kidsClothing": { "title": "Kids’ Clothing", "description": "A sticker on a suitable clothing label can help someone contact a parent or guardian." },
-      "supportClothing": { "title": "Caregiver Contact", "description": "For people with additional support needs, a clothing label can help someone reach a trusted contact." },
-      "mobilityAids": { "title": "Mobility Aids", "description": "Label a walking stick or other mobility aid so a finder can contact its owner." },
-      "tools": { "title": "Tools & Toolboxes", "description": "Give tools and their cases a way back when they are left at a job site or shared workspace." },
-      "sportsGear": { "title": "Sports Gear", "description": "Label helmets, rackets, and gear bags to help items left after practice get returned." },
-      "cameraCases": { "title": "Camera Cases", "description": "Help someone return your camera bag after a shoot, day trip, or busy event." }
-    }
-  },
-  "About": {
-    "title": "About",
-    "titleAccent": "Findmus",
-    "subtitle": "We make it simple for lost belongings to find their way home. Our ready-to-use QR stickers help finders connect with owners, turning lost items into happy reunions.",
-    "purpose": {
-      "eyebrow": "Why we’re here",
-      "title": "Lost doesn’t have to mean gone.",
-      "introduction": "A bag left on a bus. Keys dropped on a walk. A laptop with work you can’t easily replace. Losing something can interrupt your day and leave you wondering whether you’ll ever see it again.",
-      "description": "We believe the person who finds it should have a simple way to help. Findmus gives your belongings a QR sticker that connects a finder with the owner’s recovery contact details — a small step that can make a return possible.",
-      "promise": "Our purpose is simple: make it easier for someone’s good intentions to become a way home for your belongings.",
-      "imageAlt": "A phone scanning a Findmus QR sticker on a belonging.",
-      "caption": "A scan gives a finder a way to reach the owner."
-    }
-  },
-  "Pricing": {
-    "title": "Affordable",
-    "titleAccent": "Sticker Pricing",
-    "subtitle": "A little peace of mind for the things you care about. Choose the sticker types that suit your belongings and order as many as you need.",
-    "plansLabel": "Compare sticker types and unit prices",
-    "freeShipping": "Free shipping across Canada",
-    "startingAt": "From",
-    "perSticker": "per sticker",
-    "quantityRange": "{minimum, number}–{maximum, number} stickers",
-    "quantityFrom": "{minimum, number}+ stickers",
-    "variantPricingNote": "Each sticker type's quantity determines its unit price.",
-    "minimumOrder": "Minimum {minimum, number} stickers per order.",
-    "chooseVariant": "Choose {variant} stickers",
-    "variants": {
-      "everyday": {
-        "title": "Everyday",
-        "description": "A way home for the essentials that go everywhere with you."
-      },
-      "tough": {
-        "title": "Tough",
-        "description": "For the gear you count on, wherever the day takes you."
-      },
-      "fabric": {
-        "title": "Fabric",
-        "description": "For favourite outfits, school-day staples, and bags full of memories."
-      }
+    "TicketForm": {
+        "notificationWarning": "Your ticket is saved. Some email notifications could not be sent; you do not need to submit it again.",
+        "title": "Contact Findmus Team",
+        "description": "Send us a message and we’ll create a support ticket for you.",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "nameRequired": "Enter your name.",
+        "nameTooLong": "Use 100 characters or fewer for your name.",
+        "emailRequired": "Enter your email.",
+        "emailInvalid": "Enter a valid email address.",
+        "messageRequired": "Enter your message.",
+        "messageTooLong": "Use 5,000 characters or fewer for your message.",
+        "submit": "Send message",
+        "submitting": "Sending…",
+        "submitError": "Unable to save your message. Please try again.",
+        "success": "Your message has been received. Your ticket code is {code}. We’ll send updates to your email.",
+        "successTracking": "Your message has been received. Your ticket code is {code}. Track your submission in <tickets>Support Tickets</tickets>."
     },
-    "descriptions": {
-      "personal": "For your everyday favourites, with a few spare stickers just in case.",
-      "family": "For you and the people you care about, with a few spares just in case.",
-      "custom": "As many as you need, for yourself, your loved ones or the team behind your business."
+    "portalTable": {
+        "search": "Search…",
+        "rowsPerPage": "Rows per page",
+        "columns": "Columns",
+        "column": "Column {number}",
+        "selectedCount": "{count, plural, one {# selected} other {# selected}}",
+        "clearSelection": "Clear selection",
+        "selectPage": "Select all rows on this page",
+        "selectRow": "Select row",
+        "loading": "Loading…",
+        "noResults": "No results found.",
+        "pageStatus": "Page {page} of {pages} · {total} total",
+        "previous": "Previous",
+        "next": "Next"
     },
-    "readyToUse": "Pre-activated and ready to stick",
-    "getStickers": "Get Your Stickers",
-    "choosePlan": "Get stickers with the {plan} plan"
-  },
-  "Hero": {
-    "eyebrow": "A smarter way to get lost items back",
-    "titleFirstLine": "Stick. Scan.",
-    "titleSecondLine": "Get It Back.",
-    "mobileSubtitle": "If someone finds your lost item, they can scan the QR sticker to get in touch with you.",
-    "desktopSubtitle": "Findmus QR stickers help you recover your lost items easily. If someone finds your item, they can scan the QR sticker to get in touch with you.",
-    "getYourStickers": "Get Your QR Stickers",
-    "howItWorks": "How It Works",
-    "secured": "Secured",
-    "trusted": "Trusted",
-    "trustedByPeopleEverywhere": "Trusted by people everywhere",
-    "carousel": {
-      "regionLabel": "Findmus QR sticker use cases",
-      "laptopsTitle": "Stick on Electronics",
-      "laptopsDescription": "Keep your devices within reach.",
-      "laptopsAlt": "Findmus QR sticker on a laptop",
-      "bagsTitle": "Stick on Backpacks",
-      "bagsDescription": "School bags, travel luggage, gym bags and more.",
-      "bagsAlt": "Findmus QR sticker on a black backpack",
-      "keysTitle": "Stick on Keys & Essentials",
-      "keysDescription": "Keys, wallets, ID cards and more.",
-      "keysAlt": "Findmus QR tag attached to keys",
-      "walletsTitle": "Stick on Wallets & Cards",
-      "walletsDescription": "Keep everyday essentials easy to return.",
-      "walletsAlt": "Findmus QR sticker on a wallet",
-      "phonesTitle": "Stick on Phones & Devices",
-      "phonesDescription": "Give your everyday tech a way back.",
-      "phonesAlt": "Findmus QR sticker on a phone",
-      "passesTitle": "Stick on Passes & IDs",
-      "passesDescription": "Help lost travel cards find their way home.",
-      "passesAlt": "Findmus QR sticker on a bus pass",
-      "previous": "Previous item",
-      "next": "Next item",
-      "slideLabel": "{title}, slide {number} of {total}"
+    "orders": {
+        "resendInvoice": "Resend invoice",
+        "resendInvoiceSuccess": "Invoice request completed successfully.",
+        "resendInvoiceError": "Unable to resend the invoice. Please check the order and try again.",
+        "pendingPayments": "Awaiting Payments",
+        "customer": {
+            "description": "View your sticker orders and follow their delivery progress.",
+            "date": "Order date",
+            "action": "Action",
+            "shipment": "Shipment",
+            "track": "Track Order",
+            "cancel": "Cancel order",
+            "trackingDescription": "Delivery progress and tracking details for order {number}.",
+            "noTracking": "Tracking details will appear here when your order is shipped."
+        },
+        "options": "Options",
+        "createNewOrder": "Create New Order",
+        "edit": {
+            "title": "Edit Order",
+            "description": "Update this order’s purchase, contact, and delivery details.",
+            "close": "Close order editor"
+        },
+        "create": {
+            "heading": "Create new order",
+            "close": "Close order creation",
+            "description": "Create an order on behalf of a customer with their sticker, contact, and delivery details.",
+            "purchase": "Order details",
+            "customerPaid": "Customer Paid",
+            "customerPaidHelp": "Check if payment has already been received. Otherwise, a Stripe invoice is emailed to the customer and the order waits for payment.",
+            "invoiceDescription": "Findmus order {number} · {quantity, number} stickers",
+            "variants": "Select variants",
+            "variantsRequired": "Select at least one variant.",
+            "plan": "Select plan",
+            "planRequired": "Select a plan.",
+            "planOption": "{name} · {quantity, number} stickers · {price}",
+            "allocation": "Sticker allocation",
+            "customer": "Customer details",
+            "delivery": "Delivery details",
+            "loading": "Loading plans…",
+            "plansError": "Unable to load plans. Please try again.",
+            "retry": "Retry",
+            "purchaseRequired": "Choose a plan and at least one sticker variant.",
+            "submit": "Create order",
+            "submitWithAmount": "Create order · {amount}",
+            "updateSubmit": "Save changes",
+            "updateSuccess": "Order {number} updated successfully.",
+            "updateError": "Unable to update the order. Please check the details and try again.",
+            "saving": "Creating…",
+            "success": "Order {number} created successfully.",
+            "error": "Unable to create the order. Please check the details and try again."
+        },
+        "heading": "Orders",
+        "description": "Manage customer orders",
+        "tabsLabel": "Order status",
+        "changeStatus": "Change order status",
+        "shipments": {
+            "view": "View shipments",
+            "add": "Add shipment",
+            "update": "Update",
+            "deleteSuccess": "Shipment deleted successfully.",
+            "addForm": {
+                "title": "Add shipment",
+                "updateTitle": "Update shipment",
+                "updateSave": "Save changes",
+                "saveSuccess": "Shipment added successfully.",
+                "updateSuccess": "Shipment updated successfully.",
+                "updateError": "Unable to update the shipment. Please try again.",
+                "description": "Add tracking information for order {number}.",
+                "close": "Close shipment form",
+                "carrier": "Carrier (optional)",
+                "trackingNumber": "Tracking number (optional)",
+                "cancel": "Cancel",
+                "save": "Add shipment",
+                "saving": "Saving…",
+                "saveError": "Unable to add the shipment. Please try again."
+            },
+            "description": "Shipment records for order {number}.",
+            "close": "Close shipment list",
+            "loading": "Loading shipments…",
+            "empty": "No shipments have been added to this order.",
+            "loadError": "Unable to load shipments. Please try again.",
+            "delete": "Delete shipment",
+            "deleteRecord": "Delete {shipment}",
+            "deleteTitle": "Delete shipment?",
+            "deleteDescription": "Permanently delete this shipment record?",
+            "deleteError": "Unable to delete the shipment. Please try again."
+        },
+        "statusDialog": {
+            "saveSuccess": "Order status updated successfully.",
+            "description": "Choose a new status for order {number}.",
+            "close": "Close status editor",
+            "cancel": "Cancel",
+            "save": "Save",
+            "saving": "Saving…",
+            "saveError": "Unable to update the order status. Please try again."
+        },
+        "all": "Show all",
+        "statuses": {
+            "PENDING": "Pending",
+            "CONFIRMED": "Confirmed",
+            "AWAITING_PAYMENT": "Awaiting Payment",
+            "HOLD": "On hold",
+            "PROCESSING": "Processing",
+            "SHIPPED": "Shipped",
+            "DELIVERED": "Delivered",
+            "CANCELLED": "Canceled",
+            "RETURNED": "Returned"
+        },
+        "columns": {
+            "id": "Order ID",
+            "number": "Order number",
+            "actions": "Actions",
+            "customerId": "Customer ID",
+            "customer": "Customer",
+            "status": "Status",
+            "planDetail": "Plan details",
+            "estimatedDeliveryDate": "Estimated delivery date",
+            "expectedPostingDate": "Expected shipping date",
+            "products": "Products",
+            "defaultReachoutModes": "Default reachout modes",
+            "showOwnerName": "Show owner name",
+            "shippingAddress": "Shipping address",
+            "deliveryInstructions": "Delivery instructions",
+            "shipments": "Shipments",
+            "cancelledAt": "Canceled at",
+            "cancellationReason": "Cancellation reason",
+            "completedAt": "Completed at",
+            "paymentAt": "Paid at",
+            "createdAt": "Created at",
+            "updatedAt": "Updated at"
+        },
+        "details": {
+            "view": "Order Details",
+            "title": "Order details",
+            "description": "Customer, plan, delivery, and fulfillment information for this order.",
+            "close": "Close order details",
+            "loading": "Loading order details…",
+            "loadError": "Unable to load this order. Please try again.",
+            "customerName": "Customer name",
+            "plan": "Plan",
+            "quantity": "Sticker quantity",
+            "price": "Plan price",
+            "currency": "Currency",
+            "maxRecoveryProfiles": "Maximum recovery profiles",
+            "allocations": "Variant allocations",
+            "groups": {
+                "summary": "Order and delivery",
+                "customer": "Customer",
+                "plan": "Plan and allocations",
+                "preferences": "Recovery preferences",
+                "fulfillment": "Products and shipments",
+                "activity": "Order activity"
+            },
+            "shipmentHeading": "Shipment {number}",
+            "productSummary": "{code} · {variant} · ID: {id}",
+            "shipmentField": "Shipment {number} · {field}",
+            "shipmentFields": {
+                "carrier": "Carrier",
+                "trackingNumber": "Tracking number"
+            }
+        },
+        "plans": { "Starter": "Starter", "Pro": "Pro", "Premium": "Premium" },
+        "variants": { "Everyday": "Everyday", "Fabric": "Fabric", "Tough": "Tough" },
+        "planSummary": "{plan} · {quantity, number} stickers · {price} · {profiles} · {allocations}",
+        "profileLimit": "Up to {count, number} recovery profiles",
+        "unlimitedProfiles": "Unlimited recovery profiles",
+        "yes": "Yes",
+        "no": "No",
+        "unset": "Not set",
+        "none": "None",
+        "email": "Email",
+        "phone": "Phone",
+        "chat": "Chat",
+        "loadError": "Unable to load orders. Please try again.",
+        "retry": "Try again"
     },
-    "categories": {
-      "luggage": "Luggage",
-      "laptops": "Laptops",
-      "keys": "Keys",
-      "wallets": "Wallets",
-      "bikes": "Bikes",
-      "cameras": "Cameras",
-      "pets": "Pets"
+    "products": {
+        "heading": "Products",
+        "description": "View published products. Only published products appear here.",
+        "code": "Code",
+        "variant": "Variant",
+        "allVariants": "All variants",
+        "published": "Published",
+        "reachoutModes": "Reachout Modes",
+        "reservedBy": "Reserved By",
+        "reservedAt": "Date Reserved",
+        "assignedTo": "Assigned To",
+        "assignedAt": "Date Assigned",
+        "order": "Order Number",
+        "createdAt": "Date Created",
+        "actions": "Actions",
+        "delete": "Delete",
+        "deleteProduct": "Delete product {code}",
+        "deleteSelected": "Delete selected",
+        "bulkDeleteConfirmTitle": "Delete selected products?",
+        "bulkDeleteConfirmDescription": "Permanently delete {count, plural, one {this unpublished product} other {these # unpublished products}}? This cannot be undone.",
+        "deleteConfirmTitle": "Delete product?",
+        "deleteConfirmDescription": "Permanently delete {code}? This cannot be undone.",
+        "yes": "Yes",
+        "no": "No",
+        "unset": "Not set",
+        "none": "None",
+        "phone": "Phone",
+        "email": "Email",
+        "chat": "Chat",
+        "loadError": "Unable to load products. Please try again.",
+        "deleteError": "Unable to delete this product. It may be published or no longer exist.",
+        "assignedDeleteError": "Product code {code} cannot be deleted because it has been assigned to {user}. No products were deleted.",
+        "retry": "Retry",
+        "placeholder": "Manage"
+    },
+    "addProducts": {
+        "heading": "Add Products",
+        "description": "Add new products to your inventory",
+        "placeholder": "Add"
+    },
+    "Footer": {
+        "home": "Findmus home",
+        "tagline": "Small stickers. Big reunions.",
+        "description": "Findmus helps lost items find their way home. Attach, get found, and be reunited — simply and securely.",
+        "product": "Product",
+        "company": "Company",
+        "followUs": "Follow Us",
+        "stayUpdated": "Stay updated with tips, stories and more.",
+        "copyright": "© {year, number, ::group-off} Findmus. All rights reserved.",
+        "closing": "Made for a more connected world.",
+        "links": {
+            "howItWorks": "How It Works",
+            "stickers": "Our Stickers",
+            "pricing": "Pricing",
+            "faqs": "FAQs",
+            "about": "About Us",
+            "blog": "Blog",
+            "tickets": "Contact Us",
+            "privacy": "Privacy Policy",
+            "terms": "Terms of Service"
+        },
+        "social": {
+            "x": "Findmus on X",
+            "facebook": "Findmus on Facebook",
+            "instagram": "Findmus on Instagram",
+            "youtube": "Findmus on YouTube"
+        }
+    },
+    "Testimonials": {
+        "eyebrow": "Testimonials",
+        "title": "Real stories.",
+        "titleAccent": "Real happy endings.",
+        "subtitle": "See how Findmus helps people get their belongings back.",
+        "regionLabel": "Findmus testimonials",
+        "slideLabel": "Testimonial {number} of {total}",
+        "rating": "{rating, number} out of 5 stars",
+        "previous": "Previous testimonials",
+        "next": "Next testimonials",
+        "stories": {
+            "laptop": {
+                "quote": "“Honestly, the relief was the best part. My laptop had been handed in at the library, and someone scanned the sticker to reach me. It took until the next morning to collect it, but at least I knew where it was.”",
+                "name": "Michael T.",
+                "location": "St. John’s, NL"
+            },
+            "suitcase": {
+                "quote": "“Two very similar suitcases got mixed up after our flight. The sticker gave the other traveller a way to contact me, and we sorted out a swap. More luggage-friendly tag options would be nice, though.”",
+                "name": "Sarah K.",
+                "location": "Toronto, ON"
+            },
+            "jacket": {
+                "quote": "“Another school jacket gone, or so I thought. A parent found it at the playground and called using the details on the Findmus page. It was back by Monday. Saved us buying another one.”",
+                "name": "Ama S.",
+                "location": "Halifax, NS"
+            },
+            "keys": {
+                "quote": "“Wasn’t sure anyone would bother scanning it. Turns out someone did when my keys were found on a walking trail. We arranged a nearby pickup. A proper keyring version would be handy.”",
+                "name": "Daniel R.",
+                "location": "Ottawa, ON"
+            },
+            "backpack": {
+                "quote": "“Getting my course notes back mattered more than the bag itself. It had been found on the bus, and the person used Findmus to get in touch. We had to work out a pickup time, but it was pretty straightforward.”",
+                "name": "Priya M.",
+                "location": "Vancouver, BC"
+            },
+            "wallet": {
+                "quote": "“The café had my wallet behind the counter before I even realised it was missing. Someone scanned the sticker and let me know. A smaller sticker for narrow card slots would be useful, but this one did the job.”",
+                "name": "James L.",
+                "location": "Calgary, AB"
+            }
+        }
+    },
+    "FAQ": {
+        "eyebrow": "FAQs",
+        "title": "Everything you need to know",
+        "subtitle": "Quick answers to common questions about Findmus.",
+        "questions": {
+            "howItWorks": {
+                "question": "How does Findmus work?",
+                "answer": "You stick a Findmus QR code on your item. If someone finds it, they scan the code and can securely contact you through our platform."
+            },
+            "privacy": {
+                "question": "Is my information private?",
+                "answer": "At checkout, you choose whether finders can see your name and contact you by email, phone, or both. Only the details you choose to share appear on your QR page."
+            },
+            "notifications": {
+                "question": "Do people really return lost items?",
+                "answer": "Yes, people hand in lost belongings to police, banks, and lost-and-found desks to help them get home. Findmus makes helping easier: a quick scan gives the finder a way to contact you directly."
+            },
+            "items": {
+                "question": "What can I use Findmus on?",
+                "answer": "Findmus works on cards, bus pass, keys, laptops, phones, bags, bikes, clothing, pet items, and almost anything you value."
+            },
+            "subscription": {
+                "question": "Do I need a subscription?",
+                "answer": "No subscription or ongoing fees. Buy once, use forever. Your stickers arrive pre-activated and ready to use."
+            },
+            "help": {
+                "question": "What if I need help?",
+                "answer": "We’re here for you. <contact>Contact our support team</contact> anytime and we’ll be happy to assist."
+            }
+        }
+    },
+    "HowItWorks": {
+        "eyebrow": "How Findmus works",
+        "title": "Three simple steps.",
+        "subtitle": "Order yours and stick it. Get found. Get it back.",
+        "stepNumber": "{number}",
+        "secure": "Secure",
+        "trusted": "Trusted",
+        "noApp": "No App Required",
+        "steps": {
+            "stick": {
+                "title": "Order yours and stick it",
+                "description": "Attach your Findmus sticker to your item.",
+                "alt": "Findmus QR sticker attached to a laptop"
+            },
+            "scan": {
+                "title": "Someone finds it",
+                "description": "They scan the QR code to get in touch with you.",
+                "alt": "A phone scanning a Findmus QR sticker"
+            },
+            "return": {
+                "title": "Get it back",
+                "description": "Findmus connects you with the finder so you can arrange a safe return.",
+                "alt": "A phone showing notifications that a lost item has been found"
+            }
+        }
+    },
+    "CookieNotice": {
+        "dismiss": "Dismiss cookie notice",
+        "title": "Cookies on Findmus",
+        "description": "We use cookies for secure sign-in and to remember choices you make on Findmus.",
+        "learnMore": "Read our <privacy>Privacy Policy</privacy> to learn how cookies and your information are used.",
+        "accept": "Accept cookies"
+    },
+    "Privacy": {
+        "title": "Privacy",
+        "titleAccent": "Policy",
+        "subtitle": "How Findmus handles your information, what a finder can see, and the choices available to you.",
+        "contentLabel": "Findmus privacy policy",
+        "contents": "In this policy",
+        "updatedAt": "2026-11-01T00:00:00.000Z",
+        "lastUpdated": "Last updated: {date} (UTC)",
+        "sectionHeading": "{number}. {title}",
+        "summary": {
+            "title": "The essentials, before you read on",
+            "points": [
+                "Anyone with a sticker’s recovery link can see the assigned owner’s name if name sharing is enabled for the order, and the email or phone details enabled for that sticker. Calls and emails go directly to that owner.",
+                "Your shipping address, order history and sign-in information are not part of the public recovery page. The stickers themselves do not track your location.",
+                "You can ask us about your information, request corrections or deletion, and get help changing the recovery details linked to your stickers."
+            ]
+        },
+        "sections": [
+            {
+                "title": "Who this policy covers",
+                "paragraphs": [
+                    "Findmus (“we”, “us” and “our”) operates in Canada and provides QR stickers and an online recovery service that helps people return lost belongings. This policy explains how personal information is handled through our website, customer portal, orders, recovery pages and support services. Applicable Canadian federal and provincial privacy requirements govern how we handle personal information.",
+                    "It applies to customers who buy stickers, finders who open recovery links, and anyone who contacts us. You can make a privacy enquiry through our <contact>contact form</contact>."
+                ]
+            },
+            {
+                "title": "Information we collect",
+                "paragraphs": [
+                    "Account and contact information: your name, email address, phone number where provided, account role, sign-in records and the information needed to verify access to your account. Customers sign in using an emailed verification code. Authentication credentials, such as verification codes or administrator passwords, are stored in hashed form rather than as readable passwords or codes.",
+                    "Orders and delivery: your order number, selected plan, sticker variants and quantities, order value and currency, shipping address, delivery instructions, order status, shipment references and related customer-service records. Stripe processes payment details on its hosted checkout page. Findmus receives payment confirmation and related customer and checkout references; our application does not store full card numbers or card security codes.",
+                    "Sticker and recovery information: each sticker’s unique QR code, its owner, enabled recovery contact methods and the order it belongs to. Stickers are linked to the customer who purchased them.",
+                    "Support information: the name, email address, message and other information you provide when asking for help, together with ticket references, handling status and internal support notes. Please do not send passwords, verification codes, payment-card numbers or unnecessary sensitive information in a support message.",
+                    "Technical information: visiting a web page sends information such as your network address, requested URL, browser details and request time to the servers handling the request. Our infrastructure and service providers may retain operational or security logs to run the website, investigate faults and address misuse.",
+                    "Usage information: when configured and supported by your browser, Google Analytics for Firebase collects page views and interaction events, including checkout activity, recovery-page views and the contact method a finder selects. This can include page URLs containing a sticker’s recovery code. We use this information to understand how the service is used and improve it."
+                ]
+            },
+            {
+                "title": "What a finder can see",
+                "paragraphs": [
+                    "A Findmus QR code opens a recovery page that is accessible without signing in. That page displays the owner’s name only if name sharing is enabled for the linked order, and the email address or phone number enabled for the sticker. The details shown belong to the customer who purchased the stickers.",
+                    "The recovery URL is not a private account page. Anyone who scans the sticker or receives a copy of its link may be able to view those details. A link or its contents can be forwarded, photographed or saved. Only provide recovery contact details you are comfortable sharing for this purpose.",
+                    "Using the phone or email options opens a direct call or email through the finder’s own service. Findmus does not currently provide an anonymous messaging relay between the finder and owner. Any further information you choose to exchange directly is also handled by the people and communications providers involved.",
+                    "Your delivery address, order history, account sign-in credentials and internal support notes are not included in the public recovery profile. You can update your own name and phone number in your <profile>customer profile</profile>. For changes to other recovery details, removal of a recovery page or concerns about unwanted contact, <contact>contact our team</contact>. Removing information from our service cannot recall copies already saved by someone else."
+                ]
+            },
+            {
+                "title": "Why we use this information",
+                "paragraphs": [
+                    "We use information to create and manage accounts, verify sign-ins, record and fulfil orders, prepare stickers before shipping, associate QR codes with the correct purchaser and owner, and display the recovery contact details needed to help return an item. Your stickers are configured before shipping; you do not need to activate them after delivery.",
+                    "We also use information to process payments, send verification codes and order or support updates, answer enquiries, correct records, investigate security incidents or misuse, understand website usage, maintain reliable services, and meet legal, accounting and record-keeping obligations. Service emails are part of operating your account or order; they are separate from optional promotional communications.",
+                    "Where the law requires a legal basis, we rely on the basis appropriate to the purpose: providing the service or fulfilling an order, complying with legal obligations, protecting legitimate operational and security interests while considering your privacy, or consent where required. Merely reading this policy does not replace a separate consent that the law requires."
+                ]
+            },
+            {
+                "title": "Who receives information",
+                "paragraphs": [
+                    "Recovery-page visitors receive the owner details described above. Authorised Findmus staff can access information needed to prepare orders, manage assignments, provide support and operate the service.",
+                    "We use services for hosting, database infrastructure, email delivery and website assets. Our application uses Resend to send transactional emails, Cloudinary for image assets and LottieFiles for animation assets. Depending on their role, providers process information such as email recipients and message contents, or the technical requests needed to serve an asset. Delivery providers receive the contact and address information needed to ship your order. These disclosures are for the relevant service purpose.",
+                    "Stripe processes payments and receives your email address, customer and order references, selected stickers, quantities, contact-sharing preferences, name, phone number, shipping address and delivery instructions as part of checkout. Payment and any billing details you enter on Stripe’s hosted page are handled by Stripe.",
+                    "Google receives website usage and interaction information through Google Analytics for Firebase. Cloudflare Turnstile processes browser and challenge information to help protect sign-in from automated abuse. We also send the domain portion of a sign-in email address to DeBounce to check for disposable email providers; this check does not send the full email address.",
+                    "We may disclose information where required by law or reasonably necessary to respond to a lawful request, address fraud or threats, or establish, exercise or defend legal rights. We seek to limit a disclosure to information appropriate to its purpose and the applicable law.",
+                    "If Findmus is reorganised, acquired or transfers its business, relevant records may be transferred as part of that transaction, subject to applicable privacy obligations and appropriate confidentiality arrangements. We will provide any notice or obtain any consent the law requires."
+                ]
+            },
+            {
+                "title": "Cookies and third-party services",
+                "paragraphs": [
+                    "Findmus uses cookies for sign-in sessions and authentication security. When you choose a sidebar layout, a cookie remembers that choice. Accepting the cookie notice stores an acknowledgement cookie for up to 180 days so the notice does not appear on every visit. This acknowledgement does not enable or disable analytics. Your browser can block or remove cookies, but doing so may prevent sign-in or interrupt account features. Signing out ends access through your current authenticated session.",
+                    "Loading third-party assets or using an external phone or email service can send technical information to the provider involved. Their privacy practices apply to information they handle independently. Visiting our website does not authorise those providers to use your account or recovery details for unrelated purposes.",
+                    "Google Analytics for Firebase starts automatically when configured and supported by your browser, including before you acknowledge the cookie notice. It uses analytics cookies and collects website usage and interaction information as described above. The current cookie notice can be dismissed or acknowledged; it does not provide an analytics opt-in, opt-out or withdrawal control. Necessary sign-in cookies are separate from analytics cookies."
+                ]
+            },
+            {
+                "title": "Location and QR scans",
+                "paragraphs": [
+                    "Findmus stickers are passive QR labels. They do not contain GPS or Bluetooth and do not report the location of an item or person. The current recovery page does not request precise device location or provide continuous tracking. Opening it still creates an ordinary web request, which can generate the technical information described in this policy.",
+                    "If you choose to share a location or meeting point directly with an owner or finder, consider what is necessary to arrange a safe return. Information exchanged outside Findmus is not automatically collected into a Findmus recovery conversation."
+                ]
+            },
+            {
+                "title": "How long information is kept",
+                "paragraphs": [
+                    "You can close your account from your customer profile. Account closure disables sign-in, prevents existing sessions from accessing protected account features, and hides recovery contact details for your stickers. If you have an unfulfilled order, contact support before closure so we can address that order.",
+                    "Account closure is not automatic erasure of your records. Account identifiers, closure information, purchaser and assignment history, orders, shipments and support records remain held internally. Access is restricted to authorised staff and service providers for the purposes described here. Retention must be limited to what is necessary for identified purposes, such as legal or accounting obligations, fraud prevention, a specific security investigation, or handling a dispute or legal claim; the possibility of an unspecified future investigation is not a reason to retain every record indefinitely.",
+                    "You can separately request access, correction or deletion through our <contact>contact form</contact> after closure. We review what can be deleted or anonymised and what must be retained, explain any lawful exception and its retention criteria, and respond within the period required by applicable law. Closing your account does not waive these rights. You can raise an unresolved concern with the Office of the Privacy Commissioner of Canada or the provincial privacy regulator with jurisdiction.",
+                    "We keep account and recovery information while it is needed to provide an active account or linked recovery service. A sticker may remain in use for a long time, so its QR-to-owner association can be needed beyond the date of purchase.",
+                    "We keep order and shipment records where needed to fulfil an order, handle delivery issues or disputes, establish purchase history, and satisfy applicable tax, accounting or other legal retention requirements. Support records are kept where needed to resolve the enquiry, manage follow-up or disputes, and protect the service. Security and diagnostic records are kept according to their operational purpose and any investigation or legal requirement.",
+                    "Retention depends on the type of information, the ongoing service, outstanding issues and applicable law, rather than a single period for every record. Information that is no longer needed should be deleted or anonymised. Where backups exist, deletion from active systems may precede removal through the backup cycle; retained backup copies should remain limited to appropriate recovery or legal purposes.",
+                    "You may <contact>ask us about retention or request deletion</contact>. We may need to retain a limited record to meet a legal obligation or handle an outstanding claim. Removing an account or recovery information can affect whether a sticker still allows a finder to contact its owner."
+                ]
+            },
+            {
+                "title": "Security and safe use",
+                "paragraphs": [
+                    "We use access controls and authentication safeguards to limit access to account and administrative functions. No internet service or storage system can guarantee absolute security. If a security incident affects personal information, we will assess it and provide notifications where required by applicable law.",
+                    "Keep access to your email account and verification codes secure. Do not publish a recovery URL or contact detail more widely than you intend. If information is incorrect, a sticker is being misused or you receive unwanted contact, <contact>tell our team</contact> so we can review the affected record. Finders should use recovery details only to help return the item."
+                ]
+            },
+            {
+                "title": "Your choices and privacy rights",
+                "paragraphs": [
+                    "You can review and update the name and phone number in your <profile>customer profile</profile>. Contact us to ask what information we hold about you, request a correction or deletion, or get help with recovery-page contact details and assignments.",
+                    "Depending on the law that applies to you, you may also be entitled to access or receive a copy of your information, withdraw consent, object to certain uses, restrict processing or request a portable copy. A request may be subject to lawful exceptions, including the need to keep records or protect another person’s information. Withdrawing consent does not undo processing that was already lawful.",
+                    "Use our <contact>contact form</contact> and identify your message as a privacy request. We may ask for information reasonably necessary to confirm your identity and authority over the record. We will respond within the time required by applicable law and explain any restriction or refusal. You may also complain to the privacy regulator with authority over your concern."
+                ]
+            },
+            {
+                "title": "Children and family belongings",
+                "paragraphs": [
+                    "If you place stickers on a child’s belongings, use a parent’s or responsible adult’s recovery name and contact details. Avoid displaying a child’s full name, school, home address, routine or other information that is not needed for a finder to reach that adult.",
+                    "Do not provide a child’s information without the authority and consent required by applicable law. If you believe a child’s information has been provided inappropriately or exposed through a recovery page, <contact>contact us</contact> so we can review it and take appropriate action."
+                ]
+            },
+            {
+                "title": "International processing",
+                "paragraphs": [
+                    "Our infrastructure and service providers may process information outside the country where you live. Information processed in another country may be subject to that country’s laws and lawful access by its courts or authorities.",
+                    "Where cross-border processing requires safeguards under applicable law, we are responsible for arranging the safeguards applicable to that processing. You can <contact>request more information</contact> about providers and international handling relevant to your data."
+                ]
+            },
+            {
+                "title": "Changes to this policy",
+                "paragraphs": [
+                    "We may update this policy as the service, providers or applicable requirements change. The updated notice will appear here with a revised update date. For material changes, we will provide additional notice and obtain fresh consent where required. A policy update does not override privacy rights or any separate consent the law requires."
+                ]
+            },
+            {
+                "title": "Contact us about privacy",
+                "paragraphs": [
+                    "For a privacy question, access or deletion request, correction, or concern about information shown on a recovery page, please use our <contact>contact form</contact>. Include the email associated with the relevant account and, where helpful, an order number or sticker reference. Please do not include passwords, sign-in codes or unnecessary identity documents."
+                ]
+            }
+        ]
+    },
+    "Terms": {
+        "title": "Terms of",
+        "titleAccent": "Use",
+        "subtitle": "What to expect when you order Findmus stickers, use a recovery page, or manage your account.",
+        "contentLabel": "Findmus terms of use",
+        "contents": "In these terms",
+        "updatedAt": "2026-11-01T00:00:00.000Z",
+        "lastUpdated": "Last updated: {date} (UTC)",
+        "sectionHeading": "{number}. {title}",
+        "summary": {
+            "title": "The essentials, before you read on",
+            "points": [
+                "Your stickers are configured before shipping and arrive ready to use. Keeping the linked owner’s contact details accurate helps a finder reach the right person.",
+                "A QR sticker gives someone a way to contact the owner. It does not track an item, prove ownership, insure your belongings or guarantee their return.",
+                "If an order is held for restocking, you can request cancellation through our team. Your mandatory consumer rights continue to apply."
+            ]
+        },
+        "sections": [
+            {
+                "title": "About these terms",
+                "paragraphs": [
+                    "These Terms of Use govern the Findmus website, customer portal, QR recovery pages, physical stickers and associated support services. “Findmus”, “we”, “us” and “our” refer to the operator of the Findmus service. “You” includes customers, assigned sticker owners, finders and other visitors, as appropriate to the activity described.",
+                    "Please read these terms before placing an order or using the service. Where these terms are presented for acceptance during sign-in or ordering, proceeding confirms your agreement to them. Our <privacy>Privacy Policy</privacy> explains how we handle personal information. Accepting these terms does not replace any separate privacy consent required by law.",
+                    "Nothing in these terms removes a mandatory consumer right, legal guarantee or remedy that applies to you. If a provision conflicts with such a right, that right takes priority."
+                ]
+            },
+            {
+                "title": "How Findmus works",
+                "paragraphs": [
+                    "Findmus sells stickers containing unique QR codes linked to recovery pages. We configure the stickers for the customer who purchased them before shipping. After delivery, attach them to suitable belongings; no separate activation or setup is required.",
+                    "If someone finds an item and opens its QR link, they can use the contact details enabled for that sticker to reach its assigned owner. Recovery depends on someone finding the item, reading the code and choosing to make contact, as well as the recovery page and contact details being accessible.",
+                    "The stickers are passive labels, not GPS or Bluetooth trackers. Findmus does not guarantee that an item will be found, that a finder will contact you, or that an item will be returned. The service is not an emergency response service, insurance policy or proof of legal ownership."
+                ]
+            },
+            {
+                "title": "Accounts, authority and accurate details",
+                "paragraphs": [
+                    "You must have the legal capacity and authority needed for the transaction or activity you undertake. If you cannot enter a binding purchase contract yourself, a parent, guardian or other legally authorised adult should arrange the purchase and manage the recovery contact details. If you act for an organisation or another person, you must have permission to do so.",
+                    "Provide accurate account, contact and delivery information and keep it up to date. Protect access to your email account and sign-in codes. Do not use someone else’s account, share verification codes with an unauthorised person, or misrepresent your identity or authority. <contact>Contact us</contact> if you suspect unauthorised access.",
+                    "Purchasing stickers does not give you permission to publish another person’s information without the authority or consent required by law. Use an adult’s recovery contact details for a child’s belongings and avoid displaying unnecessary information about the child."
+                ]
+            },
+            {
+                "title": "Recovery pages and direct contact",
+                "paragraphs": [
+                    "A recovery page is accessible without signing in. Anyone with a sticker’s QR link can see the owner’s name only if name sharing is enabled for the linked order, and the email or phone details enabled for that sticker. A link and its contents can be copied or shared. Only provide information you are comfortable making available for item recovery.",
+                    "Calls and emails go directly through the finder’s and owner’s communications services. Findmus does not currently provide an anonymous messaging relay. We do not verify every finder or guarantee the accuracy of a person’s claim to an item. Use reasonable care when exchanging further information or arranging a return, and follow applicable lost-property laws.",
+                    "You can update your own name and phone number in your <profile>customer profile</profile>. <contact>Contact our team</contact> about other recovery details, incorrect assignments, unwanted contact or a request to remove a recovery page."
+                ]
+            },
+            {
+                "title": "Orders, prices and confirmation",
+                "paragraphs": [
+                    "Before submitting an order, review the selected plan, sticker variants, quantities, price, currency and delivery details. Any applicable charges must be disclosed before you agree to them. We will ask you to agree to a correction if a pricing or order-detail error affects what you would pay; we will not treat an error as permission to charge an undisclosed amount.",
+                    "Payment is collected through Stripe at checkout. An order acknowledgement confirms receipt of your order, not dispatch. We check stock before allocating stickers. A confirmation may indicate that the order is being prepared or explain that it is waiting for restocking; confirmation alone does not promise immediate dispatch."
+                ]
+            },
+            {
+                "title": "Stock shortages and orders on hold",
+                "paragraphs": [
+                    "We check availability for every sticker variant requested. If there is not enough stock to fulfil the whole order, we put the whole order on hold rather than allocating some variants and leaving the rest unfulfilled. We will explain the restocking delay in the order confirmation.",
+                    "A held order may continue to appear as “Confirmed” in your customer portal while our team records the restocking hold internally. We retry stock allocation and prepare the order once all requested variants are available. Restocking may delay dispatch and delivery; we will not promise a specific replenishment date unless we can confirm one.",
+                    "If the additional wait no longer works for you, <contact>contact us</contact> with the order number to request cancellation before fulfilment resumes. Restocking holds are eligible for cancellation under our order process, in addition to any rights you have by law."
+                ]
+            },
+            {
+                "title": "Cancellations, returns and refunds",
+                "paragraphs": [
+                    "Ordinary orders are not cancellable through our standard order process unless we agree otherwise. The restocking exception is described above. This standard process does not restrict a statutory cancellation or withdrawal right, or a remedy for non-delivery, a faulty product or another failure to meet a legal obligation.",
+                    "To request a cancellation, return, replacement or refund, <contact>contact our team</contact> with the order number and a description of the issue. We will explain the available options, any information reasonably needed, and the return instructions where a return is appropriate. You do not need to rely on a portal button to make a request. Treat the order as active until we confirm cancellation.",
+                    "If a refund is legally due or otherwise agreed, we will confirm the amount and arrangements and meet applicable legal deadlines. Any voluntary return arrangement will be confirmed with you in writing. Any additional return promise or warranty provided with your order remains relevant, together with your mandatory rights. Please confirm the return address and process before sending an item back."
+                ]
+            },
+            {
+                "title": "Delivery and order problems",
+                "paragraphs": [
+                    "Give us a complete and accurate delivery address and only the instructions needed to deliver the parcel. Review your details promptly and tell us about any error as soon as you notice it. We will explain whether a requested change is still possible; a change may not be possible once an order has been prepared or dispatched.",
+                    "Delivery estimates are estimates unless a specific date is expressly agreed. Stock availability, preparation, carriers, customs or events outside our reasonable control can affect delivery. We will provide available shipment information and work with you on reported delivery problems. These provisions do not remove any legal responsibility we have for delivering your order.",
+                    "Please report missing, damaged, incorrect or defective deliveries through our <contact>contact form</contact>, including the order reference and helpful details. A request to report an issue promptly does not shorten a statutory period for raising a claim."
+                ]
+            },
+            {
+                "title": "Using and caring for your stickers",
+                "paragraphs": [
+                    "Choose a sticker variant suited to the intended material and conditions, and follow the product or packaging instructions. Apply stickers carefully to an appropriate surface and keep the code readable. Check that the recovery link and contact details work after application and from time to time while the sticker is in use.",
+                    "Adhesion, wear and removal can vary with the surface, preparation, temperature, washing and other conditions. Test an inconspicuous area where appropriate. Do not cover safety information or apply a sticker where it could interfere with equipment or safe use. We do not promise suitability for every surface or indefinite durability unless an express product description says otherwise.",
+                    "Care and suitability guidance does not remove your rights if a sticker is defective, does not match its description or is otherwise supplied in breach of a legal guarantee."
+                ]
+            },
+            {
+                "title": "Acceptable use and finder responsibilities",
+                "paragraphs": [
+                    "Use Findmus and recovery contact information for lawful item recovery and legitimate account, order or support purposes. Do not use them for harassment, stalking, impersonation, fraud, unwanted marketing, unlawful demands or collecting information about people who have not authorised it.",
+                    "Do not enumerate or scrape recovery links to build contact lists, copy codes to mislead people about an item’s owner, bypass access controls, interfere with the website, or attempt to access another person’s account or private records. Do not submit information you have no right to use or disclose.",
+                    "If you find an item, use the recovery details only for a genuine attempt to arrange its return. Contacting an owner does not automatically give you a right to a reward or payment from Findmus. We do not authorise a finder to collect a fee on our behalf."
+                ]
+            },
+            {
+                "title": "Ownership and permission to use the service",
+                "paragraphs": [
+                    "Findmus branding, website design, software and other service materials belong to Findmus or the relevant rights holder. You may use the website and purchased stickers for their intended personal or organisational recovery purposes. That permission does not authorise you to reproduce our branding, resell access to the service without agreement, or use the service to mislead others.",
+                    "You retain rights you have in information you provide. You allow us to use it as needed to process your order, operate the linked recovery service and support your account, consistently with our <privacy>Privacy Policy</privacy> and applicable law. Providing information does not waive another person’s rights or authorise unrelated uses of their data."
+                ]
+            },
+            {
+                "title": "Availability, maintenance and restrictions",
+                "paragraphs": [
+                    "We aim to keep Findmus available and functioning, but maintenance, faults, network problems and third-party outages can interrupt access. Keep another appropriate way of identifying important belongings and do not rely on a QR sticker as your only protection against loss.",
+                    "We may restrict an account, recovery page or activity where reasonably necessary to address suspected misuse, an incorrect assignment, a security threat or a legal requirement. We will consider the circumstances and provide an explanation or notice where appropriate and lawful. A restriction does not automatically remove your privacy rights, ownership of an item or an entitlement to a refund or other remedy.",
+                    "Your sticker purchase includes lifetime access to its linked recovery service with no subscription or ongoing fees. Individual website features may change over time. These changes do not introduce subscription, renewal or ongoing fees for the recovery service included with your purchase."
+                ]
+            },
+            {
+                "title": "Our responsibility and recovery limitations",
+                "paragraphs": [
+                    "We remain responsible for meeting our contractual and legal obligations. A Findmus sticker gives a finder a way to contact an owner; it does not insure the value of the item. An item being lost or not returned does not, by itself, establish a failure by Findmus. Any claim arising from our own breach or failure to use legally required care remains subject to applicable law.",
+                    "For consumers, nothing here removes a right to compensation or another remedy that the applicable law provides for our breach. In particular, we do not exclude responsibility for fraud, wilful misconduct, death or personal injury caused by negligence where it cannot lawfully be excluded, or mandatory rights relating to goods, services or personal information.",
+                    "If you use Findmus for business purposes, we do not accept responsibility for lost profits, business interruption or lost commercial opportunities arising as indirect business losses, except where applicable law requires otherwise. This provision does not exclude a mandatory remedy or responsibility that cannot lawfully be limited."
+                ]
+            },
+            {
+                "title": "Questions, complaints and disputes",
+                "paragraphs": [
+                    "If something goes wrong, please <contact>contact our team</contact> with the relevant order or sticker reference and a clear description of the issue. We will review it and explain the next steps. An attempt to resolve an issue with us does not prevent you from using a regulator, court or other dispute process available under applicable law.",
+                    "The mandatory consumer protections and legal procedures applicable to your transaction continue to apply. These terms do not require you to waive a protected right, accept compulsory arbitration or give up a lawful complaint route."
+                ]
+            },
+            {
+                "title": "Changes to these terms",
+                "paragraphs": [
+                    "We may update these terms as the service or applicable requirements change. The updated text and date will appear here. Material changes affecting an ongoing service will be communicated where appropriate, and we will obtain fresh agreement where the law requires it.",
+                    "Changes do not retrospectively remove a right attached to an existing order or excuse a breach that has already occurred. Any continuing service changes remain subject to your contract and mandatory rights. If part of these terms cannot be enforced, the remainder applies only to the extent it can operate lawfully and fairly."
+                ]
+            },
+            {
+                "title": "Contact Findmus",
+                "paragraphs": [
+                    "For a question about these terms, an order, a return or a recovery page, use our <contact>contact form</contact>. You can review your purchase references in <orders>your orders</orders>. Include the information needed to identify the issue, but do not send account passwords, verification codes or payment-card details."
+                ]
+            }
+        ]
+    },
+    "Ticket": {
+        "title": "Contact",
+        "titleAccent": "Us",
+        "subtitle": "Have a question about Findmus, your stickers, or an order? Get in touch — we're here to help."
+    },
+    "Blog": {
+        "title": "Stories &",
+        "titleAccent": "Tips",
+        "subtitle": "Tips for keeping track of your belongings, stories of happy reunions, and ideas for making everyday life a little less lost.",
+        "featuredStories": "Featured Stories",
+        "latestArticles": "Latest Articles",
+        "noLatestStories": "More stories are on their way. Check back soon.",
+        "pagination": "Article pages",
+        "previousPage": "Previous",
+        "nextPage": "Next",
+        "pageNumber": "Page {page, number} of {total, number}",
+        "backToStories": "Back to stories",
+        "contentImage": "Image accompanying this story",
+        "readStory": "Read story: {title}",
+        "featuredBadge": "Featured",
+        "loading": "Loading stories…",
+        "loadError": "We couldn’t load the stories. Please try again.",
+        "retry": "Try again",
+        "noFeaturedStories": "Our first featured stories are on their way. Check back soon.",
+        "admin": {
+            "title": "Blog",
+            "description": "Create stories, prepare drafts, and choose what appears on the Findmus blog. Select a story to edit it.",
+            "createPost": "Create story",
+            "editPost": "Edit story",
+            "editorDescription": "Save a draft while you work. Select Published when your story is ready for everyone to read.",
+            "defaultAuthor": "Findmus Team",
+            "existingTags": "Existing tags — select one to add it",
+            "loadingTags": "Loading tags…",
+            "tagsLoadError": "Unable to load existing tags.",
+            "noTags": "No saved tags yet. Add tags to a story to reuse them here.",
+            "reuseTag": "Add tag: {tag}",
+            "status": "Status",
+            "published": "Published",
+            "draft": "Draft",
+            "yes": "Yes",
+            "no": "No",
+            "createdAt": "Created",
+            "loading": "Loading story…",
+            "loadError": "Unable to load the stories. Please try again.",
+            "retry": "Try again",
+            "close": "Close editor",
+            "cancel": "Cancel",
+            "save": "Save story",
+            "saving": "Saving…",
+            "saved": "Story saved.",
+            "fields": {
+                "title": "Title",
+                "slug": "URL slug",
+                "author": "Author",
+                "coverImageUrl": "Cover image URL (optional)",
+                "tags": "Tags (optional)",
+                "excerpt": "Excerpt",
+                "content": "Story content",
+                "featured": "Featured story",
+                "published": "Published"
+            },
+            "help": {
+                "title": "Give your story a clear, descriptive title.",
+                "slug": "Used in the story URL. Use lowercase letters, numbers and hyphens.",
+                "author": "Leave blank to use Findmus Team.",
+                "coverImageUrl": "Use a Findmus or Findmus Cloudinary image URL. Leave blank for a dark title cover.",
+                "tags": "Separate tags with commas. Up to 20 tags, with 50 characters per tag.",
+                "excerpt": "Write a short introduction for the story card, up to 600 characters. Required to publish.",
+                "content": "Required to publish. Drafts can be saved while you are still writing.",
+                "featured": "Featured stories appear only in Featured Stories, ordered newest first.",
+                "published": "Published stories are visible to visitors. Clear this to return the story to draft."
+            },
+            "errors": {
+                "titleRequired": "Enter a story title.",
+                "slugInvalid": "Use lowercase letters, numbers and single hyphens between words.",
+                "coverInvalid": "Use an HTTPS image URL from Findmus or the Findmus Cloudinary account.",
+                "tagsInvalid": "Use no more than 20 tags, with 50 characters per tag.",
+                "tooLong": "Use {max, number} characters or fewer.",
+                "excerptRequired": "Add an excerpt before publishing.",
+                "contentRequired": "Write your story before publishing.",
+                "slugTaken": "Another story already uses this URL slug. Choose a different one.",
+                "publishIncomplete": "Add both an excerpt and story content before publishing.",
+                "invalidContent": "The story content could not be saved. Check its formatting and links, or shorten the story.",
+                "save": "Unable to save the story. Please check the fields and try again."
+            },
+            "editor": {
+                "label": "Story content",
+                "formatting": "Story formatting",
+                "bold": "Bold",
+                "italic": "Italic",
+                "underline": "Underline",
+                "strike": "Strikethrough",
+                "heading2": "Heading",
+                "heading3": "Subheading",
+                "bulletList": "Bullet list",
+                "orderedList": "Numbered list",
+                "blockquote": "Quote",
+                "unlink": "Remove link",
+                "undo": "Undo",
+                "redo": "Redo",
+                "linkHelp": "Select the text to link, then enter a web address.",
+                "applyLink": "Apply link",
+                "invalidLink": "Enter a complete HTTP or HTTPS web address.",
+                "selectText": "Select some story text before adding a link."
+            }
+        }
+    },
+    "UseCases": {
+        "title": "Everyday Items.",
+        "titleAccent": "Endless Possibilities.",
+        "subtitle": "From keys and backpacks to laptops and luggage, give the things you carry a way home. Discover where Findmus QR stickers can make a difference.",
+        "regionLabel": "Ways to use your QR stickers",
+        "pageLabel": "Page {number} of {total}",
+        "previous": "Previous use cases",
+        "next": "Next use cases",
+        "items": {
+            "keys": {
+                "title": "Keys",
+                "description": "Add a sticker to your key holder so misplaced house or car keys have a way home."
+            },
+            "wallets": {
+                "title": "Wallets",
+                "description": "Help someone return the wallet you left at a checkout, café, or bus stop."
+            },
+            "phones": {
+                "title": "Phones",
+                "description": "Put a sticker on your phone case so a finder can reach you even when the screen is locked."
+            },
+            "laptops": {
+                "title": "Laptops & Tablets",
+                "description": "Give devices left in classrooms, offices, or cafés a clear way back to you."
+            },
+            "backpacks": {
+                "title": "Backpacks",
+                "description": "Make your everyday bag easier to return after a busy commute or a day on campus."
+            },
+            "luggage": {
+                "title": "Luggage",
+                "description": "Add a contact option to your suitcase so a finder can help reunite you with your bags."
+            },
+            "waterBottles": {
+                "title": "Water Bottles",
+                "description": "Help your reusable bottle find its way back from the gym, office, or playground."
+            },
+            "headphones": {
+                "title": "Headphones",
+                "description": "Label your headphone or earbud case for an easy return when it slips out of your bag."
+            },
+            "glassesCases": {
+                "title": "Glasses Cases",
+                "description": "Give a finder a way to return the glasses case you left on a desk or train seat."
+            },
+            "jackets": {
+                "title": "Jackets & Coats",
+                "description": "Place a sticker on a suitable clothing label to help a forgotten coat make it home."
+            },
+            "schoolUniforms": {
+                "title": "School Uniforms",
+                "description": "Label suitable areas of uniforms and PE kits to help school staff return mixed-up clothing."
+            },
+            "kidsLunchboxes": {
+                "title": "Kids’ Lunchboxes",
+                "description": "Make lunchboxes easier to return from school, clubs, and trips with a quick scan."
+            },
+            "kidsClothing": {
+                "title": "Kids’ Clothing",
+                "description": "A sticker on a suitable clothing label can help someone contact a parent or guardian."
+            },
+            "supportClothing": {
+                "title": "Caregiver Contact",
+                "description": "For people with additional support needs, a clothing label can help someone reach a trusted contact."
+            },
+            "mobilityAids": {
+                "title": "Mobility Aids",
+                "description": "Label a walking stick or other mobility aid so a finder can contact its owner."
+            },
+            "tools": {
+                "title": "Tools & Toolboxes",
+                "description": "Give tools and their cases a way back when they are left at a job site or shared workspace."
+            },
+            "sportsGear": {
+                "title": "Sports Gear",
+                "description": "Label helmets, rackets, and gear bags to help items left after practice get returned."
+            },
+            "cameraCases": {
+                "title": "Camera Cases",
+                "description": "Help someone return your camera bag after a shoot, day trip, or busy event."
+            }
+        }
+    },
+    "About": {
+        "title": "About",
+        "titleAccent": "Findmus",
+        "subtitle": "We make it simple for lost belongings to find their way home. Our ready-to-use QR stickers help finders connect with owners, turning lost items into happy reunions.",
+        "purpose": {
+            "eyebrow": "Why we’re here",
+            "title": "Lost doesn’t have to mean gone.",
+            "introduction": "A bag left on a bus. Keys dropped on a walk. A laptop with work you can’t easily replace. Losing something can interrupt your day and leave you wondering whether you’ll ever see it again.",
+            "description": "We believe the person who finds it should have a simple way to help. Findmus gives your belongings a QR sticker that connects a finder with the owner’s recovery contact details — a small step that can make a return possible.",
+            "promise": "Our purpose is simple: make it easier for someone’s good intentions to become a way home for your belongings.",
+            "imageAlt": "A phone scanning a Findmus QR sticker on a belonging.",
+            "caption": "A scan gives a finder a way to reach the owner."
+        }
+    },
+    "Pricing": {
+        "title": "Affordable",
+        "titleAccent": "Sticker Pricing",
+        "subtitle": "A little peace of mind for the things you care about. Choose the sticker types that suit your belongings and order as many as you need.",
+        "plansLabel": "Compare sticker types and unit prices",
+        "freeShipping": "Free shipping across Canada",
+        "startingAt": "From",
+        "perSticker": "per sticker",
+        "quantityRange": "{minimum, number}–{maximum, number} stickers",
+        "quantityFrom": "{minimum, number}+ stickers",
+        "variantPricingNote": "Each sticker type's quantity determines its unit price.",
+        "minimumOrder": "Minimum {minimum, number} stickers per order.",
+        "chooseVariant": "Choose {variant} stickers",
+        "variants": {
+            "everyday": {
+                "title": "Everyday",
+                "description": "A way home for the essentials that go everywhere with you."
+            },
+            "tough": {
+                "title": "Tough",
+                "description": "For the gear you count on, wherever the day takes you."
+            },
+            "fabric": {
+                "title": "Fabric",
+                "description": "For favourite outfits, school-day staples, and bags full of memories."
+            }
+        },
+        "descriptions": {
+            "personal": "For your everyday favourites, with a few spare stickers just in case.",
+            "family": "For you and the people you care about, with a few spares just in case.",
+            "custom": "As many as you need, for yourself, your loved ones or the team behind your business."
+        },
+        "readyToUse": "Pre-activated and ready to stick",
+        "getStickers": "Get Your Stickers",
+        "choosePlan": "Get stickers with the {plan} plan"
+    },
+    "Hero": {
+        "eyebrow": "A smarter way to get lost items back",
+        "titleFirstLine": "Stick. Scan.",
+        "titleSecondLine": "Get It Back.",
+        "mobileSubtitle": "If someone finds your lost item, they can scan the QR sticker to get in touch with you.",
+        "desktopSubtitle": "Findmus QR stickers help you recover your lost items easily. If someone finds your item, they can scan the QR sticker to get in touch with you.",
+        "getYourStickers": "Get Your QR Stickers",
+        "howItWorks": "How It Works",
+        "secured": "Secured",
+        "trusted": "Trusted",
+        "trustedByPeopleEverywhere": "Trusted by people everywhere",
+        "carousel": {
+            "regionLabel": "Findmus QR sticker use cases",
+            "laptopsTitle": "Stick on Electronics",
+            "laptopsDescription": "Keep your devices within reach.",
+            "laptopsAlt": "Findmus QR sticker on a laptop",
+            "bagsTitle": "Stick on Backpacks",
+            "bagsDescription": "School bags, travel luggage, gym bags and more.",
+            "bagsAlt": "Findmus QR sticker on a black backpack",
+            "keysTitle": "Stick on Keys & Essentials",
+            "keysDescription": "Keys, wallets, ID cards and more.",
+            "keysAlt": "Findmus QR tag attached to keys",
+            "walletsTitle": "Stick on Wallets & Cards",
+            "walletsDescription": "Keep everyday essentials easy to return.",
+            "walletsAlt": "Findmus QR sticker on a wallet",
+            "phonesTitle": "Stick on Phones & Devices",
+            "phonesDescription": "Give your everyday tech a way back.",
+            "phonesAlt": "Findmus QR sticker on a phone",
+            "passesTitle": "Stick on Passes & IDs",
+            "passesDescription": "Help lost travel cards find their way home.",
+            "passesAlt": "Findmus QR sticker on a bus pass",
+            "previous": "Previous item",
+            "next": "Next item",
+            "slideLabel": "{title}, slide {number} of {total}"
+        },
+        "categories": {
+            "luggage": "Luggage",
+            "laptops": "Laptops",
+            "keys": "Keys",
+            "wallets": "Wallets",
+            "bikes": "Bikes",
+            "cameras": "Cameras",
+            "pets": "Pets"
+        }
     }
-  }
 }

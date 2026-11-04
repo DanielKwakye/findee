@@ -1,27 +1,50 @@
-"use client";
+'use client';
 
-import {useMemo, useState} from "react";
-import type {KeyboardEvent, MouseEvent} from "react";
-import {isPortalTableControl} from "@/components/platform/utils/portal.table.utils";
-import {useTranslations} from "next-intl";
-import {functionalUpdate, useTable} from "@tanstack/react-table";
-import type {PaginationState, RowSelectionState, SortingState, Updater} from "@tanstack/react-table";
-import type {PortalTableProps} from "@/components/platform/utils/portal.table.types";
-import {createPortalTableSelectionColumn} from "@/components/platform/ui/shared/portal-table-selection";
-import {portalTableFeatures} from "@/components/platform/data/portal.table";
+import { useMemo, useState } from 'react';
+import type { KeyboardEvent, MouseEvent } from 'react';
+import { isPortalTableControl } from '@/components/platform/utils/portal.table.utils';
+import { useTranslations } from 'next-intl';
+import { functionalUpdate, useTable } from '@tanstack/react-table';
+import type {
+    PaginationState,
+    RowSelectionState,
+    SortingState,
+    Updater,
+} from '@tanstack/react-table';
+import type { PortalTableProps } from '@/components/platform/utils/portal.table.types';
+import { createPortalTableSelectionColumn } from '@/components/platform/ui/shared/portal-table-selection';
+import { portalTableFeatures } from '@/components/platform/data/portal.table';
 
 /** Manages reusable table behavior and coordinates server-owned pagination and filtering. */
 export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
-    const {data, columns, pagination, onPaginationChange, onSearchChange, onSortingChange, search, getRowId} = props;
-    const [globalFilter, setGlobalFilter] = useState("");
+    const {
+        data,
+        columns,
+        pagination,
+        onPaginationChange,
+        onSearchChange,
+        onSortingChange,
+        search,
+        getRowId,
+    } = props;
+    const [globalFilter, setGlobalFilter] = useState('');
     const [sorting, setSorting] = useState<SortingState>([]);
     const [internalSelection, setInternalSelection] = useState<RowSelectionState>({});
     const rowSelection = props.rowSelection ?? internalSelection;
-    const t = useTranslations("portalTable");
-    const tableColumns = useMemo(() => props.enableRowSelection ? [
-        createPortalTableSelectionColumn<T>({selectPage: t("selectPage"), selectRow: t("selectRow")}, props.isLoading ?? false),
-        ...columns,
-    ] : columns, [columns, props.enableRowSelection, props.isLoading, t]);
+    const t = useTranslations('portalTable');
+    const tableColumns = useMemo(
+        () =>
+            props.enableRowSelection
+                ? [
+                      createPortalTableSelectionColumn<T>(
+                          { selectPage: t('selectPage'), selectRow: t('selectRow') },
+                          props.isLoading ?? false,
+                      ),
+                      ...columns,
+                  ]
+                : columns,
+        [columns, props.enableRowSelection, props.isLoading, t],
+    );
     const serverPaginated = pagination !== undefined;
 
     /** Keeps row selection available to both the table and the consuming feature. */
@@ -34,7 +57,7 @@ export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
     /** Adapts table pagination to the application's one-based page API. */
     function changePagination(updater: Updater<PaginationState>) {
         if (!pagination || !onPaginationChange) return;
-        const current = {pageIndex: pagination.page - 1, pageSize: pagination.pageSize};
+        const current = { pageIndex: pagination.page - 1, pageSize: pagination.pageSize };
         const next = functionalUpdate(updater, current);
         onPaginationChange({
             page: next.pageSize !== current.pageSize ? 1 : next.pageIndex + 1,
@@ -47,7 +70,8 @@ export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
         const next = functionalUpdate(updater, search ?? globalFilter);
         setGlobalFilter(next);
         onSearchChange?.(next);
-        if (pagination && !onSearchChange) onPaginationChange?.({page: 1, pageSize: pagination.pageSize});
+        if (pagination && !onSearchChange)
+            onPaginationChange?.({ page: 1, pageSize: pagination.pageSize });
     }
 
     /** Coordinates sorting with either local row models or a server query. */
@@ -55,7 +79,7 @@ export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
         const next = functionalUpdate(updater, sorting);
         setSorting(next);
         onSortingChange?.(next);
-        if (pagination) onPaginationChange?.({page: 1, pageSize: pagination.pageSize});
+        if (pagination) onPaginationChange?.({ page: 1, pageSize: pagination.pageSize });
     }
 
     const table = useTable({
@@ -63,18 +87,22 @@ export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
         data,
         columns: tableColumns,
         getRowId,
-        initialState: {pagination: {pageIndex: 0, pageSize: props.initialPageSize ?? 10}},
+        initialState: { pagination: { pageIndex: 0, pageSize: props.initialPageSize ?? 10 } },
         state: {
             globalFilter: search ?? globalFilter,
             sorting,
             rowSelection,
-            ...(pagination ? {pagination: {pageIndex: pagination.page - 1, pageSize: pagination.pageSize}} : {}),
+            ...(pagination
+                ? { pagination: { pageIndex: pagination.page - 1, pageSize: pagination.pageSize } }
+                : {}),
         },
         onGlobalFilterChange: changeSearch,
         onSortingChange: changeSorting,
         onRowSelectionChange: changeRowSelection,
-        enableRowSelection: props.enableRowSelection ? row => props.isRowSelectable?.(row.original) ?? true : false,
-        ...(serverPaginated ? {onPaginationChange: changePagination} : {}),
+        enableRowSelection: props.enableRowSelection
+            ? (row) => props.isRowSelectable?.(row.original) ?? true
+            : false,
+        ...(serverPaginated ? { onPaginationChange: changePagination } : {}),
         manualPagination: serverPaginated,
         manualFiltering: serverPaginated || onSearchChange !== undefined,
         manualSorting: serverPaginated || onSortingChange !== undefined,
@@ -89,15 +117,24 @@ export function usePortalTable<T extends object>(props: PortalTableProps<T>) {
         return {
             tabIndex: 0,
             onClick: (event: MouseEvent<HTMLTableRowElement>) => {
-                if (!isPortalTableControl(event.target, event.currentTarget)) props.onRowClick?.(row);
+                if (!isPortalTableControl(event.target, event.currentTarget))
+                    props.onRowClick?.(row);
             },
             onKeyDown: (event: KeyboardEvent<HTMLTableRowElement>) => {
-                if (event.target !== event.currentTarget || (event.key !== "Enter" && event.key !== " ")) return;
+                if (
+                    event.target !== event.currentTarget ||
+                    (event.key !== 'Enter' && event.key !== ' ')
+                )
+                    return;
                 event.preventDefault();
                 props.onRowClick?.(row);
             },
         };
     }
 
-    return {table, canSearch: !serverPaginated || onSearchChange !== undefined, getRowInteractionProps};
+    return {
+        table,
+        canSearch: !serverPaginated || onSearchChange !== undefined,
+        getRowInteractionProps,
+    };
 }

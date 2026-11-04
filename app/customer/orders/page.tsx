@@ -1,6 +1,6 @@
-import CustomerOrdersTable from "@/features/orders/components/ui/customer-orders-table";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
+import CustomerOrdersTable from '@/features/orders/components/ui/customer-orders-table';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.customerOrders };
 

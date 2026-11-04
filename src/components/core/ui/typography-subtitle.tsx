@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import type { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 type Props = {
     children: ReactNode;
@@ -7,5 +7,5 @@ type Props = {
 };
 
 export default function TypographySubtitle({ children, className }: Props) {
-    return <p className={cn("text-sm leading-6 text-muted-foreground", className)}>{children}</p>;
+    return <p className={cn('text-sm leading-6 text-muted-foreground', className)}>{children}</p>;
 }

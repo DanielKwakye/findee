@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 /** Manages customer navigation and session feedback after sign-in. */
 export function useCustomerSignIn() {
@@ -10,8 +10,8 @@ export function useCustomerSignIn() {
 
     /** Opens the customer's account after email verification. */
     function onVerified() {
-        void queryClient.invalidateQueries({ queryKey: ["auth", "session"] });
-        router.replace("/customer");
+        void queryClient.invalidateQueries({ queryKey: ['auth', 'session'] });
+        router.replace('/customer');
         router.refresh();
     }
 

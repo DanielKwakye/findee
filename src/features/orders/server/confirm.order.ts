@@ -1,11 +1,22 @@
-import "server-only";
+import 'server-only';
 
-import { getOrderNotificationContext, sendOrderConfirmationNotifications } from "@/features/orders/utils/order.confirmation.notifications";
-import { assignOrderConfirmationProducts, createOrderRestockTicket, findOrderConfirmationProducts,
-    getConfirmationOrder, saveOrderConfirmation } from "@/features/orders/utils/order.confirmation.utils";
-import type { OrderConfirmationOptions, OrderConfirmationResult } from "@/features/orders/utils/order.types";
-import { validateOrderId } from "@/features/orders/utils/order.validations";
-import { db } from "@/lib/db";
+import {
+    getOrderNotificationContext,
+    sendOrderConfirmationNotifications,
+} from '@/features/orders/utils/order.confirmation.notifications';
+import {
+    assignOrderConfirmationProducts,
+    createOrderRestockTicket,
+    findOrderConfirmationProducts,
+    getConfirmationOrder,
+    saveOrderConfirmation,
+} from '@/features/orders/utils/order.confirmation.utils';
+import type {
+    OrderConfirmationOptions,
+    OrderConfirmationResult,
+} from '@/features/orders/utils/order.types';
+import { validateOrderId } from '@/features/orders/utils/order.validations';
+import { db } from '@/lib/db';
 
 /**
  * Confirms and allocates an entire order for a trusted, authenticated server caller.
@@ -24,30 +35,46 @@ import { db } from "@/lib/db";
  * - Tracks delivery per recipient, skips successful deliveries, and uses idempotency keys, pacing, timeouts, and bounded retries.
  * - Returns processing, restocking, or skipped with a notified flag; later calls can retry held stock or incomplete delivery.
  */
-export async function confirmOrder(id: string, options: OrderConfirmationOptions = {}): Promise<OrderConfirmationResult> {
+export async function confirmOrder(
+    id: string,
+    options: OrderConfirmationOptions = {},
+): Promise<OrderConfirmationResult> {
     // The calling endpoint is responsible for authenticating and authorizing the request.
     validateOrderId(id);
     // Load translations and validate the email destinations before changing the order.
     const context = await getOrderNotificationContext();
 
     // Commit the ticket, allocations, and order state together so partial fulfillment cannot persist.
-    const result = await db.$transaction(async transaction => {
-        if (options.deadline && Date.now() >= options.deadline) throw new Error("Order confirmation time budget reached");
+    const result = await db.$transaction(async (transaction) => {
+        if (options.deadline && Date.now() >= options.deadline)
+            throw new Error('Order confirmation time budget reached');
         // Load only the order details needed for allocation and notifications.
         const order = await getConfirmationOrder(transaction, id);
         if (order.paymentAt === null) return null;
         // Retry allocation only for pending orders or confirmed orders waiting for stock.
-        if (order.status !== "PENDING" && order.status !== "CONFIRMED" && order.status !== "HOLD") return null;
-        if (order.status === "CONFIRMED" && !order.cancellable) return order;
+        if (order.status !== 'PENDING' && order.status !== 'CONFIRMED' && order.status !== 'HOLD')
+            return null;
+        if (order.status === 'CONFIRMED' && !order.cancellable) return order;
 
         // Validate the requested variants and find the complete oldest-first sticker selection.
-        const { productIds, restocking } = await findOrderConfirmationProducts(transaction, order.planDetail.allocations);
+        const { productIds, restocking } = await findOrderConfirmationProducts(
+            transaction,
+            order.planDetail.allocations,
+        );
         // Repeated shortages leave the existing hold and support ticket intact.
-        if (restocking && (order.status === "HOLD" || order.status === "CONFIRMED") && order.cancellable) {
+        if (
+            restocking &&
+            (order.status === 'HOLD' || order.status === 'CONFIRMED') &&
+            order.cancellable
+        ) {
             // Upgrade existing restocking orders without recreating their ticket or resending delivered emails.
-            if (order.status === "CONFIRMED") {
-                await transaction.order.update({ where: { id }, data: { status: "HOLD" }, select: { id: true } });
-                return { ...order, status: "HOLD" as const };
+            if (order.status === 'CONFIRMED') {
+                await transaction.order.update({
+                    where: { id },
+                    data: { status: 'HOLD' },
+                    select: { id: true },
+                });
+                return { ...order, status: 'HOLD' as const };
             }
             return order;
         }
@@ -61,8 +88,8 @@ export async function confirmOrder(id: string, options: OrderConfirmationOptions
         // Only held orders are cancellable; each state change needs its own notification.
         return saveOrderConfirmation(transaction, order, restocking);
     });
-    if (!result) return { outcome: "skipped", notified: false };
-    const event = result.status === "HOLD" ? "restocking" : "processing";
+    if (!result) return { outcome: 'skipped', notified: false };
+    const event = result.status === 'HOLD' ? 'restocking' : 'processing';
     if (result.confirmationNotifiedAt) return { outcome: event, notified: true };
 
     // Send after commit so delivery failures do not undo fulfillment; later calls can retry delivery.

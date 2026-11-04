@@ -1,26 +1,34 @@
-"use client";
+'use client';
 
-import { useForm, useWatch } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { checkoutStepper } from "@/features/checkout/data/checkout.steps";
-import type { CheckoutCustomer, CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
-import { getCheckoutPlans } from "@/features/checkout/server/get.checkout.plans.action";
-import { distributeCheckoutQuantity } from "@/features/checkout/utils/checkout.allocation";
-import { submitCheckout } from "@/features/checkout/server/submit.checkout.action";
-import { getCheckoutAllocationError } from "@/features/checkout/utils/checkout.validations";
-import type { CheckoutVariant } from "@/features/checkout/data/checkout.variants";
-import { trackEvent } from "@/lib/firebase";
-import { getCheckoutPlanPrice } from "@/features/checkout/utils/checkout.pricing";
-import { getLastShippingAddress } from "@/features/orders/server/get.last.shipping.address.action";
-import { getDeliveryEstimate } from "@/features/orders/server/get.delivery.estimate.action";
-import { useUserDateTime } from "@/components/platform";
+import { useForm, useWatch } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { checkoutStepper } from '@/features/checkout/data/checkout.steps';
+import type {
+    CheckoutCustomer,
+    CheckoutPlan,
+    CheckoutValues,
+} from '@/features/checkout/utils/checkout.types';
+import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.action';
+import { distributeCheckoutQuantity } from '@/features/checkout/utils/checkout.allocation';
+import { submitCheckout } from '@/features/checkout/server/submit.checkout.action';
+import { getCheckoutAllocationError } from '@/features/checkout/utils/checkout.validations';
+import type { CheckoutVariant } from '@/features/checkout/data/checkout.variants';
+import { trackEvent } from '@/lib/firebase';
+import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
+import { getLastShippingAddress } from '@/features/orders/server/get.last.shipping.address.action';
+import { getDeliveryEstimate } from '@/features/orders/server/get.delivery.estimate.action';
+import { useUserDateTime } from '@/components/platform';
 
 /** Manages checkout navigation and the customer's variant selections. */
-export function useCheckout(customer: CheckoutCustomer | null, initialPlan: CheckoutPlan["id"] = "custom", initialVariant: CheckoutVariant = "Everyday") {
-    const t = useTranslations("Checkout");
+export function useCheckout(
+    customer: CheckoutCustomer | null,
+    initialPlan: CheckoutPlan['id'] = 'custom',
+    initialVariant: CheckoutVariant = 'Everyday',
+) {
+    const t = useTranslations('Checkout');
     const router = useRouter();
     const queryClient = useQueryClient();
     const formatDate = useUserDateTime();
@@ -28,152 +36,200 @@ export function useCheckout(customer: CheckoutCustomer | null, initialPlan: Chec
     useEffect(() => {
         if (checkoutTracked.current) return;
         checkoutTracked.current = true;
-        void trackEvent("begin_checkout");
+        void trackEvent('begin_checkout');
     }, []);
     const stepper = checkoutStepper.useStepper();
     const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
     const authenticatedEmail = customer?.email ?? verifiedEmail;
-    const form = useForm<CheckoutValues>({ defaultValues: {
-        variants: [initialVariant], plan: initialPlan, customQuantity: 20, allocation: {}, email: customer?.email ?? "", name: customer?.name ?? "", phone: customer?.phone ?? "",
-        contactByEmail: true, contactByPhone: false, showName: false, shippingAddress: "", postalCode: "", deliveryInstructions: "",
-    } });
+    const form = useForm<CheckoutValues>({
+        defaultValues: {
+            variants: [initialVariant],
+            plan: initialPlan,
+            customQuantity: 20,
+            allocation: {},
+            email: customer?.email ?? '',
+            name: customer?.name ?? '',
+            phone: customer?.phone ?? '',
+            contactByEmail: true,
+            contactByPhone: false,
+            showName: false,
+            shippingAddress: '',
+            postalCode: '',
+            deliveryInstructions: '',
+        },
+    });
     useEffect(() => {
-        form.setValue("plan", initialPlan);
+        form.setValue('plan', initialPlan);
     }, [initialPlan, form]);
     useEffect(() => {
         if (!customer) return;
-        form.setValue("email", customer.email);
-        if (!form.getFieldState("name").isDirty) form.setValue("name", customer.name ?? "");
-        if (!form.getFieldState("phone").isDirty) form.setValue("phone", customer.phone ?? "");
+        form.setValue('email', customer.email);
+        if (!form.getFieldState('name').isDirty) form.setValue('name', customer.name ?? '');
+        if (!form.getFieldState('phone').isDirty) form.setValue('phone', customer.phone ?? '');
     }, [customer, form]);
     const shippingAddressQuery = useQuery({
-        queryKey: ["orders", "last-shipping-address", authenticatedEmail],
+        queryKey: ['orders', 'last-shipping-address', authenticatedEmail],
         queryFn: getLastShippingAddress,
-        enabled: !!authenticatedEmail && stepper.current.id === "checkout",
+        enabled: !!authenticatedEmail && stepper.current.id === 'checkout',
     });
-    const postalCode = useWatch({ control: form.control, name: "postalCode" });
-    const estimatePostalCode = postalCode?.length === 6 ? postalCode : "";
+    const postalCode = useWatch({ control: form.control, name: 'postalCode' });
+    const estimatePostalCode = postalCode?.length === 6 ? postalCode : '';
     const deliveryEstimateQuery = useQuery({
-        queryKey: ["orders", "delivery-estimate", authenticatedEmail, estimatePostalCode],
+        queryKey: ['orders', 'delivery-estimate', authenticatedEmail, estimatePostalCode],
         queryFn: () => getDeliveryEstimate(estimatePostalCode),
-        enabled: !!authenticatedEmail && stepper.current.id === "checkout",
+        enabled: !!authenticatedEmail && stepper.current.id === 'checkout',
         staleTime: 0,
         refetchInterval: 60_000,
     });
     const deliveryEstimate = deliveryEstimateQuery.data
-        ? t("details.estimatedDelivery", { date: formatDate(new Date(`${deliveryEstimateQuery.data}T00:00:00Z`), { dateOnly: true }) })
-        : t(deliveryEstimateQuery.isError ? "details.deliveryEstimateError" : "details.deliveryEstimateLoading");
+        ? t('details.estimatedDelivery', {
+              date: formatDate(new Date(`${deliveryEstimateQuery.data}T00:00:00Z`), {
+                  dateOnly: true,
+              }),
+          })
+        : t(
+              deliveryEstimateQuery.isError
+                  ? 'details.deliveryEstimateError'
+                  : 'details.deliveryEstimateLoading',
+          );
     useEffect(() => {
         const destination = shippingAddressQuery.data;
         if (!destination) return;
-        if (!form.getFieldState("shippingAddress").isDirty) form.setValue("shippingAddress", destination.shippingAddress);
-        if (!form.getFieldState("postalCode").isDirty) form.setValue("postalCode", destination.postalCode);
+        if (!form.getFieldState('shippingAddress').isDirty)
+            form.setValue('shippingAddress', destination.shippingAddress);
+        if (!form.getFieldState('postalCode').isDirty)
+            form.setValue('postalCode', destination.postalCode);
     }, [shippingAddressQuery.data, form]);
-    const allocationSetup = useRef("");
-    const variants = useWatch({ control: form.control, name: "variants" });
-    const selectedPlan = useWatch({ control: form.control, name: "plan" });
-    const customQuantity = useWatch({ control: form.control, name: "customQuantity" });
-    const allocation = useWatch({ control: form.control, name: "allocation" });
-    const [contactByEmail, contactByPhone] = useWatch({ control: form.control,
-        name: ["contactByEmail", "contactByPhone"] });
+    const allocationSetup = useRef('');
+    const variants = useWatch({ control: form.control, name: 'variants' });
+    const selectedPlan = useWatch({ control: form.control, name: 'plan' });
+    const customQuantity = useWatch({ control: form.control, name: 'customQuantity' });
+    const allocation = useWatch({ control: form.control, name: 'allocation' });
+    const [contactByEmail, contactByPhone] = useWatch({
+        control: form.control,
+        name: ['contactByEmail', 'contactByPhone'],
+    });
     const submission = useMutation({
         mutationFn: submitCheckout,
         retry: false,
         /** Opens the order acknowledgement after a valid checkout response. */
         onSuccess(checkoutUrl, values) {
-            void trackEvent("order_submitted", {
+            void trackEvent('order_submitted', {
                 plan: values.plan,
-                sticker_quantity: values.variants.reduce((total, variant) => total + Number(values.allocation[variant] ?? 0), 0),
+                sticker_quantity: values.variants.reduce(
+                    (total, variant) => total + Number(values.allocation[variant] ?? 0),
+                    0,
+                ),
             });
-            void queryClient.invalidateQueries({ queryKey: ["orders"] });
+            void queryClient.invalidateQueries({ queryKey: ['orders'] });
             window.location.assign(checkoutUrl);
         },
     });
     const contactMissing = !contactByEmail && !contactByPhone;
     const contactInputs = {
-        email: form.register("email", {
-            required: t("details.emailRequired"),
-            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t("details.emailInvalid") },
+        email: form.register('email', {
+            required: t('details.emailRequired'),
+            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t('details.emailInvalid') },
         }),
-        name: form.register("name", {
+        name: form.register('name', {
             /** Requires a customer name for checkout. */
-            validate: value => value.trim().length > 0 || t("details.nameRequired"),
+            validate: (value) => value.trim().length > 0 || t('details.nameRequired'),
         }),
-        phone: form.register("phone", {
+        phone: form.register('phone', {
             /** Requires a reachable phone value when phone contact is enabled. */
-            validate: value => !form.getValues("contactByPhone") || value.trim().length > 0 || t("details.phoneRequired"),
+            validate: (value) =>
+                !form.getValues('contactByPhone') ||
+                value.trim().length > 0 ||
+                t('details.phoneRequired'),
         }),
     };
-    const shippingInput = form.register("shippingAddress", {
+    const shippingInput = form.register('shippingAddress', {
         /** Requires a shipping destination for physical stickers. */
-        validate: value => value.trim().length > 0 || t("details.addressRequired"),
+        validate: (value) => value.trim().length > 0 || t('details.addressRequired'),
     });
     const postalCodeRules = {
-        required: t("details.postalCodeRequired"),
-        pattern: { value: /^[A-Z]\d[A-Z]\d[A-Z]\d$/, message: t("details.postalCodeInvalid") },
+        required: t('details.postalCodeRequired'),
+        pattern: { value: /^[A-Z]\d[A-Z]\d[A-Z]\d$/, message: t('details.postalCodeInvalid') },
     };
 
     /** Prepares pasted postal codes for the segmented input. */
     function onPostalCodePaste(value: string) {
-        return value.replace(/[-\s]/g, "").toUpperCase();
+        return value.replace(/[-\s]/g, '').toUpperCase();
     }
     const plansQuery = useQuery({
-        queryKey: ["checkout", "plans"],
+        queryKey: ['checkout', 'plans'],
         queryFn: getCheckoutPlans,
-        enabled: stepper.current.id === "plan",
+        enabled: stepper.current.id === 'plan',
     });
-    const checkoutPlans = plansQuery.data?.map(option => {
+    const checkoutPlans = plansQuery.data?.map((option) => {
         const selected = getCheckoutPlanPrice(option, customQuantity);
-        const quantities = stepper.current.id === "plan"
-            ? distributeCheckoutQuantity(variants, selected.quantity)
-            : Object.fromEntries(variants.map(variant => [variant, allocation[variant]]));
+        const quantities =
+            stepper.current.id === 'plan'
+                ? distributeCheckoutQuantity(variants, selected.quantity)
+                : Object.fromEntries(variants.map((variant) => [variant, allocation[variant]]));
         return getCheckoutPlanPrice(selected, customQuantity, quantities);
     });
-    const plan = checkoutPlans?.find(plan => plan.id === selectedPlan);
-    const customQuantityInvalid = plan?.minimumQuantity !== undefined && (typeof customQuantity !== "number"
-        || !Number.isSafeInteger(customQuantity) || customQuantity < plan.minimumQuantity);
-    const allocationTotal = variants.reduce((total, variant) => total + Number(allocation[variant] ?? 0), 0);
-    const continueDisabled = (stepper.current.id === "variants" && variants.length === 0)
-        || (stepper.current.id === "plan" && (plansQuery.isPending || plansQuery.isError
-            || !plan || customQuantityInvalid))
-        || (stepper.current.id === "allocation" && (!plan || variants.length === 0
-            || !!getCheckoutAllocationError(form.getValues(), plan)))
-        || stepper.current.id === "verification";
+    const plan = checkoutPlans?.find((plan) => plan.id === selectedPlan);
+    const customQuantityInvalid =
+        plan?.minimumQuantity !== undefined &&
+        (typeof customQuantity !== 'number' ||
+            !Number.isSafeInteger(customQuantity) ||
+            customQuantity < plan.minimumQuantity);
+    const allocationTotal = variants.reduce(
+        (total, variant) => total + Number(allocation[variant] ?? 0),
+        0,
+    );
+    const continueDisabled =
+        (stepper.current.id === 'variants' && variants.length === 0) ||
+        (stepper.current.id === 'plan' &&
+            (plansQuery.isPending || plansQuery.isError || !plan || customQuantityInvalid)) ||
+        (stepper.current.id === 'allocation' &&
+            (!plan ||
+                variants.length === 0 ||
+                !!getCheckoutAllocationError(form.getValues(), plan))) ||
+        stepper.current.id === 'verification';
     const skipAllocation = variants.length === 1;
     const steps = checkoutStepper.steps
-        .filter(step => !skipAllocation || step.id !== "allocation")
-        .filter(step => !authenticatedEmail || step.id !== "verification")
-        .map(step => ({ id: step.id, label: t(`steps.${step.id}`) }));
-    const currentIndex = steps.findIndex(step => step.id === stepper.current.id);
+        .filter((step) => !skipAllocation || step.id !== 'allocation')
+        .filter((step) => !authenticatedEmail || step.id !== 'verification')
+        .map((step) => ({ id: step.id, label: t(`steps.${step.id}`) }));
+    const currentIndex = steps.findIndex((step) => step.id === stepper.current.id);
 
     /** Validates the entered sticker allocation and updates its form notice. */
     function onAllocationKeyUp() {
-        form.clearErrors("root.allocation");
+        form.clearErrors('root.allocation');
         if (!plan) return false;
         const values = form.getValues();
         const error = getCheckoutAllocationError(values, plan);
         if (!error) return true;
-        const total = values.variants.reduce((sum, variant) => sum + Number(values.allocation[variant] ?? 0), 0);
-        form.setError("root.allocation", { type: "manual", message: t(`allocation.${error}`, {
-            limit: plan.quantity, remaining: Math.max(0, plan.quantity - total),
-            excess: Math.max(0, total - plan.quantity),
-        }) });
+        const total = values.variants.reduce(
+            (sum, variant) => sum + Number(values.allocation[variant] ?? 0),
+            0,
+        );
+        form.setError('root.allocation', {
+            type: 'manual',
+            message: t(`allocation.${error}`, {
+                limit: plan.quantity,
+                remaining: Math.max(0, plan.quantity - total),
+                excess: Math.max(0, total - plan.quantity),
+            }),
+        });
         return false;
     }
 
     /** Advances checkout while preparing allocations for the selected purchase. */
     function onContinue() {
         if (continueDisabled) return;
-        if (stepper.current.id === "allocation" && !onAllocationKeyUp()) return;
-        form.clearErrors("root.allocation");
-        if (stepper.current.id === "plan" && plan) {
+        if (stepper.current.id === 'allocation' && !onAllocationKeyUp()) return;
+        form.clearErrors('root.allocation');
+        if (stepper.current.id === 'plan' && plan) {
             const setup = JSON.stringify([plan.id, plan.quantity, variants]);
             if (allocationSetup.current !== setup) {
-                form.setValue("allocation", distributeCheckoutQuantity(variants, plan.quantity));
+                form.setValue('allocation', distributeCheckoutQuantity(variants, plan.quantity));
                 allocationSetup.current = setup;
             }
             if (skipAllocation) {
-                void stepper.goTo(authenticatedEmail ? "checkout" : "verification");
+                void stepper.goTo(authenticatedEmail ? 'checkout' : 'verification');
                 return;
             }
         }
@@ -183,7 +239,7 @@ export function useCheckout(customer: CheckoutCustomer | null, initialPlan: Chec
 
     /** Returns to the previous applicable checkout step. */
     function onBack() {
-        form.clearErrors("root.allocation");
+        form.clearErrors('root.allocation');
         const previousStep = steps[currentIndex - 1];
         if (previousStep) void stepper.goTo(previousStep.id);
     }
@@ -191,20 +247,46 @@ export function useCheckout(customer: CheckoutCustomer | null, initialPlan: Chec
     /** Continues checkout with the authenticated customer identity. */
     function onVerified(email: string) {
         setVerifiedEmail(email);
-        form.setValue("email", email);
-        void stepper.goTo("checkout");
-        void queryClient.invalidateQueries({ queryKey: ["auth", "session"] });
+        form.setValue('email', email);
+        void stepper.goTo('checkout');
+        void queryClient.invalidateQueries({ queryKey: ['auth', 'session'] });
         router.refresh();
     }
 
     /** Validates checkout details before displaying the payment placeholder. */
     async function onPay() {
         if (contactMissing || submission.isPending) return;
-        const valid = await form.trigger(["email", "name", "phone", "shippingAddress", "postalCode"], { shouldFocus: true });
+        const valid = await form.trigger(
+            ['email', 'name', 'phone', 'shippingAddress', 'postalCode'],
+            { shouldFocus: true },
+        );
         if (valid) submission.mutate(form.getValues());
     }
 
-    return { t, form, stepper, steps, currentIndex, continueDisabled, plansQuery, onContinue, onBack,
-        variants, plan, checkoutPlans, allocationTotal, allocationError: form.formState.errors.root?.allocation?.message, onAllocationKeyUp,
-        contactInputs, shippingInput, postalCodeRules, onPostalCodePaste, deliveryEstimate, contactMissing, submission, onPay, onVerified };
+    return {
+        t,
+        form,
+        stepper,
+        steps,
+        currentIndex,
+        continueDisabled,
+        plansQuery,
+        onContinue,
+        onBack,
+        variants,
+        plan,
+        checkoutPlans,
+        allocationTotal,
+        allocationError: form.formState.errors.root?.allocation?.message,
+        onAllocationKeyUp,
+        contactInputs,
+        shippingInput,
+        postalCodeRules,
+        onPostalCodePaste,
+        deliveryEstimate,
+        contactMissing,
+        submission,
+        onPay,
+        onVerified,
+    };
 }

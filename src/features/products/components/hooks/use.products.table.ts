@@ -1,80 +1,153 @@
-"use client";
+'use client';
 
-import {useMemo, useRef, useState} from "react";
-import {keepPreviousData, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useTranslations} from "next-intl";
-import {toast} from "@/components/core/ui/toast";
-import {usePortalTableSearch, useUserDateTime} from "@/components/platform";
-import type {SortingState} from "@tanstack/react-table";
-import type {PortalConfirmDialogHandle, PortalTablePaginationState, PortalTableRowSelection} from "@/components/platform";
-import {getProducts} from "@/features/products/server/get.products.action";
-import {deleteProducts} from "@/features/products/server/delete.products.action";
-import {getProductColumns} from "@/features/products/utils/product.columns";
-import type {ProductVariantFilterValue} from "@/features/products/utils/product.types";
-import {useLowVariantStock} from "@/features/procurement/components/hooks/use.low.variant.stock";
+import { useMemo, useRef, useState } from 'react';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
+import { toast } from '@/components/core/ui/toast';
+import { usePortalTableSearch, useUserDateTime } from '@/components/platform';
+import type { SortingState } from '@tanstack/react-table';
+import type {
+    PortalConfirmDialogHandle,
+    PortalTablePaginationState,
+    PortalTableRowSelection,
+} from '@/components/platform';
+import { getProducts } from '@/features/products/server/get.products.action';
+import { deleteProducts } from '@/features/products/server/delete.products.action';
+import { getProductColumns } from '@/features/products/utils/product.columns';
+import type { ProductVariantFilterValue } from '@/features/products/utils/product.types';
+import { useLowVariantStock } from '@/features/procurement/components/hooks/use.low.variant.stock';
 
 /** Manages product inventory queries, table controls, and unpublished product deletion. */
 export function useProductsTable() {
-    const t = useTranslations("products");
-    const stockT = useTranslations("ProcurementStock");
-    const variants = useTranslations("procurement.generation");
+    const t = useTranslations('products');
+    const stockT = useTranslations('ProcurementStock');
+    const variants = useTranslations('procurement.generation');
     const formatDateTime = useUserDateTime();
     const queryClient = useQueryClient();
     const confirmRef = useRef<PortalConfirmDialogHandle>(null);
     const [rowSelection, setRowSelection] = useState<PortalTableRowSelection>({});
-    const [pagination, setPagination] = useState<PortalTablePaginationState>({page: 1, pageSize: 10});
-    const {search, setSearch, debouncedSearch} = usePortalTableSearch(setPagination);
+    const [pagination, setPagination] = useState<PortalTablePaginationState>({
+        page: 1,
+        pageSize: 10,
+    });
+    const { search, setSearch, debouncedSearch } = usePortalTableSearch(setPagination);
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [variant, setVariant] = useState<ProductVariantFilterValue>("all");
+    const [variant, setVariant] = useState<ProductVariantFilterValue>('all');
     const stockQuery = useLowVariantStock();
     const query = useQuery({
-        queryKey: ["products", pagination, debouncedSearch, sorting, variant],
-        queryFn: () => getProducts({...pagination, search: debouncedSearch, variant, sortBy: sorting[0]?.id ?? "createdAt", direction: !sorting[0] || sorting[0].desc ? "desc" : "asc"}),
+        queryKey: ['products', pagination, debouncedSearch, sorting, variant],
+        queryFn: () =>
+            getProducts({
+                ...pagination,
+                search: debouncedSearch,
+                variant,
+                sortBy: sorting[0]?.id ?? 'createdAt',
+                direction: !sorting[0] || sorting[0].desc ? 'desc' : 'asc',
+            }),
         placeholderData: keepPreviousData,
     });
     const mutation = useMutation({
         /** Deletes inventory and reports assignment conflicts for the selected products. */
         async mutationFn(codes: string[]) {
-            const result = await deleteProducts(codes).catch(() => {throw new Error(t("deleteError"));});
-            if ("assignedCode" in result) throw new Error(t("assignedDeleteError", {code: result.assignedCode, user: result.assignedUser}));
+            const result = await deleteProducts(codes).catch(() => {
+                throw new Error(t('deleteError'));
+            });
+            if ('assignedCode' in result)
+                throw new Error(
+                    t('assignedDeleteError', {
+                        code: result.assignedCode,
+                        user: result.assignedUser,
+                    }),
+                );
             return result;
         },
         retry: false,
-        onError: error => {toast.add({title: error.message, type: "error"});},
+        onError: (error) => {
+            toast.add({ title: error.message, type: 'error' });
+        },
         /** Refreshes both product views after deleting inventory. */
         async onSuccess() {
             setRowSelection({});
             await Promise.all([
-                queryClient.invalidateQueries({queryKey: ["products"]}),
-                queryClient.invalidateQueries({queryKey: ["procurement"]}),
+                queryClient.invalidateQueries({ queryKey: ['products'] }),
+                queryClient.invalidateQueries({ queryKey: ['procurement'] }),
             ]);
         },
     });
     /** Starts a fresh selection and result page when filtering inventory by variant. */
     function changeVariant(next: ProductVariantFilterValue) {
         setVariant(next);
-        setPagination(current => ({...current, page: 1}));
+        setPagination((current) => ({ ...current, page: 1 }));
         setRowSelection({});
     }
-    const selectedCodes = Object.keys(rowSelection).filter(code => rowSelection[code]);
+    const selectedCodes = Object.keys(rowSelection).filter((code) => rowSelection[code]);
     /** Requests confirmation for the selected unpublished inventory. */
     function requestDelete() {
         const codes = [...selectedCodes];
         confirmRef.current?.open({
-            title: t("bulkDeleteConfirmTitle"), description: t("bulkDeleteConfirmDescription", {count: codes.length}),
-            errorMessage: t("deleteError"), confirmLabel: t("deleteSelected"), destructive: true,
-            getErrorMessage: error => error instanceof Error ? error.message : t("deleteError"),
+            title: t('bulkDeleteConfirmTitle'),
+            description: t('bulkDeleteConfirmDescription', { count: codes.length }),
+            errorMessage: t('deleteError'),
+            confirmLabel: t('deleteSelected'),
+            destructive: true,
+            getErrorMessage: (error) => (error instanceof Error ? error.message : t('deleteError')),
             onConfirm: () => mutation.mutateAsync(codes),
         });
     }
-    const columns = useMemo(() => getProductColumns({
-        code: t("code"), variant: t("variant"), published: t("published"), reachoutModes: t("reachoutModes"),
-        reservedBy: t("reservedBy"), reservedAt: t("reservedAt"), assignedTo: t("assignedTo"), assignedAt: t("assignedAt"),
-        order: t("order"), createdAt: t("createdAt"), yes: t("yes"), no: t("no"), unset: t("unset"), none: t("none"),
-        phone: t("phone"), email: t("email"), chat: t("chat"),
-    }, formatDateTime,
-    {Everyday: variants("Everyday"), Fabric: variants("Fabric"), Tough: variants("Tough")}), [t, variants, formatDateTime]);
-    return {t, stockT, query, stockQuery, variants, mutation, columns, search, setSearch, setSorting, setPagination, confirmRef, requestDelete,
-        rowSelection, setRowSelection, selectedCount: selectedCodes.length, variant, changeVariant,
-        pagination: {...pagination, page: query.isPlaceholderData ? pagination.page : query.data?.page ?? pagination.page, total: query.data?.total ?? 0}};
+    const columns = useMemo(
+        () =>
+            getProductColumns(
+                {
+                    code: t('code'),
+                    variant: t('variant'),
+                    published: t('published'),
+                    reachoutModes: t('reachoutModes'),
+                    reservedBy: t('reservedBy'),
+                    reservedAt: t('reservedAt'),
+                    assignedTo: t('assignedTo'),
+                    assignedAt: t('assignedAt'),
+                    order: t('order'),
+                    createdAt: t('createdAt'),
+                    yes: t('yes'),
+                    no: t('no'),
+                    unset: t('unset'),
+                    none: t('none'),
+                    phone: t('phone'),
+                    email: t('email'),
+                    chat: t('chat'),
+                },
+                formatDateTime,
+                {
+                    Everyday: variants('Everyday'),
+                    Fabric: variants('Fabric'),
+                    Tough: variants('Tough'),
+                },
+            ),
+        [t, variants, formatDateTime],
+    );
+    return {
+        t,
+        stockT,
+        query,
+        stockQuery,
+        variants,
+        mutation,
+        columns,
+        search,
+        setSearch,
+        setSorting,
+        setPagination,
+        confirmRef,
+        requestDelete,
+        rowSelection,
+        setRowSelection,
+        selectedCount: selectedCodes.length,
+        variant,
+        changeVariant,
+        pagination: {
+            ...pagination,
+            page: query.isPlaceholderData ? pagination.page : (query.data?.page ?? pagination.page),
+            total: query.data?.total ?? 0,
+        },
+    };
 }

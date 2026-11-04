@@ -1,64 +1,71 @@
-"use server";
+'use server';
 
-import { randomUUID } from "node:crypto";
-import { CredentialsSignin } from "next-auth";
-import { validateSignInEmail } from "@/features/auth/utils/auth.email";
-import { validateBotCheck } from "@/features/auth/utils/auth.turnstile";
-import { getTranslations } from "next-intl/server";
-import { isValidEmail, normalizeEmail } from "@/features/auth/utils/auth.validation";
-import { db } from "@/lib/db";
-import { generateOtpCode } from "@/features/auth/utils/auth.otp";
-import { hashPassword } from "@/features/auth/server/auth.password";
-import { sendEmail } from "@/features/notifications/server/send.email";
-import { renderNotificationEmail } from "@/features/notifications/server/notification.email";
+import { randomUUID } from 'node:crypto';
+import { CredentialsSignin } from 'next-auth';
+import { validateSignInEmail } from '@/features/auth/utils/auth.email';
+import { validateBotCheck } from '@/features/auth/utils/auth.turnstile';
+import { getTranslations } from 'next-intl/server';
+import { isValidEmail, normalizeEmail } from '@/features/auth/utils/auth.validation';
+import { db } from '@/lib/db';
+import { generateOtpCode } from '@/features/auth/utils/auth.otp';
+import { hashPassword } from '@/features/auth/server/auth.password';
+import { sendEmail } from '@/features/notifications/server/send.email';
+import { renderNotificationEmail } from '@/features/notifications/server/notification.email';
 
 /** Validates the customer email for the placeholder verification flow. */
 export async function requestCustomerOtp(email: string, turnstileToken?: string) {
-    if (typeof email !== "string" || !isValidEmail(email)) throw new Error("emailInvalid");
+    if (typeof email !== 'string' || !isValidEmail(email)) throw new Error('emailInvalid');
     try {
-        await validateBotCheck(turnstileToken, "customer-otp");
+        await validateBotCheck(turnstileToken, 'customer-otp');
     } catch {
-        throw new Error("botCheckFailed");
+        throw new Error('botCheckFailed');
     }
     const normalizedEmail = normalizeEmail(email);
     try {
         await validateSignInEmail(normalizedEmail);
     } catch (error) {
-        if (error instanceof CredentialsSignin && error.code === "disposable_email") return { error: "disposableEmail" as const };
-        if (error instanceof CredentialsSignin && error.code === "email_check_unavailable") return { error: "emailCheckUnavailable" as const };
+        if (error instanceof CredentialsSignin && error.code === 'disposable_email')
+            return { error: 'disposableEmail' as const };
+        if (error instanceof CredentialsSignin && error.code === 'email_check_unavailable')
+            return { error: 'emailCheckUnavailable' as const };
         throw error;
     }
     const user = await db.user.upsert({
         where: { email: normalizedEmail },
-        create: { email: normalizedEmail, role: "CUSTOMER" },
+        create: { email: normalizedEmail, role: 'CUSTOMER' },
         update: {},
         select: { role: true, closedAt: true, deactivatedAt: true },
     });
-    if (user.role !== "CUSTOMER" || user.closedAt || user.deactivatedAt) throw new Error("verificationFailed");
+    if (user.role !== 'CUSTOMER' || user.closedAt || user.deactivatedAt)
+        throw new Error('verificationFailed');
     const code = generateOtpCode();
     const otp = await hashPassword(code);
     const updated = await db.user.updateMany({
-        where: { email: normalizedEmail, role: "CUSTOMER", AND: [
-            { OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
-            { OR: [{ deactivatedAt: null }, { deactivatedAt: { isSet: false } }] },
-        ] },
+        where: {
+            email: normalizedEmail,
+            role: 'CUSTOMER',
+            AND: [
+                { OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
+                { OR: [{ deactivatedAt: null }, { deactivatedAt: { isSet: false } }] },
+            ],
+        },
         data: { otp, otpCreatedAt: new Date() },
     });
-    if (updated.count !== 1) throw new Error("verificationFailed");
-    const t = await getTranslations("Auth.customerOtp.emailMessage");
-    const tEmail = await getTranslations("Notifications.email");
+    if (updated.count !== 1) throw new Error('verificationFailed');
+    const t = await getTranslations('Auth.customerOtp.emailMessage');
+    const tEmail = await getTranslations('Notifications.email');
     const content = await renderNotificationEmail({
-        brand: tEmail("brand"),
-        title: t("title"),
-        introduction: t("introduction"),
+        brand: tEmail('brand'),
+        title: t('title'),
+        introduction: t('introduction'),
         highlight: code,
-        guidance: t("guidance"),
-        signoff: tEmail("signoff"),
-        footer: tEmail("footer"),
+        guidance: t('guidance'),
+        signoff: tEmail('signoff'),
+        footer: tEmail('footer'),
     });
     await sendEmail({
         to: normalizedEmail,
-        subject: t("subject"),
+        subject: t('subject'),
         ...content,
         idempotencyKey: `customer-otp/${randomUUID()}`,
     });

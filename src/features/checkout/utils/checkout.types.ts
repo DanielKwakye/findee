@@ -1,4 +1,4 @@
-import type { CheckoutVariant } from "@/features/checkout/data/checkout.variants";
+import type { CheckoutVariant } from '@/features/checkout/data/checkout.variants';
 
 export type CheckoutCustomer = {
     email: string;
@@ -7,7 +7,7 @@ export type CheckoutCustomer = {
 };
 
 export type CheckoutPlan = {
-    id: "personal" | "family" | "custom";
+    id: 'personal' | 'family' | 'custom';
     title: string;
     price: number;
     currency: string;
@@ -21,8 +21,8 @@ export type CheckoutPlan = {
 export type CheckoutValues = {
     variants: CheckoutVariant[];
     plan: string;
-    customQuantity?: number | "";
-    allocation: Partial<Record<CheckoutVariant, number | "">>;
+    customQuantity?: number | '';
+    allocation: Partial<Record<CheckoutVariant, number | ''>>;
     email: string;
     name: string;
     phone: string;

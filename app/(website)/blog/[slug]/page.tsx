@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
-import { QueryClient } from "@tanstack/react-query";
-import { Footer, MobileNavbar, WebNavbar } from "@/components/platform";
-import { getBlogStory } from "@/features/blog/server/get.blog.story.action";
-import { BlogStoryDetail } from "@/features/blog/components/ui/blog-story-detail";
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
+import { QueryClient } from '@tanstack/react-query';
+import { Footer, MobileNavbar, WebNavbar } from '@/components/platform';
+import { getBlogStory } from '@/features/blog/server/get.blog.story.action';
+import { BlogStoryDetail } from '@/features/blog/components/ui/blog-story-detail';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.blogStory };
 
@@ -12,7 +12,11 @@ export const metadata: Metadata = { title: messages.PageMetadata.titles.blogStor
 export default async function BlogStoryPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const queryClient = new QueryClient();
-    const story = await queryClient.fetchQuery({ queryKey: ["blog", "story", slug], queryFn: () => getBlogStory(slug), retry: false });
+    const story = await queryClient.fetchQuery({
+        queryKey: ['blog', 'story', slug],
+        queryFn: () => getBlogStory(slug),
+        retry: false,
+    });
     if (!story) notFound();
     return (
         <>

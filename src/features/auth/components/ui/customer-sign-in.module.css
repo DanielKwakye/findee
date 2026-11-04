@@ -5,9 +5,15 @@
 .patternPanel::before {
     position: absolute;
     inset: 0;
-    content: "";
+    content: '';
     pointer-events: none;
     opacity: 0.1;
-    background-image: linear-gradient(color-mix(in oklch, var(--chart-2) 40%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklch, var(--chart-2) 40%, transparent) 1px, transparent 1px);
+    background-image:
+        linear-gradient(color-mix(in oklch, var(--chart-2) 40%, transparent) 1px, transparent 1px),
+        linear-gradient(
+            90deg,
+            color-mix(in oklch, var(--chart-2) 40%, transparent) 1px,
+            transparent 1px
+        );
     background-size: 50px 50px;
 }

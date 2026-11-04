@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { getFirebaseAnalytics } from "@/lib/firebase";
+import { useEffect } from 'react';
+import { getFirebaseAnalytics } from '@/lib/firebase';
 
 /** Starts automatic Analytics collection for the current browser session. */
 export function FirebaseAnalytics() {

@@ -1,26 +1,26 @@
 export const heroCarouselOptions = {
-  align: "center",
-  containScroll: "keepSnaps",
-  loop: true,
-  startIndex: 1,
+    align: 'center',
+    containScroll: 'keepSnaps',
+    loop: true,
+    startIndex: 1,
 } as const;
 
 export const webHeroCarouselOptions = {
-  ...heroCarouselOptions,
-  watchDrag: false,
+    ...heroCarouselOptions,
+    watchDrag: false,
 } as const;
 
 export const testimonialCarouselOptions = {
-  align: "start",
-  loop: true,
-  slidesToScroll: "auto",
-  startIndex: 0,
+    align: 'start',
+    loop: true,
+    slidesToScroll: 'auto',
+    startIndex: 0,
 } as const;
 
 export const heroCarouselAutoplayOptions = {
-  delay: 5000,
-  stopOnMouseEnter: true,
-  stopOnInteraction: false,
-  /** Uses the carousel wrapper for hover and focus interactions. */
-  rootNode: (emblaRoot: HTMLElement) => emblaRoot.parentElement,
+    delay: 5000,
+    stopOnMouseEnter: true,
+    stopOnInteraction: false,
+    /** Uses the carousel wrapper for hover and focus interactions. */
+    rootNode: (emblaRoot: HTMLElement) => emblaRoot.parentElement,
 } as const;

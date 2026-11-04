@@ -1,4 +1,4 @@
-import type { LoginValues } from "@/features/auth/utils/auth.types";
+import type { LoginValues } from '@/features/auth/utils/auth.types';
 
 /** Normalizes email identifiers for consistent account lookup. */
 export function normalizeEmail(email: string) {
@@ -11,8 +11,16 @@ export function isValidEmail(email: string) {
 }
 
 /** Validates credentials at the server boundary without altering passwords. */
-export function parseLoginCredentials(credentials: Partial<Record<string, unknown>>): LoginValues | null {
-    if (typeof credentials.email !== "string" || typeof credentials.password !== "string") return null;
-    if (!isValidEmail(credentials.email) || !credentials.password.length || credentials.password.length > 1024) return null;
+export function parseLoginCredentials(
+    credentials: Partial<Record<string, unknown>>,
+): LoginValues | null {
+    if (typeof credentials.email !== 'string' || typeof credentials.password !== 'string')
+        return null;
+    if (
+        !isValidEmail(credentials.email) ||
+        !credentials.password.length ||
+        credentials.password.length > 1024
+    )
+        return null;
     return { email: normalizeEmail(credentials.email), password: credentials.password };
 }

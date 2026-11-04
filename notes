@@ -6,4 +6,8 @@ TODO
 - Go through and correct false info on faq -- DONE
 - Remove disable the concept of recovery profiles for now -- DONE
 - Let customers specify the number of stickers they need -- DONE
-- use stripe webhook for reconciliations.
+- use stripe webhook for reconciliations - DONE | NOT TESTED
+- Create Reddit Account for Findmus (First login with personal account)
+- Create Twitter Account for Findmus (First login with personal account)
+- Create Instagram Account for Findmus (First login with personal account)
+- Bring back "Free Shipping Across Canada" - on the prices page and the checkout final step

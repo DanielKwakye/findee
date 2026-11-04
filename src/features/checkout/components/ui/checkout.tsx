@@ -1,92 +1,257 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useFormatter } from "next-intl";
-import { Controller } from "react-hook-form";
-import { Stepper } from "@/components/platform";
-import { Checkbox } from "@/components/core/ui/checkbox";
-import { Button } from "@/components/core/ui/button";
-import { Field, FieldContent, FieldGroup, FieldLabel, FieldTitle } from "@/components/core/ui/field";
-import TypographyH3 from "@/components/core/ui/typography-h3";
-import TypographyBody from "@/components/core/ui/typography-body";
-import TypographyParagraph from "@/components/core/ui/typography-paragraph";
-import { useCheckout } from "@/features/checkout/components/hooks/use.checkout";
-import { checkoutVariants, type CheckoutVariant } from "@/features/checkout/data/checkout.variants";
-import CheckoutPlans from "@/features/checkout/components/ui/checkout-plans";
-import CheckoutAllocation from "@/features/checkout/components/ui/checkout-allocation";
-import CheckoutDetails from "@/features/checkout/components/ui/checkout-details";
-import { CustomerOtpForm } from "@/features/auth/components/ui/customer-otp-form";
-import type { CheckoutCustomer, CheckoutPlan } from "@/features/checkout/utils/checkout.types";
+import Image from 'next/image';
+import { useFormatter } from 'next-intl';
+import { Controller } from 'react-hook-form';
+import { Stepper } from '@/components/platform';
+import { Checkbox } from '@/components/core/ui/checkbox';
+import { Button } from '@/components/core/ui/button';
+import {
+    Field,
+    FieldContent,
+    FieldGroup,
+    FieldLabel,
+    FieldTitle,
+} from '@/components/core/ui/field';
+import TypographyH3 from '@/components/core/ui/typography-h3';
+import TypographyBody from '@/components/core/ui/typography-body';
+import TypographyParagraph from '@/components/core/ui/typography-paragraph';
+import { useCheckout } from '@/features/checkout/components/hooks/use.checkout';
+import { checkoutVariants, type CheckoutVariant } from '@/features/checkout/data/checkout.variants';
+import CheckoutPlans from '@/features/checkout/components/ui/checkout-plans';
+import CheckoutAllocation from '@/features/checkout/components/ui/checkout-allocation';
+import CheckoutDetails from '@/features/checkout/components/ui/checkout-details';
+import { CustomerOtpForm } from '@/features/auth/components/ui/customer-otp-form';
+import type { CheckoutCustomer, CheckoutPlan } from '@/features/checkout/utils/checkout.types';
 
 /** Renders the checkout steps and variant choices. */
-export default function Checkout({ customer, initialPlan, initialVariant }: { customer: CheckoutCustomer | null; initialPlan?: CheckoutPlan["id"]; initialVariant?: CheckoutVariant }) {
+export default function Checkout({
+    customer,
+    initialPlan,
+    initialVariant,
+}: {
+    customer: CheckoutCustomer | null;
+    initialPlan?: CheckoutPlan['id'];
+    initialVariant?: CheckoutVariant;
+}) {
     const format = useFormatter();
-    const { t, form, stepper, steps, currentIndex, continueDisabled, plansQuery, onContinue, onBack,
-        variants, plan, checkoutPlans, allocationTotal, allocationError, onAllocationKeyUp,
-        contactInputs, shippingInput, postalCodeRules, onPostalCodePaste, deliveryEstimate, contactMissing, submission, onPay, onVerified } = useCheckout(customer, initialPlan, initialVariant);
+    const {
+        t,
+        form,
+        stepper,
+        steps,
+        currentIndex,
+        continueDisabled,
+        plansQuery,
+        onContinue,
+        onBack,
+        variants,
+        plan,
+        checkoutPlans,
+        allocationTotal,
+        allocationError,
+        onAllocationKeyUp,
+        contactInputs,
+        shippingInput,
+        postalCodeRules,
+        onPostalCodePaste,
+        deliveryEstimate,
+        contactMissing,
+        submission,
+        onPay,
+        onVerified,
+    } = useCheckout(customer, initialPlan, initialVariant);
 
     return (
-        <Stepper steps={steps} currentIndex={currentIndex} onBack={onBack} onContinue={onContinue} continueDisabled={continueDisabled}
-            continueLabel={stepper.current.id === "allocation" && plan ? t("allocation.continueWithAmount", {
-                amount: format.number(plan.price, { style: "currency", currency: plan.currency, currencyDisplay: "code" }),
-            }) : undefined}
-            hideContinue={stepper.current.id === "verification"}
-            finalAction={<Button type="button" size="lg" disabled={contactMissing || submission.isPending} onClick={onPay}><TypographyBody className="text-sm">{submission.isPending ? t("details.submitting") : plan ? t("details.payWithAmount", { amount: format.number(plan.price, { style: "currency", currency: plan.currency, currencyDisplay: "code" }) }) : t("details.pay")}</TypographyBody></Button>}
-            introduction={(
+        <Stepper
+            steps={steps}
+            currentIndex={currentIndex}
+            onBack={onBack}
+            onContinue={onContinue}
+            continueDisabled={continueDisabled}
+            continueLabel={
+                stepper.current.id === 'allocation' && plan
+                    ? t('allocation.continueWithAmount', {
+                          amount: format.number(plan.price, {
+                              style: 'currency',
+                              currency: plan.currency,
+                              currencyDisplay: 'code',
+                          }),
+                      })
+                    : undefined
+            }
+            hideContinue={stepper.current.id === 'verification'}
+            finalAction={
+                <Button
+                    type="button"
+                    size="lg"
+                    disabled={contactMissing || submission.isPending}
+                    onClick={onPay}
+                >
+                    <TypographyBody className="text-sm">
+                        {submission.isPending
+                            ? t('details.submitting')
+                            : plan
+                              ? t('details.payWithAmount', {
+                                    amount: format.number(plan.price, {
+                                        style: 'currency',
+                                        currency: plan.currency,
+                                        currencyDisplay: 'code',
+                                    }),
+                                })
+                              : t('details.pay')}
+                    </TypographyBody>
+                </Button>
+            }
+            introduction={
                 <>
-                    <TypographyH3 className={stepper.current.id === "variants" ? "text-xl sm:text-2xl xl:text-xl" : "text-lg sm:text-xl xl:text-lg"}>{t(stepper.current.id === "variants" ? "variants.title" : stepper.current.id === "plan" ? "plans.title" : stepper.current.id === "allocation" ? "allocation.title" : stepper.current.id === "verification" ? "verification.title" : "details.title")}</TypographyH3>
-                    <TypographyParagraph className={stepper.current.id === "variants" ? "hidden text-muted-foreground xl:block xl:text-sm" : "hidden text-xs leading-5 text-muted-foreground xl:block"}>{t(stepper.current.id === "variants" ? "variants.description" : stepper.current.id === "plan" ? "plans.description" : stepper.current.id === "allocation" ? "allocation.description" : stepper.current.id === "verification" ? "verification.description" : "details.description")}</TypographyParagraph>
+                    <TypographyH3
+                        className={
+                            stepper.current.id === 'variants'
+                                ? 'text-xl sm:text-2xl xl:text-xl'
+                                : 'text-lg sm:text-xl xl:text-lg'
+                        }
+                    >
+                        {t(
+                            stepper.current.id === 'variants'
+                                ? 'variants.title'
+                                : stepper.current.id === 'plan'
+                                  ? 'plans.title'
+                                  : stepper.current.id === 'allocation'
+                                    ? 'allocation.title'
+                                    : stepper.current.id === 'verification'
+                                      ? 'verification.title'
+                                      : 'details.title',
+                        )}
+                    </TypographyH3>
+                    <TypographyParagraph
+                        className={
+                            stepper.current.id === 'variants'
+                                ? 'hidden text-muted-foreground xl:block xl:text-sm'
+                                : 'hidden text-xs leading-5 text-muted-foreground xl:block'
+                        }
+                    >
+                        {t(
+                            stepper.current.id === 'variants'
+                                ? 'variants.description'
+                                : stepper.current.id === 'plan'
+                                  ? 'plans.description'
+                                  : stepper.current.id === 'allocation'
+                                    ? 'allocation.description'
+                                    : stepper.current.id === 'verification'
+                                      ? 'verification.description'
+                                      : 'details.description',
+                        )}
+                    </TypographyParagraph>
                 </>
-            )}>
-            {stepper.current.id === "variants" ? (
+            }
+        >
+            {stepper.current.id === 'variants' ? (
                 <div className="space-y-6">
-                    <Controller name="variants" control={form.control} render={({ field }) => (
-                        <FieldGroup aria-label={t("variants.title")} className="gap-2 sm:gap-3 xl:gap-4">
-                            {checkoutVariants.map(variant => (
-                                <FieldLabel key={variant.id} className="xl:*:data-[slot=field]:p-3">
-                                    <Field orientation="horizontal" className="gap-3 sm:gap-5">
-                                        <Image src={variant.image} alt={t(`variants.${variant.key}.alt`)}
-                                            width={96} height={96} sizes="(min-width: 1280px) 64px, (max-width: 640px) 64px, 96px"
-                                            className="h-16 w-16 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24 xl:h-16 xl:w-16" />
-                                        <FieldContent>
-                                            <FieldTitle><TypographyBody className="text-sm font-bold sm:text-xl xl:text-base">{t(`variants.${variant.key}.title`)}</TypographyBody></FieldTitle>
-                                            <TypographyBody className="text-xs text-muted-foreground sm:text-base xl:text-sm">{t(`variants.${variant.key}.description`)}</TypographyBody>
-                                        </FieldContent>
-                                        <Checkbox name={field.name} value={variant.id}
-                                            checked={field.value.includes(variant.id)} onBlur={field.onBlur}
-                                            onCheckedChange={checked => field.onChange(checked
-                                                ? [...field.value, variant.id]
-                                                : field.value.filter(value => value !== variant.id))} />
-                                    </Field>
-                                </FieldLabel>
-                            ))}
-                        </FieldGroup>
-                    )} />
+                    <Controller
+                        name="variants"
+                        control={form.control}
+                        render={({ field }) => (
+                            <FieldGroup
+                                aria-label={t('variants.title')}
+                                className="gap-2 sm:gap-3 xl:gap-4"
+                            >
+                                {checkoutVariants.map((variant) => (
+                                    <FieldLabel
+                                        key={variant.id}
+                                        className="xl:*:data-[slot=field]:p-3"
+                                    >
+                                        <Field orientation="horizontal" className="gap-3 sm:gap-5">
+                                            <Image
+                                                src={variant.image}
+                                                alt={t(`variants.${variant.key}.alt`)}
+                                                width={96}
+                                                height={96}
+                                                sizes="(min-width: 1280px) 64px, (max-width: 640px) 64px, 96px"
+                                                className="h-16 w-16 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24 xl:h-16 xl:w-16"
+                                            />
+                                            <FieldContent>
+                                                <FieldTitle>
+                                                    <TypographyBody className="text-sm font-bold sm:text-xl xl:text-base">
+                                                        {t(`variants.${variant.key}.title`)}
+                                                    </TypographyBody>
+                                                </FieldTitle>
+                                                <TypographyBody className="text-xs text-muted-foreground sm:text-base xl:text-sm">
+                                                    {t(`variants.${variant.key}.description`)}
+                                                </TypographyBody>
+                                            </FieldContent>
+                                            <Checkbox
+                                                name={field.name}
+                                                value={variant.id}
+                                                checked={field.value.includes(variant.id)}
+                                                onBlur={field.onBlur}
+                                                onCheckedChange={(checked) =>
+                                                    field.onChange(
+                                                        checked
+                                                            ? [...field.value, variant.id]
+                                                            : field.value.filter(
+                                                                  (value) => value !== variant.id,
+                                                              ),
+                                                    )
+                                                }
+                                            />
+                                        </Field>
+                                    </FieldLabel>
+                                ))}
+                            </FieldGroup>
+                        )}
+                    />
                 </div>
-            ) : stepper.current.id === "plan" ? (
+            ) : stepper.current.id === 'plan' ? (
                 plansQuery.isPending ? (
-                    <div role="status"><TypographyParagraph className="text-sm text-muted-foreground">{t("plans.loading")}</TypographyParagraph></div>
+                    <div role="status">
+                        <TypographyParagraph className="text-sm text-muted-foreground">
+                            {t('plans.loading')}
+                        </TypographyParagraph>
+                    </div>
                 ) : plansQuery.isError ? (
                     <div className="space-y-3">
-                        <div role="alert"><TypographyParagraph className="text-sm text-muted-foreground">{t("plans.error")}</TypographyParagraph></div>
-                        <Button type="button" variant="secondary" onClick={() => plansQuery.refetch()}>
-                            <TypographyBody className="text-sm">{t("plans.retry")}</TypographyBody>
+                        <div role="alert">
+                            <TypographyParagraph className="text-sm text-muted-foreground">
+                                {t('plans.error')}
+                            </TypographyParagraph>
+                        </div>
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={() => plansQuery.refetch()}
+                        >
+                            <TypographyBody className="text-sm">{t('plans.retry')}</TypographyBody>
                         </Button>
                     </div>
                 ) : (
                     <CheckoutPlans control={form.control} plans={checkoutPlans ?? []} />
                 )
-            ) : stepper.current.id === "allocation" ? (
-                <CheckoutAllocation control={form.control} variants={variants} limit={plan?.quantity ?? 0}
+            ) : stepper.current.id === 'allocation' ? (
+                <CheckoutAllocation
+                    control={form.control}
+                    variants={variants}
+                    limit={plan?.quantity ?? 0}
                     plan={plan}
-                    total={allocationTotal} error={allocationError} quantityIsMinimum={!!plan?.quantityIsMinimum} onQuantityKeyUp={onAllocationKeyUp} />
-            ) : stepper.current.id === "verification" ? (
+                    total={allocationTotal}
+                    error={allocationError}
+                    quantityIsMinimum={!!plan?.quantityIsMinimum}
+                    onQuantityKeyUp={onAllocationKeyUp}
+                />
+            ) : stepper.current.id === 'verification' ? (
                 <CustomerOtpForm onVerified={onVerified} />
             ) : (
-                <CheckoutDetails form={form} contactInputs={contactInputs} shippingInput={shippingInput}
-                    postalCodeRules={postalCodeRules} onPostalCodePaste={onPostalCodePaste}
+                <CheckoutDetails
+                    form={form}
+                    contactInputs={contactInputs}
+                    shippingInput={shippingInput}
+                    postalCodeRules={postalCodeRules}
+                    onPostalCodePaste={onPostalCodePaste}
                     deliveryEstimate={deliveryEstimate}
-                    contactMissing={contactMissing} isSubmitting={submission.isPending} submitError={submission.isError} />
+                    contactMissing={contactMissing}
+                    isSubmitting={submission.isPending}
+                    submitError={submission.isError}
+                />
             )}
         </Stepper>
     );

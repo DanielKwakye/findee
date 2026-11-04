@@ -1,14 +1,29 @@
-import "server-only";
+import 'server-only';
 
-import type { ConfirmationBatchOptions, ConfirmationBatchStatus, ConfirmationResult } from "@/features/orders/utils/order.types";
-import { db } from "@/lib/db";
+import type {
+    ConfirmationBatchOptions,
+    ConfirmationBatchStatus,
+    ConfirmationResult,
+} from '@/features/orders/utils/order.types';
+import { db } from '@/lib/db';
 
 /** Validates the resolved limits and retry delay for an order confirmation batch. */
-export function validateConfirmationBatchOptions({ batchSize, timeBudgetMs, retryDelayMs }: Required<ConfirmationBatchOptions>) {
-    if (!Number.isSafeInteger(batchSize) || batchSize < 1 || batchSize > 100
-        || !Number.isSafeInteger(timeBudgetMs) || timeBudgetMs < 1 || timeBudgetMs > 300_000
-        || !Number.isSafeInteger(retryDelayMs) || retryDelayMs < 1) {
-        throw new Error("Invalid order confirmation batch options");
+export function validateConfirmationBatchOptions({
+    batchSize,
+    timeBudgetMs,
+    retryDelayMs,
+}: Required<ConfirmationBatchOptions>) {
+    if (
+        !Number.isSafeInteger(batchSize) ||
+        batchSize < 1 ||
+        batchSize > 100 ||
+        !Number.isSafeInteger(timeBudgetMs) ||
+        timeBudgetMs < 1 ||
+        timeBudgetMs > 300_000 ||
+        !Number.isSafeInteger(retryDelayMs) ||
+        retryDelayMs < 1
+    ) {
+        throw new Error('Invalid order confirmation batch options');
     }
 }
 
@@ -18,40 +33,59 @@ export async function getPendingConfirmationOrders(batchSize: number) {
         where: {
             AND: [
                 { paymentAt: { not: null } },
-                { OR: [
-                    { status: "PENDING" },
-                    { status: "HOLD" },
-                    { status: "CONFIRMED", OR: [
-                        { cancellable: true }, { confirmationNotifiedAt: null },
-                        { confirmationNotifiedAt: { isSet: false } },
-                    ] },
-                ] },
-                { OR: [
-                    { nextConfirmationAttemptAt: null }, { nextConfirmationAttemptAt: { isSet: false } },
-                    { nextConfirmationAttemptAt: { lte: new Date() } },
-                ] },
+                {
+                    OR: [
+                        { status: 'PENDING' },
+                        { status: 'HOLD' },
+                        {
+                            status: 'CONFIRMED',
+                            OR: [
+                                { cancellable: true },
+                                { confirmationNotifiedAt: null },
+                                { confirmationNotifiedAt: { isSet: false } },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    OR: [
+                        { nextConfirmationAttemptAt: null },
+                        { nextConfirmationAttemptAt: { isSet: false } },
+                        { nextConfirmationAttemptAt: { lte: new Date() } },
+                    ],
+                },
             ],
         },
-        orderBy: [{ createdAt: "asc" }, { id: "asc" }],
-        take: batchSize, select: { id: true },
+        orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+        take: batchSize,
+        select: { id: true },
     });
 }
 
 /** Defers subsequent attempts so unsuccessful orders do not monopolize future batches. */
 export async function scheduleOrderConfirmationRetry(id: string, retryDelayMs: number) {
-    await db.order.update({ where: { id },
-        data: { nextConfirmationAttemptAt: new Date(Date.now() + retryDelayMs) }, select: { id: true } });
+    await db.order.update({
+        where: { id },
+        data: { nextConfirmationAttemptAt: new Date(Date.now() + retryDelayMs) },
+        select: { id: true },
+    });
 }
 
 /** Summarizes batch progress while retaining each order's outcome for the caller. */
-export function summarizeConfirmationBatch(status: ConfirmationBatchStatus, results: ConfirmationResult[]) {
+export function summarizeConfirmationBatch(
+    status: ConfirmationBatchStatus,
+    results: ConfirmationResult[],
+) {
     return {
-        status, attempted: results.length,
-        confirmed: results.filter(result => result.outcome === "processing").length,
-        held: results.filter(result => result.outcome === "restocking").length,
-        failed: results.filter(result => result.outcome === "failed").length,
-        skipped: results.filter(result => result.outcome === "skipped").length,
-        notificationsPending: results.filter(result => "notified" in result && !result.notified && result.outcome !== "skipped").length,
+        status,
+        attempted: results.length,
+        confirmed: results.filter((result) => result.outcome === 'processing').length,
+        held: results.filter((result) => result.outcome === 'restocking').length,
+        failed: results.filter((result) => result.outcome === 'failed').length,
+        skipped: results.filter((result) => result.outcome === 'skipped').length,
+        notificationsPending: results.filter(
+            (result) => 'notified' in result && !result.notified && result.outcome !== 'skipped',
+        ).length,
         results,
     };
 }

@@ -1,23 +1,33 @@
-import { useTranslations } from "next-intl";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
-import { Footer, InnerPageHero, LegalPageContent, MobileNavbar, WebNavbar } from "@/components/platform";
+import { useTranslations } from 'next-intl';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
+import {
+    Footer,
+    InnerPageHero,
+    LegalPageContent,
+    MobileNavbar,
+    WebNavbar,
+} from '@/components/platform';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.privacy };
 
 /** Presents the privacy page and its shared inner-page header. */
 export default function PrivacyPage() {
-  const t = useTranslations("Privacy");
+    const t = useTranslations('Privacy');
 
-  return (
-    <>
-      <MobileNavbar appearance="solid" />
-      <WebNavbar appearance="solid" showGetStarted={false} />
-      <main className="min-h-screen bg-background pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] xl:pb-0">
-        <InnerPageHero title={t("title")} titleAccent={t("titleAccent")} subtitle={t("subtitle")} />
-        <LegalPageContent namespace="Privacy" />
-      </main>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <MobileNavbar appearance="solid" />
+            <WebNavbar appearance="solid" showGetStarted={false} />
+            <main className="min-h-screen bg-background pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] xl:pb-0">
+                <InnerPageHero
+                    title={t('title')}
+                    titleAccent={t('titleAccent')}
+                    subtitle={t('subtitle')}
+                />
+                <LegalPageContent namespace="Privacy" />
+            </main>
+            <Footer />
+        </>
+    );
 }

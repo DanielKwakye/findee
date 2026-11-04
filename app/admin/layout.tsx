@@ -1,13 +1,18 @@
-import {
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
-} from "@/components/core/ui/sidebar";
-import {Separator} from "@/components/core/ui/separator";
-import {PortalSidebar, PortalBreadcrumb, PortalBadgeAlert} from "@/components/platform";
-import {ReactNode} from "react";
-import {requireAdmin} from "@/features/auth/server/auth.session";
-import PortalSessionGuard from "@/features/auth/components/ui/portal-session-guard";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/core/ui/sidebar';
+import { Separator } from '@/components/core/ui/separator';
+import { PortalSidebar, PortalBreadcrumb, PortalBadgeAlert } from '@/components/platform';
+import { ReactNode } from 'react';
+import { requireAdmin } from '@/features/auth/server/auth.session';
+import PortalSessionGuard from '@/features/auth/components/ui/portal-session-guard';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
+
+export const metadata: Metadata = {
+    title: {
+        default: messages.PageMetadata.adminDefaultTitle,
+        template: messages.PageMetadata.adminTitleTemplate,
+    },
+};
 
 /** Provides the authorized administrator's portal layout. */
 export default async function AdminLayout({ children }: { children: ReactNode }) {
@@ -33,5 +38,5 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                 </div>
             </SidebarInset>
         </SidebarProvider>
-    )
+    );
 }

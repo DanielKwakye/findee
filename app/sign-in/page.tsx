@@ -1,6 +1,6 @@
-import { CustomerSignIn } from "@/features/auth/components/ui/customer-sign-in";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
+import { CustomerSignIn } from '@/features/auth/components/ui/customer-sign-in';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.signIn };
 

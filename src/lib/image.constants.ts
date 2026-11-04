@@ -1,9 +1,9 @@
-const ImageOrigin = `https://res.cloudinary.com/ddnzrzwjx/image/upload/f_auto,q_auto`
+const ImageOrigin = `https://res.cloudinary.com/ddnzrzwjx/image/upload/f_auto,q_auto`;
 export const ImageConstants = {
-    FindmusIcon: "https://findmus.com/_next/image?url=%2Fimages%2Fpng%2Fapp-icon.png&w=96&q=75",
-    FindmusLogoOnDark: "/images/png/logo-on-dark.png",
-    FindmusLogoOnLight: "/images/png/logo-on-light-white-bg.png",
-    FindmusLogoEverywhere: "/images/png/logo-anywhere.png",
+    FindmusIcon: 'https://findmus.com/_next/image?url=%2Fimages%2Fpng%2Fapp-icon.png&w=96&q=75',
+    FindmusLogoOnDark: '/images/png/logo-on-dark.png',
+    FindmusLogoOnLight: '/images/png/logo-on-light-white-bg.png',
+    FindmusLogoEverywhere: '/images/png/logo-anywhere.png',
     FindeeOnLaptop: `${ImageOrigin}/v1790231037/findee-on-laptop_eva3y5.png`,
     FindeeOnBag: `${ImageOrigin}/v1790303521/findee-on-bag-in-bus_hotf68.png`,
     FindeeOnKeyHolder: `${ImageOrigin}/v1790231354/findee-on-key-holder_qz3ogk.png`,
@@ -13,4 +13,4 @@ export const ImageConstants = {
     FindeeOnLaptop2: `${ImageOrigin}/v1791855785/Laptop_Return_Sticker_Product_Render_h3f1ce.png`,
     ScanQRCode: `${ImageOrigin}/v1791855785/Hand_Scanning_Findmus_QR_Sticker_wgudkp.png`,
     NotifyItemFound: `${ImageOrigin}/v1791855785/iPhone_Lock_Screen_Notifications_Mockup_bcpjmt.png`,
-}
+};

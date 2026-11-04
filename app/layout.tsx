@@ -1,53 +1,63 @@
-import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { Geist, Geist_Mono, Noto_Sans, DM_Sans } from "next/font/google";
-import "@/app/globals.css";
-import { cn } from "@/lib/utils";
-import {TooltipProvider} from "@/components/core/ui/tooltip";
-import {ReactNode} from "react";
-import { QueryProvider } from "@/components/providers/query-provider";
-import { Toaster } from "@/components/core/ui/toast";
-import { CookieNotice } from "@/components/platform";
-import { FirebaseAnalytics } from "@/components/providers/firebase-analytics";
-import messages from "@/translations/en.json";
+import type { Metadata } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
+import { Geist, Geist_Mono, Noto_Sans, DM_Sans } from 'next/font/google';
+import '@/app/globals.css';
+import { cn } from '@/lib/utils';
+import { TooltipProvider } from '@/components/core/ui/tooltip';
+import { ReactNode } from 'react';
+import { QueryProvider } from '@/components/providers/query-provider';
+import { Toaster } from '@/components/core/ui/toast';
+import { CookieNotice } from '@/components/platform';
+import { FirebaseAnalytics } from '@/components/providers/firebase-analytics';
+import messages from '@/translations/en.json';
 
-const notoSansHeading = Noto_Sans({subsets:['latin'],variable:'--font-heading'});
+const notoSansHeading = Noto_Sans({ subsets: ['latin'], variable: '--font-heading' });
 
-const dmSans = DM_Sans({subsets:['latin'],variable:'--font-sans'});
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+    variable: '--font-geist-sans',
+    subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+    variable: '--font-geist-mono',
+    subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: messages.PageMetadata.defaultTitle,
-    template: messages.PageMetadata.titleTemplate,
-  },
-  description: messages.PageMetadata.description,
+    title: {
+        default: messages.PageMetadata.defaultTitle,
+        template: messages.PageMetadata.titleTemplate,
+    },
+    description: messages.PageMetadata.description,
 };
 
 /** Provides the shared document layout and translations to app pages. */
-export default function RootLayout({ children }: { children: ReactNode } ) {
-  return (
-    <html
-      lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", dmSans.variable, notoSansHeading.variable)}
-    >
-      <body className="min-h-full flex flex-col">
-        <FirebaseAnalytics />
-        <NextIntlClientProvider>
-          <QueryProvider><TooltipProvider>{children}</TooltipProvider></QueryProvider>
-          <Toaster />
-          <CookieNotice />
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: ReactNode }) {
+    return (
+        <html
+            lang="en"
+            className={cn(
+                'h-full',
+                'antialiased',
+                geistSans.variable,
+                geistMono.variable,
+                'font-sans',
+                dmSans.variable,
+                notoSansHeading.variable,
+            )}
+        >
+            <body className="min-h-full flex flex-col">
+                <FirebaseAnalytics />
+                <NextIntlClientProvider>
+                    <QueryProvider>
+                        <TooltipProvider>{children}</TooltipProvider>
+                    </QueryProvider>
+                    <Toaster />
+                    <CookieNotice />
+                </NextIntlClientProvider>
+            </body>
+        </html>
+    );
 }

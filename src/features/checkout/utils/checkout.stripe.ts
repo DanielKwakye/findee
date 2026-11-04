@@ -1,10 +1,10 @@
-import "server-only";
+import 'server-only';
 
-import Stripe from "stripe";
-import type { CheckoutPlan, CheckoutValues } from "@/features/checkout/utils/checkout.types";
-import { generateReferenceCode } from "@/components/platform/utils/reference.code.utils";
-import { getTranslations } from "next-intl/server";
-import { db } from "@/lib/db";
+import Stripe from 'stripe';
+import type { CheckoutPlan, CheckoutValues } from '@/features/checkout/utils/checkout.types';
+import { generateReferenceCode } from '@/components/platform/utils/reference.code.utils';
+import { getTranslations } from 'next-intl/server';
+import { db } from '@/lib/db';
 
 let stripe: Stripe | undefined;
 
@@ -12,7 +12,7 @@ let stripe: Stripe | undefined;
 export function getStripe() {
     if (!stripe) {
         const secret = process.env.STRIPE_SECRET_KEY;
-        if (!secret) throw new Error("Stripe API key is not configured");
+        if (!secret) throw new Error('Stripe API key is not configured');
         stripe = new Stripe(secret);
     }
     return stripe;
@@ -26,10 +26,13 @@ export async function getStripeCustomerId(customerId: string): Promise<string> {
     });
     if (user.stripeCustomerId) return user.stripeCustomerId;
 
-    const customer = await getStripe().customers.create({
-        email: user.email,
-        metadata: { customerId },
-    }, { idempotencyKey: `findee-customer-${customerId}` });
+    const customer = await getStripe().customers.create(
+        {
+            email: user.email,
+            metadata: { customerId },
+        },
+        { idempotencyKey: `findee-customer-${customerId}` },
+    );
     await db.user.update({
         where: { id: customerId },
         data: { stripeCustomerId: customer.id },
@@ -39,48 +42,60 @@ export async function getStripeCustomerId(customerId: string): Promise<string> {
 }
 
 /** Creates a hosted payment session containing the customer's checkout details. */
-export async function createStripeCheckout(customer: { id: string; email: string }, values: CheckoutValues, plan: CheckoutPlan): Promise<string> {
+export async function createStripeCheckout(
+    customer: { id: string; email: string },
+    values: CheckoutValues,
+    plan: CheckoutPlan,
+): Promise<string> {
     const metadata: Record<string, string> = {};
     for (const [key, value] of Object.entries(values)) {
         const encoded = JSON.stringify(value);
-        if (encoded.length > 500) throw new Error("Checkout field exceeds the payment provider's length limit");
+        if (encoded.length > 500)
+            throw new Error("Checkout field exceeds the payment provider's length limit");
         metadata[key] = encoded;
     }
     metadata.customerId = customer.id;
     metadata.orderNumber = generateReferenceCode();
     metadata.email = JSON.stringify(customer.email);
     metadata.checkoutPlan = JSON.stringify({
-        id: plan.id, title: plan.title, price: plan.price, currency: plan.currency,
-        quantity: plan.quantity, quantityIsMinimum: plan.quantityIsMinimum,
-        minimumQuantity: plan.minimumQuantity, maxRecoveryProfiles: plan.maxRecoveryProfiles,
+        id: plan.id,
+        title: plan.title,
+        price: plan.price,
+        currency: plan.currency,
+        quantity: plan.quantity,
+        quantityIsMinimum: plan.quantityIsMinimum,
+        minimumQuantity: plan.minimumQuantity,
+        maxRecoveryProfiles: plan.maxRecoveryProfiles,
     });
     const stripeCustomerId = await getStripeCustomerId(customer.id);
-    const t = await getTranslations("Checkout.plans");
+    const t = await getTranslations('Checkout.plans');
     const session = await getStripe().checkout.sessions.create({
-        ui_mode: "hosted_page",
-        mode: "payment",
+        ui_mode: 'hosted_page',
+        mode: 'payment',
         customer: stripeCustomerId,
-        billing_address_collection: "auto",
+        billing_address_collection: 'auto',
         phone_number_collection: { enabled: false },
         automatic_tax: { enabled: false },
         allow_promotion_codes: false,
-        submit_type: "auto",
-        saved_payment_method_options: { payment_method_save: "enabled" },
-        integration_identifier: "hosted_web_0001",
-        origin_context: "web",
+        submit_type: 'auto',
+        saved_payment_method_options: { payment_method_save: 'enabled' },
+        integration_identifier: 'hosted_web_0001',
+        origin_context: 'web',
         success_url: `${process.env.APP_URL}/checkout/order-received?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.APP_URL}/checkout`,
-        line_items: [{
-            price_data: {
-                currency: plan.currency.toLowerCase(),
-                unit_amount: Math.round(plan.price * 100),
-                product_data: { name: t("productName", { quantity: plan.quantity }) },
+        line_items: [
+            {
+                price_data: {
+                    currency: plan.currency.toLowerCase(),
+                    unit_amount: Math.round(plan.price * 100),
+                    product_data: { name: t('productName', { quantity: plan.quantity }) },
+                },
+                quantity: 1,
             },
-            quantity: 1,
-        }],
+        ],
         metadata,
     });
-    if (!session.url) throw new Error("Stripe did not return a checkout URL");
+    if (!session.url) throw new Error('Stripe did not return a checkout URL');
     return session.url;
 }
 
@@ -92,6 +107,6 @@ export async function getStripeCheckout(sessionId: string) {
 /** Authenticates Stripe event deliveries using the endpoint's signing secret. */
 export function verifyStripeWebhook(payload: string, signature: string) {
     const secret = process.env.STRIPE_WEBHOOK_SECRET;
-    if (!secret) throw new Error("Stripe webhook signing secret is not configured");
+    if (!secret) throw new Error('Stripe webhook signing secret is not configured');
     return getStripe().webhooks.constructEvent(payload, signature, secret);
 }

@@ -1,9 +1,17 @@
-import "server-only";
+import 'server-only';
 
-import { confirmOrder } from "@/features/orders/server/confirm.order";
-import { getPendingConfirmationOrders, scheduleOrderConfirmationRetry, summarizeConfirmationBatch,
-    validateConfirmationBatchOptions } from "@/features/orders/utils/order.confirmation.batch.utils";
-import type { ConfirmationBatchOptions, ConfirmationBatchStatus, ConfirmationResult } from "@/features/orders/utils/order.types";
+import { confirmOrder } from '@/features/orders/server/confirm.order';
+import {
+    getPendingConfirmationOrders,
+    scheduleOrderConfirmationRetry,
+    summarizeConfirmationBatch,
+    validateConfirmationBatchOptions,
+} from '@/features/orders/utils/order.confirmation.batch.utils';
+import type {
+    ConfirmationBatchOptions,
+    ConfirmationBatchStatus,
+    ConfirmationResult,
+} from '@/features/orders/utils/order.types';
 
 let isProcessing = false;
 
@@ -20,15 +28,19 @@ let isProcessing = false;
  * - Clears the in-process running flag in `finally`, including when processing throws.
  * - Returns the batch status, counts by outcome, outstanding notification count, and per-order results.
  */
-export async function confirmPendingOrders({ batchSize = 5, timeBudgetMs = 45_000, retryDelayMs = 300_000 }: ConfirmationBatchOptions = {}) {
+export async function confirmPendingOrders({
+    batchSize = 5,
+    timeBudgetMs = 45_000,
+    retryDelayMs = 300_000,
+}: ConfirmationBatchOptions = {}) {
     // Validate the configured batch limits before starting work.
     validateConfirmationBatchOptions({ batchSize, timeBudgetMs, retryDelayMs });
     const deadline = Date.now() + timeBudgetMs;
     const results: ConfirmationResult[] = [];
-    let status: ConfirmationBatchStatus = "completed";
+    let status: ConfirmationBatchStatus = 'completed';
 
     // Prevent overlapping cron requests from starting another batch in this process.
-    if (isProcessing) return summarizeConfirmationBatch("busy", results);
+    if (isProcessing) return summarizeConfirmationBatch('busy', results);
     isProcessing = true;
 
     try {
@@ -38,7 +50,7 @@ export async function confirmPendingOrders({ batchSize = 5, timeBudgetMs = 45_00
         // Finish each order before the next one can claim inventory.
         for (const order of orders) {
             if (Date.now() >= deadline) {
-                status = "time_budget";
+                status = 'time_budget';
                 break;
             }
             try {
@@ -48,8 +60,12 @@ export async function confirmPendingOrders({ batchSize = 5, timeBudgetMs = 45_00
                 const result = await confirmOrder(order.id, { deadline });
                 results.push({ id: order.id, ...result });
             } catch (error) {
-                console.error("Order confirmation failed", { orderId: order.id, error });
-                results.push({ id: order.id, outcome: "failed", error: error instanceof Error ? error.message : "Order confirmation failed" });
+                console.error('Order confirmation failed', { orderId: order.id, error });
+                results.push({
+                    id: order.id,
+                    outcome: 'failed',
+                    error: error instanceof Error ? error.message : 'Order confirmation failed',
+                });
             }
         }
     } finally {

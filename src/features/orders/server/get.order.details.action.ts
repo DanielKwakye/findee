@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { requireAdmin } from "@/features/auth/server/auth.session";
-import { db } from "@/lib/db";
-import { validateOrderId } from "@/features/orders/utils/order.validations";
-import { getEstimatedDeliveryDate } from "@/features/orders/utils/order.delivery";
+import { requireAdmin } from '@/features/auth/server/auth.session';
+import { db } from '@/lib/db';
+import { validateOrderId } from '@/features/orders/utils/order.validations';
+import { getEstimatedDeliveryDate } from '@/features/orders/utils/order.delivery';
 
 /** Retrieves the order data displayed in the administrator's details dialog. */
 export async function getOrderDetails(id: string) {
@@ -14,18 +14,38 @@ export async function getOrderDetails(id: string) {
         select: {
             number: true,
             customer: { select: { name: true, email: true, phone: true } },
-            status: true, planDetail: true, defaultReachoutModes: true, showOwnerName: true,
-            shippingAddress: true, deliveryInstructions: true, cancelledAt: true, cancellationReason: true,
-            completedAt: true, createdAt: true, updatedAt: true, paymentAt: true,
+            status: true,
+            planDetail: true,
+            defaultReachoutModes: true,
+            showOwnerName: true,
+            shippingAddress: true,
+            deliveryInstructions: true,
+            cancelledAt: true,
+            cancellationReason: true,
+            completedAt: true,
+            createdAt: true,
+            updatedAt: true,
+            paymentAt: true,
             products: { select: { id: true, code: true, variant: true } },
-            shipments: { select: {
-                id: true, carrier: true, trackingNumber: true,
-            } },
+            shipments: {
+                select: {
+                    id: true,
+                    carrier: true,
+                    trackingNumber: true,
+                },
+            },
         },
     });
-    if (!order) throw new Error("Order not found");
-    return { ...order,
-        estimatedDeliveryDate: getEstimatedDeliveryDate({ orderedAt: order.createdAt, shippingAddress: order.shippingAddress }),
-        expectedPostingDate: getEstimatedDeliveryDate({ orderedAt: order.createdAt, dateType: "posting" }),
+    if (!order) throw new Error('Order not found');
+    return {
+        ...order,
+        estimatedDeliveryDate: getEstimatedDeliveryDate({
+            orderedAt: order.createdAt,
+            shippingAddress: order.shippingAddress,
+        }),
+        expectedPostingDate: getEstimatedDeliveryDate({
+            orderedAt: order.createdAt,
+            dateType: 'posting',
+        }),
     };
 }

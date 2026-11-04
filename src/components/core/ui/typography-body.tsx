@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import type { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 type Props = {
     children: ReactNode;
@@ -7,5 +7,5 @@ type Props = {
 };
 
 export default function TypographyBody({ children, className }: Props) {
-    return <span className={cn("text-base leading-normal", className)}>{children}</span>;
+    return <span className={cn('text-base leading-normal', className)}>{children}</span>;
 }

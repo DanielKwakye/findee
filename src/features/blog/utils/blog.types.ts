@@ -1,11 +1,24 @@
-import type { BlogPost } from "@/generated/client";
-import type { JSONContent } from "@tiptap/core";
+import type { BlogPost } from '@/generated/client';
+import type { JSONContent } from '@tiptap/core';
 
-export type BlogStory = Pick<BlogPost,
-    "id" | "slug" | "title" | "excerpt" | "coverImageUrl" | "author" | "tags" | "featured" | "publishedAt" | "createdAt"
+export type BlogStory = Pick<
+    BlogPost,
+    | 'id'
+    | 'slug'
+    | 'title'
+    | 'excerpt'
+    | 'coverImageUrl'
+    | 'author'
+    | 'tags'
+    | 'featured'
+    | 'publishedAt'
+    | 'createdAt'
 >;
 
-export type BlogPostRow = Pick<BlogPost, "id" | "title" | "author" | "published" | "featured" | "createdAt" | "publishedAt">;
+export type BlogPostRow = Pick<
+    BlogPost,
+    'id' | 'title' | 'author' | 'published' | 'featured' | 'createdAt' | 'publishedAt'
+>;
 export type BlogPostValues = {
     title: string;
     slug: string;

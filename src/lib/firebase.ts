@@ -1,17 +1,23 @@
-import { getApps, initializeApp } from "firebase/app";
-import { getAnalytics, isSupported, logEvent, type Analytics, type EventParams } from "firebase/analytics";
+import { getApps, initializeApp } from 'firebase/app';
+import {
+    getAnalytics,
+    isSupported,
+    logEvent,
+    type Analytics,
+    type EventParams,
+} from 'firebase/analytics';
 
 let analyticsPromise: Promise<Analytics | null> | undefined;
 
 /** Provides the shared browser Analytics instance when Firebase is configured and supported. */
 export function getFirebaseAnalytics(): Promise<Analytics | null> {
-    if (typeof window === "undefined") return Promise.resolve(null);
+    if (typeof window === 'undefined') return Promise.resolve(null);
 
     analyticsPromise ??= (async () => {
         try {
             if (!(await isSupported())) return null;
 
-            const existingApp = getApps().find(app => app.name === "[DEFAULT]");
+            const existingApp = getApps().find((app) => app.name === '[DEFAULT]');
             const config = {
                 apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
                 authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -22,7 +28,10 @@ export function getFirebaseAnalytics(): Promise<Analytics | null> {
                 measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
             };
 
-            if (!existingApp && (!config.apiKey || !config.projectId || !config.appId || !config.measurementId)) {
+            if (
+                !existingApp &&
+                (!config.apiKey || !config.projectId || !config.appId || !config.measurementId)
+            ) {
                 return null;
             }
 

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import {useCallback, useSyncExternalStore} from "react";
-import {useFormatter} from "next-intl";
-import {formatUserDateTime} from "@/lib/datetime";
+import { useCallback, useSyncExternalStore } from 'react';
+import { useFormatter } from 'next-intl';
+import { formatUserDateTime } from '@/lib/datetime';
 
 /** Supplies a shared display formatter using the browser timezone after hydration. */
 export function useUserDateTime() {
@@ -10,7 +10,11 @@ export function useUserDateTime() {
     const timeZone = useSyncExternalStore(
         () => () => {},
         () => Intl.DateTimeFormat().resolvedOptions().timeZone,
-        () => "UTC",
+        () => 'UTC',
     );
-    return useCallback((date: Date | number, options?: { dateOnly?: boolean }) => formatUserDateTime(date, formatter, timeZone, options), [formatter, timeZone]);
+    return useCallback(
+        (date: Date | number, options?: { dateOnly?: boolean }) =>
+            formatUserDateTime(date, formatter, timeZone, options),
+        [formatter, timeZone],
+    );
 }

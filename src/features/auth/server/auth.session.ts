@@ -1,46 +1,58 @@
-import "server-only";
-import { cache } from "react";
-import { redirect } from "next/navigation";
-import { auth } from "@/features/auth/utils/auth";
-import { db } from "@/lib/db";
+import 'server-only';
+import { cache } from 'react';
+import { redirect } from 'next/navigation';
+import { auth } from '@/features/auth/utils/auth';
+import { db } from '@/lib/db';
 
 /** Resolves a verified session to the current database account and role. */
 export const getAuthenticatedUser = cache(async () => {
     const session = await auth();
     if (!session?.user?.id || !/^[a-f\d]{24}$/i.test(session.user.id)) return null;
     return db.user.findFirst({
-        where: { id: session.user.id, AND: [
-            { OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
-            { OR: [{ deactivatedAt: null }, { deactivatedAt: { isSet: false } }] },
-        ] },
+        where: {
+            id: session.user.id,
+            AND: [
+                { OR: [{ closedAt: null }, { closedAt: { isSet: false } }] },
+                { OR: [{ deactivatedAt: null }, { deactivatedAt: { isSet: false } }] },
+            ],
+        },
         // Missing fields on older MongoDB accounts also mean the account is active.
-        select: { id: true, email: true, name: true, phone: true, role: true, mustChangePassword: true },
+        select: {
+            id: true,
+            email: true,
+            name: true,
+            phone: true,
+            role: true,
+            mustChangePassword: true,
+        },
     });
 });
 
 /** Resolves the signed-in administrator against current database permissions. */
 export const getAdminUser = cache(async () => {
     const user = await getAuthenticatedUser();
-    return user?.role === "ADMIN" ? user : null;
+    return user?.role === 'ADMIN' ? user : null;
 });
 
 /** Requires administrator access at protected pages and server operation boundaries. */
-export async function requireAdmin({ allowPasswordChange = false }: { allowPasswordChange?: boolean } = {}) {
+export async function requireAdmin({
+    allowPasswordChange = false,
+}: { allowPasswordChange?: boolean } = {}) {
     const user = await getAdminUser();
-    if (!user) redirect("/login");
-    if (user.mustChangePassword && !allowPasswordChange) redirect("/change-password");
+    if (!user) redirect('/login');
+    if (user.mustChangePassword && !allowPasswordChange) redirect('/change-password');
     return user;
 }
 
 /** Resolves the signed-in customer against current database permissions. */
 export const getCustomerUser = cache(async () => {
     const user = await getAuthenticatedUser();
-    return user?.role === "CUSTOMER" ? user : null;
+    return user?.role === 'CUSTOMER' ? user : null;
 });
 
 /** Requires customer access at protected pages and server operation boundaries. */
 export async function requireCustomer() {
     const user = await getCustomerUser();
-    if (!user) redirect("/sign-in");
+    if (!user) redirect('/sign-in');
     return user;
 }

@@ -1,4 +1,4 @@
-export type AuthRole = "ADMIN" | "CUSTOMER";
+export type AuthRole = 'ADMIN' | 'CUSTOMER';
 
 export type ChangeAdminPasswordValues = { password: string; confirmPassword: string };
 
@@ -20,7 +20,7 @@ export type LoginValues = {
 };
 
 export type TurnstileCheckProps = {
-    action: "admin-login" | "customer-otp";
+    action: 'admin-login' | 'customer-otp';
     onToken: (token: string) => void;
     resetKey: number;
 };

@@ -1,8 +1,8 @@
-import {requireAdmin} from "@/features/auth/server/auth.session";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
-import ProcurementHeader from "@/features/procurement/components/ui/procurement-header";
-import ProcurementTable from "@/features/procurement/components/ui/procurement-table";
+import { requireAdmin } from '@/features/auth/server/auth.session';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
+import ProcurementHeader from '@/features/procurement/components/ui/procurement-header';
+import ProcurementTable from '@/features/procurement/components/ui/procurement-table';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.procurement };
 
@@ -14,5 +14,5 @@ export default async function ProcurementPage() {
             <ProcurementHeader />
             <ProcurementTable />
         </div>
-    )
+    );
 }

@@ -1,12 +1,16 @@
-import { MobileNavbar, WebNavbar } from "@/components/platform";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
-import CheckoutOrder from "@/features/orders/components/ui/checkout-order";
+import { MobileNavbar, WebNavbar } from '@/components/platform';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
+import CheckoutOrder from '@/features/orders/components/ui/checkout-order';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.orderReceived };
 
 /** Presents the acknowledgement for a submitted checkout. */
-export default async function OrderReceivedPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
+export default async function OrderReceivedPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ session_id?: string }>;
+}) {
     const { session_id } = await searchParams;
     return (
         <>

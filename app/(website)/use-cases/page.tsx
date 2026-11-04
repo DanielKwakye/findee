@@ -1,24 +1,29 @@
-import { useTranslations } from "next-intl";
-import type { Metadata } from "next";
-import messages from "@/translations/en.json";
-import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from "@/components/platform";
-import UseCases from "@/features/use-cases/components/ui/use-cases";
+import { useTranslations } from 'next-intl';
+import type { Metadata } from 'next';
+import messages from '@/translations/en.json';
+import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from '@/components/platform';
+import UseCases from '@/features/use-cases/components/ui/use-cases';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.useCases };
 
 /** Presents the use cases page and its shared inner-page header. */
 export default function UseCasesPage() {
-  const t = useTranslations("UseCases");
+    const t = useTranslations('UseCases');
 
-  return (
-    <>
-      <MobileNavbar appearance="solid" />
-      <WebNavbar appearance="solid" showGetStarted={false} />
-      <main className="min-h-screen bg-background pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] xl:pb-0">
-        <InnerPageHero title={t("title")} titleAccent={t("titleAccent")} subtitle={t("subtitle")} className="pb-4" />
-        <UseCases />
-      </main>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <MobileNavbar appearance="solid" />
+            <WebNavbar appearance="solid" showGetStarted={false} />
+            <main className="min-h-screen bg-background pt-16 pb-[calc(6rem+env(safe-area-inset-bottom))] xl:pb-0">
+                <InnerPageHero
+                    title={t('title')}
+                    titleAccent={t('titleAccent')}
+                    subtitle={t('subtitle')}
+                    className="pb-4"
+                />
+                <UseCases />
+            </main>
+            <Footer />
+        </>
+    );
 }

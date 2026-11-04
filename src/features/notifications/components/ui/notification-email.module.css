@@ -14,7 +14,9 @@
 
 .emailHeader {
     background-color: #f8fafb;
-    background-image: linear-gradient(#e9eef2 1px, transparent 1px), linear-gradient(90deg, #e9eef2 1px, transparent 1px);
+    background-image:
+        linear-gradient(#e9eef2 1px, transparent 1px),
+        linear-gradient(90deg, #e9eef2 1px, transparent 1px);
     background-size: 20px 20px;
 }
 

@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
-import TypographyBody from "@/components/core/ui/typography-body";
-import AddAdminDialog from "@/features/users/components/ui/add-admin-dialog";
-import type { AddAdminDialogHandle } from "@/features/users/utils/users.types";
-import { ChevronsUpDown, Plus, Users } from "lucide-react";
+import * as React from 'react';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import TypographyBody from '@/components/core/ui/typography-body';
+import AddAdminDialog from '@/features/users/components/ui/add-admin-dialog';
+import type { AddAdminDialogHandle } from '@/features/users/utils/users.types';
+import { ChevronsUpDown, Plus, Users } from 'lucide-react';
 
 import {
     DropdownMenu,
@@ -17,31 +17,31 @@ import {
     DropdownMenuSeparator,
     DropdownMenuShortcut,
     DropdownMenuTrigger,
-} from "@/components/core/ui/dropdown-menu";
+} from '@/components/core/ui/dropdown-menu';
 import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
     useSidebar,
-} from "@/components/core/ui/sidebar";
+} from '@/components/core/ui/sidebar';
 
 /** Renders the portal team selector and manages the active team. */
 export function PortalTeamSwitcher({
-                                 teams,
-                             }: {
+    teams,
+}: {
     teams: {
-        name: string
-        logo: React.ElementType
-        plan: string
-    }[]
+        name: string;
+        logo: React.ElementType;
+        plan: string;
+    }[];
 }) {
-    const { isMobile } = useSidebar()
-    const t = useTranslations("PortalTeamSwitcher")
-    const addAdminRef = React.useRef<AddAdminDialogHandle>(null)
-    const activeTeam = teams[0]
+    const { isMobile } = useSidebar();
+    const t = useTranslations('PortalTeamSwitcher');
+    const addAdminRef = React.useRef<AddAdminDialogHandle>(null);
+    const activeTeam = teams[0];
 
     if (!activeTeam) {
-        return null
+        return null;
     }
 
     return (
@@ -58,8 +58,12 @@ export function PortalTeamSwitcher({
                                     <activeTeam.logo className="size-4" />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <TypographyBody className="truncate font-medium">{t(activeTeam.name)}</TypographyBody>
-                                    <TypographyBody className="truncate text-xs">{t(activeTeam.plan)}</TypographyBody>
+                                    <TypographyBody className="truncate font-medium">
+                                        {t(activeTeam.name)}
+                                    </TypographyBody>
+                                    <TypographyBody className="truncate text-xs">
+                                        {t(activeTeam.plan)}
+                                    </TypographyBody>
                                 </div>
                                 <ChevronsUpDown className="ml-auto" />
                             </SidebarMenuButton>
@@ -68,12 +72,12 @@ export function PortalTeamSwitcher({
                     <DropdownMenuContent
                         className="w-(--anchor-width) min-w-56 rounded-lg"
                         align="start"
-                        side={isMobile ? "bottom" : "right"}
+                        side={isMobile ? 'bottom' : 'right'}
                         sideOffset={4}
                     >
                         <DropdownMenuGroup>
                             <DropdownMenuLabel className="text-xs text-muted-foreground">
-                                <TypographyBody className="text-xs">{t("admins")}</TypographyBody>
+                                <TypographyBody className="text-xs">{t('admins')}</TypographyBody>
                             </DropdownMenuLabel>
                             {teams.map((team, index) => (
                                 <DropdownMenuItem
@@ -84,28 +88,36 @@ export function PortalTeamSwitcher({
                                     <div className="flex size-6 items-center justify-center rounded-md border">
                                         <team.logo className="size-3.5 shrink-0" />
                                     </div>
-                                    <TypographyBody>{t("manageAdmin")}</TypographyBody>
+                                    <TypographyBody>{t('manageAdmin')}</TypographyBody>
                                     <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
                                 </DropdownMenuItem>
                             ))}
-                            <DropdownMenuItem render={<Link href="/admin/customers" />} className="gap-2 p-2">
+                            <DropdownMenuItem
+                                render={<Link href="/admin/customers" />}
+                                className="gap-2 p-2"
+                            >
                                 <div className="flex size-6 items-center justify-center rounded-md border">
                                     <Users className="size-3.5 shrink-0" />
                                 </div>
-                                <TypographyBody>{t("manageCustomers")}</TypographyBody>
+                                <TypographyBody>{t('manageCustomers')}</TypographyBody>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="gap-2 p-2" onClick={() => addAdminRef.current?.open()}>
+                        <DropdownMenuItem
+                            className="gap-2 p-2"
+                            onClick={() => addAdminRef.current?.open()}
+                        >
                             <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                                 <Plus className="size-4" />
                             </div>
-                            <TypographyBody className="font-medium text-muted-foreground">{t("addAdmin")}</TypographyBody>
+                            <TypographyBody className="font-medium text-muted-foreground">
+                                {t('addAdmin')}
+                            </TypographyBody>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <AddAdminDialog ref={addAdminRef} />
             </SidebarMenuItem>
         </SidebarMenu>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import { hash, verify, argon2id } from "argon2";
+import { hash, verify, argon2id } from 'argon2';
 
 /** Produces a salted password hash suitable for credential storage. */
 export function hashPassword(password: string) {
