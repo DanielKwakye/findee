@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
+                hostname: 'ik.imagekit.io',
+                pathname: '/aepn9zqke/findmus/**',
+            },
+            {
+                protocol: 'https',
                 hostname: 'res.cloudinary.com',
                 pathname: '/ddnzrzwjx/image/upload/**',
                 search: '',

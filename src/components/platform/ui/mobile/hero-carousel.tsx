@@ -73,7 +73,11 @@ export default function MobileHeroCarousel() {
                                             fill
                                             preload={index === 1}
                                             sizes="65vw"
-                                            className="object-cover"
+                                            className={
+                                                item.titleKey === 'keysFoundTitle'
+                                                    ? 'object-cover object-[90%_center]'
+                                                    : 'object-cover'
+                                            }
                                             draggable={false}
                                         />
                                         <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-foreground/95 via-foreground/45 to-transparent px-4 pt-20 pb-5 text-primary-foreground sm:px-5">

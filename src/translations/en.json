@@ -1381,8 +1381,8 @@
                 "description": "Put a sticker on your phone case so a finder can reach you even when the screen is locked."
             },
             "laptops": {
-                "title": "Laptops & Tablets",
-                "description": "Give devices left in classrooms, offices, or cafés a clear way back to you."
+                "title": "Laptops",
+                "description": "Give your laptop a clear way back when it is left in a classroom, office, or café."
             },
             "backpacks": {
                 "title": "Backpacks",
@@ -1395,6 +1395,30 @@
             "waterBottles": {
                 "title": "Water Bottles",
                 "description": "Help your reusable bottle find its way back from the gym, office, or playground."
+            },
+            "busPasses": {
+                "title": "Bus Passes",
+                "description": "Add a sticker to your bus pass holder so a finder can return it after your commute."
+            },
+            "scarves": {
+                "title": "Scarves",
+                "description": "Label your scarf so someone can help return it when it is left at a café or on the bus."
+            },
+            "hats": {
+                "title": "Hats",
+                "description": "Help a hat left at school, in the park, or on a day out find its way home."
+            },
+            "shoes": {
+                "title": "Shoes",
+                "description": "Label your shoes so pairs left in a changing room or at school can be returned."
+            },
+            "helmets": {
+                "title": "Helmets",
+                "description": "Give a finder a way to return your helmet when it is left at a bike rack or after a ride."
+            },
+            "bikes": {
+                "title": "Bikes",
+                "description": "Add a sticker to your bike so someone who finds it can contact you to arrange its return."
             },
             "headphones": {
                 "title": "Headphones",
@@ -1508,6 +1532,9 @@
             "laptopsTitle": "Stick on Electronics",
             "laptopsDescription": "Keep your devices within reach.",
             "laptopsAlt": "Findmus QR sticker on a laptop",
+            "keysFoundTitle": "Lost Keys, Found Again",
+            "keysFoundDescription": "A quick scan helps a finder connect with you.",
+            "keysFoundAlt": "Lost keys found with Findmus",
             "bagsTitle": "Stick on Backpacks",
             "bagsDescription": "School bags, travel luggage, gym bags and more.",
             "bagsAlt": "Findmus QR sticker on a black backpack",

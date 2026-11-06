@@ -65,7 +65,11 @@ export default function WebHeroCarousel() {
                                     fill
                                     preload={index === 1}
                                     sizes="(min-width: 1280px) 26vw, 50vw"
-                                    className="object-cover"
+                                    className={
+                                        item.titleKey === 'keysFoundTitle'
+                                            ? 'object-cover object-[90%_center]'
+                                            : 'object-cover'
+                                    }
                                     draggable={false}
                                 />
                                 <div

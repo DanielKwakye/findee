@@ -20,6 +20,12 @@ export const heroCarouselItems = [
         altKey: 'keysAlt',
     },
     {
+        image: ImageConstants.KeysFound,
+        titleKey: 'keysFoundTitle',
+        descriptionKey: 'keysFoundDescription',
+        altKey: 'keysFoundAlt',
+    },
+    {
         image: ImageConstants.FindeeOnWallet,
         titleKey: 'walletsTitle',
         descriptionKey: 'walletsDescription',
