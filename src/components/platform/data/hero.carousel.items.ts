@@ -8,10 +8,10 @@ export const heroCarouselItems = [
         altKey: 'laptopsAlt',
     },
     {
-        image: ImageConstants.FindeeOnBag,
-        titleKey: 'bagsTitle',
-        descriptionKey: 'bagsDescription',
-        altKey: 'bagsAlt',
+        image: ImageConstants.Cards,
+        titleKey: 'passesTitle',
+        descriptionKey: 'passesDescription',
+        altKey: 'passesAlt',
     },
     {
         image: ImageConstants.FindeeOnKeyHolder,
@@ -38,9 +38,9 @@ export const heroCarouselItems = [
         altKey: 'phonesAlt',
     },
     {
-        image: ImageConstants.FindeeOnBusPass,
-        titleKey: 'passesTitle',
-        descriptionKey: 'passesDescription',
-        altKey: 'passesAlt',
+        image: ImageConstants.FindeeOnBag,
+        titleKey: 'bagsTitle',
+        descriptionKey: 'bagsDescription',
+        altKey: 'bagsAlt',
     },
 ] as const;

@@ -7,7 +7,7 @@ export const useCases = [
     { key: 'phones', image: ImageConstants.FindeeOnPhone, variant: 'Everyday' },
     { key: 'laptops', image: ImageConstants.Laptop, variant: 'Everyday' },
     { key: 'waterBottles', image: ImageConstants.Bottle, variant: 'Everyday' },
-    { key: 'busPasses', image: ImageConstants.FindeeOnBusPass, variant: 'Everyday' },
+    { key: 'busPasses', image: ImageConstants.Cards, variant: 'Everyday' },
     { key: 'backpacks', image: ImageConstants.Backpack, variant: 'Fabric' },
     { key: 'scarves', image: ImageConstants.Scarves, variant: 'Fabric' },
     { key: 'hats', image: ImageConstants.Hats, variant: 'Fabric' },

@@ -11,7 +11,6 @@ export const ImageConstants = {
     FindeeOnKeyHolder: `${ImageOrigin}/v1790231354/findee-on-key-holder_qz3ogk.png`,
     FindeeOnWallet: `${ImageOrigin}/v1790302433/findee-on-wallet_j29ufq.png`,
     FindeeOnPhone: `${ImageOrigin}/v1790245044/findee-on-phone_joqd2b.png`,
-    FindeeOnBusPass: `${ImageOrigin}/v1790245044/findee-on-bus-pass_ay6utl.png`,
     FindeeOnLaptop2: `${ImageOrigin}/v1791855785/Laptop_Return_Sticker_Product_Render_h3f1ce.png`,
     ScanQRCode: `${ImageOrigin}/v1791855785/Hand_Scanning_Findmus_QR_Sticker_wgudkp.png`,
     NotifyItemFound: `${ImageOrigin}/v1791855785/iPhone_Lock_Screen_Notifications_Mockup_bcpjmt.png`,
@@ -21,6 +20,7 @@ export const ImageConstants = {
     Wallet: renderImageV2('/everyday/wallet.png'),
     Keys: renderImageV2('/everyday/keys.png'),
     Laptop: renderImageV2('/everyday/laptop.png'),
+    Cards: renderImageV2('/everyday/cards.png'),
 
 //     Fabric
     FindeeOnBag: renderImageV2('/fabric/QR%20Tag%20on%20Backpack%20Strap.png'),
