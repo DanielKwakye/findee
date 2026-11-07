@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { GalleryVerticalEnd, Share2, ArrowLeft, Lightbulb } from 'lucide-react';
+import { GalleryVerticalEnd, Share2, ArrowLeft, Lightbulb, Globe } from 'lucide-react';
 import {
     Sidebar,
     SidebarContent,
@@ -117,6 +117,23 @@ export function PortalSidebar({
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             )}
+                            <SidebarMenuItem>
+                                <SidebarMenuButton
+                                    tooltip={t('socials')}
+                                    render={
+                                        <Link
+                                            href={process.env.NEXT_PUBLIC_FB_PAGE_LINK || '#'}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        />
+                                    }
+                                >
+                                    <Globe aria-hidden="true" />
+                                    <TypographyBody className="text-sm">
+                                        {t('socials')}
+                                    </TypographyBody>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton
                                     tooltip={t('backToWebsite')}

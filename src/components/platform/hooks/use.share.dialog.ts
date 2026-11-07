@@ -3,12 +3,11 @@
 import { useId, useImperativeHandle, useState, type FocusEvent, type Ref } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/components/core/ui/toast';
-import { footerSocialLinks } from '@/components/platform/data/footer';
+import { shareSocialOptions } from '@/components/platform/data/footer';
 import {
     getSocialShareUrl,
     type ShareDialogHandle,
     type ShareLinks,
-    type SharePlatform,
 } from '@/components/platform/utils/share';
 
 /** Manages the share dialog's lifecycle, tracked links, and clipboard interactions. */
@@ -49,7 +48,7 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
     }
 
     /** Shares a platform's tracked link through available device apps or the clipboard. */
-    async function shareToApp(platform: SharePlatform) {
+    async function shareToApp() {
         if (!links) return;
         setError(null);
         if (navigator.share) {
@@ -57,7 +56,7 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
                 await navigator.share({
                     title: t('title'),
                     text: t('message'),
-                    url: links[platform],
+                    url: links.default,
                 });
                 return;
             } catch (error) {
@@ -65,17 +64,19 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
             }
         }
         try {
-            await navigator.clipboard.writeText(`${t('message')}\n${links[platform]}`);
+            await navigator.clipboard.writeText(`${t('message')}\n${links.default}`);
             toast.add({ title: t('messageCopied'), type: 'info' });
         } catch {
             setError(t('shareError'));
         }
     }
 
-    const socialOptions = footerSocialLinks.map(({ key, path }) => ({
+    const socialOptions = shareSocialOptions.map(({ key, path }) => ({
         key,
         path,
-        href: links ? getSocialShareUrl(key, links[key], t('message')) : null,
+        href: links
+            ? getSocialShareUrl(key, key === 'whatsapp' ? links.default : links[key], t('message'))
+            : null,
     }));
 
     return { t, links, linkId, error, socialOptions, changeOpen, copyLink, selectLink, shareToApp };

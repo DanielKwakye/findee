@@ -881,6 +881,7 @@
     },
     "Footer": {
         "backToWebsite": "Back to website",
+        "socials": "Socials",
         "communityGroup": "Explore & contribute",
         "home": "Findmus home",
         "tagline": "Small stickers. Big reunions.",
@@ -1542,13 +1543,15 @@
         "shareOn": "Share on {platform}",
         "link": "Share link",
         "copyLink": "Copy link",
+        "moreApps": "More apps",
         "copied": "Link copied.",
         "messageCopied": "Message and link copied. Paste them into your social app.",
         "copyError": "Couldn't copy automatically. Select and copy the link below.",
         "shareError": "Couldn't open sharing. You can copy the link instead.",
         "close": "Close",
         "social": {
-            "x": "X / Twitter",
+            "x": "Twitter",
+            "whatsapp": "WhatsApp",
             "tiktok": "TikTok",
             "instagram": "Instagram",
             "facebook": "Facebook"

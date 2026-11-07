@@ -2,7 +2,7 @@
 
 import type { Ref } from 'react';
 import Link from 'next/link';
-import { Copy } from 'lucide-react';
+import { Copy, Share2 } from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -50,7 +50,6 @@ export default function ShareDialog({ ref }: { ref: Ref<ShareDialogHandle> }) {
                                     <Link href={href} target="_blank" rel="noopener noreferrer" />
                                 ) : undefined
                             }
-                            onClick={href ? undefined : () => shareToApp(key)}
                             aria-label={t('shareOn', { platform: t(`social.${key}`) })}
                             className="h-auto flex-col gap-2 px-2 py-4"
                         >
@@ -71,6 +70,15 @@ export default function ShareDialog({ ref }: { ref: Ref<ShareDialogHandle> }) {
                             </TypographyBody>
                         </Button>
                     ))}
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={shareToApp}
+                        className="h-auto flex-col gap-2 px-2 py-4"
+                    >
+                        <Share2 aria-hidden="true" className="size-6" />
+                        <TypographyBody className="text-xs">{t('moreApps')}</TypographyBody>
+                    </Button>
                 </div>
                 <Field className="gap-2">
                     <FieldLabel htmlFor={linkId}>
