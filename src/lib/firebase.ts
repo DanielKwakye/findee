@@ -3,15 +3,22 @@ import {
     getAnalytics,
     isSupported,
     logEvent,
+    setAnalyticsCollectionEnabled,
     type Analytics,
     type EventParams,
 } from 'firebase/analytics';
 
 let analyticsPromise: Promise<Analytics | null> | undefined;
 
+/** Identifies browser pages excluded from Analytics collection. */
+function isAnalyticsExcluded() {
+    return /^\/(?:admin(?:\/|$)|login\/?$)/.test(window.location.pathname);
+}
+
 /** Provides the shared browser Analytics instance when Firebase is configured and supported. */
 export function getFirebaseAnalytics(): Promise<Analytics | null> {
     if (typeof window === 'undefined') return Promise.resolve(null);
+    if (isAnalyticsExcluded() && !analyticsPromise) return Promise.resolve(null);
 
     analyticsPromise ??= (async () => {
         try {
@@ -41,7 +48,12 @@ export function getFirebaseAnalytics(): Promise<Analytics | null> {
         }
     })();
 
-    return analyticsPromise;
+    return analyticsPromise.then((analytics) => {
+        if (!analytics) return null;
+        const enabled = !isAnalyticsExcluded();
+        setAnalyticsCollectionEnabled(analytics, enabled);
+        return enabled ? analytics : null;
+    });
 }
 
 /** Sends custom browser events without interrupting the app when Analytics is unavailable. */

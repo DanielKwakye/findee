@@ -8,6 +8,7 @@ import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 
 export const metadata: Metadata = {
+    robots: { index: false, follow: false },
     title: {
         default: messages.PageMetadata.adminDefaultTitle,
         template: messages.PageMetadata.adminTitleTemplate,

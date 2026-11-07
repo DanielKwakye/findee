@@ -21,6 +21,8 @@ import { checkoutVariants, type CheckoutVariant } from '@/features/checkout/data
 import CheckoutPlans from '@/features/checkout/components/ui/checkout-plans';
 import CheckoutAllocation from '@/features/checkout/components/ui/checkout-allocation';
 import CheckoutDetails from '@/features/checkout/components/ui/checkout-details';
+import CheckoutPriceSummary from '@/features/checkout/components/ui/checkout-price-summary';
+import CheckoutPreviewDialog from '@/features/checkout/components/ui/checkout-preview-dialog';
 import { CustomerOtpForm } from '@/features/auth/components/ui/customer-otp-form';
 import type { CheckoutCustomer, CheckoutPlan } from '@/features/checkout/utils/checkout.types';
 
@@ -59,6 +61,8 @@ export default function Checkout({
         contactMissing,
         submission,
         onPay,
+        previewRef,
+        onConfirmPayment,
         onVerified,
     } = useCheckout(customer, initialPlan, initialVariant);
 
@@ -92,14 +96,14 @@ export default function Checkout({
                         {submission.isPending
                             ? t('details.submitting')
                             : plan
-                              ? t('details.payWithAmount', {
+                              ? t('preview.reviewWithAmount', {
                                     amount: format.number(plan.price, {
                                         style: 'currency',
                                         currency: plan.currency,
                                         currencyDisplay: 'code',
                                     }),
                                 })
-                              : t('details.pay')}
+                              : t('preview.title')}
                     </TypographyBody>
                 </Button>
             }
@@ -241,18 +245,27 @@ export default function Checkout({
             ) : stepper.current.id === 'verification' ? (
                 <CustomerOtpForm onVerified={onVerified} />
             ) : (
-                <CheckoutDetails
-                    form={form}
-                    contactInputs={contactInputs}
-                    shippingInput={shippingInput}
-                    postalCodeRules={postalCodeRules}
-                    onPostalCodePaste={onPostalCodePaste}
-                    deliveryEstimate={deliveryEstimate}
-                    contactMissing={contactMissing}
-                    isSubmitting={submission.isPending}
-                    submitError={submission.isError}
-                />
+                <>
+                    <CheckoutDetails
+                        form={form}
+                        contactInputs={contactInputs}
+                        shippingInput={shippingInput}
+                        postalCodeRules={postalCodeRules}
+                        onPostalCodePaste={onPostalCodePaste}
+                        deliveryEstimate={deliveryEstimate}
+                        contactMissing={contactMissing}
+                        isSubmitting={submission.isPending}
+                        submitError={submission.isError}
+                    />
+                    {plan && <CheckoutPriceSummary plan={plan} />}
+                </>
             )}
+            <CheckoutPreviewDialog
+                ref={previewRef}
+                isSubmitting={submission.isPending}
+                submitError={submission.isError}
+                onConfirm={onConfirmPayment}
+            />
         </Stepper>
     );
 }

@@ -9,10 +9,12 @@ import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyH3 from '@/components/core/ui/typography-h3';
 import CheckoutAllocation from '@/features/checkout/components/ui/checkout-allocation';
 import CheckoutPlans from '@/features/checkout/components/ui/checkout-plans';
+import CheckoutPriceSummary from '@/features/checkout/components/ui/checkout-price-summary';
 import { checkoutVariants } from '@/features/checkout/data/checkout.variants';
 import { checkoutContactFields } from '@/features/checkout/data/checkout.contact.fields';
 import type { useOrderForm } from '@/features/orders/components/hooks/use.order.form';
 import type { SubmitEventHandler } from 'react';
+import CheckoutRegionFields from '@/features/checkout/components/ui/checkout-region-fields';
 
 type Props = {
     state: ReturnType<typeof useOrderForm>;
@@ -214,6 +216,7 @@ export default function OrderFormFields({
                 </section>
                 <section className="space-y-4 rounded-xl border p-4">
                     <TypographyH3 className="text-base">{t('delivery')}</TypographyH3>
+                    <CheckoutRegionFields control={form.control} id="internal-order" />
                     <div className="grid gap-5 md:grid-cols-2">
                         <Field>
                             <FieldLabel htmlFor="internal-order-address">
@@ -286,6 +289,7 @@ export default function OrderFormFields({
                         </CardContent>
                     </Card>
                 )}
+                {showPayment && plan && <CheckoutPriceSummary plan={plan} />}
             </fieldset>
             {mutation.isError && (
                 <div role="alert">

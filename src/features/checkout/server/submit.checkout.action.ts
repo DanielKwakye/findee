@@ -8,6 +8,7 @@ import {
     validateCheckoutAllocation,
 } from '@/features/checkout/utils/checkout.validations';
 import { createStripeCheckout } from '@/features/checkout/utils/checkout.stripe';
+import { formatCheckoutAddress } from '@/features/checkout/utils/checkout.address';
 
 /** Validates and records submitted checkout information for order processing. */
 export async function submitCheckout(values: CheckoutValues): Promise<string> {
@@ -25,7 +26,7 @@ export async function submitCheckout(values: CheckoutValues): Promise<string> {
         customer,
         {
             ...values,
-            shippingAddress: `${values.shippingAddress.trim()}, ${values.postalCode.slice(0, 3)}-${values.postalCode.slice(3)}`,
+            shippingAddress: formatCheckoutAddress(values),
         },
         plan,
     );

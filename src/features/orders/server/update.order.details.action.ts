@@ -10,6 +10,7 @@ import {
 import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.action';
 import { checkoutOrderPlans } from '@/features/checkout/data/checkout.order.plans';
 import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
+import { formatCheckoutAddress } from '@/features/checkout/utils/checkout.address';
 
 /** Updates an order's purchase, customer contact, and delivery information. */
 export async function updateOrderDetails(id: string, values: CheckoutValues): Promise<string> {
@@ -82,7 +83,7 @@ export async function updateOrderDetails(id: string, values: CheckoutValues): Pr
                     chat: order.defaultReachoutModes.chat,
                 },
                 showOwnerName: values.showName,
-                shippingAddress: values.shippingAddress.trim(),
+                shippingAddress: formatCheckoutAddress(values),
                 deliveryInstructions: values.deliveryInstructions.trim() || null,
             },
             select: { id: true },

@@ -12,5 +12,7 @@ export const initialOrderValues: CheckoutValues = {
     contactByPhone: false,
     showName: false,
     shippingAddress: '',
+    country: 'Canada',
+    state: '',
     deliveryInstructions: '',
 };

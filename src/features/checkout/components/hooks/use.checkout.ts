@@ -10,6 +10,7 @@ import type {
     CheckoutCustomer,
     CheckoutPlan,
     CheckoutValues,
+    CheckoutPreviewHandle,
 } from '@/features/checkout/utils/checkout.types';
 import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.action';
 import { distributeCheckoutQuantity } from '@/features/checkout/utils/checkout.allocation';
@@ -33,6 +34,7 @@ export function useCheckout(
     const queryClient = useQueryClient();
     const formatDate = useUserDateTime();
     const checkoutTracked = useRef(false);
+    const previewRef = useRef<CheckoutPreviewHandle>(null);
     useEffect(() => {
         if (checkoutTracked.current) return;
         checkoutTracked.current = true;
@@ -54,6 +56,8 @@ export function useCheckout(
             contactByPhone: false,
             showName: false,
             shippingAddress: '',
+            country: 'Canada',
+            state: '',
             postalCode: '',
             deliveryInstructions: '',
         },
@@ -99,6 +103,8 @@ export function useCheckout(
             form.setValue('shippingAddress', destination.shippingAddress);
         if (!form.getFieldState('postalCode').isDirty)
             form.setValue('postalCode', destination.postalCode);
+        if (!form.getFieldState('state').isDirty) form.setValue('state', destination.state);
+        if (!form.getFieldState('country').isDirty) form.setValue('country', destination.country);
     }, [shippingAddressQuery.data, form]);
     const allocationSetup = useRef('');
     const variants = useWatch({ control: form.control, name: 'variants' });
@@ -257,10 +263,18 @@ export function useCheckout(
     async function onPay() {
         if (contactMissing || submission.isPending) return;
         const valid = await form.trigger(
-            ['email', 'name', 'phone', 'shippingAddress', 'postalCode'],
+            ['email', 'name', 'phone', 'shippingAddress', 'postalCode', 'country', 'state'],
             { shouldFocus: true },
         );
-        if (valid) submission.mutate(form.getValues());
+        if (valid && plan) {
+            submission.reset();
+            previewRef.current?.open(form.getValues(), plan);
+        }
+    }
+
+    /** Starts payment for the shipping and purchase details reviewed by the customer. */
+    function onConfirmPayment(values: CheckoutValues) {
+        if (!submission.isPending) submission.mutate(values);
     }
 
     return {
@@ -287,6 +301,8 @@ export function useCheckout(
         contactMissing,
         submission,
         onPay,
+        previewRef,
+        onConfirmPayment,
         onVerified,
     };
 }

@@ -106,7 +106,7 @@ export default function CheckoutPlans({ control, plans }: Props) {
                                                 style: 'currency',
                                                 currency: custom.currency,
                                                 currencyDisplay: 'code',
-                                                maximumFractionDigits: 3,
+                                                maximumFractionDigits: 5,
                                             },
                                         ),
                                     })}

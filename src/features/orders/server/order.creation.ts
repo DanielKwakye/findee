@@ -18,10 +18,11 @@ export async function createOrder(
     orderNumber?: string,
     paidPlan?: CheckoutPlan,
     paymentAt: Date | null = new Date(),
+    includeShipping = true,
 ): Promise<string> {
     validateCheckoutValues(values);
     const plans = paidPlan ? [paidPlan] : await getCheckoutPlans();
-    const plan = validateCheckoutAllocation(values, plans);
+    const plan = validateCheckoutAllocation(values, plans, includeShipping);
 
     const name = values.name.trim();
     const phone = values.phone.trim();

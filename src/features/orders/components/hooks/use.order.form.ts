@@ -30,6 +30,7 @@ export function useOrderForm(
             Object.fromEntries(
                 (values.variants ?? []).map((variant) => [variant, values.allocation?.[variant]]),
             ),
+            !values.customerPaid,
         ),
     );
     const plan = plans.find((option) => option.id === values.plan);

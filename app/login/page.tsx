@@ -2,7 +2,10 @@ import { LoginForm } from '@/features/auth/components/ui/login-form';
 import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 
-export const metadata: Metadata = { title: messages.PageMetadata.titles.adminLogin };
+export const metadata: Metadata = {
+    title: messages.PageMetadata.titles.adminLogin,
+    robots: { index: false, follow: false },
+};
 
 /** Presents sign-in and sends authenticated administrators to their portal. */
 export default async function LoginPage() {

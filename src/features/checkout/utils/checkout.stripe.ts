@@ -61,6 +61,7 @@ export async function createStripeCheckout(
         id: plan.id,
         title: plan.title,
         price: plan.price,
+        shippingCost: plan.shippingCost,
         currency: plan.currency,
         quantity: plan.quantity,
         quantityIsMinimum: plan.quantityIsMinimum,
@@ -68,7 +69,7 @@ export async function createStripeCheckout(
         maxRecoveryProfiles: plan.maxRecoveryProfiles,
     });
     const stripeCustomerId = await getStripeCustomerId(customer.id);
-    const t = await getTranslations('Checkout.plans');
+    const t = await getTranslations('Checkout');
     const session = await getStripe().checkout.sessions.create({
         ui_mode: 'hosted_page',
         mode: 'payment',
@@ -87,8 +88,17 @@ export async function createStripeCheckout(
             {
                 price_data: {
                     currency: plan.currency.toLowerCase(),
-                    unit_amount: Math.round(plan.price * 100),
-                    product_data: { name: t('productName', { quantity: plan.quantity }) },
+                    unit_amount:
+                        Math.round(plan.price * 100) - Math.round((plan.shippingCost ?? 0) * 100),
+                    product_data: { name: t('plans.productName', { quantity: plan.quantity }) },
+                },
+                quantity: 1,
+            },
+            {
+                price_data: {
+                    currency: plan.currency.toLowerCase(),
+                    unit_amount: Math.round((plan.shippingCost ?? 0) * 100),
+                    product_data: { name: t('preview.shipping') },
                 },
                 quantity: 1,
             },

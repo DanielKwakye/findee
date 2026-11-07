@@ -92,7 +92,7 @@ export default function CheckoutAllocation({
                                                             style: 'currency',
                                                             currency: plan.currency,
                                                             currencyDisplay: 'code',
-                                                            maximumFractionDigits: 3,
+                                                            maximumFractionDigits: 5,
                                                         },
                                                     ),
                                                 })}

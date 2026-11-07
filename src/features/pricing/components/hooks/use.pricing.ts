@@ -14,20 +14,26 @@ export function usePricing() {
             const plan = plans.find((option) => option.id === 'custom');
             if (!plan?.unitPrices?.length) throw new Error('Sticker pricing is unavailable');
             const tiers = plan.unitPrices;
-            return checkoutVariants.map((variant) => ({
-                ...variant,
-                currency: plan.currency,
-                minimumQuantity: plan.minimumQuantity,
-                startingPrice: Math.min(...tiers.map((tier) => tier.prices[variant.id])),
-                tiers: tiers.map((tier, index) => ({
-                    minimum:
-                        index === 0
-                            ? (plan.minimumQuantity ?? 1)
-                            : (tiers[index - 1].maximumQuantity ?? 0) + 1,
-                    maximum: tier.maximumQuantity,
-                    price: tier.prices[variant.id],
-                })),
-            }));
+            return checkoutVariants.map((variant) => {
+                const variantTiers = tiers.filter(
+                    (tier, index) =>
+                        tier.prices[variant.id] !== tiers[index + 1]?.prices[variant.id],
+                );
+                return {
+                    ...variant,
+                    currency: plan.currency,
+                    minimumQuantity: plan.minimumQuantity,
+                    startingPrice: Math.min(...tiers.map((tier) => tier.prices[variant.id])),
+                    tiers: variantTiers.map((tier, index) => ({
+                        minimum:
+                            index === 0
+                                ? (plan.minimumQuantity ?? 1)
+                                : (variantTiers[index - 1].maximumQuantity ?? 0) + 1,
+                        maximum: tier.maximumQuantity,
+                        price: tier.prices[variant.id],
+                    })),
+                };
+            });
         },
     });
 }

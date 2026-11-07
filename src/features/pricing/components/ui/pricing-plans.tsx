@@ -73,7 +73,7 @@ export default function PricingPlans() {
                                                 style: 'currency',
                                                 currency: variant.currency,
                                                 currencyDisplay: 'code',
-                                                maximumFractionDigits: 3,
+                                                maximumFractionDigits: 5,
                                             })}
                                         </TypographyBody>
                                         <TypographyBody className="text-xs text-muted-foreground">
@@ -111,7 +111,7 @@ export default function PricingPlans() {
                                                                 style: 'currency',
                                                                 currency: variant.currency,
                                                                 currencyDisplay: 'code',
-                                                                maximumFractionDigits: 3,
+                                                                maximumFractionDigits: 5,
                                                             }),
                                                         })}
                                                     </TypographyBody>

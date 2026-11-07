@@ -8,17 +8,27 @@ export async function getCheckoutPlans(): Promise<CheckoutPlan[]> {
     const plans: CheckoutPlan[] = [
         {
             id: 'custom',
-            title: 'Findmus',
+            title: 'Pricing',
             price: 0,
             currency: 'CAD',
             quantity: 20,
             minimumQuantity: 10,
             maxRecoveryProfiles: null,
             unitPrices: [
-                { maximumQuantity: 19, prices: { Everyday: 1.5, Tough: 1.75, Fabric: 2.0 } },
-                { maximumQuantity: 29, prices: { Everyday: 1.25, Tough: 1.5, Fabric: 1.75 } },
-                { maximumQuantity: 39, prices: { Everyday: 1.125, Tough: 1.375, Fabric: 1.625 } },
-                { maximumQuantity: null, prices: { Everyday: 1.0, Tough: 1.25, Fabric: 1.5 } },
+                { maximumQuantity: 19, prices: { Everyday: 9.99 / 10, Tough: 1.75, Fabric: 2.0 } },
+                {
+                    maximumQuantity: 39,
+                    prices: { Everyday: 16.99 / 20, Tough: 1.375, Fabric: 1.625 },
+                },
+                {
+                    maximumQuantity: null,
+                    prices: { Everyday: 29.99 / 40, Tough: 1.25, Fabric: 1.5 },
+                },
+            ],
+            shippingPrices: [
+                { maximumQuantity: 19, prices: { Everyday: 2.99, Tough: 2.99, Fabric: 2.99 } },
+                { maximumQuantity: 39, prices: { Everyday: 2.99, Tough: 2.99, Fabric: 2.99 } },
+                { maximumQuantity: null, prices: { Everyday: 0, Tough: 0, Fabric: 0 } },
             ],
         },
     ];

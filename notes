@@ -1,8 +1,8 @@
 TODO
 - USE canada post API to estimate delivery (from postal code to postal code) -- DONE | letter delivery does not require api
-- Stripe Payment Integration
-- Images on the use cases page must be changed
-- Prices must be re-evaluated
+- Stripe Payment Integration - DONE
+- Images on the use cases page must be changed - DONE
+- Prices must be re-evaluated -DONE (FOR EVERYDAY)
 - Go through and correct false info on faq -- DONE
 - Remove disable the concept of recovery profiles for now -- DONE
 - Let customers specify the number of stickers they need -- DONE
@@ -10,4 +10,8 @@ TODO
 - Create Reddit Account for Findmus (First login with personal account)
 - Create Twitter Account for Findmus (First login with personal account)
 - Create Instagram Account for Findmus (First login with personal account)
-- Bring back "Free Shipping Across Canada" - on the prices page and the checkout final step
+- Website menu on the dashbaord sidebar
+- Add Customer Review
+- Customer Feature Request
+- Customer Share - open up a dialog for customer to share to socials or copy link
+- Disable Tough and Fabric. on click open up a dialog for people to subscribe if it becomes active

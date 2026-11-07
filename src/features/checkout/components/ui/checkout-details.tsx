@@ -13,6 +13,7 @@ import TypographyParagraph from '@/components/core/ui/typography-paragraph';
 import { checkoutContactFields } from '@/features/checkout/data/checkout.contact.fields';
 import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 import type { useCheckout } from '@/features/checkout/components/hooks/use.checkout';
+import CheckoutRegionFields from '@/features/checkout/components/ui/checkout-region-fields';
 
 type Props = {
     form: UseFormReturn<CheckoutValues>;
@@ -93,6 +94,7 @@ export default function CheckoutDetails({
                     </TypographyParagraph>
                 </div>
             )}
+            <CheckoutRegionFields control={form.control} id="checkout" />
             <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto]">
                 <Field className="min-w-0 gap-2">
                     <FieldLabel htmlFor="checkout-address">

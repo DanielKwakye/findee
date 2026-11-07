@@ -100,7 +100,7 @@ export function getEstimatedDeliveryDate({
     shippingAddress,
     dateType = 'delivery',
 }: DeliveryEstimateOptions = {}): string {
-    const addressPostalCode = shippingAddress?.match(/([A-Z]\d[A-Z])[-\s]?(\d[A-Z]\d)\.?\s*$/i);
+    const addressPostalCode = shippingAddress?.match(/\b([A-Z]\d[A-Z])[-\s]?(\d[A-Z]\d)\b/i);
     destinationProvince =
         destinationProvince?.trim().toUpperCase() ??
         getPostalProvince(

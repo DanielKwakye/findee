@@ -6,6 +6,10 @@ export type CheckoutCustomer = {
     phone: string | null;
 };
 
+export type CheckoutPreviewHandle = {
+    open: (values: CheckoutValues, plan: CheckoutPlan) => void;
+};
+
 export type CheckoutPlan = {
     id: 'personal' | 'family' | 'custom';
     title: string;
@@ -15,6 +19,8 @@ export type CheckoutPlan = {
     quantityIsMinimum?: boolean;
     minimumQuantity?: number;
     unitPrices?: { maximumQuantity: number | null; prices: Record<CheckoutVariant, number> }[];
+    shippingPrices?: { maximumQuantity: number | null; prices: Record<CheckoutVariant, number> }[];
+    shippingCost?: number;
     maxRecoveryProfiles: number | null;
 };
 
@@ -30,6 +36,8 @@ export type CheckoutValues = {
     showName: boolean;
     contactByPhone: boolean;
     shippingAddress: string;
+    state: string;
+    country: string;
     postalCode?: string;
     deliveryInstructions: string;
 };

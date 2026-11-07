@@ -2,6 +2,7 @@ import { checkoutOrderPlans } from '@/features/checkout/data/checkout.order.plan
 import { checkoutVariants } from '@/features/checkout/data/checkout.variants';
 import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 import type { OrderDetails } from '@/features/orders/utils/order.types';
+import { parseCheckoutAddress } from '@/features/checkout/utils/checkout.address';
 
 /** Converts persisted order details into editable form values. */
 export function getOrderEditValues(order: OrderDetails): CheckoutValues {
@@ -30,7 +31,7 @@ export function getOrderEditValues(order: OrderDetails): CheckoutValues {
         contactByEmail: order.defaultReachoutModes.email,
         contactByPhone: order.defaultReachoutModes.phone,
         showName: order.showOwnerName,
-        shippingAddress: order.shippingAddress ?? '',
+        ...parseCheckoutAddress(order.shippingAddress ?? ''),
         deliveryInstructions: order.deliveryInstructions ?? '',
     };
 }

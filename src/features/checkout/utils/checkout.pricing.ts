@@ -24,7 +24,8 @@ export function getCheckoutSubtotal(
         typeof quantity === 'number' && Number.isSafeInteger(quantity) && quantity >= 0
             ? quantity
             : 0;
-    return Math.round(count * getCheckoutUnitPrice(plan, variant, count) * 100) / 100;
+    const unitPrice = Math.round(getCheckoutUnitPrice(plan, variant, count) * 100_000);
+    return Math.round((count * unitPrice) / 1_000) / 100;
 }
 
 /** Applies a plan's quantity pricing to the customer's selected sticker count. */
@@ -32,6 +33,7 @@ export function getCheckoutPlanPrice(
     plan: CheckoutPlan,
     quantity: CheckoutValues['customQuantity'],
     allocation?: CheckoutValues['allocation'],
+    includeShipping = true,
 ): CheckoutPlan {
     if (!plan.unitPrices) return plan;
     const count =
@@ -48,5 +50,16 @@ export function getCheckoutPlanPrice(
             Math.round(getCheckoutSubtotal(selected, variant.id, quantities[variant.id]) * 100),
         0,
     );
-    return { ...selected, price: cents / 100 };
+    const shippingCents = includeShipping
+        ? checkoutVariants.reduce((highest, variant) => {
+              const quantity = Number(quantities[variant.id] ?? 0);
+              if (quantity <= 0 || !plan.shippingPrices) return highest;
+              const tier = plan.shippingPrices.find(
+                  (option) => option.maximumQuantity === null || quantity <= option.maximumQuantity,
+              );
+              if (!tier) throw new Error('No shipping price configured for this quantity');
+              return Math.max(highest, Math.round(tier.prices[variant.id] * 100));
+          }, 0)
+        : 0;
+    return { ...selected, shippingCost: shippingCents / 100, price: (cents + shippingCents) / 100 };
 }

@@ -7,6 +7,7 @@ import type { OrderFormValues } from '@/features/orders/utils/order.types';
 import { sendOrderInvoice } from '@/features/orders/server/order.invoice';
 import { createOrder } from '@/features/orders/server/order.creation';
 import { db } from '@/lib/db';
+import { formatCheckoutAddress } from '@/features/checkout/utils/checkout.address';
 
 /** Creates an order for a customer on behalf of authorized staff. */
 export async function createOrderInternally(
@@ -21,6 +22,7 @@ export async function createOrderInternally(
     )
         throw new Error('Invalid internal order');
     validateCheckoutValues(values);
+    const shippingAddress = formatCheckoutAddress(values);
     const email = normalizeEmail(values.email);
     const customer = await db.user.upsert({
         where: { email },
@@ -43,10 +45,11 @@ export async function createOrderInternally(
     if (!existing)
         await createOrder(
             customer.id,
-            { ...values, email },
+            { ...values, email, shippingAddress },
             orderReference,
             undefined,
             values.customerPaid ? new Date() : null,
+            !values.customerPaid,
         );
     if (!existing?.paymentAt) await sendOrderInvoice(orderReference);
     return orderReference;

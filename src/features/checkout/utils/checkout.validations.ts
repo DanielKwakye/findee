@@ -33,7 +33,11 @@ export function validateCheckoutValues(values: CheckoutValues) {
 }
 
 /** Validates sticker quantities against the selected checkout plan. */
-export function validateCheckoutAllocation(values: CheckoutValues, plans: CheckoutPlan[]) {
+export function validateCheckoutAllocation(
+    values: CheckoutValues,
+    plans: CheckoutPlan[],
+    includeShipping = true,
+) {
     const selected = plans.find((plan) => plan.id === values.plan);
     if (
         !selected ||
@@ -49,6 +53,7 @@ export function validateCheckoutAllocation(values: CheckoutValues, plans: Checko
         selected,
         values.customQuantity,
         Object.fromEntries(values.variants.map((variant) => [variant, values.allocation[variant]])),
+        includeShipping,
     );
     if (getCheckoutAllocationError(values, plan)) {
         throw new Error('Invalid sticker allocation');
