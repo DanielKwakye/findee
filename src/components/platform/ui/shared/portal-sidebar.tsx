@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { GalleryVerticalEnd } from 'lucide-react';
+import { GalleryVerticalEnd, Share2, ArrowLeft, Lightbulb } from 'lucide-react';
 import {
     Sidebar,
     SidebarContent,
@@ -13,6 +13,8 @@ import {
     SidebarMenu,
     SidebarMenuItem,
     SidebarMenuButton,
+    SidebarGroup,
+    SidebarGroupLabel,
 } from '@/components/core/ui/sidebar';
 import { PortalNavMain } from '@/components/platform/ui/shared/portal-nav-main';
 import { PortalTeamSwitcher } from '@/components/platform/ui/shared/portal-team-switcher';
@@ -24,6 +26,12 @@ import {
     portalCustomerItems,
 } from '@/components/platform/data/portal.sidebar.menuItems';
 import AppIcon from '@/components/platform/ui/shared/app-icon';
+import ShareDialog from '@/components/platform/ui/shared/share-dialog';
+import { useShare } from '@/components/platform/hooks/use.share';
+import type { ShareLinks } from '@/components/platform/utils/share';
+import TypographyBody from '@/components/core/ui/typography-body';
+import FeatureRequestDialog from '@/features/tickets/components/ui/feature-request-dialog';
+import { usePortalSidebar } from '@/components/platform/hooks/use.portal.sidebar';
 
 // This is sample data.
 const data = {
@@ -40,12 +48,17 @@ const data = {
 export function PortalSidebar({
     user,
     audience = 'admin',
+    shareLinks,
     ...props
 }: React.ComponentProps<typeof Sidebar> & {
     user: { name: string | null; email: string };
     audience?: 'admin' | 'customer';
+    shareLinks?: ShareLinks;
 }) {
     const t = useTranslations('Footer');
+    const tFeature = useTranslations('FeatureRequest');
+    const { featureRequestRef, requestFeature } = usePortalSidebar();
+    const { dialogRef, openShare } = useShare(shareLinks);
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
@@ -72,12 +85,62 @@ export function PortalSidebar({
                     items={audience === 'customer' ? portalCustomerItems : portalInventoryItems}
                     groupLabel={audience === 'customer' ? 'account' : 'inventory'}
                 />
+                {audience === 'customer' && (
+                    <SidebarGroup>
+                        <SidebarGroupLabel>
+                            <TypographyBody className="text-xs">
+                                {t('communityGroup')}
+                            </TypographyBody>
+                        </SidebarGroupLabel>
+                        <SidebarMenu>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton
+                                    tooltip={tFeature('title')}
+                                    onClick={requestFeature}
+                                >
+                                    <Lightbulb aria-hidden="true" />
+                                    <TypographyBody className="text-sm">
+                                        {tFeature('title')}
+                                    </TypographyBody>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                            {shareLinks && (
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton
+                                        tooltip={t('social.share')}
+                                        onClick={openShare}
+                                    >
+                                        <Share2 aria-hidden="true" />
+                                        <TypographyBody className="text-sm">
+                                            {t('social.share')}
+                                        </TypographyBody>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            )}
+                            <SidebarMenuItem>
+                                <SidebarMenuButton
+                                    tooltip={t('backToWebsite')}
+                                    render={<Link href="/" />}
+                                >
+                                    <ArrowLeft aria-hidden="true" />
+                                    <TypographyBody className="text-sm">
+                                        {t('backToWebsite')}
+                                    </TypographyBody>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        </SidebarMenu>
+                    </SidebarGroup>
+                )}
                 {audience === 'admin' && <PortalNavProjects projects={portalInternalItems} />}
             </SidebarContent>
             <SidebarFooter>
                 <PortalNavUser user={user} audience={audience} />
             </SidebarFooter>
             <SidebarRail />
+            {audience === 'customer' && (
+                <FeatureRequestDialog ref={featureRequestRef} user={user} />
+            )}
+            {audience === 'customer' && shareLinks && <ShareDialog ref={dialogRef} />}
         </Sidebar>
     );
 }

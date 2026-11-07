@@ -1,11 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useFormatter } from 'next-intl';
+import Link from 'next/link';
+import { useFormatter, useTranslations } from 'next-intl';
 import { Controller } from 'react-hook-form';
 import { Stepper } from '@/components/platform';
 import { Checkbox } from '@/components/core/ui/checkbox';
 import { Button } from '@/components/core/ui/button';
+import { Badge } from '@/components/core/ui/badge';
 import {
     Field,
     FieldContent,
@@ -17,7 +19,11 @@ import TypographyH3 from '@/components/core/ui/typography-h3';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyParagraph from '@/components/core/ui/typography-paragraph';
 import { useCheckout } from '@/features/checkout/components/hooks/use.checkout';
-import { checkoutVariants, type CheckoutVariant } from '@/features/checkout/data/checkout.variants';
+import {
+    checkoutVariants,
+    checkoutComingSoonVariants,
+    type CheckoutVariant,
+} from '@/features/checkout/data/checkout.variants';
 import CheckoutPlans from '@/features/checkout/components/ui/checkout-plans';
 import CheckoutAllocation from '@/features/checkout/components/ui/checkout-allocation';
 import CheckoutDetails from '@/features/checkout/components/ui/checkout-details';
@@ -25,6 +31,7 @@ import CheckoutPriceSummary from '@/features/checkout/components/ui/checkout-pri
 import CheckoutPreviewDialog from '@/features/checkout/components/ui/checkout-preview-dialog';
 import { CustomerOtpForm } from '@/features/auth/components/ui/customer-otp-form';
 import type { CheckoutCustomer, CheckoutPlan } from '@/features/checkout/utils/checkout.types';
+import StickerAvailabilityDialog from '@/features/notifications/components/ui/sticker-availability-dialog';
 
 /** Renders the checkout steps and variant choices. */
 export default function Checkout({
@@ -37,6 +44,8 @@ export default function Checkout({
     initialVariant?: CheckoutVariant;
 }) {
     const format = useFormatter();
+    const tPricing = useTranslations('Pricing');
+    const tItems = useTranslations('EverydayItems');
     const {
         t,
         form,
@@ -64,6 +73,8 @@ export default function Checkout({
         previewRef,
         onConfirmPayment,
         onVerified,
+        notificationDialogRef,
+        onVariantChange,
     } = useCheckout(customer, initialPlan, initialVariant);
 
     return (
@@ -161,46 +172,74 @@ export default function Checkout({
                                 className="gap-2 sm:gap-3 xl:gap-4"
                             >
                                 {checkoutVariants.map((variant) => (
-                                    <FieldLabel
-                                        key={variant.id}
-                                        className="xl:*:data-[slot=field]:p-3"
-                                    >
-                                        <Field orientation="horizontal" className="gap-3 sm:gap-5">
-                                            <Image
-                                                src={variant.image}
-                                                alt={t(`variants.${variant.key}.alt`)}
-                                                width={96}
-                                                height={96}
-                                                sizes="(min-width: 1280px) 64px, (max-width: 640px) 64px, 96px"
-                                                className="h-16 w-16 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24 xl:h-16 xl:w-16"
-                                            />
-                                            <FieldContent>
-                                                <FieldTitle>
-                                                    <TypographyBody className="text-sm font-bold sm:text-xl xl:text-base">
-                                                        {t(`variants.${variant.key}.title`)}
+                                    <div key={variant.id} className="space-y-2">
+                                        <FieldLabel className="w-full xl:*:data-[slot=field]:p-3">
+                                            <Field
+                                                orientation="horizontal"
+                                                className="gap-3 sm:gap-5"
+                                            >
+                                                <Image
+                                                    src={variant.image}
+                                                    alt={t(`variants.${variant.key}.alt`)}
+                                                    width={96}
+                                                    height={96}
+                                                    sizes="(min-width: 1280px) 64px, (max-width: 640px) 64px, 96px"
+                                                    className="h-16 w-16 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24 xl:h-16 xl:w-16"
+                                                />
+                                                <FieldContent>
+                                                    <FieldTitle className="flex-wrap">
+                                                        <TypographyBody className="text-sm font-bold sm:text-xl xl:text-base">
+                                                            {t(`variants.${variant.key}.title`)}
+                                                        </TypographyBody>
+                                                        <Badge
+                                                            variant="secondary"
+                                                            className={
+                                                                checkoutComingSoonVariants[
+                                                                    variant.id
+                                                                ]
+                                                                    ? undefined
+                                                                    : 'bg-success/15 text-success'
+                                                            }
+                                                        >
+                                                            <TypographyBody className="text-xs">
+                                                                {checkoutComingSoonVariants[
+                                                                    variant.id
+                                                                ]
+                                                                    ? t('comingSoon')
+                                                                    : tPricing('active')}
+                                                            </TypographyBody>
+                                                        </Badge>
+                                                    </FieldTitle>
+                                                    <TypographyBody className="text-xs text-muted-foreground sm:text-base xl:text-sm">
+                                                        {t(`variants.${variant.key}.description`)}
+                                                        {variant.id === 'Everyday' && (
+                                                            <>
+                                                                {' '}
+                                                                <Link
+                                                                    href="/everyday-items"
+                                                                    aria-label={tItems('linkLabel')}
+                                                                    className="text-primary underline-offset-4 hover:underline"
+                                                                >
+                                                                    <TypographyBody className="text-xs">
+                                                                        {tItems('seeFullList')}
+                                                                    </TypographyBody>
+                                                                </Link>
+                                                            </>
+                                                        )}
                                                     </TypographyBody>
-                                                </FieldTitle>
-                                                <TypographyBody className="text-xs text-muted-foreground sm:text-base xl:text-sm">
-                                                    {t(`variants.${variant.key}.description`)}
-                                                </TypographyBody>
-                                            </FieldContent>
-                                            <Checkbox
-                                                name={field.name}
-                                                value={variant.id}
-                                                checked={field.value.includes(variant.id)}
-                                                onBlur={field.onBlur}
-                                                onCheckedChange={(checked) =>
-                                                    field.onChange(
-                                                        checked
-                                                            ? [...field.value, variant.id]
-                                                            : field.value.filter(
-                                                                  (value) => value !== variant.id,
-                                                              ),
-                                                    )
-                                                }
-                                            />
-                                        </Field>
-                                    </FieldLabel>
+                                                </FieldContent>
+                                                <Checkbox
+                                                    name={field.name}
+                                                    value={variant.id}
+                                                    checked={field.value.includes(variant.id)}
+                                                    onBlur={field.onBlur}
+                                                    onCheckedChange={(checked) =>
+                                                        onVariantChange(variant.id, checked)
+                                                    }
+                                                />
+                                            </Field>
+                                        </FieldLabel>
+                                    </div>
                                 ))}
                             </FieldGroup>
                         )}
@@ -266,6 +305,7 @@ export default function Checkout({
                 submitError={submission.isError}
                 onConfirm={onConfirmPayment}
             />
+            <StickerAvailabilityDialog ref={notificationDialogRef} />
         </Stepper>
     );
 }

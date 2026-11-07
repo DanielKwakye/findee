@@ -29,7 +29,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
         <ToastPrimitive.Viewport
             data-slot="toast-viewport"
             className={cn(
-                'pointer-events-none fixed inset-x-4 bottom-4 z-50 mx-auto w-auto max-w-sm outline-none sm:right-4 sm:left-auto sm:mx-0 sm:w-full',
+                'pointer-events-none fixed inset-x-4 bottom-4 z-50 mx-auto w-auto max-w-sm outline-none',
                 className,
             )}
             {...props}
@@ -175,15 +175,33 @@ function ToastList() {
     const { toasts } = ToastPrimitive.useToastManager();
 
     return toasts.map((toastItem) => (
-        <Toast key={toastItem.id} toast={toastItem}>
+        <Toast
+            key={toastItem.id}
+            toast={toastItem}
+            className={
+                toastItem.type === 'info'
+                    ? 'border-primary bg-primary text-primary-foreground'
+                    : undefined
+            }
+        >
             <ToastContent>
                 <ToastIcon type={toastItem.type} />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <ToastTitle />
-                    <ToastDescription />
+                    <ToastDescription
+                        className={
+                            toastItem.type === 'info' ? 'text-primary-foreground/80' : undefined
+                        }
+                    />
                 </div>
                 <ToastAction />
-                <ToastClose />
+                <ToastClose
+                    className={
+                        toastItem.type === 'info'
+                            ? 'text-primary-foreground/80 hover:text-primary-foreground'
+                            : undefined
+                    }
+                />
             </ToastContent>
         </Toast>
     ));

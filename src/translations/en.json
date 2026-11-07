@@ -11,6 +11,7 @@
             "home": "Home",
             "pricing": "Pricing",
             "useCases": "Use cases",
+            "everydayItems": "Everyday items for QR stickers",
             "about": "About us",
             "blog": "Blog",
             "blogStory": "Blog story",
@@ -301,7 +302,7 @@
             "description": "Choose the sticker variants that suit your belongings. You can select more than one.",
             "everyday": {
                 "title": "Everyday Items",
-                "description": "Laptops, phones, tablets, water bottles, keys, bikes, luggage and more.",
+                "description": "Laptops, phones, tablets, water bottles, keys, luggage and more.",
                 "alt": "Findmus QR sticker on a laptop"
             },
             "tough": {
@@ -879,6 +880,8 @@
         "placeholder": "Add"
     },
     "Footer": {
+        "backToWebsite": "Back to website",
+        "communityGroup": "Explore & contribute",
         "home": "Findmus home",
         "tagline": "Small stickers. Big reunions.",
         "description": "Findmus helps lost items find their way home. Attach, get found, and be reunited — simply and securely.",
@@ -901,6 +904,8 @@
         },
         "social": {
             "x": "Findmus on X",
+            "tiktok": "Findmus on TikTok",
+            "share": "Share Findmus",
             "facebook": "Findmus on Facebook",
             "instagram": "Findmus on Instagram",
             "youtube": "Findmus on YouTube"
@@ -1517,7 +1522,104 @@
             "caption": "A scan gives a finder a way to reach the owner."
         }
     },
+    "FeatureRequest": {
+        "title": "Request feature",
+        "description": "What would make Findmus more useful to you?",
+        "label": "Your feature request",
+        "required": "Tell us about the feature you'd like.",
+        "tooLong": "Use 4,900 characters or fewer.",
+        "ticketMessage": "Feature request\n\n{message}",
+        "submit": "Send request",
+        "sending": "Sending…",
+        "cancel": "Cancel",
+        "success": "Feature request received. Ticket: {code}",
+        "error": "Couldn't send your request. Please try again."
+    },
+    "ShareDialog": {
+        "title": "Share Findmus",
+        "description": "Help someone get their belongings back.",
+        "message": "Findmus QR stickers help you recover your lost items easily. If someone finds your item, they can scan your QR sticker to get in touch with you.",
+        "shareOn": "Share on {platform}",
+        "link": "Share link",
+        "copyLink": "Copy link",
+        "copied": "Link copied.",
+        "messageCopied": "Message and link copied. Paste them into your social app.",
+        "copyError": "Couldn't copy automatically. Select and copy the link below.",
+        "shareError": "Couldn't open sharing. You can copy the link instead.",
+        "close": "Close",
+        "social": {
+            "x": "X / Twitter",
+            "tiktok": "TikTok",
+            "instagram": "Instagram",
+            "facebook": "Facebook"
+        }
+    },
+    "EverydayItems": {
+        "title": "Everyday items",
+        "titleAccent": "you can label",
+        "subtitle": "QR stickers work best on smooth, clean, dry surfaces. Here are some ideas for the things you use every day.",
+        "listLabel": "Everyday items for QR stickers",
+        "seeFullList": "See more list",
+        "linkLabel": "See more Everyday items",
+        "items": {
+            "transitPasses": "Transit passes",
+            "phoneCases": "Hard phone cases",
+            "laptopLids": "Laptop lids",
+            "tabletCases": "Hard tablet cases",
+            "ereaderCases": "Hard e-reader cases",
+            "powerBanks": "Power banks",
+            "chargingAdapters": "Charging adapters",
+            "externalHardDrives": "External hard drives",
+            "usbDrives": "USB flash drives",
+            "earbudCases": "Earbud charging cases",
+            "headphoneCases": "Hard headphone cases",
+            "bluetoothSpeakers": "Smooth speaker casings",
+            "computerMice": "Computer mice",
+            "keyboards": "Keyboard undersides",
+            "gameControllers": "Game controllers",
+            "portableGameConsoles": "Portable game consoles",
+            "cameraLensCaps": "Camera lens caps",
+            "plasticKeyTags": "Plastic key tags",
+            "hardGlassesCases": "Hard glasses cases",
+            "hardCardHolders": "Hard card holders",
+            "idBadgeHolders": "Plastic ID badge holders",
+            "travelCardHolders": "Hard travel card holders",
+            "waterBottles": "Smooth water bottles",
+            "travelMugs": "Travel mugs",
+            "thermosFlasks": "Thermos flasks",
+            "plasticLunchBoxes": "Plastic lunch boxes",
+            "metalFoodContainers": "Metal food containers",
+            "laminatedNotebookCovers": "Laminated notebook covers",
+            "hardPlannerCovers": "Hard planner covers",
+            "hardPencilCases": "Hard pencil cases",
+            "plasticDocumentFolders": "Plastic document folders",
+            "clipboards": "Clipboards",
+            "calculators": "Calculators",
+            "staplers": "Staplers",
+            "tapeDispensers": "Tape dispensers",
+            "remoteControls": "Remote controls",
+            "umbrellaHandles": "Smooth umbrella handles"
+        }
+    },
+    "StickerAvailability": {
+        "title": {
+            "everyday": "Notify me when QRs are ready.",
+            "tough": "Notify me when Tough QR stickers are ready.",
+            "fabric": "Notify me when Fabric QR stickers are ready.",
+            "both": "Notify me when Tough and Fabric QRs are ready."
+        },
+        "description": "Get notified by email.",
+        "name": "Name (optional)",
+        "nameInvalid": "Use 100 characters or fewer.",
+        "subscribing": "Subscribing…",
+        "success": "You're subscribed to sticker updates.",
+        "error": "We couldn't save your subscription. Please try again.",
+        "variants": "Sticker updates",
+        "variantsRequired": "Select at least one sticker type.",
+        "close": "Close"
+    },
     "Pricing": {
+        "active": "Active",
         "title": "Affordable",
         "titleAccent": "Sticker Pricing",
         "subtitle": "A little peace of mind for the things you care about. Choose the sticker types that suit your belongings and order as many as you need.",
@@ -1530,18 +1632,22 @@
         "variantPricingNote": "Each sticker type's quantity determines its unit price.",
         "minimumOrder": "Minimum {minimum, number} stickers per order.",
         "chooseVariant": "Choose {variant} stickers",
+        "notifyMe": "Subscribe",
+        "affordabilityAssurance": "We're keeping these QRs affordable so you can protect more of what matters.",
         "variants": {
             "everyday": {
                 "title": "Everyday",
-                "description": "A way home for the essentials that go everywhere with you."
+                "description": "Phones, laptops, keys, wallets, and more."
             },
             "tough": {
                 "title": "Tough",
-                "description": "For the gear you count on, wherever the day takes you."
+                "description": "Suitcases, toolboxes, sports equipment, and more.",
+                "notificationPrompt": "QR stickers for tough items are coming soon. Want to know when they're ready?"
             },
             "fabric": {
                 "title": "Fabric",
-                "description": "For favourite outfits, school-day staples, and bags full of memories."
+                "description": "Clothing, backpacks, jackets, hats, and more.",
+                "notificationPrompt": "QR stickers for fabric items are coming soon. Want to know when they're ready?"
             }
         },
         "descriptions": {

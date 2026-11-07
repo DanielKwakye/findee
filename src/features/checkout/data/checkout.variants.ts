@@ -7,3 +7,8 @@ export const checkoutVariants = [
 ] as const;
 
 export type CheckoutVariant = (typeof checkoutVariants)[number]['id'];
+
+export const checkoutComingSoonVariants: Partial<Record<CheckoutVariant, boolean>> = {
+    Tough: true,
+    Fabric: true,
+};

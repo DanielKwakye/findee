@@ -16,12 +16,16 @@ import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.
 import { distributeCheckoutQuantity } from '@/features/checkout/utils/checkout.allocation';
 import { submitCheckout } from '@/features/checkout/server/submit.checkout.action';
 import { getCheckoutAllocationError } from '@/features/checkout/utils/checkout.validations';
-import type { CheckoutVariant } from '@/features/checkout/data/checkout.variants';
+import {
+    checkoutComingSoonVariants,
+    type CheckoutVariant,
+} from '@/features/checkout/data/checkout.variants';
 import { trackEvent } from '@/lib/firebase';
 import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
 import { getLastShippingAddress } from '@/features/orders/server/get.last.shipping.address.action';
 import { getDeliveryEstimate } from '@/features/orders/server/get.delivery.estimate.action';
 import { useUserDateTime } from '@/components/platform';
+import type { StickerAvailabilityDialogHandle } from '@/features/notifications/utils/sticker.availability.types';
 
 /** Manages checkout navigation and the customer's variant selections. */
 export function useCheckout(
@@ -35,6 +39,7 @@ export function useCheckout(
     const formatDate = useUserDateTime();
     const checkoutTracked = useRef(false);
     const previewRef = useRef<CheckoutPreviewHandle>(null);
+    const notificationDialogRef = useRef<StickerAvailabilityDialogHandle>(null);
     useEffect(() => {
         if (checkoutTracked.current) return;
         checkoutTracked.current = true;
@@ -45,7 +50,7 @@ export function useCheckout(
     const authenticatedEmail = customer?.email ?? verifiedEmail;
     const form = useForm<CheckoutValues>({
         defaultValues: {
-            variants: [initialVariant],
+            variants: checkoutComingSoonVariants[initialVariant] ? [] : [initialVariant],
             plan: initialPlan,
             customQuantity: 20,
             allocation: {},
@@ -277,6 +282,20 @@ export function useCheckout(
         if (!submission.isPending) submission.mutate(values);
     }
 
+    /** Manages variant selection and opens notifications for upcoming stickers. */
+    function onVariantChange(variant: CheckoutVariant, checked: boolean) {
+        if (checkoutComingSoonVariants[variant]) {
+            notificationDialogRef.current?.open(variant);
+            return;
+        }
+        const selected = form.getValues('variants');
+        form.setValue(
+            'variants',
+            checked ? [...selected, variant] : selected.filter((value) => value !== variant),
+            { shouldDirty: true },
+        );
+    }
+
     return {
         t,
         form,
@@ -304,5 +323,7 @@ export function useCheckout(
         previewRef,
         onConfirmPayment,
         onVerified,
+        notificationDialogRef,
+        onVariantChange,
     };
 }

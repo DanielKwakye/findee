@@ -1,12 +1,19 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { useRef } from 'react';
 import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.action';
-import { checkoutVariants } from '@/features/checkout/data/checkout.variants';
+import {
+    checkoutVariants,
+    checkoutComingSoonVariants,
+    type CheckoutVariant,
+} from '@/features/checkout/data/checkout.variants';
+import type { StickerAvailabilityDialogHandle } from '@/features/notifications/utils/sticker.availability.types';
 
 /** Loads the sticker plans shared by pricing and checkout. */
 export function usePricing() {
-    return useQuery({
+    const notificationDialogRef = useRef<StickerAvailabilityDialogHandle>(null);
+    const query = useQuery({
         queryKey: ['checkout', 'plans'],
         queryFn: getCheckoutPlans,
         /** Prepares variant cards from the shared checkout pricing configuration. */
@@ -21,6 +28,7 @@ export function usePricing() {
                 );
                 return {
                     ...variant,
+                    comingSoon: !!checkoutComingSoonVariants[variant.id],
                     currency: plan.currency,
                     minimumQuantity: plan.minimumQuantity,
                     startingPrice: Math.min(...tiers.map((tier) => tier.prices[variant.id])),
@@ -36,4 +44,11 @@ export function usePricing() {
             });
         },
     });
+
+    /** Handles requests for sticker availability notifications. */
+    function onNotify(variant: CheckoutVariant) {
+        notificationDialogRef.current?.open(variant);
+    }
+
+    return { plansQuery: query, onNotify, notificationDialogRef };
 }

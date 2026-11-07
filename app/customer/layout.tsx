@@ -7,6 +7,7 @@ import CustomerPortalVisitTracker from '@/features/auth/components/ui/customer-p
 import PortalSessionGuard from '@/features/auth/components/ui/portal-session-guard';
 import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
+import { shareLinks } from '@/components/platform/data/share';
 
 export const metadata: Metadata = {
     robots: { index: false, follow: false },
@@ -22,8 +23,8 @@ export default async function CustomerLayout({ children }: { children: ReactNode
     return (
         <SidebarProvider>
             <PortalSessionGuard key={user.id} role="CUSTOMER" />
-            <CustomerPortalVisitTracker key={user.id} />
-            <PortalSidebar user={user} audience="customer" />
+            <CustomerPortalVisitTracker key={`visit-${user.id}`} />
+            <PortalSidebar user={user} audience="customer" shareLinks={shareLinks} />
             <SidebarInset className="min-w-0">
                 <header className="sticky top-0 z-20 flex min-h-16 shrink-0 items-center gap-2 bg-background transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">
                     <div className="flex min-w-0 items-center gap-2 px-4 py-2">

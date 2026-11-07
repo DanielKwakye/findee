@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Heart } from 'lucide-react';
+import FooterShare from '@/components/platform/ui/shared/footer-share';
+import { shareLinks } from '@/components/platform/data/share';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyParagraph from '@/components/core/ui/typography-paragraph';
 import { footerLinkGroups, footerSocialLinks } from '@/components/platform/data/footer';
@@ -82,6 +84,8 @@ export default function Footer() {
                                 <Link
                                     key={key}
                                     href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     aria-label={t(`social.${key}`)}
                                     className="flex size-7 items-center justify-center text-primary-foreground/70 transition-colors hover:text-primary-foreground"
                                 >
@@ -99,6 +103,7 @@ export default function Footer() {
                                     </svg>
                                 </Link>
                             ))}
+                            <FooterShare links={shareLinks} />
                         </div>
                         <TypographyParagraph className="mt-6 border-l border-primary-foreground/20 pl-4 text-sm leading-6 text-primary-foreground/70">
                             {t('stayUpdated')}

@@ -21,6 +21,7 @@ import { useCaseGroups } from '@/features/use-cases/data/use.cases';
 export default function UseCases() {
     const t = useTranslations('UseCases');
     const tVariants = useTranslations('Checkout.variants');
+    const tItems = useTranslations('EverydayItems');
     const pageSize = useUseCases();
 
     return (
@@ -46,6 +47,19 @@ export default function UseCases() {
                     const pageCount = Math.ceil(group.items.length / pageSize);
                     return (
                         <TabsContent key={group.variant} value={group.variant}>
+                            {group.variant === 'Everyday' && (
+                                <div className="flex justify-end py-2">
+                                    <Link
+                                        href="/everyday-items"
+                                        aria-label={tItems('linkLabel')}
+                                        className="text-primary underline-offset-4 hover:underline"
+                                    >
+                                        <TypographyBody className="text-xs">
+                                            {tItems('seeFullList')}
+                                        </TypographyBody>
+                                    </Link>
+                                </div>
+                            )}
                             <Carousel
                                 key={pageSize}
                                 opts={{ align: 'start' }}

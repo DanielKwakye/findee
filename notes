@@ -2,16 +2,17 @@ TODO
 - USE canada post API to estimate delivery (from postal code to postal code) -- DONE | letter delivery does not require api
 - Stripe Payment Integration - DONE
 - Images on the use cases page must be changed - DONE
-- Prices must be re-evaluated -DONE (FOR EVERYDAY)
+- Prices must be re-evaluated - (FOR EVERYDAY) - DONE
 - Go through and correct false info on faq -- DONE
 - Remove disable the concept of recovery profiles for now -- DONE
 - Let customers specify the number of stickers they need -- DONE
 - use stripe webhook for reconciliations - DONE | NOT TESTED
 - Create Reddit Account for Findmus (First login with personal account)
-- Create Twitter Account for Findmus (First login with personal account)
-- Create Instagram Account for Findmus (First login with personal account)
-- Website menu on the dashbaord sidebar
+- Create Twitter Account for Findmus (First login with personal account) - DONE
+- Create Instagram Account for Findmus (First login with personal account)  - DONE
+- Website menu on the dashbaord sidebar - DONE
 - Add Customer Review
-- Customer Feature Request
-- Customer Share - open up a dialog for customer to share to socials or copy link
-- Disable Tough and Fabric. on click open up a dialog for people to subscribe if it becomes active
+- Customer Feature Request - DONE
+- Customer Share - open up a dialog for customer to share to socials or copy link - DONE
+- Disable Tough and Fabric. on click open up a dialog for people to subscribe if it becomes active - DONE
+- List all the Items that fall under everyday - DONE

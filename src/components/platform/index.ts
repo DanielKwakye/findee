@@ -14,6 +14,8 @@ export { default as HowItWorks } from '@/components/platform/ui/shared/how-it-wo
 export { default as FAQ } from '@/components/platform/ui/shared/faq';
 export { default as Testimonials } from '@/components/platform/ui/shared/testimonials';
 export { default as Footer } from '@/components/platform/ui/shared/footer';
+export { default as ShareDialog } from '@/components/platform/ui/shared/share-dialog';
+export type { ShareDialogHandle, ShareLinks } from '@/components/platform/utils/share';
 export { PortalSidebar } from '@/components/platform/ui/shared/portal-sidebar';
 export { PortalBreadcrumb } from '@/components/platform/ui/shared/portal-breadcrumb';
 export { PortalBadgeAlert } from '@/components/platform/ui/shared/portal-badge-alert';

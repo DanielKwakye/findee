@@ -11,7 +11,20 @@ import {
 import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 
-export const metadata: Metadata = { title: messages.PageMetadata.titles.home };
+export const metadata: Metadata = {
+    title: messages.PageMetadata.titles.home,
+    description: messages.ShareDialog.message,
+    openGraph: {
+        type: 'website',
+        title: messages.PageMetadata.defaultTitle,
+        description: messages.ShareDialog.message,
+    },
+    twitter: {
+        card: 'summary',
+        title: messages.PageMetadata.defaultTitle,
+        description: messages.ShareDialog.message,
+    },
+};
 
 /** Renders the home page canvas and its shared navigation. */
 export default function Home() {
