@@ -19,8 +19,6 @@ export default function FooterShare({ links }: { links: ShareLinks }) {
                 <Link
                     key={key}
                     href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     onClick={() => onSocialClick(key, 'footer')}
                     aria-label={t(`social.${key}`)}
                     className="flex size-7 items-center justify-center text-primary-foreground/70 transition-colors hover:text-primary-foreground"

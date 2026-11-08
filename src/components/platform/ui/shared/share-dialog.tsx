@@ -56,11 +56,7 @@ export default function ShareDialog({ ref }: { ref: Ref<ShareDialogHandle> }) {
                             variant="outline"
                             onClick={() => onShareClick(key)}
                             nativeButton={!href}
-                            render={
-                                href ? (
-                                    <Link href={href} target="_blank" rel="noopener noreferrer" />
-                                ) : undefined
-                            }
+                            render={href ? <Link href={href} /> : undefined}
                             aria-label={t('shareOn', { platform: t(`social.${key}`) })}
                             className="h-auto flex-col gap-2 px-2 py-4"
                         >

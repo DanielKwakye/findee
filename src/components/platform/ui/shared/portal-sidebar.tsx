@@ -124,11 +124,7 @@ export function PortalSidebar({
                                     tooltip={t('socials')}
                                     onClick={() => onSocialClick('socials', 'customer_sidebar')}
                                     render={
-                                        <Link
-                                            href={process.env.NEXT_PUBLIC_FB_PAGE_LINK || '#'}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        />
+                                        <Link href={process.env.NEXT_PUBLIC_FB_PAGE_LINK || '#'} />
                                     }
                                 >
                                     <Globe aria-hidden="true" />
