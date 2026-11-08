@@ -4,6 +4,8 @@ import { Resend } from 'resend';
 
 type EmailNotification = {
     to: string | string[];
+    from?: string;
+    bcc?: string | string[];
     subject: string;
     replyTo?: string | string[];
     idempotencyKey?: string;
@@ -19,11 +21,11 @@ let nextEmailAt = 0;
 
 /** Delivers transactional emails from the application's verified sender. */
 export async function sendEmail(
-    { idempotencyKey, ...message }: EmailNotification,
+    { idempotencyKey, from, ...message }: EmailNotification,
     options: EmailDeliveryOptions = {},
 ) {
     const apiKey = process.env.RESEND_API_KEY;
-    const fromEmail = process.env.EMAIL_FROM;
+    const fromEmail = from || process.env.EMAIL_FROM;
     if (!apiKey || !fromEmail) throw new Error('Email delivery is not configured.');
     const resend = new Resend(apiKey);
     for (let attempt = 0; attempt <= (options.rateLimitRetries ?? 0); attempt++) {

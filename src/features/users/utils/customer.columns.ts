@@ -15,6 +15,9 @@ export function getCustomerColumns(
         lastVisited: string;
         notRecorded: string;
         deactivated: string;
+        reviewRequests: string;
+        orders: string;
+        none: string;
     },
     formatDate: (date: Date) => string,
 ): PortalTableColumnDef<CustomerRow>[] {
@@ -52,6 +55,18 @@ export function getCustomerColumns(
                     : row.deactivatedAt
                       ? labels.deactivated
                       : labels.active,
+        },
+        {
+            id: 'reviewRequestCount',
+            header: labels.reviewRequests,
+            accessorFn: (row) => row.reviewRequestCount ?? 0,
+            cell: ({ row }) => row.original.reviewRequestCount || labels.none,
+        },
+        {
+            id: 'orderCount',
+            header: labels.orders,
+            accessorFn: (row) => row._count.orders,
+            cell: ({ row }) => row.original._count.orders || labels.none,
         },
     ];
 }

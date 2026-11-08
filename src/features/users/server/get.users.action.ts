@@ -26,6 +26,8 @@ export async function getUsers(role: AuthRole = 'ADMIN') {
             deactivatedAt: role === 'CUSTOMER',
             createdAt: role === 'CUSTOMER',
             lastPortalVisitedAt: role === 'CUSTOMER',
+            reviewRequestCount: role === 'CUSTOMER',
+            _count: role === 'CUSTOMER' ? { select: { orders: true } } : false,
         },
     });
 }

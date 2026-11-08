@@ -5,7 +5,7 @@ import FooterShare from '@/components/platform/ui/shared/footer-share';
 import { shareLinks } from '@/components/platform/data/share';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyParagraph from '@/components/core/ui/typography-paragraph';
-import { footerLinkGroups, footerSocialLinks } from '@/components/platform/data/footer';
+import { footerLinkGroups } from '@/components/platform/data/footer';
 import { howItWorksTrustCues } from '@/components/platform/data/how.it.works';
 import AppIcon from '@/components/platform/ui/shared/app-icon';
 import { cn } from '@/lib/utils';
@@ -80,29 +80,6 @@ export default function Footer() {
                             {t('followUs')}
                         </TypographyBody>
                         <div className="mt-4 flex items-center gap-5">
-                            {footerSocialLinks.map(({ key, href, path }) => (
-                                <Link
-                                    key={key}
-                                    href={href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={t(`social.${key}`)}
-                                    className="flex size-7 items-center justify-center text-primary-foreground/70 transition-colors hover:text-primary-foreground"
-                                >
-                                    <svg
-                                        aria-hidden="true"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="1.75"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="size-6"
-                                    >
-                                        <path d={path} />
-                                    </svg>
-                                </Link>
-                            ))}
                             <FooterShare links={shareLinks} />
                         </div>
                         <TypographyParagraph className="mt-6 border-l border-primary-foreground/20 pl-4 text-sm leading-6 text-primary-foreground/70">

@@ -75,6 +75,13 @@
         "retry": "Try again"
     },
     "Customers": {
+        "reviewRequests": "Review requests sent",
+        "none": "None",
+        "orders": "Orders",
+        "requestReview": "Request review",
+        "reviewRequestDescription": "Send a review request email to {email}? Orders: {orders, plural, =0 {None} other {#}}. Review requests sent: {reviewRequests, plural, =0 {None} other {#}}.",
+        "reviewRequested": "Review request sent to {email}.",
+        "reviewRequestError": "Couldn't send the review request. Please try again.",
         "deactivated": "Deactivated",
         "actions": "Actions",
         "deactivate": "Deactivate",
@@ -108,6 +115,17 @@
             "variant": "{variant}: {count, number} available (minimum {threshold, number})",
             "guidance": "{summary}\n\nReview inventory and arrange more stock at {url}."
         }
+    },
+    "ReviewRequestEmail": {
+        "brand": "Findmus",
+        "subject": "How was your Findmus experience?",
+        "title": "We'd love your feedback",
+        "customer": "there",
+        "introduction": "Hi {name},\n\nThank you for choosing Findmus. We'd love to hear about your experience with our QR stickers.",
+        "guidance": "",
+        "reviewLink": "Review on TrustPilot",
+        "signoff": "Thank you,\nThe Findmus Team",
+        "footer": "Questions or feedback? Reply to this email and our support team will help."
     },
     "AdminInvitation": {
         "subject": "Your Findmus administrator account",

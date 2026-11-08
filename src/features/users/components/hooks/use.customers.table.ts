@@ -7,8 +7,9 @@ import { getUsers } from '@/features/users/server/get.users.action';
 import { getCustomerColumns } from '@/features/users/utils/customer.columns';
 import { useUserDateTime } from '@/components/platform';
 import type { PortalConfirmDialogHandle, PortalTableColumnDef } from '@/components/platform';
-import { Button } from '@/components/core/ui/button';
-import TypographyBody from '@/components/core/ui/typography-body';
+import CustomerActions from '@/features/users/components/ui/customer-actions';
+import { requestCustomerReview } from '@/features/users/server/request.customer.review.action';
+import { toast } from '@/components/core/ui/toast';
 import type { CustomerRow } from '@/features/users/utils/users.types';
 import { setCustomerDeactivation } from '@/features/users/server/set.customer.deactivation.action';
 
@@ -27,6 +28,40 @@ export function useCustomersTable() {
         },
     });
     const { mutateAsync } = mutation;
+    const reviewMutation = useMutation({
+        mutationFn: requestCustomerReview,
+        retry: false,
+        /** Confirms acceptance of the review request by the email provider. */
+        onSuccess({ email }) {
+            toast.add({
+                title: t('reviewRequested', { email }),
+                type: 'info',
+            });
+            return queryClient.invalidateQueries({ queryKey: ['customers'] });
+        },
+        /** Reports review request delivery failures. */
+        onError() {
+            toast.add({ title: t('reviewRequestError'), type: 'error' });
+        },
+    });
+    const { mutateAsync: requestReview } = reviewMutation;
+    /** Confirms the recipient before sending a customer review request. */
+    const confirmReviewRequest = useCallback(
+        (customer: CustomerRow) => {
+            confirmRef.current?.open({
+                title: t('requestReview'),
+                description: t('reviewRequestDescription', {
+                    email: customer.email,
+                    orders: customer._count.orders,
+                    reviewRequests: customer.reviewRequestCount ?? 0,
+                }),
+                confirmLabel: t('requestReview'),
+                errorMessage: t('reviewRequestError'),
+                onConfirm: () => requestReview(customer.id),
+            });
+        },
+        [t, requestReview],
+    );
     /** Confirms a temporary suspension or restoration of the selected customer's access. */
     const changeAccess = useCallback(
         (customer: CustomerRow) => {
@@ -60,6 +95,9 @@ export function useCustomersTable() {
                     lastVisited: t('lastVisited'),
                     notRecorded: t('notRecorded'),
                     deactivated: t('deactivated'),
+                    reviewRequests: t('reviewRequests'),
+                    orders: t('orders'),
+                    none: t('none'),
                 },
                 formatDate,
             ),
@@ -71,27 +109,22 @@ export function useCustomersTable() {
                 cell: ({ row }) =>
                     row.original.closedAt
                         ? null
-                        : createElement(
-                              Button,
-                              {
-                                  type: 'button',
-                                  variant: 'outline',
-                                  size: 'sm',
-                                  disabled: mutation.isPending,
-                                  className: row.original.deactivatedAt
-                                      ? 'border-success/20 bg-success/10 text-success hover:bg-success/20 hover:text-success'
-                                      : 'border-destructive/20 bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive',
-                                  onClick: () => changeAccess(row.original),
-                              },
-                              createElement(
-                                  TypographyBody,
-                                  null,
-                                  t(row.original.deactivatedAt ? 'reactivate' : 'deactivate'),
-                              ),
-                          ),
+                        : createElement(CustomerActions, {
+                              deactivated: !!row.original.deactivatedAt,
+                              disabled: mutation.isPending || reviewMutation.isPending,
+                              onChangeAccess: () => changeAccess(row.original),
+                              onRequestReview: () => confirmReviewRequest(row.original),
+                          }),
             },
         ],
-        [t, formatDate, changeAccess, mutation.isPending],
+        [
+            t,
+            formatDate,
+            changeAccess,
+            mutation.isPending,
+            reviewMutation.isPending,
+            confirmReviewRequest,
+        ],
     );
     return { t, query, columns, confirmRef };
 }

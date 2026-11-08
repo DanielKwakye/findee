@@ -3,6 +3,7 @@
 import { useId, useImperativeHandle, useState, type FocusEvent, type Ref } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/components/core/ui/toast';
+import { trackEvent } from '@/lib/firebase';
 import { shareSocialOptions } from '@/components/platform/data/footer';
 import {
     getSocialShareUrl,
@@ -33,6 +34,7 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
     /** Copies the default tracked link for sharing anywhere. */
     async function copyLink() {
         if (!links) return;
+        onShareClick('copy_link');
         setError(null);
         try {
             await navigator.clipboard.writeText(links.default);
@@ -50,6 +52,7 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
     /** Shares a platform's tracked link through available device apps or the clipboard. */
     async function shareToApp() {
         if (!links) return;
+        onShareClick('more_apps');
         setError(null);
         if (navigator.share) {
             try {
@@ -71,6 +74,11 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
         }
     }
 
+    /** Records share action clicks independently of completion in an external app. */
+    function onShareClick(method: string) {
+        void trackEvent('share_item_clicked', { method, page_path: window.location.pathname });
+    }
+
     const socialOptions = shareSocialOptions.map(({ key, path }) => ({
         key,
         path,
@@ -79,5 +87,16 @@ export function useShareDialog(ref: Ref<ShareDialogHandle>) {
             : null,
     }));
 
-    return { t, links, linkId, error, socialOptions, changeOpen, copyLink, selectLink, shareToApp };
+    return {
+        t,
+        links,
+        linkId,
+        error,
+        socialOptions,
+        changeOpen,
+        copyLink,
+        selectLink,
+        shareToApp,
+        onShareClick,
+    };
 }

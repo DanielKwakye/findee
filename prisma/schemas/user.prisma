@@ -12,6 +12,7 @@ model User {
   closedAt DateTime?
   deactivatedAt DateTime?
   lastPortalVisitedAt DateTime?
+  reviewRequestCount Int? @default(0)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   reservedProducts Product[] @relation("ProductReservation")

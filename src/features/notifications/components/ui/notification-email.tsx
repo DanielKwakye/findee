@@ -3,6 +3,7 @@ import 'server-only';
 import React from 'react';
 import {
     Body,
+    Button,
     Column,
     Container,
     Head,
@@ -25,6 +26,7 @@ export default function NotificationEmail({
     introduction,
     highlight,
     guidance,
+    link,
     signoff,
     footer,
     footerTagline,
@@ -98,18 +100,39 @@ export default function NotificationEmail({
                                 </Text>
                             </Section>
                         )}
-                        <Text
-                            className="bodyText"
-                            style={{
-                                margin: '24px 0 36px',
-                                fontSize: '16px',
-                                lineHeight: '26px',
-                                whiteSpace: 'pre-line',
-                                overflowWrap: 'anywhere',
-                            }}
-                        >
-                            {guidance}
-                        </Text>
+                        {guidance && (
+                            <Text
+                                className="bodyText"
+                                style={{
+                                    margin: '24px 0 36px',
+                                    fontSize: '16px',
+                                    lineHeight: '26px',
+                                    whiteSpace: 'pre-line',
+                                    overflowWrap: 'anywhere',
+                                }}
+                            >
+                                {guidance}
+                            </Text>
+                        )}
+                        {link && (
+                            <Text
+                                style={{ margin: '0 0 36px', fontSize: '16px', lineHeight: '26px' }}
+                            >
+                                <Button
+                                    href={link.href}
+                                    className="highlight highlightText"
+                                    style={{
+                                        fontWeight: 600,
+                                        textDecoration: 'none',
+                                        borderRadius: '32px',
+                                        padding: '14px 24px',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    {link.label}
+                                </Button>
+                            </Text>
+                        )}
                         <Text
                             className="bodyText"
                             style={{

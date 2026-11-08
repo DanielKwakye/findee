@@ -20,8 +20,18 @@ import type { ShareDialogHandle } from '@/components/platform/utils/share';
 
 /** Presents reusable social sharing and copying for supplied campaign links. */
 export default function ShareDialog({ ref }: { ref: Ref<ShareDialogHandle> }) {
-    const { t, links, linkId, error, socialOptions, changeOpen, copyLink, selectLink, shareToApp } =
-        useShareDialog(ref);
+    const {
+        t,
+        links,
+        linkId,
+        error,
+        socialOptions,
+        changeOpen,
+        copyLink,
+        selectLink,
+        shareToApp,
+        onShareClick,
+    } = useShareDialog(ref);
     return (
         <Dialog open={!!links} onOpenChange={changeOpen}>
             <DialogContent
@@ -44,6 +54,7 @@ export default function ShareDialog({ ref }: { ref: Ref<ShareDialogHandle> }) {
                             key={key}
                             type="button"
                             variant="outline"
+                            onClick={() => onShareClick(key)}
                             nativeButton={!href}
                             render={
                                 href ? (

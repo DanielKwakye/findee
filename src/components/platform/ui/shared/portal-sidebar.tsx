@@ -58,7 +58,7 @@ export function PortalSidebar({
     const t = useTranslations('Footer');
     const tFeature = useTranslations('FeatureRequest');
     const { featureRequestRef, requestFeature } = usePortalSidebar();
-    const { dialogRef, openShare } = useShare(shareLinks);
+    const { dialogRef, openShare, onSocialClick } = useShare(shareLinks);
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
@@ -120,6 +120,7 @@ export function PortalSidebar({
                             <SidebarMenuItem>
                                 <SidebarMenuButton
                                     tooltip={t('socials')}
+                                    onClick={() => onSocialClick('socials', 'customer_sidebar')}
                                     render={
                                         <Link
                                             href={process.env.NEXT_PUBLIC_FB_PAGE_LINK || '#'}

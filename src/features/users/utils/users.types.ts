@@ -15,4 +15,6 @@ export type CustomerRow = {
     deactivatedAt: Date | null;
     createdAt: Date;
     lastPortalVisitedAt: Date | null;
+    reviewRequestCount: number | null;
+    _count: { orders: number };
 };
