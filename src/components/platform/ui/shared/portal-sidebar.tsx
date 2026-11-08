@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { GalleryVerticalEnd, Share2, ArrowLeft, Lightbulb, Globe } from 'lucide-react';
+import { GalleryVerticalEnd, Share2, ArrowLeft, Lightbulb, Globe, Star } from 'lucide-react';
 import {
     Sidebar,
     SidebarContent,
@@ -49,11 +49,13 @@ export function PortalSidebar({
     user,
     audience = 'admin',
     shareLinks,
+    reviewLink,
     ...props
 }: React.ComponentProps<typeof Sidebar> & {
     user: { name: string | null; email: string };
     audience?: 'admin' | 'customer';
     shareLinks?: ShareLinks;
+    reviewLink?: string;
 }) {
     const t = useTranslations('Footer');
     const tFeature = useTranslations('FeatureRequest');
@@ -135,6 +137,25 @@ export function PortalSidebar({
                                     </TypographyBody>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
+                            {reviewLink && (
+                                <SidebarMenuItem>
+                                    <SidebarMenuButton
+                                        tooltip={t('leaveReview')}
+                                        render={
+                                            <Link
+                                                href={reviewLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            />
+                                        }
+                                    >
+                                        <Star aria-hidden="true" />
+                                        <TypographyBody className="text-sm">
+                                            {t('leaveReview')}
+                                        </TypographyBody>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            )}
                             <SidebarMenuItem>
                                 <SidebarMenuButton
                                     tooltip={t('backToWebsite')}

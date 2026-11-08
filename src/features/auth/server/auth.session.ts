@@ -24,6 +24,7 @@ export const getAuthenticatedUser = cache(async () => {
             phone: true,
             role: true,
             mustChangePassword: true,
+            reviewRequestCount: true,
         },
     });
 });

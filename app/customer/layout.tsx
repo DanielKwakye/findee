@@ -24,7 +24,16 @@ export default async function CustomerLayout({ children }: { children: ReactNode
         <SidebarProvider>
             <PortalSessionGuard key={user.id} role="CUSTOMER" />
             <CustomerPortalVisitTracker key={`visit-${user.id}`} />
-            <PortalSidebar user={user} audience="customer" shareLinks={shareLinks} />
+            <PortalSidebar
+                user={user}
+                audience="customer"
+                shareLinks={shareLinks}
+                reviewLink={
+                    (user.reviewRequestCount ?? 0) > 0
+                        ? process.env.TRUST_PILOT_REVIEW_LINK
+                        : undefined
+                }
+            />
             <SidebarInset className="min-w-0">
                 <header className="sticky top-0 z-20 flex min-h-16 shrink-0 items-center gap-2 bg-background transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">
                     <div className="flex min-w-0 items-center gap-2 px-4 py-2">
