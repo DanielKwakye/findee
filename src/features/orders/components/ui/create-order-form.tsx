@@ -1,6 +1,7 @@
 'use client';
 
 import { useFormatter } from 'next-intl';
+import { formatAmount } from '@/components/platform';
 import { useCreateOrderForm } from '@/features/orders/components/hooks/use.create.order.form';
 import OrderFormFields from '@/features/orders/components/ui/order-form-fields';
 
@@ -17,11 +18,7 @@ export default function CreateOrderForm({ onCreated }: { onCreated?: (number: st
             submitLabel={
                 state.plan
                     ? state.t('submitWithAmount', {
-                          amount: format.number(state.plan.price, {
-                              style: 'currency',
-                              currency: state.plan.currency,
-                              currencyDisplay: 'code',
-                          }),
+                          amount: formatAmount(state.plan.price, state.plan.currency, format),
                       })
                     : state.t('submit')
             }

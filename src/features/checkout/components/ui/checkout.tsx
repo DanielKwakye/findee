@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useFormatter, useTranslations } from 'next-intl';
 import { Controller } from 'react-hook-form';
-import { Stepper } from '@/components/platform';
+import { formatAmount, Stepper } from '@/components/platform';
 import { Checkbox } from '@/components/core/ui/checkbox';
 import { Button } from '@/components/core/ui/button';
 import { Badge } from '@/components/core/ui/badge';
@@ -87,11 +87,7 @@ export default function Checkout({
             continueLabel={
                 stepper.current.id === 'allocation' && plan
                     ? t('allocation.continueWithAmount', {
-                          amount: format.number(plan.price, {
-                              style: 'currency',
-                              currency: plan.currency,
-                              currencyDisplay: 'code',
-                          }),
+                          amount: formatAmount(plan.price, plan.currency, format),
                       })
                     : undefined
             }
@@ -108,11 +104,7 @@ export default function Checkout({
                             ? t('details.submitting')
                             : plan
                               ? t('preview.reviewWithAmount', {
-                                    amount: format.number(plan.price, {
-                                        style: 'currency',
-                                        currency: plan.currency,
-                                        currencyDisplay: 'code',
-                                    }),
+                                    amount: formatAmount(plan.price, plan.currency, format),
                                 })
                               : t('preview.title')}
                     </TypographyBody>

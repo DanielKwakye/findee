@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useFormatter, useTranslations } from 'next-intl';
+import { formatAmount } from '@/components/platform';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/core/ui/button';
 import { Badge } from '@/components/core/ui/badge';
@@ -102,12 +103,11 @@ export default function PricingPlans() {
                                                 {t('startingAt')}
                                             </TypographyBody>
                                             <TypographyBody className="text-3xl font-bold tracking-tight">
-                                                {format.number(variant.startingPrice, {
-                                                    style: 'currency',
-                                                    currency: variant.currency,
-                                                    currencyDisplay: 'code',
-                                                    maximumFractionDigits: 5,
-                                                })}
+                                                {formatAmount(
+                                                    variant.startingPrice,
+                                                    variant.currency,
+                                                    format,
+                                                )}
                                             </TypographyBody>
                                             <TypographyBody className="text-xs text-muted-foreground">
                                                 {t('perSticker')}
@@ -143,12 +143,11 @@ export default function PricingPlans() {
                                                         </TypographyBody>
                                                         <TypographyBody className="text-sm font-semibold">
                                                             {tPlans('perUnit', {
-                                                                price: format.number(tier.price, {
-                                                                    style: 'currency',
-                                                                    currency: variant.currency,
-                                                                    currencyDisplay: 'code',
-                                                                    maximumFractionDigits: 5,
-                                                                }),
+                                                                price: formatAmount(
+                                                                    tier.price,
+                                                                    variant.currency,
+                                                                    format,
+                                                                ),
                                                             })}
                                                         </TypographyBody>
                                                     </div>

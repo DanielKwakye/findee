@@ -4,7 +4,7 @@ import { createElement, Fragment, useCallback, useMemo, useRef, useState } from 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
 import type { SortingState } from '@tanstack/react-table';
-import { usePortalTableSearch, useUserDateTime } from '@/components/platform';
+import { formatAmount, usePortalTableSearch, useUserDateTime } from '@/components/platform';
 import type { PortalTableColumnDef, PortalTablePaginationState } from '@/components/platform';
 import { Button } from '@/components/core/ui/button';
 import TypographyBody from '@/components/core/ui/typography-body';
@@ -46,7 +46,7 @@ export function useCustomerOrders() {
     const columns = useMemo<PortalTableColumnDef<CustomerOrderRow>[]>(
         () => [
             ...getCustomerOrderColumns(t, formatDate, (price, currency) =>
-                formatter.number(price, { style: 'currency', currency }),
+                formatAmount(price, currency, formatter, 'symbol'),
             ),
             {
                 id: 'actions',

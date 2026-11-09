@@ -2,6 +2,7 @@
  and hooks shared by all the features */
 export { default as MobileNavbar } from '@/components/platform/ui/mobile/navbar';
 export { Stepper } from '@/components/platform/ui/shared/stepper';
+export { formatAmount } from '@/components/platform/utils/amount.utils';
 export { default as WebNavbar } from '@/components/platform/ui/web/navbar';
 export { default as AppIcon } from '@/components/platform/ui/shared/app-icon';
 export { useUserDateTime } from '@/components/platform/hooks/use.user.datetime';

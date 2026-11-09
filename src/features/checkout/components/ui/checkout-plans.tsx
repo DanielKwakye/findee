@@ -2,6 +2,7 @@
 
 import { Controller, useWatch, type Control } from 'react-hook-form';
 import { useFormatter, useTranslations } from 'next-intl';
+import { formatAmount } from '@/components/platform';
 import { Info } from 'lucide-react';
 import { Input } from '@/components/core/ui/input';
 import { Field, FieldContent, FieldLabel } from '@/components/core/ui/field';
@@ -96,18 +97,14 @@ export default function CheckoutPlans({ control, plans }: Props) {
                                 </TypographyBody>
                                 <TypographyBody className="text-sm font-semibold">
                                     {t('perUnit', {
-                                        price: format.number(
+                                        price: formatAmount(
                                             getCheckoutUnitPrice(
                                                 custom,
                                                 variant.id,
                                                 Number(allocation[variant.id]) || 0,
                                             ),
-                                            {
-                                                style: 'currency',
-                                                currency: custom.currency,
-                                                currencyDisplay: 'code',
-                                                maximumFractionDigits: 5,
-                                            },
+                                            custom.currency,
+                                            format,
                                         ),
                                     })}
                                 </TypographyBody>

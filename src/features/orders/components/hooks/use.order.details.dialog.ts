@@ -4,7 +4,7 @@ import { useImperativeHandle, useState } from 'react';
 import type { Ref } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
-import { useUserDateTime } from '@/components/platform';
+import { formatAmount, useUserDateTime } from '@/components/platform';
 import { getOrderDetails } from '@/features/orders/server/get.order.details.action';
 import { getOrderDetailGroups } from '@/features/orders/utils/order.details';
 import type { OrderDetailsDialogHandle } from '@/features/orders/utils/order.types';
@@ -30,7 +30,7 @@ export function useOrderDetailsDialog(ref: Ref<OrderDetailsDialogHandle>) {
     });
     const groups = query.data
         ? getOrderDetailGroups(query.data, t, formatDate, (price, currency) =>
-              formatter.number(price, { style: 'currency', currency }),
+              formatAmount(price, currency, formatter, 'symbol'),
           )
         : [];
     return { t, open, changeOpen: setOpen, query, groups };

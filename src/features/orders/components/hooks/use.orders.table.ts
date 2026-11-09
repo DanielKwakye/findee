@@ -5,7 +5,7 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tansta
 import { useFormatter, useTranslations } from 'next-intl';
 import type { SortingState } from '@tanstack/react-table';
 import type { PortalTableColumnDef, PortalTablePaginationState } from '@/components/platform';
-import { usePortalTableSearch, useUserDateTime } from '@/components/platform';
+import { formatAmount, usePortalTableSearch, useUserDateTime } from '@/components/platform';
 import { getOrders } from '@/features/orders/server/get.orders.action';
 import { getOrderColumns } from '@/features/orders/utils/order.columns';
 import type { OrderColumnLabels } from '@/features/orders/utils/order.columns';
@@ -123,12 +123,7 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
                 id: 'amount',
                 header: t('details.price'),
                 enableSorting: false,
-                cell: ({ row }) =>
-                    format.number(row.original.price, {
-                        style: 'currency',
-                        currency: row.original.currency,
-                        currencyDisplay: 'code',
-                    }),
+                cell: ({ row }) => formatAmount(row.original.price, row.original.currency, format),
             },
             {
                 accessorKey: 'createdAt',

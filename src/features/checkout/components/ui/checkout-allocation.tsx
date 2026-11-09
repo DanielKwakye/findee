@@ -2,6 +2,7 @@
 
 import { Controller, type Control } from 'react-hook-form';
 import { useFormatter, useTranslations } from 'next-intl';
+import { formatAmount } from '@/components/platform';
 import { Field, FieldGroup, FieldLabel } from '@/components/core/ui/field';
 import { Input } from '@/components/core/ui/input';
 import TypographyBody from '@/components/core/ui/typography-body';
@@ -82,34 +83,27 @@ export default function CheckoutAllocation({
                                         <div className="flex items-center justify-between gap-3">
                                             <TypographyParagraph className="text-xs text-muted-foreground">
                                                 {t('plans.perUnit', {
-                                                    price: format.number(
+                                                    price: formatAmount(
                                                         getCheckoutUnitPrice(
                                                             plan,
                                                             variant.id,
                                                             Number(field.value) || 0,
                                                         ),
-                                                        {
-                                                            style: 'currency',
-                                                            currency: plan.currency,
-                                                            currencyDisplay: 'code',
-                                                            maximumFractionDigits: 5,
-                                                        },
+                                                        plan.currency,
+                                                        format,
                                                     ),
                                                 })}
                                             </TypographyParagraph>
                                             <TypographyParagraph className="text-sm font-semibold">
                                                 {t('allocation.subtotal', {
-                                                    amount: format.number(
+                                                    amount: formatAmount(
                                                         getCheckoutSubtotal(
                                                             plan,
                                                             variant.id,
                                                             field.value,
                                                         ),
-                                                        {
-                                                            style: 'currency',
-                                                            currency: plan.currency,
-                                                            currencyDisplay: 'code',
-                                                        },
+                                                        plan.currency,
+                                                        format,
                                                     ),
                                                 })}
                                             </TypographyParagraph>
