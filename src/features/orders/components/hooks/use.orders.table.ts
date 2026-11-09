@@ -15,6 +15,8 @@ import type {
     OrderStatusFilter,
     OrderStatusDialogHandle,
     OrderStatusDialogRecord,
+    OrderPaymentDateDialogHandle,
+    OrderPaymentDateRecord,
     OrderShipmentsDialogHandle,
     AddOrderShipmentDialogHandle,
 } from '@/features/orders/utils/order.types';
@@ -47,6 +49,7 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
         editRef.current?.open(id);
     }, []);
     const statusRef = useRef<OrderStatusDialogHandle>(null);
+    const paymentDateRef = useRef<OrderPaymentDateDialogHandle>(null);
     const shipmentsRef = useRef<OrderShipmentsDialogHandle>(null);
     const addShipmentRef = useRef<AddOrderShipmentDialogHandle>(null);
     /** Opens the internally managed order details dialog. */
@@ -60,6 +63,10 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
     /** Opens the internally managed status editor for an order. */
     const openStatus = useCallback((order: OrderStatusDialogRecord) => {
         statusRef.current?.open(order);
+    }, []);
+    /** Opens the internally managed payment date editor for an order. */
+    const openPaymentDate = useCallback((order: OrderPaymentDateRecord) => {
+        paymentDateRef.current?.open(order);
     }, []);
     /** Opens the internally managed shipment list for an order. */
     const openShipments = useCallback((order: OrderStatusDialogRecord) => {
@@ -157,6 +164,7 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
                         onOpen: openDetails,
                         onEdit: openEdit,
                         onChangeStatus: openStatus,
+                        onUpdatePaymentDate: openPaymentDate,
                         onViewShipments: openShipments,
                         onAddShipment: openAddShipment,
                         onResendInvoice: resendInvoice,
@@ -172,6 +180,7 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
         openDetails,
         openEdit,
         openStatus,
+        openPaymentDate,
         openShipments,
         openAddShipment,
         resendInvoice,
@@ -198,6 +207,7 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
         detailsRef,
         editRef,
         statusRef,
+        paymentDateRef,
         shipmentsRef,
         addShipmentRef,
         openOrder,

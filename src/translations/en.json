@@ -768,6 +768,18 @@
             "deleteDescription": "Permanently delete this shipment record?",
             "deleteError": "Unable to delete the shipment. Please try again."
         },
+        "paymentDateDialog": {
+            "title": "Update payment date",
+            "description": "Select the payment date for order {number}.",
+            "close": "Close payment date editor",
+            "date": "Payment date",
+            "required": "Select a valid payment date.",
+            "cancel": "Cancel",
+            "save": "Save",
+            "saving": "Saving…",
+            "saveSuccess": "Payment date updated successfully.",
+            "saveError": "Unable to update the payment date. Please try again."
+        },
         "statusDialog": {
             "saveSuccess": "Order status updated successfully.",
             "description": "Choose a new status for order {number}.",

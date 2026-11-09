@@ -11,7 +11,10 @@ import {
     DropdownMenuTrigger,
 } from '@/components/core/ui/dropdown-menu';
 import TypographyBody from '@/components/core/ui/typography-body';
-import type { OrderStatusDialogRecord } from '@/features/orders/utils/order.types';
+import type {
+    OrderPaymentDateRecord,
+    OrderStatusDialogRecord,
+} from '@/features/orders/utils/order.types';
 
 /** Presents the details action for a single order record. */
 export default function OrderActions({
@@ -20,15 +23,17 @@ export default function OrderActions({
     onOpen,
     onEdit,
     onChangeStatus,
+    onUpdatePaymentDate,
     onViewShipments,
     onAddShipment,
     onResendInvoice,
     invoicePending,
 }: {
-    order: OrderStatusDialogRecord;
+    order: OrderStatusDialogRecord & OrderPaymentDateRecord;
     label: string;
     onOpen: (id: string) => void;
     onChangeStatus: (order: OrderStatusDialogRecord) => void;
+    onUpdatePaymentDate: (order: OrderPaymentDateRecord) => void;
     onViewShipments: (order: OrderStatusDialogRecord) => void;
     onAddShipment: (order: OrderStatusDialogRecord) => void;
     onEdit: (id: string) => void;
@@ -70,6 +75,11 @@ export default function OrderActions({
                     )}
                     <DropdownMenuItem onClick={() => onChangeStatus(order)}>
                         <TypographyBody className="text-sm">{t('changeStatus')}</TypographyBody>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => onUpdatePaymentDate(order)}>
+                        <TypographyBody className="text-sm">
+                            {t('paymentDateDialog.title')}
+                        </TypographyBody>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => onViewShipments(order)}>
                         <TypographyBody className="text-sm">{t('shipments.view')}</TypographyBody>

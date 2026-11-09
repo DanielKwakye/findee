@@ -8,6 +8,7 @@ import type { OrderStatusFilter } from '@/features/orders/utils/order.types';
 import OrderStatusSelector from '@/features/orders/components/ui/order-status-filter';
 import OrderDetailsDialog from '@/features/orders/components/ui/order-details-dialog';
 import OrderStatusDialog from '@/features/orders/components/ui/order-status-dialog';
+import OrderPaymentDateDialog from '@/features/orders/components/ui/order-payment-date-dialog';
 import OrderShipmentsDialog from '@/features/orders/components/ui/order-shipments-dialog';
 import AddOrderShipmentDialog from '@/features/orders/components/ui/add-order-shipment-dialog';
 import EditOrderDialog from '@/features/orders/components/ui/edit-order-dialog';
@@ -33,6 +34,7 @@ export default function OrdersTable({
         detailsRef,
         editRef,
         statusRef,
+        paymentDateRef,
         shipmentsRef,
         addShipmentRef,
         openOrder,
@@ -77,6 +79,7 @@ export default function OrdersTable({
             <OrderDetailsDialog ref={detailsRef} />
             <EditOrderDialog ref={editRef} />
             <OrderStatusDialog ref={statusRef} />
+            <OrderPaymentDateDialog ref={paymentDateRef} />
             <OrderShipmentsDialog ref={shipmentsRef} />
             <AddOrderShipmentDialog ref={addShipmentRef} />
         </div>
