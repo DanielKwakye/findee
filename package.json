@@ -8,6 +8,8 @@
         "gen": "prisma generate",
         "codes:normalize": "tsx prisma/normalize.product.codes.ts",
         "seed": "prisma db seed",
+        "seed:director": "tsx prisma/seed.director.ts",
+        "seed:director:prod": "DOTENV_CONFIG_PATH=.env.prod tsx prisma/seed.director.ts",
         "seed:recovery": "tsx prisma/seed.recovery.ts",
         "seed:recovery:prod": "DOTENV_CONFIG_PATH=.env.prod tsx prisma/seed.recovery.ts",
         "seed:prod": "DOTENV_CONFIG_PATH=.env.prod prisma db seed",

@@ -9,16 +9,22 @@ import { renderNotificationEmail } from '@/features/notifications/server/notific
 import { sendEmail } from '@/features/notifications/server/send.email';
 import type { AddAdminValues } from '@/features/users/utils/users.types';
 import { db } from '@/lib/db';
+import { UserDepartments } from '@/features/users/utils/users.constants';
 
 /** Creates a new administrator account for an authorized administrator. */
 export async function createAdmin(values: AddAdminValues) {
-    await requireAdmin();
+    const user = await requireAdmin();
+    if (!user.departments.includes(UserDepartments.directors)) throw new Error('Unauthorized');
     if (
         !values ||
         typeof values.email !== 'string' ||
         !isValidEmail(values.email) ||
         typeof values.name !== 'string' ||
-        values.name.trim().length > 100
+        values.name.trim().length > 100 ||
+        !Array.isArray(values.departments) ||
+        values.departments.some(
+            (department) => !Object.values<string>(UserDepartments).includes(department),
+        )
     ) {
         return { error: 'invalid' as const };
     }
@@ -50,6 +56,7 @@ export async function createAdmin(values: AddAdminValues) {
                 name: values.name.trim() || null,
                 passwordHash,
                 role: 'ADMIN',
+                departments: [...new Set(values.departments)],
                 mustChangePassword: true,
             },
             select: { id: true },

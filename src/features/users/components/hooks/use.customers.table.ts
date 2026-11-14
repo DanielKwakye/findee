@@ -1,33 +1,24 @@
 'use client';
 
-import { createElement, useCallback, useMemo, useRef } from 'react';
+import { createElement, useCallback, useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { getUsers } from '@/features/users/server/get.users.action';
 import { getCustomerColumns } from '@/features/users/utils/customer.columns';
 import { useUserDateTime } from '@/components/platform';
-import type { PortalConfirmDialogHandle, PortalTableColumnDef } from '@/components/platform';
-import CustomerActions from '@/features/users/components/ui/customer-actions';
+import type { PortalTableColumnDef } from '@/components/platform';
+import UserActions from '@/features/users/components/ui/user-actions';
 import { requestCustomerReview } from '@/features/users/server/request.customer.review.action';
 import { toast } from '@/components/core/ui/toast';
 import type { CustomerRow } from '@/features/users/utils/users.types';
-import { setCustomerDeactivation } from '@/features/users/server/set.customer.deactivation.action';
+import { useUserAccess } from '@/features/users/components/hooks/use.user.access';
 
 /** Manages customer records and the customer management table's behavior. */
 export function useCustomersTable() {
     const t = useTranslations('Customers');
     const formatDate = useUserDateTime();
     const queryClient = useQueryClient();
-    const confirmRef = useRef<PortalConfirmDialogHandle>(null);
-    const mutation = useMutation({
-        mutationFn: setCustomerDeactivation,
-        retry: false,
-        /** Refreshes customer access status after an administrator changes it. */
-        onSuccess() {
-            return queryClient.invalidateQueries({ queryKey: ['customers'] });
-        },
-    });
-    const { mutateAsync } = mutation;
+    const { confirmRef, mutation, changeAccess } = useUserAccess('customers');
     const reviewMutation = useMutation({
         mutationFn: requestCustomerReview,
         retry: false,
@@ -60,24 +51,7 @@ export function useCustomersTable() {
                 onConfirm: () => requestReview(customer.id),
             });
         },
-        [t, requestReview],
-    );
-    /** Confirms a temporary suspension or restoration of the selected customer's access. */
-    const changeAccess = useCallback(
-        (customer: CustomerRow) => {
-            const deactivated = !customer.deactivatedAt;
-            confirmRef.current?.open({
-                title: t(deactivated ? 'deactivate' : 'reactivate'),
-                description: t(deactivated ? 'deactivateDescription' : 'reactivateDescription', {
-                    email: customer.email,
-                }),
-                confirmLabel: t(deactivated ? 'deactivate' : 'reactivate'),
-                errorMessage: t('accessError'),
-                destructive: deactivated,
-                onConfirm: () => mutateAsync({ id: customer.id, deactivated }),
-            });
-        },
-        [t, mutateAsync],
+        [t, requestReview, confirmRef],
     );
     const query = useQuery({ queryKey: ['customers'], queryFn: () => getUsers('CUSTOMER') });
     const columns = useMemo<PortalTableColumnDef<CustomerRow>[]>(
@@ -109,7 +83,7 @@ export function useCustomersTable() {
                 cell: ({ row }) =>
                     row.original.closedAt
                         ? null
-                        : createElement(CustomerActions, {
+                        : createElement(UserActions, {
                               deactivated: !!row.original.deactivatedAt,
                               disabled: mutation.isPending || reviewMutation.isPending,
                               onChangeAccess: () => changeAccess(row.original),

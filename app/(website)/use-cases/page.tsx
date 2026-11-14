@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 import { Footer, InnerPageHero, MobileNavbar, WebNavbar } from '@/components/platform';
@@ -18,7 +19,17 @@ export default function UseCasesPage() {
                 <InnerPageHero
                     title={t('title')}
                     titleAccent={t('titleAccent')}
-                    subtitle={t('subtitle')}
+                    subtitle={
+                        <>
+                            {t('subtitle')}{' '}
+                            <Link
+                                href="/everyday-items"
+                                className="text-primary underline underline-offset-4"
+                            >
+                                {t('seeMore')}
+                            </Link>
+                        </>
+                    }
                     className="pb-4"
                 />
                 <UseCases />

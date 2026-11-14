@@ -15,10 +15,13 @@ import { Input } from '@/components/core/ui/input';
 import TypographyBody from '@/components/core/ui/typography-body';
 import { useAddAdminDialog } from '@/features/users/components/hooks/use.add.admin.dialog';
 import type { AddAdminDialogHandle } from '@/features/users/utils/users.types';
+import { Checkbox } from '@/components/core/ui/checkbox';
+import { UserDepartments } from '@/features/users/utils/users.constants';
 
 /** Presents the form for creating an administrator account. */
 export default function AddAdminDialog({ ref }: { ref: Ref<AddAdminDialogHandle> }) {
-    const { t, open, changeOpen, form, inputs, mutation, submit } = useAddAdminDialog(ref);
+    const { t, open, changeOpen, form, inputs, mutation, submit, departments, changeDepartment } =
+        useAddAdminDialog(ref);
     const { errors } = form.formState;
     return (
         <Dialog open={open} onOpenChange={changeOpen}>
@@ -82,6 +85,31 @@ export default function AddAdminDialog({ ref }: { ref: Ref<AddAdminDialogHandle>
                                 </FieldError>
                             )}
                         </Field>
+                        <fieldset className="space-y-3">
+                            <legend>
+                                <TypographyBody className="text-sm font-medium">
+                                    {t('departments')}
+                                </TypographyBody>
+                            </legend>
+                            {Object.values(UserDepartments).map((department) => (
+                                <Field key={department} orientation="horizontal">
+                                    <Checkbox
+                                        id={`admin-department-${department}`}
+                                        name="departments"
+                                        value={department}
+                                        checked={departments.includes(department)}
+                                        onCheckedChange={(checked) =>
+                                            changeDepartment(department, checked)
+                                        }
+                                    />
+                                    <FieldLabel htmlFor={`admin-department-${department}`}>
+                                        <TypographyBody className="text-sm">
+                                            {t(`departmentOptions.${department}`)}
+                                        </TypographyBody>
+                                    </FieldLabel>
+                                </Field>
+                            ))}
+                        </fieldset>
                     </fieldset>
                     {(mutation.isError || errors.root) && (
                         <div role="alert">

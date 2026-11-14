@@ -6,6 +6,7 @@ export { formatAmount } from '@/components/platform/utils/amount.utils';
 export { default as WebNavbar } from '@/components/platform/ui/web/navbar';
 export { default as AppIcon } from '@/components/platform/ui/shared/app-icon';
 export { useUserDateTime } from '@/components/platform/hooks/use.user.datetime';
+export { default as AdminWelcome } from '@/components/platform/ui/shared/admin-welcome';
 export { default as MobileHero } from '@/components/platform/ui/mobile/hero';
 export { default as WebHero } from '@/components/platform/ui/web/hero';
 export { default as InnerPageHero } from '@/components/platform/ui/shared/inner-page-hero';

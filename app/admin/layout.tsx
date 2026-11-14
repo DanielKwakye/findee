@@ -4,6 +4,7 @@ import { PortalSidebar, PortalBreadcrumb, PortalBadgeAlert } from '@/components/
 import { ReactNode } from 'react';
 import { requireAdmin } from '@/features/auth/server/auth.session';
 import PortalSessionGuard from '@/features/auth/components/ui/portal-session-guard';
+import PortalVisitTracker from '@/features/auth/components/ui/portal-visit-tracker';
 import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 
@@ -21,6 +22,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     return (
         <SidebarProvider>
             <PortalSessionGuard key={user.id} role="ADMIN" />
+            <PortalVisitTracker key={`visit-${user.id}`} role="ADMIN" />
             <PortalSidebar user={user} />
             <SidebarInset className="min-w-0">
                 <header className="sticky top-0 z-20 bg-background flex min-h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:min-h-12">

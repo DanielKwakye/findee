@@ -12,7 +12,8 @@ export function usePortalNavigation() {
         const [path, query] = url.split('?');
         if (
             !path.startsWith('/') ||
-            (pathname !== path && (path === '/' || !pathname.startsWith(`${path}/`)))
+            (pathname !== path &&
+                (path === '/' || path === '/admin' || !pathname.startsWith(`${path}/`)))
         )
             return false;
         return (

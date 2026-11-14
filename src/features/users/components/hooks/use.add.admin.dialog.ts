@@ -1,7 +1,7 @@
 'use client';
 
 import { useImperativeHandle, useState, type Ref } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { createAdmin } from '@/features/users/server/create.admin.action';
@@ -14,7 +14,21 @@ export function useAddAdminDialog(ref: Ref<AddAdminDialogHandle>) {
     const t = useTranslations('PortalTeamSwitcher.addForm');
     const queryClient = useQueryClient();
     const [open, setOpen] = useState(false);
-    const form = useForm<AddAdminValues>({ defaultValues: { name: '', email: '' } });
+    const form = useForm<AddAdminValues>({
+        defaultValues: { name: '', email: '', departments: [] },
+    });
+    const departments = useWatch({ control: form.control, name: 'departments' });
+    /** Updates the departments selected for the new administrator. */
+    function changeDepartment(department: string, checked: boolean) {
+        const selected = form.getValues('departments');
+        form.setValue(
+            'departments',
+            checked
+                ? [...new Set([...selected, department])]
+                : selected.filter((value) => value !== department),
+            { shouldDirty: true },
+        );
+    }
     const mutation = useMutation({
         mutationFn: createAdmin,
         retry: false,
@@ -57,5 +71,5 @@ export function useAddAdminDialog(ref: Ref<AddAdminDialogHandle>) {
     const submit = form.handleSubmit((values) => {
         if (!mutation.isPending) mutation.mutate(values);
     });
-    return { t, open, changeOpen, form, inputs, mutation, submit };
+    return { t, open, changeOpen, form, inputs, mutation, submit, departments, changeDepartment };
 }

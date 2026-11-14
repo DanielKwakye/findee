@@ -9,6 +9,7 @@ model User {
   otp String?
   otpCreatedAt DateTime?
   role UserRole @default(CUSTOMER)
+  departments String[] @default([])
   closedAt DateTime?
   deactivatedAt DateTime?
   lastPortalVisitedAt DateTime?

@@ -3,6 +3,7 @@ import { cache } from 'react';
 import { redirect } from 'next/navigation';
 import { auth } from '@/features/auth/utils/auth';
 import { db } from '@/lib/db';
+import type { UserDepartments } from '@/features/users/utils/users.constants';
 
 /** Resolves a verified session to the current database account and role. */
 export const getAuthenticatedUser = cache(async () => {
@@ -23,6 +24,7 @@ export const getAuthenticatedUser = cache(async () => {
             name: true,
             phone: true,
             role: true,
+            departments: true,
             mustChangePassword: true,
             reviewRequestCount: true,
         },
@@ -38,10 +40,15 @@ export const getAdminUser = cache(async () => {
 /** Requires administrator access at protected pages and server operation boundaries. */
 export async function requireAdmin({
     allowPasswordChange = false,
-}: { allowPasswordChange?: boolean } = {}) {
+    department,
+}: {
+    allowPasswordChange?: boolean;
+    department?: (typeof UserDepartments)[keyof typeof UserDepartments];
+} = {}) {
     const user = await getAdminUser();
     if (!user) redirect('/login');
     if (user.mustChangePassword && !allowPasswordChange) redirect('/change-password');
+    if (department && !user.departments.includes(department)) redirect('/admin');
     return user;
 }
 

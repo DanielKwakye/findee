@@ -29,6 +29,7 @@
             "customerSupport": "Contact support",
             "customerTickets": "My support tickets",
             "adminOrders": "Manage orders",
+            "adminWelcome": "Welcome",
             "createOrder": "Create order",
             "procurement": "Procurement",
             "adminBlog": "Manage blog",
@@ -50,6 +51,14 @@
             "title": "Add Admin",
             "description": "Create an administrator account. We will email them a temporary password and login instructions.",
             "name": "Name (optional)",
+            "departments": "Departments (optional)",
+            "departmentOptions": {
+                "directors": "Directors",
+                "operations": "Operations",
+                "sales": "Sales",
+                "support": "Support",
+                "marketing": "Marketing"
+            },
             "email": "Email",
             "nameInvalid": "Use no more than 100 characters.",
             "emailInvalid": "Enter a valid email address.",
@@ -63,7 +72,74 @@
             "saving": "Adding…"
         }
     },
+    "AdminWelcome": {
+        "linksLabel": "Admin navigation",
+        "eyebrow": "Your Findmus workspace",
+        "greetings": {
+            "welcome": "Welcome",
+            "welcomePersonal": "Welcome, {name}",
+            "morning": "Good morning",
+            "morningPersonal": "Good morning, {name}",
+            "afternoon": "Good afternoon",
+            "afternoonPersonal": "Good afternoon, {name}",
+            "evening": "Good evening",
+            "eveningPersonal": "Good evening, {name}"
+        },
+        "quoteOfTheDay": "Quote of the day",
+        "quotes": {
+            "reunion": {
+                "title": "Behind every lost belonging is someone hoping to see it again. Help make that reunion happen.",
+                "description": "What you do here helps turn a lost item into a happy reunion. Thanks for being part of it."
+            },
+            "smallSteps": {
+                "title": "One small act of care can bring someone's most treasured belonging home.",
+                "description": "Every detail you handle with care can make it easier for a finder to reach an owner."
+            },
+            "kindness": {
+                "title": "Returning a lost item is a simple way to remind someone that kindness is still out there.",
+                "description": "Help turn a stranger's thoughtful gesture into a happy reunion."
+            },
+            "freshStart": {
+                "title": "Today could be the day someone's lost belonging finds its way back. Be part of that story.",
+                "description": "Each order you prepare helps give another belonging a way home."
+            },
+            "wayHome": {
+                "title": "Sometimes a small detail helps something precious find its way home.",
+                "description": "A clear contact detail or a carefully prepared sticker can help a finder take the next step."
+            },
+            "progress": {
+                "title": "You may never meet the person whose day you brighten by helping their lost item return.",
+                "description": "The work behind each sticker matters, even when the reunion happens far from view."
+            },
+            "together": {
+                "title": "A finder brings the kindness. An owner brings the hope. Your work helps connect them.",
+                "description": "Make that connection as simple and welcoming as you can."
+            },
+            "curiosity": {
+                "title": "A returned item can carry more than its value: memories, comfort, and a little peace of mind.",
+                "description": "Treat every recovery as a chance to give someone back something that matters."
+            }
+        },
+        "navigationHint": "Use the menus in the sidebar to get started, or use the quick links below.",
+        "title": "Welcome",
+        "personalTitle": "Welcome, {name}",
+        "description": "Welcome to your admin portal. Use the sidebar to access the tools available to your departments."
+    },
     "Admins": {
+        "departments": "Departments",
+        "updateDetails": "Edit details",
+        "updateDetailsForm": {
+            "title": "Update admin details",
+            "description": "Update this administrator's account details.",
+            "name": "Name (optional)",
+            "nameInvalid": "Use no more than 100 characters.",
+            "error": "Unable to update the details. Please try again.",
+            "cancel": "Cancel",
+            "save": "Save",
+            "saving": "Saving…"
+        },
+        "lastVisited": "Last Visited",
+        "notRecorded": "Not recorded",
         "title": "Manage Admins",
         "name": "Name",
         "email": "Email",
@@ -88,7 +164,7 @@
         "reactivate": "Reactivate",
         "deactivateDescription": "Temporarily block portal access for {email}. You can reactivate this account later.",
         "reactivateDescription": "Restore portal access for {email}.",
-        "accessError": "Unable to update customer access. Please try again.",
+        "accessError": "Unable to update account access. Please try again.",
         "createdAt": "Date Joined",
         "lastVisited": "Last Visited",
         "notRecorded": "Not recorded",
@@ -445,6 +521,7 @@
         "serverError": "We couldn’t sign you in. Please try again."
     },
     "PortalNavigation": {
+        "welcome": "Get Started",
         "lowStockAlert": "Low product stock alert",
         "blog": "Blog",
         "ordersInView": "{label}: {count, plural, one {# order} other {# orders}}",
@@ -458,7 +535,7 @@
         "contactUs": "Contact Support",
         "account": "Account",
         "profile": "Profile",
-        "inventory": "Inventory",
+        "inventory": "Sales",
         "orders": "Orders",
         "showAll": "Show all",
         "pendingPayments": "Awaiting Payments",
@@ -1437,6 +1514,7 @@
         "title": "Everyday Items.",
         "titleAccent": "Endless Possibilities.",
         "subtitle": "From keys and backpacks to laptops and luggage, make it easier for someone to return your lost belongings. These are just a few ideas. Findmus QR stickers can help protect so much more.",
+        "seeMore": "See more",
         "regionLabel": "Ways to use your QR stickers",
         "pageLabel": "Page {number} of {total}",
         "previous": "Previous use cases",

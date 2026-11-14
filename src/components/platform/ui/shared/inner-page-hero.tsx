@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import type { ReactNode } from 'react';
 import { Badge } from '@/components/core/ui/badge';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyH1 from '@/components/core/ui/typography-h1';
@@ -8,7 +9,7 @@ import { cn } from '@/lib/utils';
 type InnerPageHeroProps = {
     title: string;
     titleAccent: string;
-    subtitle: string;
+    subtitle: ReactNode;
     className?: string;
 };
 

@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 import { requireAdmin } from '@/features/auth/server/auth.session';
 import { orderStatuses } from '@/features/orders/data/order.statuses';
+import { UserDepartments } from '@/features/users/utils/users.constants';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.adminOrders };
 
@@ -12,7 +13,7 @@ export default async function OrdersPage({
 }: {
     searchParams: Promise<{ status?: string | string[] }>;
 }) {
-    await requireAdmin();
+    await requireAdmin({ department: UserDepartments.sales });
     const params = await searchParams;
     const status = orderStatuses.find((value) => value === params.status) ?? 'all';
     return <OrdersTable key={status} status={status} />;

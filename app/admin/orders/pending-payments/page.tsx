@@ -4,12 +4,13 @@ import { requireAdmin } from '@/features/auth/server/auth.session';
 import OrdersTable from '@/features/orders/components/ui/orders-table';
 import TypographyH3 from '@/components/core/ui/typography-h3';
 import messages from '@/translations/en.json';
+import { UserDepartments } from '@/features/users/utils/users.constants';
 
 export const metadata: Metadata = { title: messages.orders.pendingPayments };
 
 /** Presents orders awaiting customer payment for administrator review. */
 export default async function PendingPaymentsPage() {
-    await requireAdmin();
+    await requireAdmin({ department: UserDepartments.sales });
     const t = await getTranslations('orders');
     return (
         <>

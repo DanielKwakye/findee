@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { Button } from '@/components/core/ui/button';
 import { Card, CardContent } from '@/components/core/ui/card';
 import {
     Carousel,
@@ -47,19 +48,6 @@ export default function UseCases() {
                     const pageCount = Math.ceil(group.items.length / pageSize);
                     return (
                         <TabsContent key={group.variant} value={group.variant}>
-                            {group.variant === 'Everyday' && (
-                                <div className="flex justify-end py-2">
-                                    <Link
-                                        href="/everyday-items"
-                                        aria-label={tItems('linkLabel')}
-                                        className="text-primary underline-offset-4 hover:underline"
-                                    >
-                                        <TypographyBody className="text-xs">
-                                            {tItems('seeFullList')}
-                                        </TypographyBody>
-                                    </Link>
-                                </div>
-                            )}
                             <Carousel
                                 key={pageSize}
                                 opts={{ align: 'start' }}
@@ -121,6 +109,19 @@ export default function UseCases() {
                                     />
                                 </div>
                             </Carousel>
+                            {group.variant === 'Everyday' && (
+                                <div className="mt-6 flex justify-center">
+                                    <Button
+                                        nativeButton={false}
+                                        render={<Link href="/everyday-items" />}
+                                        aria-label={tItems('linkLabel')}
+                                    >
+                                        <TypographyBody className="text-sm">
+                                            {tItems('seeFullList')}
+                                        </TypographyBody>
+                                    </Button>
+                                </div>
+                            )}
                         </TabsContent>
                     );
                 })}

@@ -7,6 +7,7 @@ import {
     ShoppingCart,
     UserRound,
     Newspaper,
+    House,
     type LucideIcon,
 } from 'lucide-react';
 import type { OrderStatus } from '@/generated/client';
@@ -53,6 +54,7 @@ export const portalInventoryItems: PortalInventoryItem[] = [
 ];
 
 export const portalInternalItems = [
+    { name: 'welcome', url: '/admin', icon: House },
     { name: 'products', url: '/admin/products', icon: Package },
     { name: 'procurements', url: '/admin/procurement', icon: ClipboardList },
     { name: 'tickets', url: '/admin/tickets', icon: MessageSquare },

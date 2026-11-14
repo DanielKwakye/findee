@@ -22,7 +22,6 @@ import { PortalNavProjects } from '@/components/platform/ui/shared/portal-nav-pr
 import { PortalNavUser } from '@/components/platform/ui/shared/portal-nav-user';
 import {
     portalInventoryItems,
-    portalInternalItems,
     portalCustomerItems,
 } from '@/components/platform/data/portal.sidebar.menuItems';
 import AppIcon from '@/components/platform/ui/shared/app-icon';
@@ -52,14 +51,15 @@ export function PortalSidebar({
     reviewLink,
     ...props
 }: React.ComponentProps<typeof Sidebar> & {
-    user: { name: string | null; email: string };
+    user: { name: string | null; email: string; departments: string[] };
     audience?: 'admin' | 'customer';
     shareLinks?: ShareLinks;
     reviewLink?: string;
 }) {
     const t = useTranslations('Footer');
     const tFeature = useTranslations('FeatureRequest');
-    const { featureRequestRef, requestFeature } = usePortalSidebar();
+    const { featureRequestRef, requestFeature, internalItems, canAddAdmin, canViewSales } =
+        usePortalSidebar(user.departments);
     const { dialogRef, openShare, onSocialClick } = useShare(shareLinks);
     return (
         <Sidebar collapsible="icon" {...props}>
@@ -79,14 +79,16 @@ export function PortalSidebar({
                         </SidebarMenuItem>
                     </SidebarMenu>
                 ) : (
-                    <PortalTeamSwitcher teams={data.teams} />
+                    <PortalTeamSwitcher teams={data.teams} canAddAdmin={canAddAdmin} />
                 )}
             </SidebarHeader>
             <SidebarContent>
-                <PortalNavMain
-                    items={audience === 'customer' ? portalCustomerItems : portalInventoryItems}
-                    groupLabel={audience === 'customer' ? 'account' : 'inventory'}
-                />
+                {(audience === 'customer' || canViewSales) && (
+                    <PortalNavMain
+                        items={audience === 'customer' ? portalCustomerItems : portalInventoryItems}
+                        groupLabel={audience === 'customer' ? 'account' : 'inventory'}
+                    />
+                )}
                 {audience === 'customer' && (
                     <SidebarGroup>
                         <SidebarGroupLabel>
@@ -166,7 +168,7 @@ export function PortalSidebar({
                         </SidebarMenu>
                     </SidebarGroup>
                 )}
-                {audience === 'admin' && <PortalNavProjects projects={portalInternalItems} />}
+                {audience === 'admin' && <PortalNavProjects projects={internalItems} />}
             </SidebarContent>
             <SidebarFooter>
                 <PortalNavUser user={user} audience={audience} />

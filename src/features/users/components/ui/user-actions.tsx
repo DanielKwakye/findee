@@ -12,18 +12,21 @@ import {
 import TypographyBody from '@/components/core/ui/typography-body';
 
 /** Presents administrator actions for a customer account. */
-export default function CustomerActions({
+export default function UserActions({
     deactivated,
     disabled,
     onChangeAccess,
     onRequestReview,
+    onUpdateDetails,
 }: {
     deactivated: boolean;
     disabled: boolean;
-    onChangeAccess: () => void;
-    onRequestReview: () => void;
+    onChangeAccess?: () => void;
+    onRequestReview?: () => void;
+    onUpdateDetails?: () => void;
 }) {
     const t = useTranslations('Customers');
+    const tAdmins = useTranslations('Admins');
     return (
         <DropdownMenu>
             <DropdownMenuTrigger
@@ -40,14 +43,25 @@ export default function CustomerActions({
                 <MoreHorizontal aria-hidden="true" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={onChangeAccess}>
-                    <TypographyBody className="text-sm">
-                        {t(deactivated ? 'reactivate' : 'deactivate')}
-                    </TypographyBody>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={onRequestReview}>
-                    <TypographyBody className="text-sm">{t('requestReview')}</TypographyBody>
-                </DropdownMenuItem>
+                {onUpdateDetails && (
+                    <DropdownMenuItem onClick={onUpdateDetails}>
+                        <TypographyBody className="text-sm">
+                            {tAdmins('updateDetails')}
+                        </TypographyBody>
+                    </DropdownMenuItem>
+                )}
+                {onChangeAccess && (
+                    <DropdownMenuItem onClick={onChangeAccess}>
+                        <TypographyBody className="text-sm">
+                            {t(deactivated ? 'reactivate' : 'deactivate')}
+                        </TypographyBody>
+                    </DropdownMenuItem>
+                )}
+                {onRequestReview && (
+                    <DropdownMenuItem onClick={onRequestReview}>
+                        <TypographyBody className="text-sm">{t('requestReview')}</TypographyBody>
+                    </DropdownMenuItem>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );

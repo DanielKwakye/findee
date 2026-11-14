@@ -3,12 +3,13 @@ import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 import { getTranslations } from 'next-intl/server';
 import { requireAdmin } from '@/features/auth/server/auth.session';
+import { UserDepartments } from '@/features/users/utils/users.constants';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.addProducts };
 
 /** Renders the portal's product creation page. */
 export default async function AddProductsPage() {
-    await requireAdmin();
+    await requireAdmin({ department: UserDepartments.operations });
     const t = await getTranslations('addProducts');
 
     return (

@@ -3,12 +3,13 @@ import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
 import ProcurementHeader from '@/features/procurement/components/ui/procurement-header';
 import ProcurementTable from '@/features/procurement/components/ui/procurement-table';
+import { UserDepartments } from '@/features/users/utils/users.constants';
 
 export const metadata: Metadata = { title: messages.PageMetadata.titles.procurement };
 
 /** Presents the administrator's procurement workspace. */
 export default async function ProcurementPage() {
-    await requireAdmin();
+    await requireAdmin({ department: UserDepartments.operations });
     return (
         <div className="flex min-w-0 flex-col gap-4">
             <ProcurementHeader />

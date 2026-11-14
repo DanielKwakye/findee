@@ -3,7 +3,7 @@ import { requireCustomer } from '@/features/auth/server/auth.session';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/core/ui/sidebar';
 import { Separator } from '@/components/core/ui/separator';
 import { PortalSidebar, PortalBreadcrumb } from '@/components/platform';
-import CustomerPortalVisitTracker from '@/features/auth/components/ui/customer-portal-visit-tracker';
+import PortalVisitTracker from '@/features/auth/components/ui/portal-visit-tracker';
 import PortalSessionGuard from '@/features/auth/components/ui/portal-session-guard';
 import type { Metadata } from 'next';
 import messages from '@/translations/en.json';
@@ -23,7 +23,7 @@ export default async function CustomerLayout({ children }: { children: ReactNode
     return (
         <SidebarProvider>
             <PortalSessionGuard key={user.id} role="CUSTOMER" />
-            <CustomerPortalVisitTracker key={`visit-${user.id}`} />
+            <PortalVisitTracker key={`visit-${user.id}`} role="CUSTOMER" />
             <PortalSidebar
                 user={user}
                 audience="customer"

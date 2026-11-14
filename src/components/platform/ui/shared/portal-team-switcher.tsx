@@ -28,7 +28,9 @@ import {
 /** Renders the portal team selector and manages the active team. */
 export function PortalTeamSwitcher({
     teams,
+    canAddAdmin,
 }: {
+    canAddAdmin: boolean;
     teams: {
         name: string;
         logo: React.ElementType;
@@ -102,21 +104,25 @@ export function PortalTeamSwitcher({
                                 <TypographyBody>{t('manageCustomers')}</TypographyBody>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            className="gap-2 p-2"
-                            onClick={() => addAdminRef.current?.open()}
-                        >
-                            <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                                <Plus className="size-4" />
-                            </div>
-                            <TypographyBody className="font-medium text-muted-foreground">
-                                {t('addAdmin')}
-                            </TypographyBody>
-                        </DropdownMenuItem>
+                        {canAddAdmin && (
+                            <>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    className="gap-2 p-2"
+                                    onClick={() => addAdminRef.current?.open()}
+                                >
+                                    <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                                        <Plus className="size-4" />
+                                    </div>
+                                    <TypographyBody className="font-medium text-muted-foreground">
+                                        {t('addAdmin')}
+                                    </TypographyBody>
+                                </DropdownMenuItem>
+                            </>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <AddAdminDialog ref={addAdminRef} />
+                {canAddAdmin && <AddAdminDialog ref={addAdminRef} />}
             </SidebarMenuItem>
         </SidebarMenu>
     );
