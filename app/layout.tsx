@@ -9,6 +9,7 @@ import { QueryProvider } from '@/components/providers/query-provider';
 import { Toaster } from '@/components/core/ui/toast';
 import { CookieNotice } from '@/components/platform';
 import { FirebaseAnalytics } from '@/components/providers/firebase-analytics';
+import { MetaPixel } from '@/components/providers/meta-pixel';
 import messages from '@/translations/en.json';
 
 const notoSansHeading = Noto_Sans({ subsets: ['latin'], variable: '--font-heading' });
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
             <body className="min-h-full flex flex-col">
                 <FirebaseAnalytics />
+                <MetaPixel />
                 <NextIntlClientProvider>
                     <QueryProvider>
                         <TooltipProvider>{children}</TooltipProvider>

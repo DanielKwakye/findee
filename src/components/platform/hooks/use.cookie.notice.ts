@@ -30,10 +30,15 @@ export function useCookieNotice(ref?: Ref<CookieNoticeHandle>) {
     }, []);
 
     /** Saves the browser's acknowledgement and dismisses the notice. */
-    function accept() {
-        rememberCookieNoticeAcceptance();
+    function accept(advertising = true) {
+        rememberCookieNoticeAcceptance(advertising);
         setIsOpen(false);
     }
 
-    return { isOpen, changeOpen: setIsOpen, accept };
+    /** Opens the existing notice when visitors want to change their advertising preference. */
+    function openPreferences() {
+        setIsOpen(true);
+    }
+
+    return { isOpen, changeOpen: setIsOpen, accept, openPreferences };
 }

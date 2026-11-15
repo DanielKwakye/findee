@@ -16,7 +16,7 @@ function isAnalyticsExcluded() {
 }
 
 /** Provides the shared browser Analytics instance when Firebase is configured and supported. */
-export function getFirebaseAnalytics(): Promise<Analytics | null> {
+export async function getFirebaseAnalytics(): Promise<Analytics | null> {
     if (typeof window === 'undefined') return Promise.resolve(null);
     if (isAnalyticsExcluded() && !analyticsPromise) return Promise.resolve(null);
 
@@ -48,22 +48,23 @@ export function getFirebaseAnalytics(): Promise<Analytics | null> {
         }
     })();
 
-    return analyticsPromise.then((analytics) => {
-        if (!analytics) return null;
-        const enabled = !isAnalyticsExcluded();
-        setAnalyticsCollectionEnabled(analytics, enabled);
-        return enabled ? analytics : null;
-    });
+    const analytics = await analyticsPromise;
+    if (!analytics) return null;
+    const enabled = !isAnalyticsExcluded();
+    setAnalyticsCollectionEnabled(analytics, enabled);
+    return enabled ? analytics : null;
 }
 
 /** Sends custom browser events without interrupting the app when Analytics is unavailable. */
-export async function trackEvent(name: string, parameters?: EventParams): Promise<void> {
+export async function trackEvent(name: string, parameters?: EventParams): Promise<boolean> {
     const analytics = await getFirebaseAnalytics();
-    if (!analytics) return;
+    if (!analytics) return false;
 
     try {
         logEvent(analytics, name, parameters);
+        return true;
     } catch {
         // Analytics failures must not interrupt the user's action.
+        return false;
     }
 }

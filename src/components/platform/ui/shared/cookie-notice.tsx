@@ -22,9 +22,20 @@ import type { CookieNoticeHandle } from '@/components/platform/utils/cookie.noti
 /** Presents a compact notice about Findmus cookies and remembers the visitor's acknowledgement. */
 export default function CookieNotice({ ref }: { ref?: Ref<CookieNoticeHandle> }) {
     const t = useTranslations('CookieNotice');
-    const { isOpen, changeOpen, accept } = useCookieNotice(ref);
+    const { isOpen, changeOpen, accept, openPreferences } = useCookieNotice(ref);
 
-    if (!isOpen) return null;
+    if (!isOpen)
+        return (
+            <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={openPreferences}
+                className="fixed bottom-2 left-2 z-40"
+            >
+                <TypographyBody className="text-xs">{t('preferences')}</TypographyBody>
+            </Button>
+        );
 
     return (
         <Card
@@ -71,9 +82,18 @@ export default function CookieNotice({ ref }: { ref?: Ref<CookieNoticeHandle> })
                     })}
                 </TypographyParagraph>
             </CardContent>
-            <CardFooter>
-                <Button type="button" size="sm" onClick={accept} className="w-full">
+            <CardFooter className="flex-col gap-2">
+                <Button type="button" size="sm" onClick={() => accept()} className="w-full">
                     <TypographyBody className="text-xs">{t('accept')}</TypographyBody>
+                </Button>
+                <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => accept(false)}
+                    className="w-full"
+                >
+                    <TypographyBody className="text-xs">{t('reject')}</TypographyBody>
                 </Button>
             </CardFooter>
         </Card>

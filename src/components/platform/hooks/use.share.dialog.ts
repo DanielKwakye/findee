@@ -3,7 +3,7 @@
 import { useId, useImperativeHandle, useState, type FocusEvent, type Ref } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/components/core/ui/toast';
-import { trackEvent } from '@/lib/firebase';
+import { trackEvent } from '@/lib/analytics';
 import { shareSocialOptions } from '@/components/platform/data/footer';
 import {
     getSocialShareUrl,

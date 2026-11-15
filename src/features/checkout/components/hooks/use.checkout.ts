@@ -20,7 +20,9 @@ import {
     checkoutComingSoonVariants,
     type CheckoutVariant,
 } from '@/features/checkout/data/checkout.variants';
-import { trackEvent } from '@/lib/firebase';
+import { trackEvent } from '@/lib/analytics';
+import { identifyMetaVisitor } from '@/lib/meta.pixel';
+import { subscribeCookieNotice } from '@/components/platform/utils/cookie.notice';
 import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
 import { getLastShippingAddress } from '@/features/orders/server/get.last.shipping.address.action';
 import { getDeliveryEstimate } from '@/features/orders/server/get.delivery.estimate.action';
@@ -48,6 +50,14 @@ export function useCheckout(
     const stepper = checkoutStepper.useStepper();
     const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
     const authenticatedEmail = customer?.email ?? verifiedEmail;
+    useEffect(() => {
+        /** Supplies the verified purchasing visitor's identity when advertising is allowed. */
+        function identify() {
+            if (authenticatedEmail) identifyMetaVisitor(authenticatedEmail, customer?.phone);
+        }
+        identify();
+        return subscribeCookieNotice(identify);
+    }, [authenticatedEmail, customer?.phone]);
     const form = useForm<CheckoutValues>({
         defaultValues: {
             variants: checkoutComingSoonVariants[initialVariant] ? [] : [initialVariant],

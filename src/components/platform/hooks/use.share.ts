@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import type { ShareDialogHandle, ShareLinks } from '@/components/platform/utils/share';
-import { trackEvent } from '@/lib/firebase';
+import { trackEvent } from '@/lib/analytics';
 
 /** Manages opening the footer's reusable sharing dialog. */
 export function useShare(links?: ShareLinks) {
