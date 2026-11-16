@@ -1,6 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
+import { trackEvent } from '@/lib/analytics';
 
 /** Subscribes to the use cases layout breakpoint. */
 function subscribe(notify: () => void) {
@@ -21,5 +22,17 @@ function getServerPageSize() {
 
 /** Manages the responsive layout of the use cases carousel. */
 export function useUseCases() {
-    return useSyncExternalStore(subscribe, getPageSize, getServerPageSize);
+    const pageSize = useSyncExternalStore(subscribe, getPageSize, getServerPageSize);
+
+    /** Reports deliberate interest in a sticker category. */
+    function onVariantChange(variant: string) {
+        void trackEvent('variant_selected', { variant, source: 'use_cases' });
+    }
+
+    /** Reports the belonging and sticker category a visitor chooses to explore. */
+    function onUseCaseClick(useCase: string, variant: string) {
+        void trackEvent('use_case_clicked', { use_case: useCase, variant, source: 'use_cases' });
+    }
+
+    return { pageSize, onVariantChange, onUseCaseClick };
 }

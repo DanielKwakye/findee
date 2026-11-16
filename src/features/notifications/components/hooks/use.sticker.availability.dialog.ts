@@ -1,5 +1,7 @@
 'use client';
 
+import { trackEvent } from '@/lib/analytics';
+
 import { useId, useImperativeHandle, type Ref } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
@@ -72,6 +74,11 @@ export function useStickerAvailabilityDialog(ref: Ref<StickerAvailabilityDialogH
 
     /** Updates the sticker variants requested for availability notifications. */
     function onVariantChange(selectedVariant: CheckoutVariant, checked: boolean) {
+        if (checked)
+            void trackEvent('variant_selected', {
+                variant: selectedVariant,
+                source: 'availability_dialog',
+            });
         const selected = form.getValues('variants');
         form.setValue(
             'variants',

@@ -9,6 +9,7 @@ import {
     type CheckoutVariant,
 } from '@/features/checkout/data/checkout.variants';
 import type { StickerAvailabilityDialogHandle } from '@/features/notifications/utils/sticker.availability.types';
+import { trackEvent } from '@/lib/analytics';
 
 /** Loads the sticker plans shared by pricing and checkout. */
 export function usePricing() {
@@ -45,10 +46,16 @@ export function usePricing() {
         },
     });
 
+    /** Reports the sticker category a visitor chooses from the pricing cards. */
+    function onSelectVariant(variant: CheckoutVariant) {
+        void trackEvent('variant_selected', { variant, source: 'pricing' });
+    }
+
     /** Handles requests for sticker availability notifications. */
     function onNotify(variant: CheckoutVariant) {
+        onSelectVariant(variant);
         notificationDialogRef.current?.open(variant);
     }
 
-    return { plansQuery: query, onNotify, notificationDialogRef };
+    return { plansQuery: query, onNotify, onSelectVariant, notificationDialogRef };
 }

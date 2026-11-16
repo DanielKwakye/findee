@@ -17,10 +17,12 @@ declare global {
 }
 
 export const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-const events: Record<string, string> = {
-    page_view: 'PageView',
-    begin_checkout: 'InitiateCheckout',
-    purchase: 'Purchase',
+const events: Record<string, { name: string; custom?: boolean }> = {
+    page_view: { name: 'PageView' },
+    begin_checkout: { name: 'InitiateCheckout' },
+    purchase: { name: 'Purchase' },
+    use_case_clicked: { name: 'use_case_clicked', custom: true },
+    variant_selected: { name: 'variant_selected', custom: true },
 };
 let initialized = false;
 let identified = false;
@@ -101,11 +103,25 @@ export function trackMetaEvent(name: string, parameters?: EventParams) {
             ...(parameters?.value !== undefined ? { value: parameters.value } : {}),
             ...(parameters?.currency ? { currency: parameters.currency } : {}),
             ...(parameters?.sticker_quantity ? { num_items: parameters.sticker_quantity } : {}),
+            ...(parameters?.use_case ? { use_case: parameters.use_case } : {}),
+            ...(parameters?.variant ? { variant: parameters.variant } : {}),
+            ...(parameters?.variants ? { variants: parameters.variants } : {}),
+            ...(parameters?.source ? { source: parameters.source } : {}),
+            ...(Array.isArray(parameters?.items)
+                ? {
+                      content_type: 'product',
+                      content_ids: parameters.items.map((item) => item.item_id),
+                      contents: parameters.items.map((item) => ({
+                          id: item.item_id,
+                          quantity: item.quantity,
+                      })),
+                  }
+                : {}),
         };
         window.fbq?.(
-            'trackSingle',
+            events[name].custom ? 'trackSingleCustom' : 'trackSingle',
             metaPixelId,
-            events[name],
+            events[name].name,
             details,
             ...(order ? [{ eventID: `purchase_${order}` }] : []),
         );

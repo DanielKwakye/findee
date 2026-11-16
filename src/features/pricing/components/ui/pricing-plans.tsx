@@ -21,7 +21,7 @@ export default function PricingPlans() {
     const tCheckout = useTranslations('Checkout');
     const tItems = useTranslations('EverydayItems');
     const format = useFormatter();
-    const { plansQuery: plans, onNotify, notificationDialogRef } = usePricing();
+    const { plansQuery: plans, onNotify, onSelectVariant, notificationDialogRef } = usePricing();
 
     return (
         <section
@@ -168,6 +168,7 @@ export default function PricingPlans() {
                                             render={
                                                 <Link
                                                     href={`/checkout?variant=${variant.id.toLowerCase()}`}
+                                                    onClick={() => onSelectVariant(variant.id)}
                                                     aria-label={t('chooseVariant', {
                                                         variant: t(`variants.${variant.key}.title`),
                                                     })}

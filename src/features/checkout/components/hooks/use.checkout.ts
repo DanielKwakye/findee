@@ -45,8 +45,8 @@ export function useCheckout(
     useEffect(() => {
         if (checkoutTracked.current) return;
         checkoutTracked.current = true;
-        void trackEvent('begin_checkout');
-    }, []);
+        void trackEvent('begin_checkout', { variants: initialVariant });
+    }, [initialVariant]);
     const stepper = checkoutStepper.useStepper();
     const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
     const authenticatedEmail = customer?.email ?? verifiedEmail;
@@ -137,6 +137,7 @@ export function useCheckout(
         onSuccess(checkoutUrl, values) {
             void trackEvent('order_submitted', {
                 plan: values.plan,
+                variants: values.variants.join(','),
                 sticker_quantity: values.variants.reduce(
                     (total, variant) => total + Number(values.allocation[variant] ?? 0),
                     0,
@@ -294,6 +295,7 @@ export function useCheckout(
 
     /** Manages variant selection and opens notifications for upcoming stickers. */
     function onVariantChange(variant: CheckoutVariant, checked: boolean) {
+        if (checked) void trackEvent('variant_selected', { variant, source: 'checkout' });
         if (checkoutComingSoonVariants[variant]) {
             notificationDialogRef.current?.open(variant);
             return;

@@ -16,15 +16,29 @@ export async function completeCheckoutOrder(sessionId?: string) {
         where: { number: orderNumber, customerId: customer.id },
         select: {
             number: true,
-            planDetail: { select: { price: true, currency: true, quantity: true } },
+            planDetail: {
+                select: {
+                    price: true,
+                    currency: true,
+                    quantity: true,
+                    allocations: { select: { variant: true, quantity: true } },
+                },
+            },
             customer: { select: { email: true, phone: true } },
         },
     });
+    const allocations = order.planDetail.allocations.filter(({ quantity }) => quantity > 0);
     return {
         transaction_id: order.number,
         value: order.planDetail.price,
         currency: order.planDetail.currency,
         sticker_quantity: order.planDetail.quantity,
+        variants: allocations.map(({ variant }) => variant).join(','),
+        items: allocations.map(({ variant, quantity }) => ({
+            item_id: variant,
+            item_variant: variant,
+            quantity,
+        })),
         email: order.customer.email,
         phone: order.customer.phone,
     };

@@ -23,14 +23,18 @@ export default function UseCases() {
     const t = useTranslations('UseCases');
     const tVariants = useTranslations('Checkout.variants');
     const tItems = useTranslations('EverydayItems');
-    const pageSize = useUseCases();
+    const { pageSize, onVariantChange, onUseCaseClick } = useUseCases();
 
     return (
         <section
             aria-label={t('regionLabel')}
             className="container mx-auto px-4 pt-0 pb-8 sm:px-6 lg:pb-12"
         >
-            <Tabs defaultValue={useCaseGroups[0].variant} className="gap-4">
+            <Tabs
+                defaultValue={useCaseGroups[0].variant}
+                onValueChange={onVariantChange}
+                className="gap-4"
+            >
                 <TabsList
                     variant="line"
                     aria-label={t('regionLabel')}
@@ -69,6 +73,9 @@ export default function UseCases() {
                                                         <Link
                                                             key={key}
                                                             href={`/checkout?variant=${variant}`}
+                                                            onClick={() =>
+                                                                onUseCaseClick(key, variant)
+                                                            }
                                                             className="group rounded-2xl outline-none transition-[scale] duration-300 ease-in-out hover:scale-[1.02] focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transform-none motion-reduce:scale-100 motion-reduce:transition-none"
                                                         >
                                                             <Card className="h-full gap-0 border border-border pt-0 pb-0 ring-0 transition-shadow group-hover:shadow-[0_0_12px_2px_var(--tw-shadow-color)] group-hover:shadow-chart-2/10 group-focus-visible:shadow-[0_0_12px_2px_var(--tw-shadow-color)] group-focus-visible:shadow-chart-2/10">
