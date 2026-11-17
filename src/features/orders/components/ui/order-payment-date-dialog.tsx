@@ -13,7 +13,7 @@ import {
 } from '@/components/core/ui/dialog';
 import { Button } from '@/components/core/ui/button';
 import { Field, FieldError, FieldLabel } from '@/components/core/ui/field';
-import { Input } from '@/components/core/ui/input';
+import { DatePicker } from '@/components/platform';
 import TypographyBody from '@/components/core/ui/typography-body';
 import { useOrderPaymentDateDialog } from '@/features/orders/components/hooks/use.order.payment.date.dialog';
 import type { OrderPaymentDateDialogHandle } from '@/features/orders/utils/order.types';
@@ -63,10 +63,10 @@ export default function OrderPaymentDateDialog({
                         <FieldLabel htmlFor="order-payment-date">
                             <TypographyBody className="text-sm">{t('date')}</TypographyBody>
                         </FieldLabel>
-                        <Input
+                        <DatePicker
                             id="order-payment-date"
-                            type="date"
                             {...input}
+                            placeholder={t('selectDate')}
                             disabled={mutation.isPending}
                             aria-invalid={!!error}
                             aria-describedby={error ? 'order-payment-date-error' : undefined}

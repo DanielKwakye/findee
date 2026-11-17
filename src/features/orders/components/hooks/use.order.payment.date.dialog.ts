@@ -2,7 +2,7 @@
 
 import { useImperativeHandle, useState } from 'react';
 import type { Ref } from 'react';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { toast } from '@/components/core/ui/toast';
@@ -46,11 +46,22 @@ export function useOrderPaymentDateDialog(ref: Ref<OrderPaymentDateDialogHandle>
             setOrder(record);
         },
     }));
-    const input = form.register('paymentDate', {
-        required: t('required'),
-        validate: (value) =>
-            Number.isFinite(new Date(`${value}T00:00:00`).getTime()) || t('required'),
+    const { field: input } = useController({
+        name: 'paymentDate',
+        control: form.control,
+        rules: {
+            required: t('required'),
+            validate: (value) =>
+                Number.isFinite(new Date(`${value}T00:00:00`).getTime()) || t('required'),
+        },
     });
+
+    /** Updates the payment date from a calendar selection. */
+    function onDateSelect(date: string) {
+        if (mutation.isPending) return;
+        input.onChange(date);
+        input.onBlur();
+    }
 
     /** Dismisses the payment date editor while no save is in progress. */
     function changeOpen(open: boolean) {
@@ -66,5 +77,13 @@ export function useOrderPaymentDateDialog(ref: Ref<OrderPaymentDateDialogHandle>
         });
     });
 
-    return { t, order, form, mutation, input, changeOpen, submit };
+    return {
+        t,
+        order,
+        form,
+        mutation,
+        input: { ref: input.ref, onBlur: input.onBlur, value: input.value, onChange: onDateSelect },
+        changeOpen,
+        submit,
+    };
 }

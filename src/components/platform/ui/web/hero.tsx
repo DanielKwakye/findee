@@ -2,6 +2,8 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { CircleHelp } from 'lucide-react';
 import { Button } from '@/components/core/ui/button';
+import { launched } from '@/lib/launch.constants';
+import LaunchDialogButton from '@/features/notifications/components/ui/launch-dialog-button';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyParagraph from '@/components/core/ui/typography-paragraph';
 import { webHeroTrustedItems } from '@/components/platform/data/web.hero.trustedItems';
@@ -29,15 +31,23 @@ export default function WebHero() {
                         {t('desktopSubtitle')}
                     </TypographyParagraph>
                     <div className="mt-7 flex flex-wrap gap-4">
-                        <Button
-                            render={<Link href="/checkout" />}
-                            nativeButton={false}
-                            className="h-12 min-w-48 bg-destructive px-7 text-primary-foreground hover:bg-destructive/90"
-                        >
-                            <TypographyBody className="text-sm font-semibold">
-                                {t('getYourStickers')}
-                            </TypographyBody>
-                        </Button>
+                        {!launched ? (
+                            <Button
+                                render={<Link href="/checkout" />}
+                                nativeButton={false}
+                                className="h-12 min-w-48 bg-destructive px-7 text-primary-foreground hover:bg-destructive/90"
+                            >
+                                <TypographyBody className="text-sm font-semibold">
+                                    {t('getYourStickers')}
+                                </TypographyBody>
+                            </Button>
+                        ) : (
+                            <LaunchDialogButton className="h-12 min-w-48 bg-destructive px-7 text-primary-foreground hover:bg-destructive/90">
+                                <TypographyBody className="text-sm font-semibold">
+                                    {t('getYourStickers')}
+                                </TypographyBody>
+                            </LaunchDialogButton>
+                        )}
                         <Button
                             render={<Link href="#how-it-works" />}
                             nativeButton={false}

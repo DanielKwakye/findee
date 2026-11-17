@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Heart } from 'lucide-react';
 import FooterShare from '@/components/platform/ui/shared/footer-share';
+import FooterCookiePreferences from '@/components/platform/ui/shared/footer-cookie-preferences';
 import { shareLinks } from '@/components/platform/data/share';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyParagraph from '@/components/core/ui/typography-paragraph';
@@ -72,6 +73,11 @@ export default function Footer() {
                                         </Link>
                                     </li>
                                 ))}
+                                {group.key === 'company' && (
+                                    <li>
+                                        <FooterCookiePreferences />
+                                    </li>
+                                )}
                             </ul>
                         </nav>
                     ))}

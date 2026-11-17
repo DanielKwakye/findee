@@ -225,6 +225,7 @@
         "home": "Home",
         "getYours": "Get Yours",
         "getYourQrs": "Get Your QRs",
+        "getStarted": "Get Started",
         "menus": "More",
         "primaryNavigation": "Primary navigation",
         "close": "Close",
@@ -850,6 +851,7 @@
             "description": "Select the payment date for order {number}.",
             "close": "Close payment date editor",
             "date": "Payment date",
+            "selectDate": "Select a date",
             "required": "Select a valid payment date.",
             "cancel": "Cancel",
             "save": "Save",
@@ -1716,6 +1718,10 @@
             "umbrellaHandles": "Smooth umbrella handles"
         }
     },
+    "LaunchDialog": {
+        "title": "We're launching soon!",
+        "description": "Subscribe to hear when Findee launches and get updates on all our sticker types."
+    },
     "StickerAvailability": {
         "title": {
             "everyday": "Notify me when QRs are ready.",
@@ -1727,7 +1733,7 @@
         "name": "Name (optional)",
         "nameInvalid": "Use 100 characters or fewer.",
         "subscribing": "Subscribing…",
-        "success": "You're subscribed to sticker updates.",
+        "success": "Thanks for joining the Findmus newsletter! We're glad you're here. Look out for launch news, new sticker updates, and tips to help keep your belongings close.",
         "error": "We couldn't save your subscription. Please try again.",
         "variants": "Sticker updates",
         "variantsRequired": "Select at least one sticker type.",

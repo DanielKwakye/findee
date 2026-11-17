@@ -27,7 +27,11 @@ import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing
 import { getLastShippingAddress } from '@/features/orders/server/get.last.shipping.address.action';
 import { getDeliveryEstimate } from '@/features/orders/server/get.delivery.estimate.action';
 import { useUserDateTime } from '@/components/platform';
-import type { StickerAvailabilityDialogHandle } from '@/features/notifications/utils/sticker.availability.types';
+import type {
+    LaunchDialogHandle,
+    StickerAvailabilityDialogHandle,
+} from '@/features/notifications/utils/sticker.availability.types';
+import { launched } from '@/lib/launch.constants';
 
 /** Manages checkout navigation and the customer's variant selections. */
 export function useCheckout(
@@ -42,6 +46,7 @@ export function useCheckout(
     const checkoutTracked = useRef(false);
     const previewRef = useRef<CheckoutPreviewHandle>(null);
     const notificationDialogRef = useRef<StickerAvailabilityDialogHandle>(null);
+    const launchDialogRef = useRef<LaunchDialogHandle>(null);
     useEffect(() => {
         if (checkoutTracked.current) return;
         checkoutTracked.current = true;
@@ -242,6 +247,10 @@ export function useCheckout(
     /** Advances checkout while preparing allocations for the selected purchase. */
     function onContinue() {
         if (continueDisabled) return;
+        if (launched && stepper.current.id === 'variants') {
+            launchDialogRef.current?.open();
+            return;
+        }
         if (stepper.current.id === 'allocation' && !onAllocationKeyUp()) return;
         form.clearErrors('root.allocation');
         if (stepper.current.id === 'plan' && plan) {
@@ -336,6 +345,7 @@ export function useCheckout(
         onConfirmPayment,
         onVerified,
         notificationDialogRef,
+        launchDialogRef,
         onVariantChange,
     };
 }

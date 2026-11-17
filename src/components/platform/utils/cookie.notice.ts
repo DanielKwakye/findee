@@ -1,5 +1,12 @@
 export type CookieNoticeHandle = { open: () => void };
 
+export const cookiePreferencesEvent = 'findmus-cookie-preferences-open';
+
+/** Requests the shared cookie notice so visitors can review their preferences. */
+export function openCookiePreferences() {
+    window.dispatchEvent(new Event(cookiePreferencesEvent));
+}
+
 const cookieName = 'findmus_cookie_notice_v2';
 const cookieNoticeEvent = 'findmus-cookie-notice-change';
 

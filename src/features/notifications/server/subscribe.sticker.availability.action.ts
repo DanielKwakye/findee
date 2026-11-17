@@ -2,10 +2,7 @@
 
 import { createHash } from 'node:crypto';
 import { isValidEmail, normalizeEmail } from '@/features/auth/utils/auth.validation';
-import {
-    checkoutVariants,
-    checkoutComingSoonVariants,
-} from '@/features/checkout/data/checkout.variants';
+import { checkoutVariants } from '@/features/checkout/data/checkout.variants';
 import type { StickerAvailabilityValues } from '@/features/notifications/utils/sticker.availability.types';
 
 /** Subscribes an email to sticker availability updates in the configured Mailchimp audience. */
@@ -21,12 +18,7 @@ export async function subscribeStickerAvailability(
         !Array.isArray(values.variants) ||
         values.variants.length === 0 ||
         new Set(values.variants).size !== values.variants.length ||
-        values.variants.some(
-            (variant) =>
-                !checkoutVariants.some(
-                    (option) => option.id === variant && checkoutComingSoonVariants[option.id],
-                ),
-        )
+        values.variants.some((variant) => !checkoutVariants.some((option) => option.id === variant))
     )
         throw new Error('Invalid sticker subscription');
 

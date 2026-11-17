@@ -10,6 +10,7 @@ import { useNavbarMobile } from '@/components/platform/hooks/use.navbar';
 import AppIcon from '@/components/platform/ui/shared/app-icon';
 import NavbarAccount from '@/components/platform/ui/shared/navbar-account';
 import NavbarMenu from '@/components/platform/ui/mobile/navbar-menu';
+import LaunchDialog from '@/features/notifications/components/ui/launch-dialog';
 import { cn } from '@/lib/utils';
 
 type MobileNavbarProps = {
@@ -22,7 +23,7 @@ export default function MobileNavbar({
     appearance = 'overlay',
     elevated = false,
 }: MobileNavbarProps) {
-    const { activeTab, showAccount, menuRef } = useNavbarMobile();
+    const { activeTab, showAccount, menuRef, launchDialogRef, onGetYours } = useNavbarMobile();
     const t = useTranslations('recovery');
     const tNav = useTranslations('Navbar');
 
@@ -64,6 +65,7 @@ export default function MobileNavbar({
                                 render={
                                     <Link
                                         href={href}
+                                        onClick={label === 'getYours' ? onGetYours : undefined}
                                         aria-current={activeTab === href ? 'page' : undefined}
                                     />
                                 }
@@ -91,6 +93,7 @@ export default function MobileNavbar({
                 </button>
             </nav>
             <NavbarMenu ref={menuRef} />
+            <LaunchDialog ref={launchDialogRef} />
         </>
     );
 }

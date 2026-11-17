@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/core/ui/button';
+import { launched } from '@/lib/launch.constants';
+import LaunchDialogButton from '@/features/notifications/components/ui/launch-dialog-button';
 import TypographyBody from '@/components/core/ui/typography-body';
 import { navbarMenuItems } from '@/components/platform/data/navbar.menuItems';
 import { useNavbarWeb } from '@/components/platform/hooks/use.navbar';
@@ -18,7 +20,7 @@ export default function WebNavbar({
     appearance?: 'overlay' | 'solid' | 'primary';
     showGetStarted?: boolean;
 }) {
-    const { isScrolled, showAccount, showGetYourQrs } = useNavbarWeb();
+    const { isHome, isScrolled, showAccount, showGetYourQrs } = useNavbarWeb();
     const t = useTranslations('recovery');
     const tNav = useTranslations('Navbar');
 
@@ -75,7 +77,21 @@ export default function WebNavbar({
                 </div>
 
                 <div className="flex shrink-0 items-center gap-6">
-                    {showGetStarted && (
+                    {showGetStarted && isHome && launched && (
+                        <LaunchDialogButton
+                            variant={isScrolled ? 'default' : 'outline'}
+                            className={cn(
+                                !isScrolled &&
+                                    appearance !== 'solid' &&
+                                    'border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground',
+                            )}
+                        >
+                            <TypographyBody className="text-sm">
+                                {tNav('getStarted')}
+                            </TypographyBody>
+                        </LaunchDialogButton>
+                    )}
+                    {showGetStarted && (!isHome || !launched) && (
                         <Button
                             variant={isScrolled ? 'default' : 'outline'}
                             render={<Link href="/checkout" />}
@@ -86,7 +102,9 @@ export default function WebNavbar({
                                     'border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground',
                             )}
                         >
-                            <TypographyBody className="text-sm">Get Started</TypographyBody>
+                            <TypographyBody className="text-sm">
+                                {tNav('getStarted')}
+                            </TypographyBody>
                         </Button>
                     )}
                     {showAccount && <NavbarAccount />}

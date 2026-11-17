@@ -47,6 +47,7 @@ export function useStickerAvailabilityDialog(ref: Ref<StickerAvailabilityDialogH
             toast.add({
                 title: t('StickerAvailability.success'),
                 type: 'info',
+                timeout: 10000,
             });
             form.reset({ variant: null, variants: [], email: '', name: '' });
         },

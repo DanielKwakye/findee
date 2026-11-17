@@ -32,6 +32,7 @@ import CheckoutPreviewDialog from '@/features/checkout/components/ui/checkout-pr
 import { CustomerOtpForm } from '@/features/auth/components/ui/customer-otp-form';
 import type { CheckoutCustomer, CheckoutPlan } from '@/features/checkout/utils/checkout.types';
 import StickerAvailabilityDialog from '@/features/notifications/components/ui/sticker-availability-dialog';
+import LaunchDialog from '@/features/notifications/components/ui/launch-dialog';
 
 /** Renders the checkout steps and variant choices. */
 export default function Checkout({
@@ -74,6 +75,7 @@ export default function Checkout({
         onConfirmPayment,
         onVerified,
         notificationDialogRef,
+        launchDialogRef,
         onVariantChange,
     } = useCheckout(customer, initialPlan, initialVariant);
 
@@ -298,6 +300,7 @@ export default function Checkout({
                 onConfirm={onConfirmPayment}
             />
             <StickerAvailabilityDialog ref={notificationDialogRef} />
+            <LaunchDialog ref={launchDialogRef} />
         </Stepper>
     );
 }

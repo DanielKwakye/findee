@@ -22,20 +22,9 @@ import type { CookieNoticeHandle } from '@/components/platform/utils/cookie.noti
 /** Presents a compact notice about Findmus cookies and remembers the visitor's acknowledgement. */
 export default function CookieNotice({ ref }: { ref?: Ref<CookieNoticeHandle> }) {
     const t = useTranslations('CookieNotice');
-    const { isOpen, changeOpen, accept, openPreferences } = useCookieNotice(ref);
+    const { isOpen, changeOpen, accept } = useCookieNotice(ref);
 
-    if (!isOpen)
-        return (
-            <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={openPreferences}
-                className="fixed bottom-2 left-2 z-40"
-            >
-                <TypographyBody className="text-xs">{t('preferences')}</TypographyBody>
-            </Button>
-        );
+    if (!isOpen) return null;
 
     return (
         <Card

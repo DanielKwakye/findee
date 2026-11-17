@@ -3,6 +3,7 @@
 import { useEffect, useImperativeHandle, useState, type Ref } from 'react';
 import {
     hasAcceptedCookieNotice,
+    cookiePreferencesEvent,
     rememberCookieNoticeAcceptance,
 } from '@/components/platform/utils/cookie.notice';
 import type { CookieNoticeHandle } from '@/components/platform/utils/cookie.notice';
@@ -23,10 +24,14 @@ export function useCookieNotice(ref?: Ref<CookieNoticeHandle>) {
     );
 
     useEffect(() => {
+        window.addEventListener(cookiePreferencesEvent, openPreferences);
         const frame = window.requestAnimationFrame(() => {
             if (!hasAcceptedCookieNotice()) setIsOpen(true);
         });
-        return () => window.cancelAnimationFrame(frame);
+        return () => {
+            window.cancelAnimationFrame(frame);
+            window.removeEventListener(cookiePreferencesEvent, openPreferences);
+        };
     }, []);
 
     /** Saves the browser's acknowledgement and dismisses the notice. */

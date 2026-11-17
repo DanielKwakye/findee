@@ -4,6 +4,10 @@ export type StickerAvailabilityDialogHandle = {
     open: (variant: CheckoutVariant) => void;
 };
 
+export type LaunchDialogHandle = {
+    open: () => void;
+};
+
 export type StickerAvailabilityValues = {
     variant: CheckoutVariant | null;
     variants: CheckoutVariant[];
