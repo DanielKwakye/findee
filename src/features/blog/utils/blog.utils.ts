@@ -41,15 +41,12 @@ export function getBlogContentImageUrl(value: string) {
             return null;
         }
     }
-    if (
-        url.protocol !== 'https:' ||
-        url.username ||
-        url.password ||
-        url.port ||
-        url.search ||
-        url.hash
-    )
+    if (url.protocol !== 'https:' || url.username || url.password || url.port || url.hash)
         return null;
+    if (url.hostname === 'ik.imagekit.io' && url.pathname.startsWith('/aepn9zqke/')) {
+        return url.href;
+    }
+    if (url.search) return null;
     const cloudinary =
         url.hostname === 'res.cloudinary.com' &&
         url.pathname.startsWith('/ddnzrzwjx/image/upload/');

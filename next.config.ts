@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
             {
                 protocol: 'https',
                 hostname: 'ik.imagekit.io',
-                pathname: '/aepn9zqke/findmus/**',
+                pathname: '/aepn9zqke/**',
             },
             {
                 protocol: 'https',

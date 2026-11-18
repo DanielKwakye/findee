@@ -1483,7 +1483,7 @@
                 "title": "Give your story a clear, descriptive title.",
                 "slug": "Used in the story URL. Use lowercase letters, numbers and hyphens.",
                 "author": "Leave blank to use Findmus Team.",
-                "coverImageUrl": "Use a Findmus or Findmus Cloudinary image URL. Leave blank for a dark title cover.",
+                "coverImageUrl": "Use an image URL from Findmus or its Cloudinary or ImageKit account. Leave blank for a dark title cover.",
                 "tags": "Separate tags with commas. Up to 20 tags, with 50 characters per tag.",
                 "excerpt": "Write a short introduction for the story card, up to 600 characters. Required to publish.",
                 "content": "Required to publish. Drafts can be saved while you are still writing.",
@@ -1493,7 +1493,7 @@
             "errors": {
                 "titleRequired": "Enter a story title.",
                 "slugInvalid": "Use lowercase letters, numbers and single hyphens between words.",
-                "coverInvalid": "Use an HTTPS image URL from Findmus or the Findmus Cloudinary account.",
+                "coverInvalid": "Use an HTTPS image URL from Findmus or its Cloudinary or ImageKit account.",
                 "tagsInvalid": "Use no more than 20 tags, with 50 characters per tag.",
                 "tooLong": "Use {max, number} characters or fewer.",
                 "excerptRequired": "Add an excerpt before publishing.",
