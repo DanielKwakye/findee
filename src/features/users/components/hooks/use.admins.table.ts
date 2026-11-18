@@ -1,7 +1,7 @@
 'use client';
 
 import { createElement, useCallback, useMemo, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { getUsers } from '@/features/users/server/get.users.action';
 import { getAdminColumns } from '@/features/users/utils/admin.columns';
@@ -11,9 +11,11 @@ import type { AdminRow, UpdateAdminDetailsDialogHandle } from '@/features/users/
 import UserActions from '@/features/users/components/ui/user-actions';
 import { useUserAccess } from '@/features/users/components/hooks/use.user.access';
 import { UserDepartments } from '@/features/users/utils/users.constants';
+import { resetAdminPassword } from '@/features/users/server/reset.admin.password.action';
+import { toast } from '@/components/core/ui/toast';
 
 /** Manages administrator records and the management table's display columns. */
-export function useAdminsTable(isDirector: boolean) {
+export function useAdminsTable(currentAdminId: string, isDirector: boolean) {
     const t = useTranslations('Admins');
     const tDepartments = useTranslations('PortalTeamSwitcher.addForm.departmentOptions');
     const updateDetailsRef = useRef<UpdateAdminDetailsDialogHandle>(null);
@@ -24,6 +26,30 @@ export function useAdminsTable(isDirector: boolean) {
     const formatDate = useUserDateTime();
     const tAccess = useTranslations('Customers');
     const { confirmRef, mutation, changeAccess } = useUserAccess('admins');
+    const queryClient = useQueryClient();
+    const { mutateAsync: resetPassword, isPending: isResetting } = useMutation({
+        mutationFn: resetAdminPassword,
+        retry: false,
+        /** Refreshes password setup status and confirms email submission. */
+        onSuccess() {
+            toast.add({ title: t('resetPasswordSuccess'), type: 'success' });
+            return queryClient.invalidateQueries({ queryKey: ['admins'] });
+        },
+    });
+    /** Confirms the credential reset for the selected administrator. */
+    const confirmPasswordReset = useCallback(
+        (admin: AdminRow) => {
+            confirmRef.current?.open({
+                title: t('resetPassword'),
+                description: t('resetPasswordDescription', { email: admin.email }),
+                confirmLabel: t('resetPassword'),
+                errorMessage: t('resetPasswordError'),
+                destructive: true,
+                onConfirm: () => resetPassword(admin.id),
+            });
+        },
+        [confirmRef, resetPassword, t],
+    );
     const query = useQuery({ queryKey: ['admins'], queryFn: () => getUsers('ADMIN') });
     const columns = useMemo<PortalTableColumnDef<AdminRow>[]>(
         () => [
@@ -62,9 +88,15 @@ export function useAdminsTable(isDirector: boolean) {
                 cell: ({ row }) =>
                     createElement(UserActions, {
                         deactivated: !!row.original.deactivatedAt,
-                        disabled: mutation.isPending,
+                        disabled: mutation.isPending || isResetting,
                         onChangeAccess: isDirector ? () => changeAccess(row.original) : undefined,
                         onUpdateDetails: () => updateDetails(row.original),
+                        onResetPassword:
+                            isDirector &&
+                            row.original.id !== currentAdminId &&
+                            !row.original.deactivatedAt
+                                ? () => confirmPasswordReset(row.original)
+                                : undefined,
                     }),
             },
         ],
@@ -77,6 +109,9 @@ export function useAdminsTable(isDirector: boolean) {
             mutation.isPending,
             changeAccess,
             updateDetails,
+            currentAdminId,
+            confirmPasswordReset,
+            isResetting,
         ],
     );
     return { t, query, columns, confirmRef, updateDetailsRef };

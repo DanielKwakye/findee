@@ -5,6 +5,7 @@ import 'next-auth/jwt';
 declare module 'next-auth' {
     interface User {
         role: AuthRole;
+        passwordResetVersion?: string;
     }
     interface Session {
         user: DefaultSession['user'] & { id: string; role: AuthRole };
@@ -14,5 +15,6 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
     interface JWT {
         role: AuthRole;
+        passwordResetVersion?: string;
     }
 }

@@ -128,6 +128,10 @@
     "Admins": {
         "departments": "Departments",
         "updateDetails": "Edit details",
+        "resetPassword": "Send password reset",
+        "resetPasswordDescription": "Replace the current password, sign out active sessions, and email a temporary password to {email}?",
+        "resetPasswordError": "Unable to send the password reset. Please try again.",
+        "resetPasswordSuccess": "Password reset email sent.",
         "updateDetailsForm": {
             "title": "Update admin details",
             "description": "Update this administrator's account details.",
@@ -208,6 +212,12 @@
         "title": "Welcome to Findmus",
         "introduction": "An administrator account has been created for {email}. Your temporary password is:",
         "guidance": "Sign in at {url} using your email address and the temporary password above. After signing in, you must choose a new password on the password change page before continuing to the admin portal."
+    },
+    "AdminPasswordReset": {
+        "subject": "Reset your Findmus administrator password",
+        "title": "Your administrator password was reset",
+        "introduction": "A password reset was requested for {email}. Your temporary password is:",
+        "guidance": "Sign in at {url} using your email address and the temporary password above. You’ll be asked to choose a new password before continuing to the admin portal."
     },
     "AdminPasswordChange": {
         "title": "Change your password",

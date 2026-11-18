@@ -18,12 +18,14 @@ export default function UserActions({
     onChangeAccess,
     onRequestReview,
     onUpdateDetails,
+    onResetPassword,
 }: {
     deactivated: boolean;
     disabled: boolean;
     onChangeAccess?: () => void;
     onRequestReview?: () => void;
     onUpdateDetails?: () => void;
+    onResetPassword?: () => void;
 }) {
     const t = useTranslations('Customers');
     const tAdmins = useTranslations('Admins');
@@ -54,6 +56,13 @@ export default function UserActions({
                     <DropdownMenuItem onClick={onChangeAccess}>
                         <TypographyBody className="text-sm">
                             {t(deactivated ? 'reactivate' : 'deactivate')}
+                        </TypographyBody>
+                    </DropdownMenuItem>
+                )}
+                {onResetPassword && (
+                    <DropdownMenuItem onClick={onResetPassword}>
+                        <TypographyBody className="text-sm">
+                            {tAdmins('resetPassword')}
                         </TypographyBody>
                     </DropdownMenuItem>
                 )}

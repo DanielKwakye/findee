@@ -30,5 +30,11 @@ export async function authenticateCredentials(
     if (!user || !user.passwordHash || !valid || user.role !== 'ADMIN') return null;
 
     await validateSignInEmail(user.email);
-    return { id: user.id, email: user.email, name: user.name, role: user.role };
+    return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        passwordResetVersion: user.passwordResetVersion ?? undefined,
+    };
 }

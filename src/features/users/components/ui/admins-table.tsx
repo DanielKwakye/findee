@@ -8,8 +8,17 @@ import { useAdminsTable } from '@/features/users/components/hooks/use.admins.tab
 import UpdateAdminDetailsDialog from '@/features/users/components/ui/update-admin-details-dialog';
 
 /** Presents searchable administrator accounts using the shared portal table. */
-export default function AdminsTable({ isDirector }: { isDirector: boolean }) {
-    const { t, query, columns, confirmRef, updateDetailsRef } = useAdminsTable(isDirector);
+export default function AdminsTable({
+    currentAdminId,
+    isDirector,
+}: {
+    currentAdminId: string;
+    isDirector: boolean;
+}) {
+    const { t, query, columns, confirmRef, updateDetailsRef } = useAdminsTable(
+        currentAdminId,
+        isDirector,
+    );
     return (
         <section aria-label={t('title')} className="min-w-0 space-y-4">
             <TypographyH1>{t('title')}</TypographyH1>

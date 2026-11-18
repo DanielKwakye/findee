@@ -1,12 +1,9 @@
 'use server';
 
 import { requireAdmin } from '@/features/auth/server/auth.session';
-import { hashPassword } from '@/features/auth/server/auth.password';
 import { isValidEmail, normalizeEmail } from '@/features/auth/utils/auth.validation';
-import { generateReferenceCode } from '@/components/platform/utils/reference.code.utils';
-import { getTranslations } from 'next-intl/server';
-import { renderNotificationEmail } from '@/features/notifications/server/notification.email';
 import { sendEmail } from '@/features/notifications/server/send.email';
+import { prepareAdminTemporaryPassword } from '@/features/users/server/admin.temporary.password';
 import type { AddAdminValues } from '@/features/users/utils/users.types';
 import { db } from '@/lib/db';
 import { UserDepartments } from '@/features/users/utils/users.constants';
@@ -31,23 +28,7 @@ export async function createAdmin(values: AddAdminValues) {
     const email = normalizeEmail(values.email);
     if (await db.user.findUnique({ where: { email }, select: { id: true } }))
         return { error: 'duplicate' as const };
-    const appUrl = process.env.APP_URL;
-    if (!appUrl) throw new Error('APP_URL is not configured');
-    const loginUrl = new URL('/login', appUrl);
-    if (!['https:', 'http:'].includes(loginUrl.protocol)) throw new Error('Invalid APP_URL');
-    const password = `${generateReferenceCode()}-${generateReferenceCode()}`;
-    const passwordHash = await hashPassword(password);
-    const t = await getTranslations('AdminInvitation');
-    const tEmail = await getTranslations('Notifications.email');
-    const content = await renderNotificationEmail({
-        brand: tEmail('brand'),
-        title: t('title'),
-        introduction: t('introduction', { email }),
-        highlight: password,
-        guidance: t('guidance', { url: loginUrl.toString() }),
-        signoff: tEmail('signoff'),
-        footer: tEmail('footer'),
-    });
+    const { passwordHash, message } = await prepareAdminTemporaryPassword(email);
     let admin;
     try {
         admin = await db.user.create({
@@ -69,9 +50,7 @@ export async function createAdmin(values: AddAdminValues) {
     }
     try {
         await sendEmail({
-            to: email,
-            subject: t('subject'),
-            ...content,
+            ...message,
             idempotencyKey: `admin-invitation/${admin.id}`,
         });
     } catch {

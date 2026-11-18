@@ -35,4 +35,5 @@ export type AuthUser = {
     email: string;
     name: string | null;
     role: AuthRole;
+    passwordResetVersion?: string;
 };

@@ -6,6 +6,7 @@ model User {
   name  String?
   passwordHash String?
   mustChangePassword Boolean @default(false)
+  passwordResetVersion String?
   otp String?
   otpCreatedAt DateTime?
   role UserRole @default(CUSTOMER)

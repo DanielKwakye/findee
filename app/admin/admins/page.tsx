@@ -9,5 +9,10 @@ export const metadata: Metadata = { title: messages.PageMetadata.titles.admins }
 /** Presents administrator account management to authorized administrators. */
 export default async function AdminsPage() {
     const user = await requireAdmin();
-    return <AdminsTable isDirector={user.departments.includes(UserDepartments.directors)} />;
+    return (
+        <AdminsTable
+            currentAdminId={user.id}
+            isDirector={user.departments.includes(UserDepartments.directors)}
+        />
+    );
 }

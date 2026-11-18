@@ -24,14 +24,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             if (user) {
                 token.sub = user.id;
                 token.role = user.role;
+                token.passwordResetVersion = user.passwordResetVersion;
             }
             // Reject previously issued sessions as soon as the account is closed.
             if (token.sub) {
                 const account = await db.user.findUnique({
                     where: { id: token.sub },
-                    select: { closedAt: true, deactivatedAt: true },
+                    select: { closedAt: true, deactivatedAt: true, passwordResetVersion: true },
                 });
                 if (!account || account.closedAt || account.deactivatedAt) return null;
+                if (
+                    token.role === 'ADMIN' &&
+                    token.passwordResetVersion !== (account.passwordResetVersion ?? undefined)
+                ) {
+                    return null;
+                }
             }
             return token;
         },
