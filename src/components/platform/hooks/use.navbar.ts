@@ -32,7 +32,7 @@ export function useNavbarMobile() {
 
     /** Opens launch subscriptions when checkout navigation is gated. */
     function onGetYours(event: MouseEvent<HTMLAnchorElement>) {
-        if (!launched) return;
+        if (launched) return;
         event.preventDefault();
         launchDialogRef.current?.open();
     }

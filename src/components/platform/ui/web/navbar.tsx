@@ -77,7 +77,7 @@ export default function WebNavbar({
                 </div>
 
                 <div className="flex shrink-0 items-center gap-6">
-                    {showGetStarted && isHome && launched && (
+                    {showGetStarted && isHome && !launched && (
                         <LaunchDialogButton
                             variant={isScrolled ? 'default' : 'outline'}
                             className={cn(
@@ -91,7 +91,7 @@ export default function WebNavbar({
                             </TypographyBody>
                         </LaunchDialogButton>
                     )}
-                    {showGetStarted && (!isHome || !launched) && (
+                    {showGetStarted && (!isHome || launched) && (
                         <Button
                             variant={isScrolled ? 'default' : 'outline'}
                             render={<Link href="/checkout" />}

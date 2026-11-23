@@ -30,7 +30,7 @@ export default function MobileHero() {
                 <TypographyParagraph className="mx-auto mt-5 max-w-sm text-base leading-7 text-primary-foreground/75">
                     {t('mobileSubtitle')}
                 </TypographyParagraph>
-                {!launched ? (
+                {launched ? (
                     <Button
                         render={<Link href="/checkout" />}
                         nativeButton={false}

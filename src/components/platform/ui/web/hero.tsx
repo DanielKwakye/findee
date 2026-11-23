@@ -31,7 +31,7 @@ export default function WebHero() {
                         {t('desktopSubtitle')}
                     </TypographyParagraph>
                     <div className="mt-7 flex flex-wrap gap-4">
-                        {!launched ? (
+                        {launched ? (
                             <Button
                                 render={<Link href="/checkout" />}
                                 nativeButton={false}

@@ -1485,7 +1485,7 @@
                 "author": "Leave blank to use Findmus Team.",
                 "coverImageUrl": "Use an image URL from Findmus or its Cloudinary or ImageKit account. Leave blank for a dark title cover.",
                 "tags": "Separate tags with commas. Up to 20 tags, with 50 characters per tag.",
-                "excerpt": "Write a short introduction for the story card, up to 600 characters. Required to publish.",
+                "excerpt": "Write a short abstract that grabs the user attention. (maximum of 600 characters)",
                 "content": "Required to publish. Drafts can be saved while you are still writing.",
                 "featured": "Featured stories appear only in Featured Stories, ordered newest first.",
                 "published": "Published stories are visible to visitors. Clear this to return the story to draft."

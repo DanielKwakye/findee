@@ -247,7 +247,7 @@ export function useCheckout(
     /** Advances checkout while preparing allocations for the selected purchase. */
     function onContinue() {
         if (continueDisabled) return;
-        if (launched && stepper.current.id === 'variants') {
+        if (!launched && stepper.current.id === 'variants') {
             launchDialogRef.current?.open();
             return;
         }
