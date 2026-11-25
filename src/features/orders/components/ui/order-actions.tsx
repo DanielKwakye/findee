@@ -13,6 +13,7 @@ import {
 import TypographyBody from '@/components/core/ui/typography-body';
 import type {
     OrderPaymentDateRecord,
+    OrderProductsDialogRecord,
     OrderStatusDialogRecord,
 } from '@/features/orders/utils/order.types';
 
@@ -22,6 +23,7 @@ export default function OrderActions({
     label,
     onOpen,
     onEdit,
+    onReassignProducts,
     onChangeStatus,
     onUpdatePaymentDate,
     onViewShipments,
@@ -29,7 +31,7 @@ export default function OrderActions({
     onResendInvoice,
     invoicePending,
 }: {
-    order: OrderStatusDialogRecord & OrderPaymentDateRecord;
+    order: OrderProductsDialogRecord & OrderPaymentDateRecord;
     label: string;
     onOpen: (id: string) => void;
     onChangeStatus: (order: OrderStatusDialogRecord) => void;
@@ -37,6 +39,7 @@ export default function OrderActions({
     onViewShipments: (order: OrderStatusDialogRecord) => void;
     onAddShipment: (order: OrderStatusDialogRecord) => void;
     onEdit: (id: string) => void;
+    onReassignProducts?: (order: OrderProductsDialogRecord) => void;
     onResendInvoice: (id: string) => void;
     invoicePending: boolean;
 }) {
@@ -63,6 +66,13 @@ export default function OrderActions({
                     <DropdownMenuItem onClick={() => onEdit(order.id)}>
                         <TypographyBody className="text-sm">{t('edit.title')}</TypographyBody>
                     </DropdownMenuItem>
+                    {onReassignProducts && (
+                        <DropdownMenuItem onClick={() => onReassignProducts(order)}>
+                            <TypographyBody className="text-sm">
+                                {t('products.title')}
+                            </TypographyBody>
+                        </DropdownMenuItem>
+                    )}
                     {order.status === 'AWAITING_PAYMENT' && (
                         <DropdownMenuItem
                             disabled={invoicePending}

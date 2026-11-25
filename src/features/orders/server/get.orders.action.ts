@@ -43,6 +43,7 @@ export async function getOrders(params: OrderQuery, pendingPayments = false) {
         orderBy: [{ [sortBy]: direction }, { number: 'asc' }],
         select: {
             id: true,
+            customerId: true,
             number: true,
             customer: { select: { name: true, email: true } },
             status: true,
@@ -55,6 +56,7 @@ export async function getOrders(params: OrderQuery, pendingPayments = false) {
     return {
         orders: orders.map((order) => ({
             id: order.id,
+            customerId: order.customerId,
             number: order.number,
             customer: order.customer,
             status: order.status,

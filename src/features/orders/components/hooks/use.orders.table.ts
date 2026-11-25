@@ -18,6 +18,8 @@ import type {
     OrderPaymentDateDialogHandle,
     OrderPaymentDateRecord,
     OrderShipmentsDialogHandle,
+    OrderProductsDialogHandle,
+    OrderProductsDialogRecord,
     AddOrderShipmentDialogHandle,
 } from '@/features/orders/utils/order.types';
 import OrderActions from '@/features/orders/components/ui/order-actions';
@@ -44,6 +46,11 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
     });
     const detailsRef = useRef<OrderDetailsDialogHandle>(null);
     const editRef = useRef<EditOrderDialogHandle>(null);
+    const productsRef = useRef<OrderProductsDialogHandle>(null);
+    /** Opens the product assignment dialog for the selected order. */
+    const openProducts = useCallback((order: OrderProductsDialogRecord) => {
+        productsRef.current?.open(order);
+    }, []);
     /** Opens the internally managed editor for a selected order. */
     const openEdit = useCallback((id: string) => {
         editRef.current?.open(id);
@@ -163,6 +170,11 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
                         label: labels.viewDetails,
                         onOpen: openDetails,
                         onEdit: openEdit,
+                        onReassignProducts:
+                            ['CONFIRMED', 'HOLD', 'PROCESSING'].includes(status) &&
+                            row.original.status === status
+                                ? openProducts
+                                : undefined,
                         onChangeStatus: openStatus,
                         onUpdatePaymentDate: openPaymentDate,
                         onViewShipments: openShipments,
@@ -177,8 +189,10 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
         formatDate,
         format,
         pendingPayments,
+        status,
         openDetails,
         openEdit,
+        openProducts,
         openStatus,
         openPaymentDate,
         openShipments,
@@ -206,6 +220,7 @@ export function useOrdersTable(status: OrderStatusFilter, pendingPayments = fals
         changeStatus,
         detailsRef,
         editRef,
+        productsRef,
         statusRef,
         paymentDateRef,
         shipmentsRef,

@@ -12,6 +12,7 @@ import OrderPaymentDateDialog from '@/features/orders/components/ui/order-paymen
 import OrderShipmentsDialog from '@/features/orders/components/ui/order-shipments-dialog';
 import AddOrderShipmentDialog from '@/features/orders/components/ui/add-order-shipment-dialog';
 import EditOrderDialog from '@/features/orders/components/ui/edit-order-dialog';
+import OrderProductsDialog from '@/features/orders/components/ui/order-products-dialog';
 
 /** Presents order records using the shared server-paginated table. */
 export default function OrdersTable({
@@ -33,6 +34,7 @@ export default function OrdersTable({
         changeStatus,
         detailsRef,
         editRef,
+        productsRef,
         statusRef,
         paymentDateRef,
         shipmentsRef,
@@ -78,6 +80,7 @@ export default function OrdersTable({
             />
             <OrderDetailsDialog ref={detailsRef} />
             <EditOrderDialog ref={editRef} />
+            <OrderProductsDialog ref={productsRef} />
             <OrderStatusDialog ref={statusRef} />
             <OrderPaymentDateDialog ref={paymentDateRef} />
             <OrderShipmentsDialog ref={shipmentsRef} />

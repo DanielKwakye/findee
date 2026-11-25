@@ -41,6 +41,8 @@ export type OrderPaymentDateRecord = Pick<OrderRow, 'id' | 'number' | 'paymentAt
 export type OrderPaymentDateDialogHandle = { open: (order: OrderPaymentDateRecord) => void };
 export type OrderShipmentRow = Awaited<ReturnType<typeof getOrderShipments>>[number];
 export type OrderShipmentsDialogHandle = { open: (order: OrderStatusDialogRecord) => void };
+export type OrderProductsDialogRecord = OrderStatusDialogRecord & Pick<OrderRow, 'customerId'>;
+export type OrderProductsDialogHandle = { open: (order: OrderProductsDialogRecord) => void };
 export type OrderShipmentDelete = { orderId: string; id: string };
 export type OrderShipmentValues = {
     carrier: string;

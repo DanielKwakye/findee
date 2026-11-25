@@ -4,16 +4,7 @@ import { generateReferenceCode } from '@/components/platform/utils/reference.cod
 import type { ConfirmationOrder } from '@/features/orders/utils/order.types';
 import type { getOrderNotificationContext } from '@/features/orders/utils/order.confirmation.notifications';
 import type { Prisma } from '@/generated/client';
-
-// MongoDB stores optional fields as either null or missing; both mean unclaimed here.
-const availableProducts: Prisma.ProductWhereInput = {
-    published: true,
-    AND: [
-        { OR: [{ reservedById: null }, { reservedById: { isSet: false } }] },
-        { OR: [{ assignedToId: null }, { assignedToId: { isSet: false } }] },
-        { OR: [{ orderId: null }, { orderId: { isSet: false } }] },
-    ],
-};
+import { availableProducts } from '@/features/products/utils/product.availability';
 
 /** Retrieves the customer, allocation, and delivery state needed to confirm an order. */
 export async function getConfirmationOrder(transaction: Prisma.TransactionClient, id: string) {
@@ -42,6 +33,7 @@ export async function getConfirmationOrder(transaction: Prisma.TransactionClient
 export async function findOrderConfirmationProducts(
     transaction: Prisma.TransactionClient,
     allocations: ConfirmationOrder['planDetail']['allocations'],
+    orderId: string,
 ) {
     if (
         !allocations.length ||
@@ -57,17 +49,24 @@ export async function findOrderConfirmationProducts(
         throw new Error('Invalid order allocations');
     }
     const productIds: string[] = [];
+    const assigned = await transaction.product.groupBy({
+        by: ['variant'],
+        where: { orderId },
+        _count: { _all: true },
+    });
+    const assignedCounts = new Map(assigned.map(({ variant, _count }) => [variant, _count._all]));
     // Collect candidates without assigning any: every requested variant must be fully available.
     for (const allocation of allocations) {
-        if (!allocation.quantity) continue;
+        const quantity = allocation.quantity - (assignedCounts.get(allocation.variant) ?? 0);
+        if (quantity <= 0) continue;
         const products = await transaction.product.findMany({
             where: { ...availableProducts, variant: allocation.variant },
             // Use oldest stock first, with a stable tie-breaker for matching creation times.
             orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
-            take: allocation.quantity,
+            take: quantity,
             select: { id: true },
         });
-        if (products.length < allocation.quantity) return { productIds, restocking: true };
+        if (products.length < quantity) return { productIds, restocking: true };
         productIds.push(...products.map((product) => product.id));
     }
     return { productIds, restocking: false };
@@ -99,13 +98,20 @@ export async function createOrderRestockTicket(
 /** Reserves and assigns a complete sticker selection to the order's customer. */
 export async function assignOrderConfirmationProducts(
     transaction: Prisma.TransactionClient,
-    order: ConfirmationOrder,
+    order: Pick<ConfirmationOrder, 'id' | 'customerId' | 'defaultReachoutModes'>,
     productIds: string[],
+    expectedUpdatedAt?: Date,
 ) {
+    if (!productIds.length) return;
     // Claim the whole selection, rechecking availability to protect against competing allocations.
     const now = new Date();
     const assigned = await transaction.product.updateMany({
-        where: { ...availableProducts, id: { in: productIds } },
+        where: {
+            ...(expectedUpdatedAt
+                ? { published: true, updatedAt: expectedUpdatedAt }
+                : availableProducts),
+            id: { in: productIds },
+        },
         data: {
             reservedById: order.customerId,
             assignedToId: order.customerId,

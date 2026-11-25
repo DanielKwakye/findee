@@ -15,14 +15,17 @@ export async function getCheckoutPlans(): Promise<CheckoutPlan[]> {
             minimumQuantity: 10,
             maxRecoveryProfiles: null,
             unitPrices: [
-                { maximumQuantity: 19, prices: { Everyday: 12.99 / 10, Tough: 1.75, Fabric: 2.0 } },
+                {
+                    maximumQuantity: 19,
+                    prices: { Everyday: 12.99 / 10, Tough: 12.99 / 10, Fabric: 2.0 },
+                },
                 {
                     maximumQuantity: 39,
-                    prices: { Everyday: 19.99 / 20, Tough: 1.375, Fabric: 1.625 },
+                    prices: { Everyday: 19.99 / 20, Tough: 19.99 / 20, Fabric: 1.625 },
                 },
                 {
                     maximumQuantity: null,
-                    prices: { Everyday: 34.99 / 40, Tough: 1.25, Fabric: 1.5 },
+                    prices: { Everyday: 34.99 / 40, Tough: 34.99 / 40, Fabric: 1.5 },
                 },
             ],
             shippingPrices: [

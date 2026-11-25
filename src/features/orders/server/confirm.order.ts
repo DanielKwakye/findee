@@ -60,6 +60,7 @@ export async function confirmOrder(
         const { productIds, restocking } = await findOrderConfirmationProducts(
             transaction,
             order.planDetail.allocations,
+            order.id,
         );
         // Repeated shortages leave the existing hold and support ticket intact.
         if (

@@ -76,10 +76,23 @@ export async function getProducts(params: ProductQuery) {
             reservedBy: { select: { name: true, email: true } },
             reservedAt: true,
             assignedTo: { select: { name: true, email: true } },
+            assignedToId: true,
+            reservedById: true,
+            orderId: true,
             assignedAt: true,
             order: { select: { number: true } },
             createdAt: true,
+            updatedAt: true,
         },
     });
-    return { products, total, page };
+    return {
+        products: products.map(({ assignedToId, reservedById, orderId, ...product }) => ({
+            ...product,
+            assignedToId,
+            orderId,
+            isAvailable: !assignedToId && !reservedById && !orderId,
+        })),
+        total,
+        page,
+    };
 }
