@@ -1,7 +1,7 @@
 'use client';
 
 import type { Ref } from 'react';
-import { Trash2, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 import { Button } from '@/components/core/ui/button';
 import {
     Dialog,
@@ -12,7 +12,7 @@ import {
     DialogTitle,
 } from '@/components/core/ui/dialog';
 import { Input } from '@/components/core/ui/input';
-import { Item, ItemActions, ItemContent, ItemGroup } from '@/components/core/ui/item';
+import { Item, ItemGroup } from '@/components/core/ui/item';
 import TypographyBody from '@/components/core/ui/typography-body';
 import { PortalConfirmDialog } from '@/components/platform';
 import { useOrderProductsDialog } from '@/features/orders/components/hooks/use.order.products.dialog';
@@ -73,7 +73,10 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                 >
                     <XIcon aria-hidden="true" />
                 </DialogClose>
-                <section className="grid min-w-0 gap-1" aria-label={t('products.assigned')}>
+                <section
+                    className="flex min-w-0 flex-col gap-1"
+                    aria-label={t('products.assigned')}
+                >
                     <TypographyBody className="font-medium">
                         {t('products.assigned')}
                     </TypographyBody>
@@ -96,36 +99,25 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                             </TypographyBody>
                         </div>
                     ) : (
-                        <ItemGroup className="max-h-52 flex-row flex-wrap content-start overflow-y-auto">
+                        <ul className="flex max-h-52 flex-row flex-wrap content-start gap-1 overflow-y-auto -translate-x-3">
                             {assigned.data.map(({ code, variant }) => (
-                                <Item
-                                    key={code}
-                                    role="listitem"
-                                    variant="outline"
-                                    size="xs"
-                                    className="w-fit max-w-full flex-nowrap"
-                                >
-                                    <ItemContent className="min-w-0">
-                                        <TypographyBody className="min-w-0 wrap-break-word">
+                                <li key={code} className="max-w-full">
+                                    <Button
+                                        type="button"
+                                        variant="link"
+                                        size="sm"
+                                        className="h-auto max-w-full py-1.5 text-left whitespace-normal"
+                                        disabled={isUpdating}
+                                        aria-label={t('products.removeSticker', { code })}
+                                        onClick={() => requestChange('remove', code)}
+                                    >
+                                        <TypographyBody className="min-w-0 text-sm wrap-break-word">
                                             {t('products.sticker', { code, variant })}
                                         </TypographyBody>
-                                    </ItemContent>
-                                    <ItemActions>
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="icon-sm"
-                                            className="shrink-0"
-                                            disabled={isUpdating}
-                                            aria-label={t('products.removeSticker', { code })}
-                                            onClick={() => requestChange('remove', code)}
-                                        >
-                                            <Trash2 aria-hidden="true" />
-                                        </Button>
-                                    </ItemActions>
-                                </Item>
+                                    </Button>
+                                </li>
                             ))}
-                        </ItemGroup>
+                        </ul>
                     )}
                 </section>
                 <div className="space-y-2">
