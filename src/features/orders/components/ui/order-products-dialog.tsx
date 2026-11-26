@@ -3,6 +3,7 @@
 import type { Ref } from 'react';
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/core/ui/button';
+import { Checkbox } from '@/components/core/ui/checkbox';
 import {
     Dialog,
     DialogClose,
@@ -29,7 +30,12 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
         results,
         search,
         searchInput,
+        quantityInput,
+        saveQuantity,
+        quantityError,
         isUpdating,
+        autoAssign,
+        changeAutoAssign,
         confirmRef,
         changeOpen,
         requestChange,
@@ -73,6 +79,57 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                 >
                     <XIcon aria-hidden="true" />
                 </DialogClose>
+                <label className="flex items-center gap-2">
+                    <Checkbox
+                        checked={autoAssign ?? false}
+                        disabled={autoAssign === undefined || isUpdating}
+                        onCheckedChange={changeAutoAssign}
+                    />
+                    <TypographyBody>{t('products.autoAssign')}</TypographyBody>
+                </label>
+                {assigned.data && (
+                    <form onSubmit={saveQuantity} noValidate className="space-y-2">
+                        <label htmlFor={quantityInput.id}>
+                            <TypographyBody className="block font-medium">
+                                {t('details.quantity')}
+                            </TypographyBody>
+                        </label>
+                        <div className="flex items-center gap-2">
+                            <Input
+                                {...quantityInput}
+                                type="number"
+                                min={1}
+                                max={2_147_483_647}
+                                step={1}
+                                required
+                                aria-invalid={!!quantityError}
+                                aria-describedby={
+                                    quantityError ? `${quantityInput.id}-error` : undefined
+                                }
+                                disabled={isUpdating}
+                            />
+                            <Button
+                                type="submit"
+                                disabled={
+                                    isUpdating ||
+                                    Number(quantityInput.value) ===
+                                        assigned.data.planDetail.quantity
+                                }
+                            >
+                                <TypographyBody className="text-sm">
+                                    {t('products.saveQuantity')}
+                                </TypographyBody>
+                            </Button>
+                        </div>
+                        {quantityError && (
+                            <div id={`${quantityInput.id}-error`} role="alert">
+                                <TypographyBody className="text-sm text-destructive">
+                                    {quantityError}
+                                </TypographyBody>
+                            </div>
+                        )}
+                    </form>
+                )}
                 <section
                     className="flex min-w-0 flex-col gap-1"
                     aria-label={t('products.assigned')}
@@ -92,7 +149,7 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                                 {t('products.loading')}
                             </TypographyBody>
                         </div>
-                    ) : !assigned.data?.length ? (
+                    ) : !assigned.data?.products.length ? (
                         <div>
                             <TypographyBody className="text-sm text-muted-foreground">
                                 {t('products.empty')}
@@ -100,7 +157,7 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                         </div>
                     ) : (
                         <ul className="flex max-h-52 flex-row flex-wrap content-start gap-1 overflow-y-auto -translate-x-3">
-                            {assigned.data.map(({ code, variant }) => (
+                            {assigned.data.products.map(({ code, variant }) => (
                                 <li key={code} className="max-w-full">
                                     <Button
                                         type="button"

@@ -15,6 +15,7 @@ export async function getConfirmationOrder(transaction: Prisma.TransactionClient
             number: true,
             customerId: true,
             status: true,
+            autoAssign: true,
             cancellable: true,
             paymentAt: true,
             confirmationNotifiedAt: true,

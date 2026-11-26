@@ -35,6 +35,13 @@ export async function getPendingConfirmationOrders(batchSize: number) {
                 { paymentAt: { not: null } },
                 {
                     OR: [
+                        { autoAssign: true },
+                        { autoAssign: null },
+                        { autoAssign: { isSet: false } },
+                    ],
+                },
+                {
+                    OR: [
                         { status: 'PENDING' },
                         { status: 'HOLD' },
                         {
