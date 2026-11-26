@@ -1,13 +1,20 @@
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
+import {
+    checkoutComingSoonVariants,
+    checkoutVariants,
+} from '@/features/checkout/data/checkout.variants';
 import { getLowVariantStock } from '@/features/procurement/server/procurement.stock';
 import { renderNotificationEmail } from '@/features/notifications/server/notification.email';
 import { sendEmail } from '@/features/notifications/server/send.email';
 
 /** Notifies the operations inbox of low inventory for a trusted scheduled server caller. */
 export async function notifyLowVariantStock() {
-    const variants = await getLowVariantStock();
+    const activeVariants = checkoutVariants
+        .filter(({ id }) => !checkoutComingSoonVariants[id])
+        .map(({ id }) => id);
+    const variants = await getLowVariantStock(activeVariants);
     if (!variants.length) return { notified: false, variants };
 
     const to = process.env.ORDERS_EMAIL;

@@ -13,6 +13,7 @@
         "seed:recovery": "tsx prisma/seed.recovery.ts",
         "seed:recovery:prod": "DOTENV_CONFIG_PATH=.env.prod tsx prisma/seed.recovery.ts",
         "seed:prod": "DOTENV_CONFIG_PATH=.env.prod prisma db seed",
+        "seed:tough:prod": "DOTENV_CONFIG_PATH=.env.prod tsx prisma/seed.tough.products.ts",
         "start": "next start",
         "lint": "eslint",
         "prettier": "npx prettier --write ."
