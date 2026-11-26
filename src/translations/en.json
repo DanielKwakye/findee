@@ -824,6 +824,10 @@
         "description": "Manage customer orders",
         "tabsLabel": "Order status",
         "changeStatus": "Change order status",
+        "allocationMismatch": {
+            "title": "Assigned stickers differ from the plan",
+            "description": "Review the assigned counts by variant. Adjust the assigned stickers or put the order on hold."
+        },
         "products": {
             "title": "Reassign products",
             "description": "Order {number}",
@@ -831,9 +835,11 @@
             "autoAssign": "Automatically assign stickers",
             "autoAssignError": "Unable to save the automatic assignment setting.",
             "saveQuantity": "Save",
-            "quantitySaved": "Sticker quantity updated.",
+            "quantitySaved": "Sticker quantity and variant allocations updated.",
             "quantityInvalid": "Enter a whole number between 1 and 2,147,483,647.",
-            "quantitySaveError": "Unable to save the sticker quantity.",
+            "allocationInvalid": "Enter a whole number of zero or more for each variant.",
+            "allocationTotalMismatch": "The variant allocations must add up to the sticker quantity.",
+            "quantitySaveError": "Unable to save the sticker quantity and variant allocations.",
             "assigned": "Assigned products",
             "loading": "Loading assigned products…",
             "loadError": "Unable to load the assigned products.",

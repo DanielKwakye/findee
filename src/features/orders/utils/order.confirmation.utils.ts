@@ -19,7 +19,7 @@ export async function getConfirmationOrder(transaction: Prisma.TransactionClient
             cancellable: true,
             paymentAt: true,
             confirmationNotifiedAt: true,
-            planDetail: { select: { allocations: true } },
+            planDetail: { select: { quantity: true, allocations: true } },
             customerConfirmationNotifiedAt: true,
             adminConfirmationNotifiedAt: true,
             defaultReachoutModes: true,
@@ -30,12 +30,24 @@ export async function getConfirmationOrder(transaction: Prisma.TransactionClient
     return order;
 }
 
-/** Finds enough oldest available stickers to fulfill every variant without claiming inventory. */
+/** Finds the oldest available stickers needed to reach the order total, using planned variants. */
 export async function findOrderConfirmationProducts(
     transaction: Prisma.TransactionClient,
-    allocations: ConfirmationOrder['planDetail']['allocations'],
+    { quantity: totalQuantity, allocations }: ConfirmationOrder['planDetail'],
     orderId: string,
 ) {
+    if (!Number.isSafeInteger(totalQuantity) || totalQuantity < 1)
+        throw new Error('Invalid order quantity');
+
+    const productIds: string[] = [];
+    const assigned = await transaction.product.groupBy({
+        by: ['variant'],
+        where: { orderId },
+        _count: { _all: true },
+    });
+    let remaining = totalQuantity - assigned.reduce((total, { _count }) => total + _count._all, 0);
+    if (remaining <= 0) return { productIds, restocking: false };
+
     if (
         !allocations.length ||
         allocations.some(
@@ -49,16 +61,13 @@ export async function findOrderConfirmationProducts(
     ) {
         throw new Error('Invalid order allocations');
     }
-    const productIds: string[] = [];
-    const assigned = await transaction.product.groupBy({
-        by: ['variant'],
-        where: { orderId },
-        _count: { _all: true },
-    });
     const assignedCounts = new Map(assigned.map(({ variant, _count }) => [variant, _count._all]));
     // Collect candidates without assigning any: every requested variant must be fully available.
     for (const allocation of allocations) {
-        const quantity = allocation.quantity - (assignedCounts.get(allocation.variant) ?? 0);
+        const quantity = Math.min(
+            remaining,
+            allocation.quantity - (assignedCounts.get(allocation.variant) ?? 0),
+        );
         if (quantity <= 0) continue;
         const products = await transaction.product.findMany({
             where: { ...availableProducts, variant: allocation.variant },
@@ -69,8 +78,10 @@ export async function findOrderConfirmationProducts(
         });
         if (products.length < quantity) return { productIds, restocking: true };
         productIds.push(...products.map((product) => product.id));
+        remaining -= products.length;
+        if (remaining === 0) break;
     }
-    return { productIds, restocking: false };
+    return { productIds, restocking: remaining > 0 };
 }
 
 /** Records a support request containing an order's complete restocking requirements. */

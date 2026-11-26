@@ -17,6 +17,7 @@ import { Item, ItemGroup } from '@/components/core/ui/item';
 import TypographyBody from '@/components/core/ui/typography-body';
 import { PortalConfirmDialog } from '@/components/platform';
 import { useOrderProductsDialog } from '@/features/orders/components/hooks/use.order.products.dialog';
+import OrderAllocationAlert from '@/features/orders/components/ui/order-allocation-alert';
 import OrderStatusBadge from '@/features/orders/components/ui/order-status-badge';
 import type { OrderProductsDialogHandle } from '@/features/orders/utils/order.types';
 
@@ -26,12 +27,15 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
         t,
         order,
         assigned,
+        allocationMismatch,
         matches,
         results,
         search,
         searchInput,
         quantityInput,
+        allocationInputs,
         saveQuantity,
+        isQuantityDirty,
         quantityError,
         isUpdating,
         autoAssign,
@@ -79,6 +83,7 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                 >
                     <XIcon aria-hidden="true" />
                 </DialogClose>
+                {allocationMismatch && <OrderAllocationAlert />}
                 <label className="flex items-center gap-2">
                     <Checkbox
                         checked={autoAssign ?? false}
@@ -94,40 +99,44 @@ export default function OrderProductsDialog({ ref }: { ref: Ref<OrderProductsDia
                                 {t('details.quantity')}
                             </TypographyBody>
                         </label>
-                        <div className="flex items-center gap-2">
-                            <Input
-                                {...quantityInput}
-                                type="number"
-                                min={1}
-                                max={2_147_483_647}
-                                step={1}
-                                required
-                                aria-invalid={!!quantityError}
-                                aria-describedby={
-                                    quantityError ? `${quantityInput.id}-error` : undefined
-                                }
-                                disabled={isUpdating}
-                            />
-                            <Button
-                                type="submit"
-                                disabled={
-                                    isUpdating ||
-                                    Number(quantityInput.value) ===
-                                        assigned.data.planDetail.quantity
-                                }
-                            >
-                                <TypographyBody className="text-sm">
-                                    {t('products.saveQuantity')}
+                        <Input
+                            {...quantityInput}
+                            type="number"
+                            min={1}
+                            max={2_147_483_647}
+                            step={1}
+                            required
+                            disabled={isUpdating}
+                        />
+                        <fieldset className="space-y-2" disabled={isUpdating}>
+                            <legend>
+                                <TypographyBody className="font-medium">
+                                    {t('details.allocations')}
                                 </TypographyBody>
-                            </Button>
-                        </div>
+                            </legend>
+                            <div className="grid gap-2 sm:grid-cols-3">
+                                {allocationInputs?.map(({ label, input }) => (
+                                    <label key={input.id} className="block space-y-1">
+                                        <TypographyBody className="block text-sm">
+                                            {label}
+                                        </TypographyBody>
+                                        <Input {...input} type="number" min={0} step={1} required />
+                                    </label>
+                                ))}
+                            </div>
+                        </fieldset>
                         {quantityError && (
-                            <div id={`${quantityInput.id}-error`} role="alert">
+                            <div role="alert">
                                 <TypographyBody className="text-sm text-destructive">
                                     {quantityError}
                                 </TypographyBody>
                             </div>
                         )}
+                        <Button type="submit" disabled={isUpdating || !isQuantityDirty}>
+                            <TypographyBody className="text-sm">
+                                {t('products.saveQuantity')}
+                            </TypographyBody>
+                        </Button>
                     </form>
                 )}
                 <section

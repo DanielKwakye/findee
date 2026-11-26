@@ -60,7 +60,7 @@ export async function confirmOrder(
         // Validate the requested variants and find the complete oldest-first sticker selection.
         const { productIds, restocking } = await findOrderConfirmationProducts(
             transaction,
-            order.planDetail.allocations,
+            order.planDetail,
             order.id,
         );
         // Repeated shortages leave the existing hold and support ticket intact.

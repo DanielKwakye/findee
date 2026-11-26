@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import type { Ref } from 'react';
+import type { ChangeEvent, Ref } from 'react';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import debounce from 'debounce';
 import { useTranslations } from 'next-intl';
@@ -13,6 +13,7 @@ import { getOrderProducts } from '@/features/orders/server/get.order.products.ac
 import { removeOrderProduct } from '@/features/orders/server/remove.order.product.action';
 import { updateOrderAutoAssign } from '@/features/orders/server/update.order.auto.assign.action';
 import { updateOrderQuantity } from '@/features/orders/server/update.order.quantity.action';
+import { hasOrderAllocationMismatch } from '@/features/orders/utils/order.details';
 import type {
     OrderProductsDialogHandle,
     OrderProductsDialogRecord,
@@ -31,20 +32,18 @@ export function useOrderProductsDialog(ref: Ref<OrderProductsDialogHandle>) {
         control: quantityControl,
         handleSubmit: handleQuantitySubmit,
         reset: resetQuantity,
-    } = useForm<{ quantity: string | null }>({ defaultValues: { quantity: null } });
-    const { field: quantityInput, fieldState: quantityField } = useController({
+        setError: setQuantityError,
+        formState: { errors: quantityErrors, isDirty: isQuantityDirty },
+    } = useForm<{ quantity: string | null; allocations: string[] }>({
+        defaultValues: { quantity: null, allocations: [] },
+    });
+    const { field: quantityInput } = useController({
         control: quantityControl,
         name: 'quantity',
-        rules: {
-            /** Validates the recorded sticker count. */
-            validate(value) {
-                const quantity = Number(value);
-                return (
-                    (Number.isInteger(quantity) && quantity >= 1 && quantity <= 2_147_483_647) ||
-                    t('products.quantityInvalid')
-                );
-            },
-        },
+    });
+    const { field: allocationField } = useController({
+        control: quantityControl,
+        name: 'allocations',
     });
     const search = useWatch({ control, name: 'search' }).trim();
     const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -113,15 +112,20 @@ export function useOrderProductsDialog(ref: Ref<OrderProductsDialogHandle>) {
     });
     const quantityMutation = useMutation({
         /** Updates the order's recorded sticker quantity. */
-        mutationFn: ({ orderId, quantity }: { orderId: string; quantity: number }) =>
-            updateOrderQuantity(orderId, quantity),
+        mutationFn: ({
+            orderId,
+            planDetail,
+        }: {
+            orderId: string;
+            planDetail: Parameters<typeof updateOrderQuantity>[1];
+        }) => updateOrderQuantity(orderId, planDetail),
         /** Refreshes order views and clears the saved draft. */
-        async onSuccess(_, { orderId, quantity }) {
+        async onSuccess(_, { orderId, planDetail }) {
             const queryKey = ['orders', 'products', orderId];
             await queryClient.cancelQueries({ queryKey });
             queryClient.setQueryData<typeof assigned.data>(
                 queryKey,
-                (current) => current && { ...current, planDetail: { quantity } },
+                (current) => current && { ...current, planDetail },
             );
             resetQuantity();
             toast.add({ title: t('products.quantitySaved'), type: 'success' });
@@ -147,9 +151,32 @@ export function useOrderProductsDialog(ref: Ref<OrderProductsDialogHandle>) {
     }));
 
     /** Saves the entered quantity for the open order. */
-    const saveQuantity = handleQuantitySubmit(({ quantity }) => {
-        if (!order || isUpdating || quantity === null) return;
-        quantityMutation.mutate({ orderId: order.id, quantity: Number(quantity) });
+    const saveQuantity = handleQuantitySubmit((draft) => {
+        const saved = assigned.data?.planDetail;
+        if (!order || !saved || isUpdating) return;
+        const quantity = Number(draft.quantity ?? saved.quantity);
+        const allocations = saved.allocations.map((allocation, index) => {
+            const value = draft.allocations[index] ?? allocation.quantity;
+            return { ...allocation, quantity: value === '' ? NaN : Number(value) };
+        });
+        if (!Number.isInteger(quantity) || quantity < 1 || quantity > 2_147_483_647) {
+            setQuantityError('root', { message: t('products.quantityInvalid') });
+            return;
+        }
+        if (
+            allocations.some(
+                (allocation) =>
+                    !Number.isSafeInteger(allocation.quantity) || allocation.quantity < 0,
+            )
+        ) {
+            setQuantityError('root', { message: t('products.allocationInvalid') });
+            return;
+        }
+        if (allocations.reduce((sum, allocation) => sum + allocation.quantity, 0) !== quantity) {
+            setQuantityError('root', { message: t('products.allocationTotalMismatch') });
+            return;
+        }
+        quantityMutation.mutate({ orderId: order.id, planDetail: { quantity, allocations } });
     });
 
     /** Dismisses the dialog when there is no update in progress. */
@@ -192,6 +219,7 @@ export function useOrderProductsDialog(ref: Ref<OrderProductsDialogHandle>) {
         t,
         order,
         assigned,
+        allocationMismatch: !!assigned.data && hasOrderAllocationMismatch(assigned.data),
         matches,
         results: matches.data?.products.map(
             ({ code, variant, assignedTo, assignedToId, orderId, isAvailable }) => ({
@@ -211,7 +239,24 @@ export function useOrderProductsDialog(ref: Ref<OrderProductsDialogHandle>) {
             value: quantityInput.value ?? assigned.data?.planDetail.quantity ?? '',
         },
         saveQuantity,
-        quantityError: quantityField.error?.message,
+        isQuantityDirty,
+        quantityError: quantityErrors.root?.message,
+        allocationInputs: assigned.data?.planDetail.allocations.map(
+            ({ variant, quantity }, index) => ({
+                label: t(`variants.${variant}`),
+                input: {
+                    id: `${quantityInputId}-allocation-${index}`,
+                    value: allocationField.value[index] ?? quantity,
+                    onBlur: allocationField.onBlur,
+                    /** Updates the draft quantity for this variant. */
+                    onChange(event: ChangeEvent<HTMLInputElement>) {
+                        const values = [...allocationField.value];
+                        values[index] = event.target.value;
+                        allocationField.onChange(values);
+                    },
+                },
+            }),
+        ),
         isUpdating,
         autoAssign: autoAssignMutation.isPending
             ? autoAssignMutation.variables.checked

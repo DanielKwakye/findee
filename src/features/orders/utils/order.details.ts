@@ -6,6 +6,21 @@ import type { OrderDetails } from '@/features/orders/utils/order.types';
 import { orderDetailGroups } from '@/features/orders/data/order.details';
 import { getOrderShipmentGroups } from '@/features/orders/utils/order.shipments';
 
+/** Checks whether assigned stickers differ from the planned counts by variant. */
+export function hasOrderAllocationMismatch({
+    planDetail: { allocations },
+    products,
+}: {
+    planDetail: Pick<OrderDetails['planDetail'], 'allocations'>;
+    products: Pick<OrderDetails['products'][number], 'variant'>[];
+}) {
+    const counts = new Map<string, number>();
+    for (const { variant, quantity } of allocations)
+        counts.set(variant, (counts.get(variant) ?? 0) + quantity);
+    for (const { variant } of products) counts.set(variant, (counts.get(variant) ?? 0) - 1);
+    return [...counts.values()].some((count) => count !== 0);
+}
+
 /** Identifies whether a scheduled shipping date has passed in the shipping calendar's UTC timezone. */
 export function getShippingDateClass(date: string, status?: OrderDetails['status']): string {
     if (status === 'SHIPPED' || status === 'DELIVERED') return '';

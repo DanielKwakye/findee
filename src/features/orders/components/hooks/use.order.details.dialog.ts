@@ -6,7 +6,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
 import { formatAmount, useUserDateTime } from '@/components/platform';
 import { getOrderDetails } from '@/features/orders/server/get.order.details.action';
-import { getOrderDetailGroups } from '@/features/orders/utils/order.details';
+import {
+    getOrderDetailGroups,
+    hasOrderAllocationMismatch,
+} from '@/features/orders/utils/order.details';
 import type { OrderDetailsDialogHandle } from '@/features/orders/utils/order.types';
 
 /** Manages the order details dialog and its on-demand data request. */
@@ -33,5 +36,6 @@ export function useOrderDetailsDialog(ref: Ref<OrderDetailsDialogHandle>) {
               formatAmount(price, currency, formatter, 'symbol'),
           )
         : [];
-    return { t, open, changeOpen: setOpen, query, groups };
+    const allocationMismatch = !!query.data && hasOrderAllocationMismatch(query.data);
+    return { t, open, changeOpen: setOpen, query, groups, allocationMismatch };
 }

@@ -12,7 +12,7 @@ export async function getOrderProducts(orderId: string) {
         where: { id: orderId },
         select: {
             autoAssign: true,
-            planDetail: { select: { quantity: true } },
+            planDetail: { select: { quantity: true, allocations: true } },
             products: {
                 orderBy: { code: 'asc' },
                 select: { code: true, variant: true },

@@ -1,12 +1,10 @@
 'use client';
 
-import { PortalConfirmDialog, PortalTable } from '@/components/platform';
+import { PortalConfirmDialog, PortalTable, PortalWarningAlert } from '@/components/platform';
 import { Button } from '@/components/core/ui/button';
 import TypographyBody from '@/components/core/ui/typography-body';
 import { useProductsTable } from '@/features/products/components/hooks/use.products.table';
 import ProductVariantFilter from '@/features/products/components/ui/product-variant-filter';
-import { Alert, AlertDescription, AlertTitle } from '@/components/core/ui/alert';
-import { Info } from 'lucide-react';
 
 /** Presents product records and their allowed inventory actions. */
 export default function ProductsTable() {
@@ -30,45 +28,34 @@ export default function ProductsTable() {
     return (
         <div className="min-w-0 space-y-4">
             {!!stockQuery.data?.length && (
-                <Alert className="border-warning/20 bg-warning/10">
-                    <Info aria-hidden="true" className="text-warning" />
-                    <AlertTitle>
-                        <TypographyBody className="text-sm font-medium">
-                            {stockT('title')}
-                        </TypographyBody>
-                    </AlertTitle>
-                    <AlertDescription className="text-foreground">
-                        <TypographyBody className="text-sm">{stockT('summary')}</TypographyBody>
-                        <ul className="list-disc space-y-1 pl-4">
-                            {stockQuery.data.map((item) => (
-                                <li key={item.variant}>
-                                    <TypographyBody className="text-sm">
-                                        {stockT('variant', {
-                                            ...item,
-                                            variant: variants(item.variant),
-                                        })}
-                                    </TypographyBody>
-                                </li>
-                            ))}
-                        </ul>
-                    </AlertDescription>
-                </Alert>
+                <PortalWarningAlert title={stockT('title')}>
+                    <TypographyBody className="text-sm">{stockT('summary')}</TypographyBody>
+                    <ul className="list-disc space-y-1 pl-4">
+                        {stockQuery.data.map((item) => (
+                            <li key={item.variant}>
+                                <TypographyBody className="text-sm">
+                                    {stockT('variant', {
+                                        ...item,
+                                        variant: variants(item.variant),
+                                    })}
+                                </TypographyBody>
+                            </li>
+                        ))}
+                    </ul>
+                </PortalWarningAlert>
             )}
             {stockQuery.isError && (
-                <Alert className="border-warning/20 bg-warning/10">
-                    <Info aria-hidden="true" className="text-warning" />
-                    <AlertDescription className="text-foreground">
-                        <TypographyBody className="text-sm">{stockT('loadError')}</TypographyBody>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            disabled={stockQuery.isFetching}
-                            onClick={() => stockQuery.refetch()}
-                        >
-                            <TypographyBody className="text-sm">{t('retry')}</TypographyBody>
-                        </Button>
-                    </AlertDescription>
-                </Alert>
+                <PortalWarningAlert>
+                    <TypographyBody className="text-sm">{stockT('loadError')}</TypographyBody>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        disabled={stockQuery.isFetching}
+                        onClick={() => stockQuery.refetch()}
+                    >
+                        <TypographyBody className="text-sm">{t('retry')}</TypographyBody>
+                    </Button>
+                </PortalWarningAlert>
             )}
             {query.isError && (
                 <div role="alert" className="flex flex-wrap items-center gap-2">

@@ -22,6 +22,7 @@ export type { ShareDialogHandle, ShareLinks } from '@/components/platform/utils/
 export { PortalSidebar } from '@/components/platform/ui/shared/portal-sidebar';
 export { PortalBreadcrumb } from '@/components/platform/ui/shared/portal-breadcrumb';
 export { PortalBadgeAlert } from '@/components/platform/ui/shared/portal-badge-alert';
+export { PortalWarningAlert } from '@/components/platform/ui/shared/portal-warning-alert';
 export { PortalConfirmDialog } from '@/components/platform/ui/shared/portal-confirm-dialog';
 export type { PortalConfirmDialogHandle } from '@/components/platform/utils/portal.confirm.dialog.types';
 export { default as PortalTable } from '@/components/platform/ui/shared/portal-table';
