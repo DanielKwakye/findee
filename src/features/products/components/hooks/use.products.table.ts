@@ -41,7 +41,7 @@ export function useProductsTable() {
                 ...pagination,
                 search: debouncedSearch,
                 variant,
-                sortBy: sorting[0]?.id ?? 'createdAt',
+                sortBy: sorting[0]?.id ?? 'assignedAt',
                 direction: !sorting[0] || sorting[0].desc ? 'desc' : 'asc',
             }),
         placeholderData: keepPreviousData,
