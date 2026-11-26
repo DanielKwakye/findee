@@ -10,6 +10,7 @@ import { db } from '@/lib/db';
 import { Prisma } from '@/generated/client';
 import { generateReferenceCode } from '@/components/platform/utils/reference.code.utils';
 import { checkoutOrderPlans } from '@/features/checkout/data/checkout.order.plans';
+import { scheduleCelebrationEmail } from '@/features/notifications/server/schedule.celebration.email';
 
 /** Validates purchase details and creates an order for the supplied customer. */
 export async function createOrder(
@@ -74,6 +75,7 @@ export async function createOrder(
                     select: { number: true },
                 });
             });
+            if (paymentAt) scheduleCelebrationEmail({ type: 'payment', orderNumber: order.number });
             return order.number;
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034')

@@ -8,6 +8,7 @@ import {
 } from '@/features/checkout/utils/checkout.validations';
 import type { CheckoutPlan, CheckoutValues } from '@/features/checkout/utils/checkout.types';
 import { createOrder } from '@/features/orders/server/order.creation';
+import { scheduleCelebrationEmail } from '@/features/notifications/server/schedule.celebration.email';
 import { db } from '@/lib/db';
 
 /** Verifies a paid Stripe checkout and records its order independently of a browser session. */
@@ -75,13 +76,15 @@ export async function fulfillCheckoutOrder(
     if (existing) {
         if (existing.customerId !== metadata.customerId)
             throw new Error('Order does not belong to this customer');
-        await db.order.updateMany({
+        const paid = await db.order.updateMany({
             where: {
                 number: metadata.orderNumber,
                 OR: [{ paymentAt: null }, { paymentAt: { isSet: false } }],
             },
             data: { paymentAt: new Date(), status: 'PENDING' },
         });
+        if (paid.count === 1)
+            scheduleCelebrationEmail({ type: 'payment', orderNumber: metadata.orderNumber });
         return metadata.orderNumber;
     }
     return createOrder(metadata.customerId, values, metadata.orderNumber, plan);

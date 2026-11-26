@@ -9,6 +9,7 @@ model User {
   passwordResetVersion String?
   otp String?
   otpCreatedAt DateTime?
+  signupPending Boolean?
   role UserRole @default(CUSTOMER)
   departments String[] @default([])
   closedAt DateTime?

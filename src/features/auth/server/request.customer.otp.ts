@@ -32,7 +32,7 @@ export async function requestCustomerOtp(email: string, turnstileToken?: string)
     }
     const user = await db.user.upsert({
         where: { email: normalizedEmail },
-        create: { email: normalizedEmail, role: 'CUSTOMER' },
+        create: { email: normalizedEmail, role: 'CUSTOMER', signupPending: true },
         update: {},
         select: { role: true, closedAt: true, deactivatedAt: true },
     });

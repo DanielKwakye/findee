@@ -441,6 +441,16 @@
         "noContact": "No contact methods are available for this item."
     },
     "Notifications": {
+        "celebration": {
+            "signup": {
+                "subject": "🎉 A new Findmus customer!",
+                "message": "{email} verified their email and joined Findmus."
+            },
+            "payment": {
+                "subject": "🎉 A Findmus order was paid!",
+                "message": "Payment was recorded for order {number}."
+            }
+        },
         "email": {
             "brand": "Findmus",
             "signoff": "Best,\nThe Findmus Team",

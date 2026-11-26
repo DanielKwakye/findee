@@ -2,6 +2,7 @@ import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
 import { getStripe, getStripeCustomerId } from '@/features/checkout/utils/checkout.stripe';
+import { scheduleCelebrationEmail } from '@/features/notifications/server/schedule.celebration.email';
 import { db } from '@/lib/db';
 
 /** Creates and emails an order's payment invoice, resuming safely after interrupted requests. */
@@ -111,8 +112,12 @@ export async function recordInvoicePayment(invoiceId: string) {
     ) {
         throw new Error('Invoice payment does not match its order');
     }
-    await db.order.updateMany({
-        where: { id: order.id, paymentAt: null },
+    const paid = await db.order.updateMany({
+        where: {
+            id: order.id,
+            OR: [{ paymentAt: null }, { paymentAt: { isSet: false } }],
+        },
         data: { paymentAt: new Date(), status: 'PENDING' },
     });
+    if (paid.count === 1) scheduleCelebrationEmail({ type: 'payment', orderNumber: number });
 }
