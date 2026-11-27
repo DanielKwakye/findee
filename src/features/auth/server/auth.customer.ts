@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { isValidEmail, normalizeEmail } from '@/features/auth/utils/auth.validation';
 import type { AuthUser } from '@/features/auth/utils/auth.types';
 import { verifyPassword } from '@/features/auth/server/auth.password';
+import { allowLoginAttempt, RateLimitedSignin } from '@/features/auth/server/auth.rate-limit';
 import { validateSignInEmail } from '@/features/auth/utils/auth.email';
 import { scheduleCelebrationEmail } from '@/features/notifications/server/schedule.celebration.email';
 
@@ -18,6 +19,8 @@ export async function authenticateCustomerOtp(
     )
         return null;
     const email = normalizeEmail(credentials.email);
+    if (!(await allowLoginAttempt(email, 'customer-otp'))) throw new RateLimitedSignin();
+
     const user = await db.user.findFirst({
         where: {
             email,

@@ -84,7 +84,9 @@ export function useCustomerOtp(onVerified: (email: string) => void) {
                     ? 'codeInvalid'
                     : failure.message === 'verificationFailed'
                       ? 'verificationFailed'
-                      : 'serverError'
+                      : failure.message === 'rateLimited'
+                        ? 'rateLimited'
+                        : 'serverError'
         : null;
 
     /** Requests a verification code for a validated email address. */

@@ -1,6 +1,7 @@
 model LoginAttempt {
   id        String   @id @map("_id")
   attempts  Int      @default(0)
+  email     String?
   expiresAt DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

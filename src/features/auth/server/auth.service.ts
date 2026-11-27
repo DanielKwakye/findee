@@ -1,17 +1,11 @@
 import 'server-only';
-import { CredentialsSignin } from 'next-auth';
 import { db } from '@/lib/db';
 import { parseLoginCredentials } from '@/features/auth/utils/auth.validation';
 import { hashPassword, verifyPassword } from '@/features/auth/server/auth.password';
-import { allowLoginAttempt } from '@/features/auth/server/auth.rate-limit';
+import { allowLoginAttempt, RateLimitedSignin } from '@/features/auth/server/auth.rate-limit';
 import { validateSignInEmail } from '@/features/auth/utils/auth.email';
 import { validateBotCheck } from '@/features/auth/utils/auth.turnstile';
 import type { AuthUser } from '@/features/auth/utils/auth.types';
-
-/** Identifies rejected sign-in attempts that exceed the account rate limit. */
-class RateLimitedSignin extends CredentialsSignin {
-    code = 'rate_limited';
-}
 
 let dummyHash: Promise<string> | undefined;
 

@@ -505,6 +505,7 @@
             "code": "Verification code",
             "codeSent": "Check your inbox for your verification code, then enter it below.",
             "codeInvalid": "Invalid verification code. Kindly check the code in your email or request a new one",
+            "rateLimited": "Too many code attempts. Please try again in 15 minutes.",
             "verificationFailed": "You can’t sign in with this email. Try a different email address or contact support for help.",
             "botCheckFailed": "The security check didn’t go through. Please try again.",
             "disposableEmail": "This email address was flagged as a temporary email and is not supported. If you believe this is a mistake, <contact>contact support</contact>.",

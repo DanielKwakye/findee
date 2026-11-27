@@ -15,6 +15,8 @@ export async function verifyCustomerOtp(values: CustomerOtpValues) {
     try {
         await signIn('customer-otp', { email, code: values.code, redirect: false });
     } catch (error) {
+        if (error instanceof CredentialsSignin && error.code === 'rate_limited')
+            return { error: 'rateLimited' as const };
         if (error instanceof CredentialsSignin && error.code === 'disposable_email')
             return { error: 'disposableEmail' as const };
         if (error instanceof CredentialsSignin && error.code === 'email_check_unavailable')
