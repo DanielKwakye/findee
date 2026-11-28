@@ -4,7 +4,6 @@ import { Checkbox } from '@/components/core/ui/checkbox';
 import { Card, CardContent } from '@/components/core/ui/card';
 import { Field, FieldLabel } from '@/components/core/ui/field';
 import { Input } from '@/components/core/ui/input';
-import { Textarea } from '@/components/core/ui/textarea';
 import TypographyBody from '@/components/core/ui/typography-body';
 import TypographyH3 from '@/components/core/ui/typography-h3';
 import CheckoutAllocation from '@/features/checkout/components/ui/checkout-allocation';
@@ -14,13 +13,14 @@ import { checkoutVariants } from '@/features/checkout/data/checkout.variants';
 import { checkoutContactFields } from '@/features/checkout/data/checkout.contact.fields';
 import type { useOrderForm } from '@/features/orders/components/hooks/use.order.form';
 import type { SubmitEventHandler } from 'react';
-import CheckoutRegionFields from '@/features/checkout/components/ui/checkout-region-fields';
+import CheckoutAddressFields from '@/features/checkout/components/ui/checkout-address-fields';
 
 type Props = {
     state: ReturnType<typeof useOrderForm>;
     mutation: { isPending: boolean; isError: boolean };
     submit: SubmitEventHandler<HTMLFormElement>;
     readOnlyEmail?: boolean;
+    postalCodeRequired?: boolean;
     showPayment?: boolean;
     submitLabel: string;
     errorMessage: string;
@@ -32,6 +32,7 @@ export default function OrderFormFields({
     mutation,
     submit,
     readOnlyEmail = false,
+    postalCodeRequired = false,
     showPayment = false,
     submitLabel,
     errorMessage,
@@ -216,48 +217,12 @@ export default function OrderFormFields({
                 </section>
                 <section className="space-y-4 rounded-xl border p-4">
                     <TypographyH3 className="text-base">{t('delivery')}</TypographyH3>
-                    <CheckoutRegionFields control={form.control} id="internal-order" />
-                    <div className="grid gap-5 md:grid-cols-2">
-                        <Field>
-                            <FieldLabel htmlFor="internal-order-address">
-                                <TypographyBody className="text-sm">
-                                    {checkout('details.shippingAddress')}
-                                </TypographyBody>
-                            </FieldLabel>
-                            <Input
-                                id="internal-order-address"
-                                autoComplete="street-address"
-                                {...inputs.shippingAddress}
-                                aria-invalid={!!errors.shippingAddress}
-                                aria-describedby="internal-order-address-help internal-order-address-error"
-                            />
-                            <div id="internal-order-address-help">
-                                <TypographyBody className="text-xs text-muted-foreground">
-                                    {checkout('details.addressHelp')}
-                                </TypographyBody>
-                            </div>
-                            {errors.shippingAddress && (
-                                <div id="internal-order-address-error" role="alert">
-                                    <TypographyBody className="text-sm text-destructive">
-                                        {errors.shippingAddress.message}
-                                    </TypographyBody>
-                                </div>
-                            )}
-                        </Field>
-                        <Field>
-                            <FieldLabel htmlFor="internal-order-instructions">
-                                <TypographyBody className="text-sm">
-                                    {checkout('details.deliveryInstructions')}
-                                </TypographyBody>
-                            </FieldLabel>
-                            <Textarea
-                                id="internal-order-instructions"
-                                rows={4}
-                                className="field-sizing-fixed"
-                                {...form.register('deliveryInstructions')}
-                            />
-                        </Field>
-                    </div>
+                    <CheckoutAddressFields
+                        form={form}
+                        id="internal-order"
+                        shippingInput={inputs.shippingAddress}
+                        postalCodeRequired={postalCodeRequired}
+                    />
                 </section>
                 {showPayment && (
                     <Card size="sm" className="bg-destructive/10 ring-destructive/20">

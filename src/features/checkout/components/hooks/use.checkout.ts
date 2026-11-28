@@ -67,7 +67,7 @@ export function useCheckout(
         defaultValues: {
             variants: checkoutComingSoonVariants[initialVariant] ? [] : [initialVariant],
             plan: initialPlan,
-            customQuantity: 20,
+            customQuantity: 4,
             allocation: {},
             email: customer?.email ?? '',
             name: customer?.name ?? '',
@@ -174,18 +174,10 @@ export function useCheckout(
         /** Requires a shipping destination for physical stickers. */
         validate: (value) => value.trim().length > 0 || t('details.addressRequired'),
     });
-    const postalCodeRules = {
-        required: t('details.postalCodeRequired'),
-        pattern: { value: /^[A-Z]\d[A-Z]\d[A-Z]\d$/, message: t('details.postalCodeInvalid') },
-    };
-
-    /** Prepares pasted postal codes for the segmented input. */
-    function onPostalCodePaste(value: string) {
-        return value.replace(/[-\s]/g, '').toUpperCase();
-    }
     const plansQuery = useQuery({
         queryKey: ['checkout', 'plans'],
-        queryFn: getCheckoutPlans,
+        /** Loads the customer purchase limits. */
+        queryFn: () => getCheckoutPlans(),
         enabled: stepper.current.id === 'plan',
     });
     const checkoutPlans = plansQuery.data?.map((option) => {
@@ -335,8 +327,6 @@ export function useCheckout(
         onAllocationKeyUp,
         contactInputs,
         shippingInput,
-        postalCodeRules,
-        onPostalCodePaste,
         deliveryEstimate,
         contactMissing,
         submission,

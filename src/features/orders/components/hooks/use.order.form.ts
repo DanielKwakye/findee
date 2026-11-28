@@ -22,7 +22,11 @@ export function useOrderForm(
         defaultValues: { customerPaid: false, ...initialValues },
     });
     const values = useWatch({ control: form.control });
-    const plansQuery = useQuery({ queryKey: ['checkout', 'plans'], queryFn: getCheckoutPlans });
+    const plansQuery = useQuery({
+        queryKey: ['orders', 'plans'],
+        /** Loads purchase limits for staff order management. */
+        queryFn: () => getCheckoutPlans(true),
+    });
     const plans = (plansQuery.data ?? []).map((option) =>
         getCheckoutPlanPrice(
             planDetail && option.id === initialValues.plan ? { ...option, ...planDetail } : option,

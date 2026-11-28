@@ -8,19 +8,17 @@ import {
     validateCheckoutAllocation,
 } from '@/features/checkout/utils/checkout.validations';
 import { createStripeCheckout } from '@/features/checkout/utils/checkout.stripe';
-import { formatCheckoutAddress } from '@/features/checkout/utils/checkout.address';
+import {
+    formatCheckoutAddress,
+    validateCheckoutPostalCode,
+} from '@/features/checkout/utils/checkout.address';
 
 /** Validates and records submitted checkout information for order processing. */
 export async function submitCheckout(values: CheckoutValues): Promise<string> {
     const customer = await getCustomerUser();
     if (!customer) throw new Error('Customer authentication required');
     validateCheckoutValues(values);
-    if (
-        typeof values.postalCode !== 'string' ||
-        !/^[A-Z]\d[A-Z]\d[A-Z]\d$/.test(values.postalCode)
-    ) {
-        throw new Error('A valid postal code is required');
-    }
+    validateCheckoutPostalCode(values.postalCode);
     const plan = validateCheckoutAllocation(values, await getCheckoutPlans());
     return createStripeCheckout(
         customer,

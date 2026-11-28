@@ -2,9 +2,11 @@
 
 import type { CheckoutPlan } from '@/features/checkout/utils/checkout.types';
 import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
+import { requireAdmin } from '@/features/auth/server/auth.session';
 
 /** Retrieves the available sticker plans and their purchase limits. */
-export async function getCheckoutPlans(): Promise<CheckoutPlan[]> {
+export async function getCheckoutPlans(forAdmin = false): Promise<CheckoutPlan[]> {
+    if (forAdmin) await requireAdmin();
     const plans: CheckoutPlan[] = [
         {
             id: 'custom',
@@ -12,7 +14,7 @@ export async function getCheckoutPlans(): Promise<CheckoutPlan[]> {
             price: 0,
             currency: 'CAD',
             quantity: 20,
-            minimumQuantity: 10,
+            minimumQuantity: forAdmin ? 1 : 4,
             maxRecoveryProfiles: null,
             unitPrices: [
                 {

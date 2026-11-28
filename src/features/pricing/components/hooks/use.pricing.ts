@@ -16,7 +16,8 @@ export function usePricing() {
     const notificationDialogRef = useRef<StickerAvailabilityDialogHandle>(null);
     const query = useQuery({
         queryKey: ['checkout', 'plans'],
-        queryFn: getCheckoutPlans,
+        /** Loads the public sticker pricing. */
+        queryFn: () => getCheckoutPlans(),
         /** Prepares variant cards from the shared checkout pricing configuration. */
         select(plans) {
             const plan = plans.find((option) => option.id === 'custom');

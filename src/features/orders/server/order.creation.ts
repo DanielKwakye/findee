@@ -22,7 +22,7 @@ export async function createOrder(
     includeShipping = true,
 ): Promise<string> {
     validateCheckoutValues(values);
-    const plans = paidPlan ? [paidPlan] : await getCheckoutPlans();
+    const plans = paidPlan ? [paidPlan] : await getCheckoutPlans(true);
     const plan = validateCheckoutAllocation(values, plans, includeShipping);
 
     const name = values.name.trim();

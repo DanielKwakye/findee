@@ -3,7 +3,7 @@ import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 export const initialOrderValues: CheckoutValues = {
     variants: [],
     plan: 'custom',
-    customQuantity: 20,
+    customQuantity: 1,
     allocation: {},
     email: '',
     name: '',
@@ -14,5 +14,6 @@ export const initialOrderValues: CheckoutValues = {
     shippingAddress: '',
     country: 'Canada',
     state: '',
+    postalCode: '',
     deliveryInstructions: '',
 };

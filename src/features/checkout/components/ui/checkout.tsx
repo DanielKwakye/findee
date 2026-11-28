@@ -65,8 +65,6 @@ export default function Checkout({
         onAllocationKeyUp,
         contactInputs,
         shippingInput,
-        postalCodeRules,
-        onPostalCodePaste,
         deliveryEstimate,
         contactMissing,
         submission,
@@ -283,8 +281,6 @@ export default function Checkout({
                         form={form}
                         contactInputs={contactInputs}
                         shippingInput={shippingInput}
-                        postalCodeRules={postalCodeRules}
-                        onPostalCodePaste={onPostalCodePaste}
                         deliveryEstimate={deliveryEstimate}
                         contactMissing={contactMissing}
                         isSubmitting={submission.isPending}

@@ -17,7 +17,7 @@ export async function updateOrderDetails(id: string, values: CheckoutValues): Pr
     await requireAdmin();
     validateOrderId(id);
     validateCheckoutValues(values);
-    const plans = await getCheckoutPlans();
+    const plans = await getCheckoutPlans(true);
     return db.$transaction(async (transaction) => {
         const order = await transaction.order.findUnique({
             where: { id },

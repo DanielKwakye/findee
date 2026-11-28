@@ -1,6 +1,19 @@
 import { checkoutProvinces } from '@/features/checkout/data/checkout.regions';
 import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 
+export const checkoutPostalCodePattern = /^[A-Z]\d[A-Z]\d[A-Z]\d$/;
+
+/** Prepares pasted postal codes for the segmented input. */
+export function onPostalCodePaste(value: string) {
+    return value.replace(/[-\s]/g, '').toUpperCase();
+}
+
+/** Requires a complete Canadian postal code for a new order. */
+export function validateCheckoutPostalCode(postalCode: CheckoutValues['postalCode']) {
+    if (typeof postalCode !== 'string' || !checkoutPostalCodePattern.test(postalCode))
+        throw new Error('A valid postal code is required');
+}
+
 /** Separates saved shipping destinations while preserving commas within street addresses. */
 export function parseCheckoutAddress(address: string) {
     const parts = address
@@ -29,6 +42,7 @@ export function formatCheckoutAddress(values: CheckoutValues) {
         throw new Error('A valid Canadian province and country are required');
     const street = values.shippingAddress.trim();
     const postalCode = values.postalCode?.replace(/[-\s]/g, '').toUpperCase();
+    if (postalCode) validateCheckoutPostalCode(postalCode);
     return [
         postalCode ? `${street}, ${postalCode.slice(0, 3)}-${postalCode.slice(3)}` : street,
         values.state,

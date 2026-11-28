@@ -15,6 +15,7 @@ export default function CreateOrderForm({ onCreated }: { onCreated?: (number: st
             mutation={state.mutation}
             submit={state.submit}
             showPayment
+            postalCodeRequired
             submitLabel={
                 state.plan
                     ? state.t('submitWithAmount', {
