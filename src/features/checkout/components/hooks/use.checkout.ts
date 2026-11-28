@@ -186,7 +186,12 @@ export function useCheckout(
             stepper.current.id === 'plan'
                 ? distributeCheckoutQuantity(variants, selected.quantity)
                 : Object.fromEntries(variants.map((variant) => [variant, allocation[variant]]));
-        return getCheckoutPlanPrice(selected, customQuantity, quantities);
+        return getCheckoutPlanPrice(
+            selected,
+            customQuantity,
+            quantities,
+            stepper.current.id === 'checkout',
+        );
     });
     const plan = checkoutPlans?.find((plan) => plan.id === selectedPlan);
     const customQuantityInvalid =

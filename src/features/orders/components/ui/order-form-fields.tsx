@@ -42,6 +42,7 @@ export default function OrderFormFields({
         checkout,
         form,
         inputs,
+        hasShippingAddress,
         plansQuery,
         plans,
         plan,
@@ -221,7 +222,8 @@ export default function OrderFormFields({
                         form={form}
                         id="internal-order"
                         shippingInput={inputs.shippingAddress}
-                        postalCodeRequired={postalCodeRequired}
+                        addressRequired={hasShippingAddress}
+                        postalCodeRequired={postalCodeRequired && hasShippingAddress}
                     />
                 </section>
                 {showPayment && (

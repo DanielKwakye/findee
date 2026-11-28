@@ -18,9 +18,11 @@ import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 export default function CheckoutRegionFields({
     control,
     id,
+    required = true,
 }: {
     control: Control<CheckoutValues>;
     id: string;
+    required?: boolean;
 }) {
     const t = useTranslations('Checkout.details');
     return (
@@ -30,7 +32,7 @@ export default function CheckoutRegionFields({
                     key={name}
                     name={name}
                     control={control}
-                    rules={{ required: t(`${name}Required`) }}
+                    rules={{ required: required && t(`${name}Required`) }}
                     render={({ field, fieldState }) => (
                         <Field className="min-w-0 gap-2">
                             <FieldLabel htmlFor={`${id}-${name}`}>

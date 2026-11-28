@@ -21,7 +21,7 @@ export async function createOrder(
     paymentAt: Date | null = new Date(),
     includeShipping = true,
 ): Promise<string> {
-    validateCheckoutValues(values);
+    validateCheckoutValues(values, paidPlan !== undefined);
     const plans = paidPlan ? [paidPlan] : await getCheckoutPlans(true);
     const plan = validateCheckoutAllocation(values, plans, includeShipping);
 
@@ -66,7 +66,7 @@ export async function createOrder(
                             chat: false,
                         },
                         showOwnerName: values.showName,
-                        shippingAddress: values.shippingAddress.trim(),
+                        shippingAddress: values.shippingAddress.trim() || null,
                         deliveryInstructions: values.deliveryInstructions.trim() || null,
                         cancelledAt: null,
                         cancellationReason: null,

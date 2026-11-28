@@ -10,6 +10,7 @@ import { distributeCheckoutQuantity } from '@/features/checkout/utils/checkout.a
 import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 import type { OrderDetails, OrderFormValues } from '@/features/orders/utils/order.types';
 import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
+import { hasCheckoutAddress } from '@/features/checkout/utils/checkout.address';
 
 /** Manages shared order fields, purchase options, and form validation. */
 export function useOrderForm(
@@ -80,7 +81,10 @@ export function useOrderForm(
         }),
         shippingAddress: form.register('shippingAddress', {
             /** Requires a destination for sticker delivery. */
-            validate: (value) => !!value.trim() || checkout('details.addressRequired'),
+            validate: (value, current) =>
+                !hasCheckoutAddress(current) ||
+                !!value.trim() ||
+                checkout('details.addressRequired'),
         }),
     };
 
@@ -129,6 +133,7 @@ export function useOrderForm(
         checkout,
         form,
         inputs,
+        hasShippingAddress: hasCheckoutAddress(values),
         plansQuery,
         plans,
         plan,

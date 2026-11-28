@@ -9,6 +9,7 @@ import { createOrder } from '@/features/orders/server/order.creation';
 import { db } from '@/lib/db';
 import {
     formatCheckoutAddress,
+    hasCheckoutAddress,
     validateCheckoutPostalCode,
 } from '@/features/checkout/utils/checkout.address';
 
@@ -24,9 +25,12 @@ export async function createOrderInternally(
         (values.customerPaid !== undefined && typeof values.customerPaid !== 'boolean')
     )
         throw new Error('Invalid internal order');
-    validateCheckoutValues(values);
-    validateCheckoutPostalCode(values.postalCode);
-    const shippingAddress = formatCheckoutAddress(values);
+    validateCheckoutValues(values, false);
+    let shippingAddress = '';
+    if (hasCheckoutAddress(values)) {
+        validateCheckoutPostalCode(values.postalCode);
+        shippingAddress = formatCheckoutAddress(values);
+    }
     const email = normalizeEmail(values.email);
     const customer = await db.user.upsert({
         where: { email },

@@ -3,6 +3,13 @@ import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
 
 export const checkoutPostalCodePattern = /^[A-Z]\d[A-Z]\d[A-Z]\d$/;
 
+/** Detects when a shipping destination has been entered. */
+export function hasCheckoutAddress(
+    values: Partial<Pick<CheckoutValues, 'shippingAddress' | 'state' | 'postalCode'>>,
+) {
+    return !!(values.shippingAddress?.trim() || values.state || values.postalCode);
+}
+
 /** Prepares pasted postal codes for the segmented input. */
 export function onPostalCodePaste(value: string) {
     return value.replace(/[-\s]/g, '').toUpperCase();
@@ -41,6 +48,7 @@ export function formatCheckoutAddress(values: CheckoutValues) {
     )
         throw new Error('A valid Canadian province and country are required');
     const street = values.shippingAddress.trim();
+    if (!street) throw new Error('A shipping address is required');
     const postalCode = values.postalCode?.replace(/[-\s]/g, '').toUpperCase();
     if (postalCode) validateCheckoutPostalCode(postalCode);
     return [

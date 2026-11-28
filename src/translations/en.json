@@ -817,7 +817,7 @@
             "planOption": "{name} · {quantity, number} stickers · {price}",
             "allocation": "Sticker allocation",
             "customer": "Customer details",
-            "delivery": "Delivery details",
+            "delivery": "Delivery details (optional)",
             "loading": "Loading plans…",
             "plansError": "Unable to load plans. Please try again.",
             "retry": "Retry",

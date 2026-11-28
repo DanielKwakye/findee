@@ -10,13 +10,17 @@ import {
 import { getCheckoutPlans } from '@/features/checkout/server/get.checkout.plans.action';
 import { checkoutOrderPlans } from '@/features/checkout/data/checkout.order.plans';
 import type { CheckoutValues } from '@/features/checkout/utils/checkout.types';
-import { formatCheckoutAddress } from '@/features/checkout/utils/checkout.address';
+import {
+    formatCheckoutAddress,
+    hasCheckoutAddress,
+} from '@/features/checkout/utils/checkout.address';
 
 /** Updates an order's purchase, customer contact, and delivery information. */
 export async function updateOrderDetails(id: string, values: CheckoutValues): Promise<string> {
     await requireAdmin();
     validateOrderId(id);
-    validateCheckoutValues(values);
+    validateCheckoutValues(values, false);
+    const shippingAddress = hasCheckoutAddress(values) ? formatCheckoutAddress(values) : null;
     const plans = await getCheckoutPlans(true);
     return db.$transaction(async (transaction) => {
         const order = await transaction.order.findUnique({
@@ -83,7 +87,7 @@ export async function updateOrderDetails(id: string, values: CheckoutValues): Pr
                     chat: order.defaultReachoutModes.chat,
                 },
                 showOwnerName: values.showName,
-                shippingAddress: formatCheckoutAddress(values),
+                shippingAddress,
                 deliveryInstructions: values.deliveryInstructions.trim() || null,
             },
             select: { id: true },

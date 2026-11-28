@@ -20,6 +20,7 @@ type Props = {
     form: UseFormReturn<CheckoutValues>;
     id: string;
     shippingInput: UseFormRegisterReturn;
+    addressRequired?: boolean;
     postalCodeRequired?: boolean;
     deliveryEstimate?: string;
 };
@@ -29,6 +30,7 @@ export default function CheckoutAddressFields({
     form,
     id,
     shippingInput,
+    addressRequired = true,
     postalCodeRequired = true,
     deliveryEstimate,
 }: Props) {
@@ -36,7 +38,7 @@ export default function CheckoutAddressFields({
     const { errors } = form.formState;
     return (
         <>
-            <CheckoutRegionFields control={form.control} id={id} />
+            <CheckoutRegionFields control={form.control} id={id} required={addressRequired} />
             <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto]">
                 <Field className="min-w-0 gap-2">
                     <FieldLabel htmlFor={`${id}-address`}>

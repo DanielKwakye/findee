@@ -3,7 +3,7 @@ import type { CheckoutPlan, CheckoutValues } from '@/features/checkout/utils/che
 import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
 
 /** Validates purchase, contact, and shipping inputs for checkout. */
-export function validateCheckoutValues(values: CheckoutValues) {
+export function validateCheckoutValues(values: CheckoutValues, shippingAddressRequired = true) {
     if (
         !values ||
         !Array.isArray(values.variants) ||
@@ -20,7 +20,7 @@ export function validateCheckoutValues(values: CheckoutValues) {
         !values.name.trim() ||
         typeof values.phone !== 'string' ||
         typeof values.shippingAddress !== 'string' ||
-        !values.shippingAddress.trim() ||
+        (shippingAddressRequired && !values.shippingAddress.trim()) ||
         typeof values.deliveryInstructions !== 'string' ||
         typeof values.contactByEmail !== 'boolean' ||
         typeof values.contactByPhone !== 'boolean' ||
