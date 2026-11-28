@@ -24,17 +24,20 @@ export type CheckoutPlan = {
     maxRecoveryProfiles: number | null;
 };
 
-export type CheckoutValues = {
-    variants: CheckoutVariant[];
-    plan: string;
-    customQuantity?: number | '';
-    allocation: Partial<Record<CheckoutVariant, number | ''>>;
+export type CheckoutContactValues = {
     email: string;
     name: string;
     phone: string;
     contactByEmail: boolean;
     showName: boolean;
     contactByPhone: boolean;
+};
+
+export type CheckoutValues = CheckoutContactValues & {
+    variants: CheckoutVariant[];
+    plan: string;
+    customQuantity?: number | '';
+    allocation: Partial<Record<CheckoutVariant, number | ''>>;
     shippingAddress: string;
     state: string;
     country: string;

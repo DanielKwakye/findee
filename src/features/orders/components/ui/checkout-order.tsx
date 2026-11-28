@@ -54,5 +54,5 @@ export default function CheckoutOrder({ sessionId }: { sessionId?: string }) {
         );
     }
 
-    return <OrderReceived />;
+    return <OrderReceived activationCode={order.data.activationCode} />;
 }

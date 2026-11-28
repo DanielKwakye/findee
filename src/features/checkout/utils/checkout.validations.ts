@@ -1,6 +1,28 @@
 import { checkoutVariants } from '@/features/checkout/data/checkout.variants';
-import type { CheckoutPlan, CheckoutValues } from '@/features/checkout/utils/checkout.types';
+import type {
+    CheckoutContactValues,
+    CheckoutPlan,
+    CheckoutValues,
+} from '@/features/checkout/utils/checkout.types';
 import { getCheckoutPlanPrice } from '@/features/checkout/utils/checkout.pricing';
+
+/** Validates customer identity and finder contact preferences. */
+export function validateCheckoutContact(values: CheckoutContactValues) {
+    if (
+        typeof values.email !== 'string' ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) ||
+        typeof values.name !== 'string' ||
+        !values.name.trim() ||
+        typeof values.phone !== 'string' ||
+        typeof values.contactByEmail !== 'boolean' ||
+        typeof values.contactByPhone !== 'boolean' ||
+        typeof values.showName !== 'boolean' ||
+        (!values.contactByEmail && !values.contactByPhone) ||
+        (values.contactByPhone && !values.phone.trim())
+    ) {
+        throw new Error('Invalid checkout information');
+    }
+}
 
 /** Validates purchase, contact, and shipping inputs for checkout. */
 export function validateCheckoutValues(values: CheckoutValues, shippingAddressRequired = true) {
@@ -14,22 +36,13 @@ export function validateCheckoutValues(values: CheckoutValues, shippingAddressRe
         ) ||
         !values.allocation ||
         typeof values.allocation !== 'object' ||
-        typeof values.email !== 'string' ||
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email) ||
-        typeof values.name !== 'string' ||
-        !values.name.trim() ||
-        typeof values.phone !== 'string' ||
         typeof values.shippingAddress !== 'string' ||
         (shippingAddressRequired && !values.shippingAddress.trim()) ||
-        typeof values.deliveryInstructions !== 'string' ||
-        typeof values.contactByEmail !== 'boolean' ||
-        typeof values.contactByPhone !== 'boolean' ||
-        typeof values.showName !== 'boolean' ||
-        (!values.contactByEmail && !values.contactByPhone) ||
-        (values.contactByPhone && !values.phone.trim())
+        typeof values.deliveryInstructions !== 'string'
     ) {
         throw new Error('Invalid checkout information');
     }
+    validateCheckoutContact(values);
 }
 
 /** Validates sticker quantities against the selected checkout plan. */

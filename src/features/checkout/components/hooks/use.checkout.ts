@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { checkoutStepper } from '@/features/checkout/data/checkout.steps';
+import { useCheckoutContactRules } from '@/features/checkout/components/hooks/use.checkout.contact.rules';
 import type {
     CheckoutCustomer,
     CheckoutPlan,
@@ -153,22 +154,11 @@ export function useCheckout(
         },
     });
     const contactMissing = !contactByEmail && !contactByPhone;
+    const contactRules = useCheckoutContactRules();
     const contactInputs = {
-        email: form.register('email', {
-            required: t('details.emailRequired'),
-            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: t('details.emailInvalid') },
-        }),
-        name: form.register('name', {
-            /** Requires a customer name for checkout. */
-            validate: (value) => value.trim().length > 0 || t('details.nameRequired'),
-        }),
-        phone: form.register('phone', {
-            /** Requires a reachable phone value when phone contact is enabled. */
-            validate: (value) =>
-                !form.getValues('contactByPhone') ||
-                value.trim().length > 0 ||
-                t('details.phoneRequired'),
-        }),
+        email: form.register('email', contactRules.email),
+        name: form.register('name', contactRules.name),
+        phone: form.register('phone', contactRules.phone),
     };
     const shippingInput = form.register('shippingAddress', {
         /** Requires a shipping destination for physical stickers. */

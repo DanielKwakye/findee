@@ -10,10 +10,10 @@ export async function completeCheckoutOrder(sessionId?: string) {
     if (!customer || typeof sessionId !== 'string' || !sessionId.startsWith('cs_')) {
         throw new Error('A customer checkout session is required');
     }
-    const orderNumber = await fulfillCheckoutOrder(sessionId, customer.id);
-    if (!orderNumber) throw new Error('Unable to verify checkout payment');
+    const fulfillment = await fulfillCheckoutOrder(sessionId, customer.id);
+    if (!fulfillment) throw new Error('Unable to verify checkout payment');
     const order = await db.order.findUniqueOrThrow({
-        where: { number: orderNumber, customerId: customer.id },
+        where: { number: fulfillment.number, customerId: customer.id },
         select: {
             number: true,
             planDetail: {
@@ -29,16 +29,19 @@ export async function completeCheckoutOrder(sessionId?: string) {
     });
     const allocations = order.planDetail.allocations.filter(({ quantity }) => quantity > 0);
     return {
-        transaction_id: order.number,
-        value: order.planDetail.price,
-        currency: order.planDetail.currency,
-        sticker_quantity: order.planDetail.quantity,
-        variants: allocations.map(({ variant }) => variant).join(','),
-        items: allocations.map(({ variant, quantity }) => ({
-            item_id: variant,
-            item_variant: variant,
-            quantity,
-        })),
+        activationCode: fulfillment.activationCode,
+        purchase: {
+            transaction_id: order.number,
+            value: order.planDetail.price,
+            currency: order.planDetail.currency,
+            sticker_quantity: order.planDetail.quantity,
+            variants: allocations.map(({ variant }) => variant).join(','),
+            items: allocations.map(({ variant, quantity }) => ({
+                item_id: variant,
+                item_variant: variant,
+                quantity,
+            })),
+        },
         email: order.customer.email,
         phone: order.customer.phone,
     };

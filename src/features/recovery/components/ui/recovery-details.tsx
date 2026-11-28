@@ -10,12 +10,20 @@ import { useRecovery } from '@/features/recovery/components/hooks/use.recovery';
 import Link from 'next/link';
 import { Mail, Phone, ScanLine, UserRound } from 'lucide-react';
 import TypographySubtitle from '@/components/core/ui/typography-subtitle';
+import RecoveryActivationDetails from '@/features/recovery/components/ui/recovery-activation-details';
+import type { CheckoutCustomer } from '@/features/checkout/utils/checkout.types';
 
 /** Displays the owner and available contact details for a public recovery link. */
-export default function RecoveryDetails({ code }: { code: string }) {
+export default function RecoveryDetails({
+    code,
+    customer,
+}: {
+    code: string;
+    customer: CheckoutCustomer | null;
+}) {
     const t = useTranslations('recovery');
     const query = useRecovery(code);
-    const product = query.data;
+    const product = query.data?.status === 'assigned' ? query.data : null;
     return (
         <Card className="w-full max-w-lg gap-6 rounded-3xl py-8 shadow-lg sm:py-10">
             {query.isSuccess && product && (
@@ -60,6 +68,24 @@ export default function RecoveryDetails({ code }: { code: string }) {
                             <TypographyBody className="text-sm">{t('retry')}</TypographyBody>
                         </Button>
                     </>
+                ) : query.data?.status === 'available' ? (
+                    <div className="space-y-4">
+                        <div className="space-y-2 text-center">
+                            <TypographyH2 className="font-heading text-xl leading-tight font-semibold sm:text-2xl">
+                                {t('activationTitle')}
+                            </TypographyH2>
+                            <TypographyParagraph className="text-sm leading-5">
+                                {t('activationDescription')}
+                            </TypographyParagraph>
+                        </div>
+                        <RecoveryActivationDetails
+                            key={customer?.email}
+                            code={code}
+                            customer={customer}
+                            price={query.data.plan.price}
+                            currency={query.data.plan.currency}
+                        />
+                    </div>
                 ) : !product ? (
                     <div className="rounded-2xl bg-muted/50 p-5 text-center">
                         <TypographyParagraph>{t('notFound')}</TypographyParagraph>

@@ -385,6 +385,9 @@
             "retryVerification": "Check again",
             "title": "Order received",
             "description": "Thank you for the order. We're processing your order and we'll get back to you soon.",
+            "activationTitle": "QR sticker activated",
+            "activationDescription": "Your sticker is ready. Anyone who scans it can reach you using the contact options you selected.",
+            "viewRecovery": "View recovery page",
             "goHome": "Go Home",
             "trackDelivery": "Track Order"
         },
@@ -432,6 +435,15 @@
         "description": "Contact the owner to help return this item.",
         "loading": "Looking up this recovery code…",
         "notFound": "No record found for the given recovery code.",
+        "activationTitle": "Activate QR sticker",
+        "activationDescription": "Add your contact details so anyone who finds your item can reach you.",
+        "activationPaymentError": "Unable to start payment for this sticker. Please try again.",
+        "activationEmail": {
+            "subject": "Your Findmus sticker is active",
+            "title": "Your sticker is active",
+            "introduction": "We've received your payment and activated your sticker. Finders who scan it can now reach you using the contact options you selected.",
+            "guidance": "View your recovery page: {url}"
+        },
         "error": "Unable to load recovery details. Please try again.",
         "retry": "Try again",
         "owner": "Owner: {name}",

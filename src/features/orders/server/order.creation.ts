@@ -11,6 +11,7 @@ import { Prisma } from '@/generated/client';
 import { generateReferenceCode } from '@/components/platform/utils/reference.code.utils';
 import { checkoutOrderPlans } from '@/features/checkout/data/checkout.order.plans';
 import { scheduleCelebrationEmail } from '@/features/notifications/server/schedule.celebration.email';
+import { assignOrderConfirmationProducts } from '@/features/orders/utils/order.confirmation.utils';
 
 /** Validates purchase details and creates an order for the supplied customer. */
 export async function createOrder(
@@ -20,8 +21,9 @@ export async function createOrder(
     paidPlan?: CheckoutPlan,
     paymentAt: Date | null = new Date(),
     includeShipping = true,
+    activationCode?: string,
 ): Promise<string> {
-    validateCheckoutValues(values, paidPlan !== undefined);
+    validateCheckoutValues(values, paidPlan !== undefined && !activationCode);
     const plans = paidPlan ? [paidPlan] : await getCheckoutPlans(true);
     const plan = validateCheckoutAllocation(values, plans, includeShipping);
 
@@ -43,12 +45,17 @@ export async function createOrder(
                     },
                     select: { id: true },
                 });
-                return transaction.order.create({
+                const order = await transaction.order.create({
                     data: {
                         number: orderNumber ?? generateReferenceCode(),
                         customerId: customerId,
                         paymentAt,
-                        status: paymentAt ? 'PENDING' : 'AWAITING_PAYMENT',
+                        status: activationCode
+                            ? 'DELIVERED'
+                            : paymentAt
+                              ? 'PENDING'
+                              : 'AWAITING_PAYMENT',
+                        ...(activationCode ? { autoAssign: false } : {}),
                         planDetail: {
                             plan: checkoutOrderPlans[plan.id],
                             quantity: plan.quantity,
@@ -70,12 +77,23 @@ export async function createOrder(
                         deliveryInstructions: values.deliveryInstructions.trim() || null,
                         cancelledAt: null,
                         cancellationReason: null,
-                        completedAt: null,
+                        completedAt: activationCode ? paymentAt : null,
                     },
-                    select: { number: true },
+                    select: { id: true, number: true, defaultReachoutModes: true },
                 });
+                if (activationCode) {
+                    const product = await transaction.product.findUniqueOrThrow({
+                        where: { code: activationCode, variant: values.variants[0] },
+                        select: { id: true },
+                    });
+                    await assignOrderConfirmationProducts(transaction, { ...order, customerId }, [
+                        product.id,
+                    ]);
+                }
+                return order;
             });
-            if (paymentAt) scheduleCelebrationEmail({ type: 'payment', orderNumber: order.number });
+            if (paymentAt && !activationCode)
+                scheduleCelebrationEmail({ type: 'payment', orderNumber: order.number });
             return order.number;
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2034')
@@ -84,7 +102,10 @@ export async function createOrder(
                 throw error;
             if (orderNumber) {
                 const existing = await db.order.findUnique({
-                    where: { number: orderNumber },
+                    where: {
+                        number: orderNumber,
+                        ...(activationCode ? { products: { some: { code: activationCode } } } : {}),
+                    },
                     select: { number: true, customerId: true },
                 });
                 if (existing?.customerId === customerId) return existing.number;

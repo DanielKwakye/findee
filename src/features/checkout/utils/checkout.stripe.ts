@@ -1,12 +1,22 @@
 import 'server-only';
 
 import Stripe from 'stripe';
-import type { CheckoutPlan, CheckoutValues } from '@/features/checkout/utils/checkout.types';
+import type {
+    CheckoutContactValues,
+    CheckoutPlan,
+    CheckoutValues,
+} from '@/features/checkout/utils/checkout.types';
+import type { CheckoutVariant } from '@/features/checkout/data/checkout.variants';
 import { generateReferenceCode } from '@/components/platform/utils/reference.code.utils';
 import { getTranslations } from 'next-intl/server';
 import { db } from '@/lib/db';
 
 let stripe: Stripe | undefined;
+
+type ActivationCheckoutValues = CheckoutContactValues & {
+    activationCode: string;
+    activationVariant: CheckoutVariant;
+};
 
 /** Provides the shared Stripe client using runtime server credentials. */
 export function getStripe() {
@@ -44,7 +54,7 @@ export async function getStripeCustomerId(customerId: string): Promise<string> {
 /** Creates a hosted payment session containing the customer's checkout details. */
 export async function createStripeCheckout(
     customer: { id: string; email: string },
-    values: CheckoutValues,
+    values: CheckoutValues | ActivationCheckoutValues,
     plan: CheckoutPlan,
 ): Promise<string> {
     const metadata: Record<string, string> = {};
@@ -70,6 +80,31 @@ export async function createStripeCheckout(
     });
     const stripeCustomerId = await getStripeCustomerId(customer.id);
     const t = await getTranslations('Checkout');
+    const recoveryPath =
+        'activationCode' in values
+            ? `/recovery/${encodeURIComponent(values.activationCode)}`
+            : null;
+    const shippingCents = recoveryPath ? 0 : Math.round((plan.shippingCost ?? 0) * 100);
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+        {
+            price_data: {
+                currency: plan.currency.toLowerCase(),
+                unit_amount: Math.round(plan.price * 100) - shippingCents,
+                product_data: { name: t('plans.productName', { quantity: plan.quantity }) },
+            },
+            quantity: 1,
+        },
+    ];
+    if (!recoveryPath) {
+        lineItems.push({
+            price_data: {
+                currency: plan.currency.toLowerCase(),
+                unit_amount: shippingCents,
+                product_data: { name: t('preview.shipping') },
+            },
+            quantity: 1,
+        });
+    }
     const session = await getStripe().checkout.sessions.create({
         ui_mode: 'hosted_page',
         mode: 'payment',
@@ -83,26 +118,8 @@ export async function createStripeCheckout(
         integration_identifier: 'hosted_web_0001',
         origin_context: 'web',
         success_url: `${process.env.APP_URL}/checkout/order-received?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.APP_URL}/checkout`,
-        line_items: [
-            {
-                price_data: {
-                    currency: plan.currency.toLowerCase(),
-                    unit_amount:
-                        Math.round(plan.price * 100) - Math.round((plan.shippingCost ?? 0) * 100),
-                    product_data: { name: t('plans.productName', { quantity: plan.quantity }) },
-                },
-                quantity: 1,
-            },
-            {
-                price_data: {
-                    currency: plan.currency.toLowerCase(),
-                    unit_amount: Math.round((plan.shippingCost ?? 0) * 100),
-                    product_data: { name: t('preview.shipping') },
-                },
-                quantity: 1,
-            },
-        ],
+        cancel_url: `${process.env.APP_URL}${recoveryPath ?? '/checkout'}`,
+        line_items: lineItems,
         metadata,
     });
     if (!session.url) throw new Error('Stripe did not return a checkout URL');

@@ -17,7 +17,7 @@ export function useRecovery(code: string) {
     });
     const trackedCode = useRef<string | null>(null);
     useEffect(() => {
-        if (!query.data || trackedCode.current === normalizedCode) return;
+        if (query.data?.status !== 'assigned' || trackedCode.current === normalizedCode) return;
         trackedCode.current = normalizedCode;
         void trackEvent('recovery_page_viewed');
     }, [normalizedCode, query.data]);

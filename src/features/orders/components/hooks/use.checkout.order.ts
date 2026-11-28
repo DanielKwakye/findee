@@ -17,7 +17,7 @@ export function useCheckoutOrder(sessionId?: string) {
     });
     useEffect(() => {
         if (!order.data) return;
-        const { email, phone, ...purchase } = order.data;
+        const { email, phone, purchase } = order.data;
         /** Reports a verified purchase when the visitor's advertising preference changes. */
         function trackPurchase() {
             identifyMetaVisitor(email, phone);
